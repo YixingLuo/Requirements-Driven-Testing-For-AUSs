@@ -1,5 +1,3 @@
-clc
-clear
 global num_incidents
 num_incidents = 5;    
 lb=[];
@@ -46,13 +44,8 @@ x0 = randomsituation_test(num_incidents)
 % options.Display = 'off';
 % [x,fval,exitflag]=fmincon(@uuv_normal_test,x0,[],[],[],[],lb,ub,@myconuuv_normal_test,options)
 
-options.PopulationSize = 100;
-options.SelectionFcn = 'selectiontournament';
-options.PlotFcn = 'gaplotpareto';
-% options = optimoptions('gamultiobj','PlotFcn',@gaplotpareto);
-% x = ga(fun,nvars,A,b,Aeq,beq,lb,ub,nonlcon,IntCon,options)
-[x,fval,exitflag,output,population,scores] = gamultiobj(@uuv_normal_test,4*num_incidents,[],[],[],[],lb,ub,@myconuuv_normal_test)
-% [x,fval,exitflag,output,population,scores] = ga(@uuv_normal_test,4*num_incidents,[],[],[],[],lb,ub,@myconuuv_normal_test)
+
+% [x,fval] = ga(@uuv_normal_test,x0,lb,ub,@myconuuv_normal_test)
 
 % [condition, indextemp] = randomsituation(num,num_incidents);
 % index(num,:) = indextemp;
@@ -71,11 +64,11 @@ for i = 1:m
     x_last(i,3) = round(x((i-1)*4+3));
     x_last(i,4) = x((i-1)*4+4);
 end
-x_last
+% x_last
 for i = 1:m
     x_last(i,1) = x((i-1)*4+1);
     x_last(i,2) = x((i-1)*4+2);
     x_last(i,3) = x((i-1)*4+3);
     x_last(i,4) = x((i-1)*4+4);
 end
-x_last
+% x_last

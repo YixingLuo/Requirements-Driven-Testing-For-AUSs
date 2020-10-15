@@ -56,12 +56,11 @@ while(1)
         DS_D = min(1,pastdistance/uuv.distance_target);
         DS_E = min(1,(1-(pastenergy - uuv.energy_target)/(uuv.energy_budget-uuv.energy_target)));
         data = [DS_A, pastaccuracy, DS_D, pastdistance, DS_E, pastenergy];
-%         [DS_A, DS_D, DS_E]
+        [DS_A, DS_D, DS_E]
 %         f = DS_A + DS_D + DS_E
-%         f(1) = DS_A;
-%         f(2) = DS_D;
-%         f(3) = DS_E;
-        f = [DS_A; DS_D; DS_E]
+        f(1) = DS_A;
+        f(2) = DS_D;
+        f(3) = DS_E;
         break
     end
     
