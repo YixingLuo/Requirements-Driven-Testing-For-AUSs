@@ -1,4 +1,9 @@
-function [data,usage_plan,planning_time] = uuv_normal(nnum, indextemp)
+[m,n] = size(x_test);
+for i = 1:m
+    x_test(i,1) = round(x_test(i,1));
+    x_test(i,2) = round(x_test(i,2));
+    x_test(i,3) = round(x_test(i,3));
+end
 global uuv
 uuv = UnmannedUnderwaterVehicle();
 global pastdistance
@@ -25,13 +30,15 @@ results =[];
 x_pre = [];
 planning_time = [];
 current_step = 1;
-% name = 'condition' + string(1) + '.mat';
-name = 'condition' + string(nnum) + '.mat';
-cond = load(name);
+% name = 'condition' + string(946) + '.mat';
+% name = 'condition' + string(nnum) + '.mat';
+% cond = load(name);
 need_replan = 0;
-% indextemp = 1;
-plan_num = length(indextemp);
-index_cond = 1;
+% name = 'index' + string(946) + '.mat';
+% index = load(name);
+% indextemp = index.index;
+% plan_num = length(indextemp);
+% index_cond = 1;
 
 while(1)
     need_replan = 0;
@@ -42,32 +49,52 @@ while(1)
         DS_A = min(1,pastaccuracy);
         DS_D = min(1,pastdistance/uuv.distance_target);
         DS_E = min(1,(1-(pastenergy - uuv.energy_target)/(uuv.energy_budget-uuv.energy_target)));
-        data = [DS_A, pastaccuracy, DS_D, pastdistance, DS_E, pastenergy];
+        data = [DS_A, pastaccuracy, DS_D, pastdistance, DS_E, pastenergy]
+        f = DS_A + DS_D + DS_E
         break
     end
     
-    if  plan_num > 0 && current_step == indextemp(index_cond)        
-        need_replan = 1;
-        plan_num = plan_num - 1;      
-        if cond.condition(index_cond,1) == 1
-            uuv = SensorError(uuv, cond.condition(index_cond,2), cond.condition(index_cond,3));  
-        elseif cond.condition(index_cond,1) == 2
-            uuv = EnergyDisturbance(uuv, cond.condition(index_cond,2), cond.condition(index_cond,3));
-            elseif cond.condition(index_cond,1) == 3
-                 uuv = SpeedDisturbance(uuv, cond.condition(index_cond,2), cond.condition(index_cond,3));
-                elseif cond.condition(index_cond,1) == 4
-                    uuv = SensorFailure(uuv, cond.condition(index_cond,2));    
+%     if  plan_num > 0 && current_step == indextemp(index_cond)        
+%         need_replan = 1;
+%         plan_num = plan_num - 1;      
+%         if cond.condition(index_cond,1) == 1
+%             uuv = SensorError(uuv, cond.condition(index_cond,2), cond.condition(index_cond,3));  
+%         elseif cond.condition(index_cond,1) == 2
+%             uuv = EnergyDisturbance(uuv, cond.condition(index_cond,2), cond.condition(index_cond,3));
+%             elseif cond.condition(index_cond,1) == 3
+%                  uuv = SpeedDisturbance(uuv, cond.condition(index_cond,2), cond.condition(index_cond,3));
+%                 elseif cond.condition(index_cond,1) == 4
+%                     uuv = SensorFailure(uuv, cond.condition(index_cond,2));    
+%         end
+%         index_cond = index_cond+1;
+%     end
+    
+    
+    for i = 1:m
+        if current_step == x_test(i,1)
+            need_replan = 1;
+            index_cond = i;
+                if x_test(index_cond,2) == 1
+                    uuv = SensorError(uuv, x_test(index_cond,3), x_test(index_cond,4));  
+                elseif x_test(index_cond,2) == 2
+                    uuv = EnergyDisturbance(uuv, x_test(index_cond,3), x_test(index_cond,4));
+                    elseif x_test(index_cond,2) == 3
+                         uuv = SpeedDisturbance(uuv, x_test(index_cond,3), x_test(index_cond,4));
+                        elseif x_test(index_cond,2) == 4
+                            uuv = SensorFailure(uuv, x_test(index_cond,3));    
+                end
+            break
         end
-        index_cond = index_cond+1;
     end
+    
+    
     
     if current_step == 1
         need_replan = 1;
     end
-
+    exitflag = 0;
     if need_replan == 1 
         t1=clock;
-        exitflag = 0;
         for iternum = 1:1:20
             lb=[];
             ub=[];
@@ -91,7 +118,7 @@ while(1)
         end
         planning_time = [planning_time; t2];
         
-        if exitflag == 0
+        if exitflag < 0
             for iternum = 1:1:20
                 lb=[];
                 ub=[];
@@ -114,6 +141,7 @@ while(1)
                 end     
             end
         end
+
         %% distance
         speed_now = 0;
         for i = 1:uuv.N_s
@@ -207,5 +235,4 @@ while(1)
     end
     current_step = current_step + 1;
 
-end
-% end
+    end
