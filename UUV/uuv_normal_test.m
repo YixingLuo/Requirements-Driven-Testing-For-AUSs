@@ -9,7 +9,7 @@ for i = 1:m
     x_test(i,3) = round(x_test_initial((i-1)*4+3));
     x_test(i,4) = x_test_initial((i-1)*4+4);
 end
-x_test
+x_test;
 global uuv
 uuv = UnmannedUnderwaterVehicle();
 global pastdistance
@@ -61,7 +61,7 @@ while(1)
 %         f(1) = DS_A;
 %         f(2) = DS_D;
 %         f(3) = DS_E;
-        f = [DS_A; DS_D; DS_E]
+        f = [DS_A; DS_D; DS_E];
         break
     end
     
