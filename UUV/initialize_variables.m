@@ -1,7 +1,11 @@
-function Population = randomsituation_test
-x=[];
+function Population = initialize_variables(GenomeLength, uuv_normal_test, options)
+Population = [];
+options.PopulationSize
+totalpopulation = sum(options.PopulationSize);
 global num_incidents
 global uuv
+
+for pop = 1:1:totalpopulation
 uuv = UnmannedUnderwaterVehicle();
 l = 1:1:15;
 disturb = randi([1,4],1,l(num_incidents));
@@ -37,14 +41,22 @@ failure_list = [];
             condition(i,:) = [4,idx,-1];
         end
     end
+    x_test_initial = [];
     for i = 1: length(disturb)
 %         x0(i,1) = index (i);
 %         x0(i,2) = condition(i,1);
 %         x0(i,3) = condition(i,2);
 %         x0(i,4) = condition(i,3);
-        x((i-1)*4+1) = index (i);
-        x((i-1)*4+2) = condition(i,1);
-        x((i-1)*4+3) = condition(i,2);
-        x((i-1)*4+4) = condition(i,3);
+        x_test_initial((i-1)*4+1) = index (i);
+        x_test_initial((i-1)*4+2) = condition(i,1);
+        x_test_initial((i-1)*4+3) = condition(i,2);
+        x_test_initial((i-1)*4+4) = condition(i,3);
+    end
+    f  = uuv_normal_test(x_test_initial);
+    Population(pop,1:4*num_incidents) =  x_test_initial;
+    for fit = 1:1:3
+        Population(pop,fit+4*num_incidents)=f(fit);
     end
 end
+end
+

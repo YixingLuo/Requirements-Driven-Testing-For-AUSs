@@ -1,6 +1,7 @@
 function f  = uuv_normal_test(x_test_initial)
 global num_incidents
 m = num_incidents;
+x_test_initial;
 x_test = [];
 % [m,n] = size(x_test);
 for i = 1:m

@@ -41,7 +41,7 @@ for i = 1:num_incidents
     end
 end
 
-x0 = randomsituation_test(num_incidents);
+% x0 = randomsituation_test;
 
 % options.Algorithm = 'sqp'; 
 % options.Display = 'off';
@@ -53,9 +53,16 @@ x0 = randomsituation_test(num_incidents);
 % options = optimoptions('gamultiobj','PlotFcn',@gaplotpareto);
 option_temp = load('options.mat');
 options = option_temp.options;
+% options.PopulationSize = 500;
+% options = optimoptions(options,'CreationFcn',{@gacreationnonlinearfeasible,...
+%     'UseParallel',true,'NumStartPts',20});
+options = optimoptions(options,'CreationFcn',@initialize_variables);
 % rng default
 % x = ga(fun,nvars,A,b,Aeq,beq,lb,ub,nonlcon,IntCon,options)
-options.MaxTime = 3600 * hour;
+options.MaxTime = 60 * hour;
+
+% Population = initialize_variables(3, @uuv_normal_test, options);
+
 [x,fval,exitflag,output,population,scores] = gamultiobj(@uuv_normal_test,4*num_incidents,[],[],[],[],lb,ub,@myconuuv_normal_test,options);
 % [x,fval,exitflag,output,population,scores] = ga(@uuv_normal_test,4*num_incidents,[],[],[],[],lb,ub,@myconuuv_normal_test)
 
