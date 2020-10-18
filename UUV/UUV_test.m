@@ -41,25 +41,19 @@ for i = 1:num_incidents
     end
 end
 
-% x0 = randomsituation_test;
-
-% options.Algorithm = 'sqp'; 
-% options.Display = 'off';
-% [x,fval,exitflag]=fmincon(@uuv_normal_test,x0,[],[],[],[],lb,ub,@myconuuv_normal_test,options)
-
 % options.PopulationSize = 500;
 % options.SelectionFcn = 'selectiontournament';
 % options.PlotFcn = 'gaplotpareto';
 % options = optimoptions('gamultiobj','PlotFcn',@gaplotpareto);
 option_temp = load('options.mat');
 options = option_temp.options;
-% options.PopulationSize = 500;
+options.PopulationSize = 500;
 % options = optimoptions(options,'CreationFcn',{@gacreationnonlinearfeasible,...
 %     'UseParallel',true,'NumStartPts',20});
 options = optimoptions(options,'CreationFcn',@initialize_variables);
 % rng default
 % x = ga(fun,nvars,A,b,Aeq,beq,lb,ub,nonlcon,IntCon,options)
-options.MaxTime = 60 * hour;
+options.MaxTime = 3600 * hour;
 
 % Population = initialize_variables(3, @uuv_normal_test, options);
 
@@ -67,9 +61,9 @@ options.MaxTime = 60 * hour;
 % [x,fval,exitflag,output,population,scores] = ga(@uuv_normal_test,4*num_incidents,[],[],[],[],lb,ub,@myconuuv_normal_test)
 
 time = datestr(now,30);
-name = 'ga-multiobj-'+ string(hour) + '-'+ string(time) + '.mat';
+name =  string(time) + '-' + 'ga-multiobj-'+ string(hour) + '.mat';
 save(name);
-figurename = 'ga-multiobj-figure-' + string(hour)+ '-'+ string(time) ;
+figurename =  string(time) + '-' + 'ga-multiobj-figure-' + string(hour);
 savefig(figurename);
 fprintf('UUV_test:training hour %d, Time is %s \n', hour, string(time));
 

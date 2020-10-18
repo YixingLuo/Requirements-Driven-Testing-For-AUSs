@@ -54,9 +54,9 @@ failure_list = [];
     end
     f  = uuv_normal_test(x_test_initial);
     Population(pop,1:4*num_incidents) =  x_test_initial;
-    for fit = 1:1:3
-        Population(pop,fit+4*num_incidents)=f(fit);
-    end
+%     for fit = 1:1:3
+%         Population(pop,fit+4*num_incidents)=f(fit);
+%     end
 end
 end
 
