@@ -1,4 +1,6 @@
-function f  = uuv_normal_test(x_test_initial)
+function f = evaluate_objective(x_test_initial, M, V)%%计算每个个体的M个目标函数值
+% function f  = uuv_normal_test(x_test_initial)
+f=[];
 global num_incidents
 m = num_incidents;
 x_test = [];
@@ -9,7 +11,7 @@ for i = 1:m
     x_test(i,3) = round(x_test_initial((i-1)*4+3));
     x_test(i,4) = x_test_initial((i-1)*4+4);
 end
-x_test
+x_test;
 global uuv
 uuv = UnmannedUnderwaterVehicle();
 global pastdistance
@@ -51,16 +53,17 @@ while(1)
 %     fprintf('uuv_normal: current step %d\n', current_step);
     
     if current_step > 360
-        fprintf('last step\n');
+%         fprintf('last step\n');
         DS_A = min(1,pastaccuracy);
         DS_D = min(1,pastdistance/uuv.distance_target);
         DS_E = min(1,(1-(pastenergy - uuv.energy_target)/(uuv.energy_budget-uuv.energy_target)));
         data = [DS_A, pastaccuracy, DS_D, pastdistance, DS_E, pastenergy];
-        [DS_A, DS_D, DS_E]
+%         [DS_A, DS_D, DS_E]
 %         f = DS_A + DS_D + DS_E
         f(1) = DS_A;
         f(2) = DS_D;
         f(3) = DS_E;
+%         f = [DS_A; DS_D; DS_E];
         break
     end
     
@@ -120,7 +123,7 @@ while(1)
             [x,fval,exitflag]=fmincon(@objuuv_normal,x0,[],[],[],[],lb,ub,@myconuuv_normal,options);
             t2 = toc;
             if exitflag > 0 
-                fprintf(2,'uuv_normal: have solution at current step: %d , %d\n',exitflag, current_step);
+%                 fprintf(2,'uuv_normal: have solution at current step: %d , %d\n',exitflag, current_step);
                 fval_pre = fval;
                 x_pre = x;            
                 break
@@ -144,7 +147,7 @@ while(1)
                 [x,fval,exitflag]=fmincon(@objuuv_relax,x0,[],[],[],[],lb,ub,@myconuuv_relax,options);
                 t2 = toc;
                 if exitflag > 0 
-                    fprintf(2,'uuv_relax: have solution at current step: %d , %d\n',exitflag, current_step);
+%                     fprintf(2,'uuv_relax: have solution at current step: %d , %d\n',exitflag, current_step);
                     fval_pre = fval;
                     x_pre = x;            
                     break
@@ -247,3 +250,5 @@ while(1)
 
     end
 end
+
+% end

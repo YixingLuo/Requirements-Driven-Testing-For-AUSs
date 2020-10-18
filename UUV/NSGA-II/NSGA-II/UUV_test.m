@@ -1,5 +1,6 @@
-% clc
-% clear
+clc
+clear
+for hour = 2:4:24
 global num_incidents
 num_incidents = 5;    
 lb=[];
@@ -40,7 +41,7 @@ for i = 1:num_incidents
     end
 end
 
-x0 = randomsituation_test(num_incidents)
+x0 = randomsituation_test(num_incidents);
 
 % options.Algorithm = 'sqp'; 
 % options.Display = 'off';
@@ -50,29 +51,36 @@ x0 = randomsituation_test(num_incidents)
 % options.SelectionFcn = 'selectiontournament';
 % options.PlotFcn = 'gaplotpareto';
 % options = optimoptions('gamultiobj','PlotFcn',@gaplotpareto);
+option_temp = load('options.mat');
+options = option_temp.options;
 % rng default
 % x = ga(fun,nvars,A,b,Aeq,beq,lb,ub,nonlcon,IntCon,options)
-[x,fval,exitflag,output,population,scores] = gamultiobj(@uuv_normal_test,4*num_incidents,[],[],[],[],lb,ub,@myconuuv_normal_test,options1)
+options.MaxTime = 3600 * hour;
+[x,fval,exitflag,output,population,scores] = gamultiobj(@uuv_normal_test,4*num_incidents,[],[],[],[],lb,ub,@myconuuv_normal_test,options);
 % [x,fval,exitflag,output,population,scores] = ga(@uuv_normal_test,4*num_incidents,[],[],[],[],lb,ub,@myconuuv_normal_test)
 
 time = datestr(now,30);
-name = 'data' + string(time) + '.mat';
+name = 'ga-multiobj-'+ string(hour) + '-'+ string(time) + '.mat';
 save(name);
+figurename = 'ga-multiobj-figure-' + string(hour)+ '-'+ string(time) ;
+savefig(figurename);
+fprintf('UUV_test:training hour %d, Time is %s \n', hour, string(time));
 
-for i = 1:size(x,1)
-m = num_incidents;
-for i = 1:m
-    x_last(i,1) = round(x((i-1)*4+1));
-    x_last(i,2) = round(x((i-1)*4+2));
-    x_last(i,3) = round(x((i-1)*4+3));
-    x_last(i,4) = x((i-1)*4+4);
-end
-x_last
-for i = 1:m
-    x_last(i,1) = x((i-1)*4+1);
-    x_last(i,2) = x((i-1)*4+2);
-    x_last(i,3) = x((i-1)*4+3);
-    x_last(i,4) = x((i-1)*4+4);
-end
-x_last
+% for i = 1:size(x,1)
+% m = num_incidents;
+% for i = 1:m
+%     x_last(i,1) = round(x((i-1)*4+1));
+%     x_last(i,2) = round(x((i-1)*4+2));
+%     x_last(i,3) = round(x((i-1)*4+3));
+%     x_last(i,4) = x((i-1)*4+4);
+% end
+% x_last
+% for i = 1:m
+%     x_last(i,1) = x((i-1)*4+1);
+%     x_last(i,2) = x((i-1)*4+2);
+%     x_last(i,3) = x((i-1)*4+3);
+%     x_last(i,4) = x((i-1)*4+4);
+% end
+% x_last
+% end
 end

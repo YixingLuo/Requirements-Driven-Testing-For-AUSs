@@ -1,5 +1,6 @@
-function x0_initial = randomsituation_test(k)
+function x0 = randomsituation_test(k)
 x0=[];
+global num_incidents
 global uuv
 uuv = UnmannedUnderwaterVehicle();
 l = 1:1:15;
@@ -37,14 +38,14 @@ failure_list = [];
         end
     end
     for i = 1: length(disturb)
-        x0(i,1) = index (i);
-        x0(i,2) = condition(i,1);
-        x0(i,3) = condition(i,2);
-        x0(i,4) = condition(i,3);
-        x0((i-1)*4) = [x0, index (i), condition(i,1), condition(i,2),condition(i,3)];
+%         x0(i,1) = index (i);
+%         x0(i,2) = condition(i,1);
+%         x0(i,3) = condition(i,2);
+%         x0(i,4) = condition(i,3);
+        x0((i-1)*4+1) = index (i);
+        x0((i-1)*4+2) = condition(i,1);
+        x0((i-1)*4+3) = condition(i,2);
+        x0((i-1)*4+4) = condition(i,3);
     end
-    
-    for i = 1: length(disturb)
-        for j = 
     
 end

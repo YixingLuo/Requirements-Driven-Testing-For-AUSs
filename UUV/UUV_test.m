@@ -1,6 +1,6 @@
-% clc
-% clear
-for hour = 1:1:5
+clc
+clear
+for hour = 2:4:24
 global num_incidents
 num_incidents = 5;    
 lb=[];
@@ -60,10 +60,11 @@ options.MaxTime = 3600 * hour;
 % [x,fval,exitflag,output,population,scores] = ga(@uuv_normal_test,4*num_incidents,[],[],[],[],lb,ub,@myconuuv_normal_test)
 
 time = datestr(now,30);
-name = 'data' + string(time) + '-' + string(hour) + '.mat';
+name = 'ga-multiobj-'+ string(hour) + '-'+ string(time) + '.mat';
 save(name);
-figurename = 'figure'+ string(time) + '-' + string(hour);
-saveas(gca,figurename,fig);
+figurename = 'ga-multiobj-figure-' + string(hour)+ '-'+ string(time) ;
+savefig(figurename);
+fprintf('UUV_test:training hour %d, Time is %s \n', hour, string(time));
 
 % for i = 1:size(x,1)
 % m = num_incidents;
