@@ -1,6 +1,5 @@
 function Population = initialize_variables(GenomeLength, uuv_normal_test, options)
 Population = [];
-options.PopulationSize
 totalpopulation = sum(options.PopulationSize);
 global num_incidents
 global uuv
