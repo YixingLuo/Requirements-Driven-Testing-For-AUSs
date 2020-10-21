@@ -2,9 +2,7 @@ clc;
 clear;
 X=[];
 Y=[];
-% data_name = 'ga-multiobj-1-20201016T100507.mat';
-% data_name = 'ga-multiobj-10-20201018T143659.mat';
-data_name = 'ga-multiobj-5-20201016T223448.mat';
+data_name = 'ga-multiobj-1-20201016T100507.mat';
 data = load(data_name);
 [m,n] = size(data.population);
 for i = 1:1:m
@@ -25,7 +23,7 @@ for i = 1:1:m
         flag(3)=0;
     end 
 %     Y(i)=flag(1)*2^0+flag(2)*2^1+flag(3)*2^2;
-    Y(i)=data.scores(i,1)*3^0+data.scores(i,2)*3^1+data.scores(i,3)*3^2;
+    Y(i)=data.scores(i,1)*2^0+data.scores(i,2)*2^1+data.scores(i,3)*2^2;
 end
 XTest = X(1:floor(0.3*m),:);
 XTrain = X(floor(0.3*m)+1:end,:);
@@ -49,11 +47,5 @@ YTest_predicted = predict(mdl,scoreTest95);
 saveLearnerForCoder(mdl,'myMdl');
 
 YTest_predicted_mex = myPCAPredict(XTest,coeff(:,1:idx),mu);
-squre_sum1 = 0;
-squre_sum2 = 0;
-for i = 1:length(YTest)
-    squre_sum1 = squre_sum1 + (YTest(i)-YTest_predicted(i)).^2;
-    squre_sum2 = squre_sum2 + (YTest(i)-YTest_predicted_mex(i)).^2;
-end
-squre_sum1, squre_sum2
-% isequal(YTest_predicted,YTest_predicted_mex)
+for i = 1:length(Y)
+isequal(YTest_predicted,YTest_predicted_mex)
