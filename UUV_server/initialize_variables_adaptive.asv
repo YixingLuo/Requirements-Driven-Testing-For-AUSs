@@ -2,10 +2,14 @@ function Population = initialize_variables_adaptive(GenomeLength, uuv_normal_tes
 Population = [];
 totalpopulation = sum(options.PopulationSize);
 global num_incidents
+global time
 global uuv
 global hour
 global coeff
 global mu
+global idx
+global iter
+global datafolder
 if hour == 1
     for pop = 1:1:totalpopulation
     uuv = UnmannedUnderwaterVehicle();
@@ -62,8 +66,9 @@ if hour == 1
     end
 elseif hour > 1
     model_num = hour-1;
-    name = 'ga-multiobj-adaptive'+ string(model_num) + '.mat';
-    pre_result = load(name);
+    name = string(time) + '-ga-multiobj-adaptive-iter-' + string(iter) + '-'+ string(model_num) + '.mat';
+    pre_result_name = strcat(datafolder,'/',name);
+    pre_result = load(pre_result_name);
     Population = pre_result.population;
     [m,n] = size(Population);
     for i = 1:m
@@ -89,7 +94,10 @@ elseif hour > 1
     end
     scoreTrain95 = scoreTrain(:,1:idx);
     mdl = fitctree(scoreTrain95,YTrain);
-    saveLearnerForCoder(mdl,'myMdl'+ '-'+ string(model_num));
+    model_name = 'myMdl-iter'+ string(iter) + '-'+ string(model_num);
+%     model_name = 'myMdl-'+ string(model_num);
+    model_name = strcat(datafolder,'/',model_name);
+    saveLearnerForCoder(mdl,model_name);
     %% initial population generation
     lb=[];
     ub=[];
@@ -112,7 +120,7 @@ elseif hour > 1
     end
     options_new.PopulationSize = totalpopulation;
     options_new.InitialPopulationMatrix = Population;
-    [x_new,fval_new,exitflag_new,output_new,population_new,scores_new] = ga(@PCAPredict_UUV,4*num_incidents,[],[],[],[],lb,ub,@myconuuv_normal_test,new);
+    [x_new,fval_new,exitflag_new,output_new,population_new,scores_new] = ga(@PCAPredict_UUV,4*num_incidents,[],[],[],[],lb,ub,@myconuuv_normal_test,options_new);
     
     [m,n] = size(population_new);
     for i = 1:m
@@ -123,7 +131,8 @@ elseif hour > 1
             Population(i,(j-1)*4+4) = population_new(i,(j-1)*4+4);
         end
     end
-   
+   popul
+   save(strcat(datafolder,'/','Initial-Population-iter-'+string(iter)+'-'+string(hour)),'Population');
 end
 end
 

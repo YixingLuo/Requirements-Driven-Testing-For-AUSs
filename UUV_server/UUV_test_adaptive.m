@@ -6,8 +6,8 @@ global num_incidents
 num_incidents = 5; 
 global iter
 global time
-total_generation = 1000;
-iter = 5;
+total_generation = 2000;
+iter = 10;
 global datafolder
 % da = date;
 da = fix(datevec(now));
@@ -66,28 +66,13 @@ addpath(datafolder);
 
     time = datestr(now,30);
     name = string(time) +'-ga-multiobj-adaptive-iter-' + string(iter) + '-'+ string(hour) + '.mat';
-    save(strcat(datafolder,'/',name));
+    path = strcat(datafolder,'/',name);
+    save(path);
     figurename = string(time) +'-ga-multiobj-adaptive-figure-iter-' + string(iter) + '-' + string(hour);
-    savefig(strcat(datafolder,'/',figurename));
+    figpath = strcat(datafolder,'/',figurename);
+    savefig(figpath);
     fprintf('UUV_test:training ieration %d \n', hour);
 
-    % for i = 1:size(x,1)
-    % m = num_incidents;
-    % for i = 1:m
-    %     x_last(i,1) = round(x((i-1)*4+1));
-    %     x_last(i,2) = round(x((i-1)*4+2));
-    %     x_last(i,3) = round(x((i-1)*4+3));
-    %     x_last(i,4) = x((i-1)*4+4);
-    % end
-    % x_last
-    % for i = 1:m
-    %     x_last(i,1) = x((i-1)*4+1);
-    %     x_last(i,2) = x((i-1)*4+2);
-    %     x_last(i,3) = x((i-1)*4+3);
-    %     x_last(i,4) = x((i-1)*4+4);
-    % end
-    % x_last
-    % end
     hour = hour + 1;
     end
 % end

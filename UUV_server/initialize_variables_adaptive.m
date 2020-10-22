@@ -67,7 +67,8 @@ if hour == 1
 elseif hour > 1
     model_num = hour-1;
     name = string(time) + '-ga-multiobj-adaptive-iter-' + string(iter) + '-'+ string(model_num) + '.mat';
-    pre_result = load(strcat(datafolder,'/',name));
+    pre_result_name = strcat(datafolder,'/',name);
+    pre_result = load(pre_result_name);
     Population = pre_result.population;
     [m,n] = size(Population);
     for i = 1:m
@@ -95,7 +96,8 @@ elseif hour > 1
     mdl = fitctree(scoreTrain95,YTrain);
     model_name = 'myMdl-iter'+ string(iter) + '-'+ string(model_num);
 %     model_name = 'myMdl-'+ string(model_num);
-    saveLearnerForCoder(mdl,strcat(datafolder,'/',model_name));
+    model_name = strcat(datafolder,'/',model_name);
+    saveLearnerForCoder(mdl,model_name);
     %% initial population generation
     lb=[];
     ub=[];
@@ -129,7 +131,8 @@ elseif hour > 1
             Population(i,(j-1)*4+4) = population_new(i,(j-1)*4+4);
         end
     end
-   save(strcat(datafolder,'/','Initial-Population-iter-'+string(iter)+'-'+string(hour)),'Population');
+   population_name = strcat(datafolder,'/','Initial-Population-iter-'+string(iter)+'-'+string(hour));
+   save(population_name,'Population');
 end
 end
 

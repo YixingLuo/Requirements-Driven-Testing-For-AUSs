@@ -17,6 +17,7 @@ for i = 1:m
 end
 model_num = hour - 1;
 model_name = 'myMdl-iter'+ string(iter) + '-'+ string(model_num);
-mdl = loadLearnerForCoder(strcat(datafolder, '/', model_name));
+model_path = strcat(datafolder, '/', model_name);
+mdl = loadLearnerForCoder(model_path);
 scoreTest95 = (XTest-mu)*coeff(:,1:idx);
 f = predict(mdl,scoreTest95);

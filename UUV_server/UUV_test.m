@@ -2,7 +2,7 @@ clc
 clear
 global hour
 hour  = 10;
-total_generation = 1000;
+total_generation = 2000;
 global num_incidents
 num_incidents = 5; 
 global datafolder
