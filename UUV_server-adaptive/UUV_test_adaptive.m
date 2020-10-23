@@ -7,7 +7,7 @@ num_incidents = 5;
 global iter
 
 total_generation = 300;
-iter = 2;
+iter = 10;
 global datafolder
 % da = date;
 da = fix(datevec(now));
@@ -75,7 +75,7 @@ for hour = 1:iter
     figurename ='-ga-multiobj-adaptive-figure-iter-' + string(iter) + '-' + string(hour);
     figpath = strcat(datafolder,'/',figurename);
     savefig(figpath);
-    fprintf('UUV_test:training ieration %d \n', hour);
+    fprintf('UUV_test_adaptive:training ieration %d \n', hour);
 
 
 end

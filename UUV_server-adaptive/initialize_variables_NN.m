@@ -1,12 +1,9 @@
-function Population = initialize_variables_adaptive(GenomeLength, uuv_normal_test, options)
+function Population = initialize_variables_NN(GenomeLength, uuv_normal_test, options)
 Population = [];
 totalpopulation = sum(options.PopulationSize);
 global num_incidents
 global uuv
 global hour
-global coeff
-global mu
-global idx
 global iter
 global datafolder
 if hour == 1
@@ -65,10 +62,13 @@ if hour == 1
     end
 elseif hour > 1
     model_num = hour-1;
-    name = 'ga-multiobj-adaptive-iter-' + string(iter) + '-'+ string(model_num) + '.mat';
-    pre_result_name = strcat(datafolder,'/',name);
-    pre_result = load(pre_result_name);
-    Population = pre_result.population;
+    Population = [];
+    for model_index = 1:model_num
+        name = 'ga-multiobj-adaptive-iter-' + string(iter) + '-'+ string(model_index) + '.mat';
+        pre_result_name = strcat(datafolder,'/',name);
+        pre_result = load(pre_result_name);
+        Population = [Population;pre_result.population];
+    end
     [m,n] = size(Population);
     for i = 1:m
         for j = 1:num_incidents
@@ -77,26 +77,28 @@ elseif hour > 1
             Population(i,(j-1)*4+3) = round(Population(i,(j-1)*4+3));
             Population(i,(j-1)*4+4) = Population(i,(j-1)*4+4);
         end
-        Y(i)=pre_result.scores(i,1)*2^0+pre_result.scores(i,2)*2^1+pre_result.scores(i,3)*2^2;    
+%         Y(i)=pre_result.scores(i,1)*2^0+pre_result.scores(i,2)*2^1+pre_result.scores(i,3)*2^2;    
+        Y(i,1)=pre_result.scores(i,1);
+        Y(i,2)=pre_result.scores(i,2);
+        Y(i,3)=pre_result.scores(i,3);
     end
     X = Population;
-    XTest = X(1:floor(0.3*m),:);
-    XTrain = X(floor(0.3*m)+1:end,:);
-    YTest = Y(1:floor(0.3*m));
-    YTrain = Y(floor(0.3*m)+1:end);
-    [coeff,scoreTrain,~,~,explained,mu] = pca(XTrain);
-    sum_explained = 0;
-    idx = 0;
-    while sum_explained < 95
-        idx = idx + 1;
-        sum_explained = sum_explained + explained(idx);
-    end
-    scoreTrain95 = scoreTrain(:,1:idx);
-    mdl = fitctree(scoreTrain95,YTrain);
-    model_name = 'myMdl-iter'+ string(iter) + '-'+ string(model_num);
-%     model_name = 'myMdl-'+ string(model_num);
+    
+    X=X';
+    Y=Y';
+    hiddenLayerSize = 10;
+    net = fitnet(hiddenLayerSize);
+    net.divideParam.trainRatio = 70/100;
+    net.divideParam.valRatio = 15/100;
+    net.divideParam.testRatio = 15/100;
+    net.trainParam.epochs = 300;
+    net.trainParam.goal = 1e-6;
+    [net,tr] = train(net,X,Y); 
+    
+    model_name = 'NN_fit_net'+ string(iter) + '-'+ string(model_num);
     model_name = strcat(datafolder,'/',model_name);
-    saveLearnerForCoder(mdl,model_name);
+    save (model_name,'net')
+    fprintf('UUV_test_adaptive:generating the requirements violaiton predictior %d \n', model_num);
     %% initial population generation
     lb=[];
     ub=[];
@@ -119,8 +121,8 @@ elseif hour > 1
     end
     options_new.PopulationSize = totalpopulation;
     options_new.InitialPopulationMatrix = Population;
-    [x_new,fval_new,exitflag_new,output_new,population_new,scores_new] = ga(@PCAPredict_UUV,4*num_incidents,[],[],[],[],lb,ub,@myconuuv_normal_test,options_new);
-    
+    [x_new,fval_new,exitflag_new,output_new,population_new,scores_new] = gamultiobj(@NNPredict_UUV,4*num_incidents,[],[],[],[],lb,ub,@myconuuv_normal_test,options_new);
+%     [x,fval,exitflag,output,population,scores] = gamultiobj(@uuv_normal_test,4*num_incidents,[],[],[],[],lb,ub,@myconuuv_normal_test,options);
     [m,n] = size(population_new);
     for i = 1:m
         for j = 1:num_incidents
@@ -132,6 +134,7 @@ elseif hour > 1
     end
    population_name = strcat(datafolder,'/','Initial-Population-iter-'+string(iter)+'-'+string(hour));
    save(population_name,'Population');
+   fprintf('UUV_test_adaptive:generating the the initial population %d \n', iter);
 end
 end
 

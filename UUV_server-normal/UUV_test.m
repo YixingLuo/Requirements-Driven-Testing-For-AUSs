@@ -71,7 +71,7 @@ options.MaxGenerations = inf;
 options.CreationFcn = @gacreationnonlinearfeasible;
 % rng default
 % x = ga(fun,nvars,A,b,Aeq,beq,lb,ub,nonlcon,IntCon,options)
-options.MaxTime = hour;
+options.MaxTime = hour * 3600;
 
 % Population = initialize_variables(3, @uuv_normal_test, options);
 
@@ -87,7 +87,7 @@ save(path);
 figurename =  'ga-multiobj-figure-iternum-' + string(hour);
 figpath = strcat(datafolder,'/',figurename);
 savefig(figpath);
-fprintf('UUV_test: iteration number %d, Time is %s \n', total_generation, string(time));
+fprintf('UUV_test: iteration number %d, Time is %s \n', hour, string(time));
 
 
 % hour = hour + 1;
