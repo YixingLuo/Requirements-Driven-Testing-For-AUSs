@@ -41,7 +41,7 @@ while sum_explained < 95
 end
 idx
 scoreTrain95 = scoreTrain(:,1:idx);
-mdl = fitctree(scoreTrain95,YTrain);
+% mdl = fitctree(scoreTrain95,YTrain);
 % view(mdl.Trained{1},'Mode','graph')
 scoreTest95 = (XTest-mu)*coeff(:,1:idx);
 

@@ -2,7 +2,7 @@ clc
 clear
 global hour
 hour  = 10;
-total_generation = 2000;
+total_generation = 200;
 global num_incidents
 num_incidents = 5; 
 global datafolder
@@ -76,9 +76,11 @@ options.MaxTime = inf;
 
 time = datestr(now,30);
 name =  string(time) + '-ga-multiobj-iternum-'+ string(total_generation)+ '.mat';
-save(strcat(datafolder,'/',name));
+path = strcat(datafolder,'/',name);
+save(path);
 figurename =  string(time) + '-ga-multiobj-figure-iternum-' + string(total_generation);
-savefig(strcat(datafolder,'/',figurename));
+figpath = strcat(datafolder,'/',figurename);
+savefig(figpath);
 fprintf('UUV_test: iteration number %d, Time is %s \n', total_generation, string(time));
 
 
