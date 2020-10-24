@@ -7,7 +7,7 @@ num_incidents = 5;
 global iter
 population_size = 500;
 total_generation = 300;
-iter = 3;
+iter = 10;
 global datafolder
 % da = date;
 da = fix(datevec(now));
@@ -47,7 +47,7 @@ for hour = 1:iter
     options.FunctionTolerance = 0;
     options.ConstraintTolerance = 0;
     options.PopulationSize = population_size;
-    options.Display = 'iter';
+%     options.Display = 'iter';
 %     options.MaxGenerations = floor(total_generation/iter);
     options.MaxGenerations = inf;
     

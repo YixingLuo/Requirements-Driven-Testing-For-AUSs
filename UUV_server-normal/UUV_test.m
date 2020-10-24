@@ -11,7 +11,7 @@ datafolder = strcat('Datalog-',string(da(1)),'-',string(da(2)),'-',string(da(3))
 mkdir(datafolder);
 addpath(datafolder);
 
-for hour = 1:1:10
+for hour = 7:1:10
 
 % total_generation = 2000;
 % while hour <= 2

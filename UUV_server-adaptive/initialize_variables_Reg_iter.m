@@ -1,4 +1,4 @@
-function Population = initialize_variables_NN_iter(GenomeLength, uuv_normal_test, options)
+function Population = initialize_variables_Reg_iter(GenomeLength, uuv_normal_test, options)
 % function Population = initialize_variables_NN
 Population = [];
 totalpopulation = sum(options.PopulationSize);
@@ -65,6 +65,8 @@ elseif hour > 1
     model_num = hour-1;
     Population = [];
     Scores = [];
+    X=[];
+    Y=[];
     %% type1
     for model_index = 1:model_num
         name = 'ga-multiobj-adaptive-iter-' + string(iter) + '-'+ string(model_index) + '.mat';
@@ -93,20 +95,27 @@ elseif hour > 1
 %     X = xbest;
 %     Y = ybest;
     
-    X=X';
-    Y=Y';
-    hiddenLayerSize = 20;
-    net = fitnet(hiddenLayerSize,'trainbr');
-    net.divideParam.trainRatio = 70/100;
-    net.divideParam.valRatio = 15/100;
-    net.divideParam.testRatio = 15/100;
-    net.trainParam.epochs = 500;
-    net.trainParam.goal = 1e-6;
-    [net,tr] = train(net,X,Y); 
+%     Mdl1 = fitrtree(X,Y1,'OptimizeHyperparameters','auto',...
+%     'HyperparameterOptimizationOptions',struct('AcquisitionFunctionName',...
+%     'expected-improvement-plus'));
+% 
+%     Mdl2 = fitrtree(X,Y2,'OptimizeHyperparameters','auto',...
+%     'HyperparameterOptimizationOptions',struct('AcquisitionFunctionName',...
+%     'expected-improvement-plus'));
+% 
+%     Mdl3 = fitrtree(X,Y3,'OptimizeHyperparameters','auto',...
+%     'HyperparameterOptimizationOptions',struct('AcquisitionFunctionName',...
+%     'expected-improvement-plus'));
     
-    model_name = 'NN_fit_net'+ string(iter) + '-'+ string(model_num);
-    model_name = strcat(datafolder,'/',model_name);
-    save (model_name,'net')
+    for i = 1:3
+        Mdl = fitrtree(X,Y(:,i),'OptimizeHyperparameters','auto',...
+        'HyperparameterOptimizationOptions',struct('AcquisitionFunctionName',...
+        'expected-improvement-plus'));
+        model_name = 'Reg_model-'+ string(iter) + '-'+ string(model_num)+ '-'+ string(i);
+        model_name = strcat(datafolder,'/',model_name);
+        save (model_name,'Mdl')
+    end
+
     fprintf('UUV_test_adaptive:generating the requirements violaiton predictior %d \n', model_num);
     %% initial population generation
     lb=[];
@@ -136,7 +145,7 @@ elseif hour > 1
     options_new.ConstraintTolerance = 0;
     options_new.MaxGenerations = 100;
 %     options_new.Display = 'iter';
-    [x_new,fval_new,exitflag_new,output_new,population_new,scores_new] = gamultiobj(@NNPredict_UUV,4*num_incidents,[],[],[],[],lb,ub,@myconuuv_normal_test,options_new);
+    [x_new,fval_new,exitflag_new,output_new,population_new,scores_new] = gamultiobj(@RegPredict_UUV,4*num_incidents,[],[],[],[],lb,ub,@myconuuv_normal_test,options_new);
 %     [x,fval,exitflag,output,population,scores] = gamultiobj(@uuv_normal_test,4*num_incidents,[],[],[],[],lb,ub,@myconuuv_normal_test,options);
     [m,n] = size(population_new);
     for i = 1:m
