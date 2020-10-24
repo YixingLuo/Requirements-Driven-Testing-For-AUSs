@@ -1,4 +1,4 @@
-function Population = initialize_variables_NN(GenomeLength, uuv_normal_test, options)
+function Population = initialize_variables_NN_iter(GenomeLength, uuv_normal_test, options)
 % function Population = initialize_variables_NN
 Population = [];
 totalpopulation = sum(options.PopulationSize);
@@ -7,6 +7,9 @@ global uuv
 global hour
 global iter
 global datafolder
+global xbest
+global ybest
+
 
 if hour == 1
     for pop = 1:1:totalpopulation
@@ -47,10 +50,6 @@ if hour == 1
         end
         x_test_initial = [];
         for i = 1: length(disturb)
-    %         x0(i,1) = index (i);
-    %         x0(i,2) = condition(i,1);
-    %         x0(i,3) = condition(i,2);
-    %         x0(i,4) = condition(i,3);
             x_test_initial((i-1)*4+1) = index (i);
             x_test_initial((i-1)*4+2) = condition(i,1);
             x_test_initial((i-1)*4+3) = condition(i,2);
@@ -66,27 +65,31 @@ elseif hour > 1
     model_num = hour-1;
     Population = [];
     Scores = [];
-    for model_index = 1:model_num
-        name = 'ga-multiobj-adaptive-iter-' + string(iter) + '-'+ string(model_index) + '.mat';
-        pre_result_name = strcat(datafolder,'/',name);
-        pre_result = load(pre_result_name);
-        Population = [Population;pre_result.population];
-        Scores = [Scores; pre_result.scores];
-    end
-    [m,n] = size(Population);
-    for i = 1:m
-        for j = 1:num_incidents
-            Population(i,(j-1)*4+1) = round(Population(i,(j-1)*4+1));
-            Population(i,(j-1)*4+2) = round(Population(i,(j-1)*4+2));
-            Population(i,(j-1)*4+3) = round(Population(i,(j-1)*4+3));
-            Population(i,(j-1)*4+4) = Population(i,(j-1)*4+4);
-        end
-%         Y(i)=pre_result.scores(i,1)*2^0+pre_result.scores(i,2)*2^1+pre_result.scores(i,3)*2^2;    
-        Y(i,1)=Scores(i,1);
-        Y(i,2)=Scores(i,2);
-        Y(i,3)=Scores(i,3);
-    end
-    X = Population;
+%     for model_index = 1:model_num
+%         name = 'ga-multiobj-adaptive-iter-' + string(iter) + '-'+ string(model_index) + '.mat';
+%         pre_result_name = strcat(datafolder,'/',name);
+%         pre_result = load(pre_result_name);
+%         Population = [Population;pre_result.population];
+%         Scores = [Scores; pre_result.scores];
+%     end
+%     [m,n] = size(Population);
+%     for i = 1:m
+%         for j = 1:num_incidents
+%             Population(i,(j-1)*4+1) = round(Population(i,(j-1)*4+1));
+%             Population(i,(j-1)*4+2) = round(Population(i,(j-1)*4+2));
+%             Population(i,(j-1)*4+3) = round(Population(i,(j-1)*4+3));
+%             Population(i,(j-1)*4+4) = Population(i,(j-1)*4+4);
+%         end
+% %         Y(i)=pre_result.scores(i,1)*2^0+pre_result.scores(i,2)*2^1+pre_result.scores(i,3)*2^2;    
+%         Y(i,1)=Scores(i,1);
+%         Y(i,2)=Scores(i,2);
+%         Y(i,3)=Scores(i,3);
+%     end
+    
+%     X = Population;
+    
+    X = xbest;
+    Y = ybest;
     
     X=X';
     Y=Y';
@@ -144,4 +147,3 @@ elseif hour > 1
    fprintf('UUV_test_adaptive:generating the the initial population %d \n', hour);
 end
 end
-

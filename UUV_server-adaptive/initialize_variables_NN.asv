@@ -1,15 +1,15 @@
-function Population = initialize_variables_NN(GenomeLength, uuv_normal_test, options)
-% function Population = initialize_variables_NN
+% function Population = initialize_variables_NN(GenomeLength, uuv_normal_test, options)
+function Population = initialize_variables_NN
 Population = [];
-totalpopulation = sum(options.PopulationSize);
+% totalpopulation = sum(options.PopulationSize);
 global num_incidents
 global uuv
 global hour
 global iter
 global datafolder
-
+global population_size
 if hour == 1
-    for pop = 1:1:totalpopulation
+    for pop = 1:1:population_size
     uuv = UnmannedUnderwaterVehicle();
     l = 1:1:15;
     disturb = randi([1,4],1,l(num_incidents));
@@ -82,9 +82,9 @@ elseif hour > 1
             Population(i,(j-1)*4+4) = Population(i,(j-1)*4+4);
         end
 %         Y(i)=pre_result.scores(i,1)*2^0+pre_result.scores(i,2)*2^1+pre_result.scores(i,3)*2^2;    
-        Y(i,1)=Scores(i,1);
-        Y(i,2)=Scores(i,2);
-        Y(i,3)=Scores(i,3);
+        Y(i,1)=pre_result.scores(i,1);
+        Y(i,2)=pre_result.scores(i,2);
+        Y(i,3)=pre_result.scores(i,3);
     end
     X = Population;
     
@@ -125,9 +125,6 @@ elseif hour > 1
     end
     options_new.PopulationSize = totalpopulation;
     options_new.InitialPopulationMatrix = Population;
-    options_new.FunctionTolerance = 0;
-    options_new.ConstraintTolerance = 0;
-    options_new.Display = 'iter';
     [x_new,fval_new,exitflag_new,output_new,population_new,scores_new] = gamultiobj(@NNPredict_UUV,4*num_incidents,[],[],[],[],lb,ub,@myconuuv_normal_test,options_new);
 %     [x,fval,exitflag,output,population,scores] = gamultiobj(@uuv_normal_test,4*num_incidents,[],[],[],[],lb,ub,@myconuuv_normal_test,options);
     [m,n] = size(population_new);
@@ -141,7 +138,7 @@ elseif hour > 1
     end
    population_name = strcat(datafolder,'/','Initial-Population-iter-'+string(iter)+'-'+string(hour));
    save(population_name,'Population');
-   fprintf('UUV_test_adaptive:generating the the initial population %d \n', hour);
+   fprintf('UUV_test_adaptive:generating the the initial population %d \n', iter);
 end
 end
 

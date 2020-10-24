@@ -12,9 +12,17 @@ global datafolder
 % da = date;
 da = fix(datevec(now));
 % datafolder = strcat('Datalog-',string(da(1)),'-',string(da(2)),'-',string(da(3)),'-',string(da(4)),'-',string(da(5)), '-Adapt');
-datafolder = strcat('Datalog-',string(da(1)),'-',string(da(2)),'-',string(da(3)),'-',string(da(4)),'-',string(da(5)), '-NN');
+datafolder = strcat('Datalog-',string(da(1)),'-',string(da(2)),'-',string(da(3)),'-',string(da(4)),'-',string(da(5)), '-NN-iter');
 mkdir(datafolder);
 addpath(datafolder);
+global xbest
+global ybest
+global ReqTarget
+global ReqSatFlag
+xbest = [];
+ybest = [];
+ReqTarget = [0.9,1,1];
+ReqSatFlag = [0,0,0];
 for hour = 1:iter
  
     lb=[];
@@ -47,7 +55,7 @@ for hour = 1:iter
     options.FunctionTolerance = 0;
     options.ConstraintTolerance = 0;
     options.PopulationSize = population_size;
-    options.Display = 'iter';
+%     options.Display = 'iter';
 %     options.MaxGenerations = floor(total_generation/iter);
     options.MaxGenerations = inf;
     
@@ -55,14 +63,15 @@ for hour = 1:iter
     %     'UseParallel',true,'NumStartPts',20});
     if hour > 1
 %         options = optimoptions(options,'CreationFcn',@initialize_variables_adaptive);
-        options = optimoptions(options,'CreationFcn',@initialize_variables_NN);
+%         options = optimoptions(options,'CreationFcn',@initialize_variables_NN);
+        options = optimoptions(options,'CreationFcn',@initialize_variables_NN_iter);
     else
         options.CreationFcn = @gacreationnonlinearfeasible;
-    end
-    % rng default
-    % x = ga(fun,nvars,A,b,Aeq,beq,lb,ub,nonlcon,IntCon,options)
+    end   
+    options.OutputFcn = @gaoutputfcn;
 %     options.MaxTime = inf;
     options.MaxTime = 3600; %% 1 hour
+%     options.PlotFcn = @gaplotbestf;
 
     % Population = initialize_variables(3, @uuv_normal_test, options);
 

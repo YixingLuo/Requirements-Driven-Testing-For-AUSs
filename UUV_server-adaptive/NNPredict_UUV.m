@@ -17,6 +17,7 @@ model_num = hour - 1;
 model_name = 'NN_fit_net'+ string(iter) + '-'+ string(model_num);
 model_path = strcat(datafolder, '/', model_name);
 mdl = load(model_path);
+% size(XTest)
 Y_preditct = mdl.net(XTest);
 % Y_preditct = float(Y_preditct);
 f = Y_preditct;
