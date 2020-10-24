@@ -49,5 +49,6 @@ for i = 1:uuv.N_s
         sum = sum + x(i);
     end
 end
-ceq = [ceq, sum-1];
+% ceq = [ceq, sum-1];
+c = [c, sum-1];
 

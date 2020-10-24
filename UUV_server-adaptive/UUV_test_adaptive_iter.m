@@ -7,7 +7,7 @@ num_incidents = 5;
 global iter
 population_size = 500;
 total_generation = 300;
-iter = 10;
+iter = 3;
 global datafolder
 % da = date;
 da = fix(datevec(now));
@@ -70,7 +70,7 @@ for hour = 1:iter
     end   
     options.OutputFcn = @gaoutputfcn;
 %     options.MaxTime = inf;
-    options.MaxTime = 3600; %% 1 hour
+    options.MaxTime = 360; %% 1 hour
 %     options.PlotFcn = @gaplotbestf;
 
     % Population = initialize_variables(3, @uuv_normal_test, options);

@@ -8,7 +8,11 @@ for i = 1:m
     x_test(i,1) = round(x_test_initial((i-1)*4+1));
     x_test(i,2) = round(x_test_initial((i-1)*4+2));
     x_test(i,3) = round(x_test_initial((i-1)*4+3));
-    x_test(i,4) = x_test_initial((i-1)*4+4);
+    if x_test(i,2) == 4
+        x_test(i,4) = -1;
+    else
+        x_test(i,4) = x_test_initial((i-1)*4+4);
+    end
 end
 x_test;
 global uuv
@@ -99,8 +103,6 @@ while(1)
         end
     end
     
-    
-    
     if current_step == 1
         need_replan = 1;
     end
@@ -179,7 +181,7 @@ while(1)
         engy = 0;
         for i = 1:uuv.N_s
            if uuv.s_work(i) == 1
-            engy = engy + x(i)*uuv.s_energy(i);     
+                engy = engy + x(i)*uuv.s_energy(i);     
            end
         end
         pastenergy = pastenergy + engy * uuv.time_step;

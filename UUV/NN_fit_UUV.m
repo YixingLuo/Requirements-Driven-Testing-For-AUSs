@@ -3,8 +3,8 @@ clear;
 X=[];
 Y=[];
 % data_name = 'ga-multiobj-1-20201016T100507.mat';
-% data_name = 'ga-multiobj-10-20201018T143659.mat';
-data_name = 'ga-multiobj-5-20201016T223448.mat';
+data_name = 'ga-multiobj-10-20201018T143659.mat';
+% data_name = 'ga-multiobj-5-20201016T223448.mat';
 data = load(data_name);
 [m,n] = size(data.population);
 for i = 1:1:m
@@ -37,21 +37,16 @@ Reg1 = [X;Y(1,:)];
 Reg2 = [X;Y(2,:)];
 Reg3 = [X;Y(3,:)];
 
-hiddenLayerSize = 10;
-net = fitnet(hiddenLayerSize);
-
+hiddenLayerSize = 20;
+% 'trainlm'
+net = fitnet(hiddenLayerSize,'trainbr');
 net.divideParam.trainRatio = 70/100;
 net.divideParam.valRatio = 15/100;
 net.divideParam.testRatio = 15/100;
+net.trainParam.epochs = 500;
+net.trainParam.goal = 1e-6;
 
-% [net,tr] = train(net,X,Y);
-
-% net = feedforwardnet(10,'trainbr');
-% net.divideFcn = '';
-net.trainParam.epochs = 300;
-net.trainParam.goal = 1e-5;
-% net.performParam.regularization = 0.5;
- [net,tr] = train(net,X,Y);
+[net,tr] = train(net,X,Y);
 
 
 outputs = net(X);

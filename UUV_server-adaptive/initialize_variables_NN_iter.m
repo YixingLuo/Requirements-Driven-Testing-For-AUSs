@@ -65,40 +65,42 @@ elseif hour > 1
     model_num = hour-1;
     Population = [];
     Scores = [];
-%     for model_index = 1:model_num
-%         name = 'ga-multiobj-adaptive-iter-' + string(iter) + '-'+ string(model_index) + '.mat';
-%         pre_result_name = strcat(datafolder,'/',name);
-%         pre_result = load(pre_result_name);
-%         Population = [Population;pre_result.population];
-%         Scores = [Scores; pre_result.scores];
-%     end
-%     [m,n] = size(Population);
-%     for i = 1:m
-%         for j = 1:num_incidents
-%             Population(i,(j-1)*4+1) = round(Population(i,(j-1)*4+1));
-%             Population(i,(j-1)*4+2) = round(Population(i,(j-1)*4+2));
-%             Population(i,(j-1)*4+3) = round(Population(i,(j-1)*4+3));
-%             Population(i,(j-1)*4+4) = Population(i,(j-1)*4+4);
-%         end
-% %         Y(i)=pre_result.scores(i,1)*2^0+pre_result.scores(i,2)*2^1+pre_result.scores(i,3)*2^2;    
-%         Y(i,1)=Scores(i,1);
-%         Y(i,2)=Scores(i,2);
-%         Y(i,3)=Scores(i,3);
-%     end
+    %% type1
+    for model_index = 1:model_num
+        name = 'ga-multiobj-adaptive-iter-' + string(iter) + '-'+ string(model_index) + '.mat';
+        pre_result_name = strcat(datafolder,'/',name);
+        pre_result = load(pre_result_name);
+        Population = [Population;pre_result.population];
+        Scores = [Scores; pre_result.scores];
+    end
+    [m,n] = size(Population);
+    for i = 1:m
+        for j = 1:num_incidents
+            Population(i,(j-1)*4+1) = round(Population(i,(j-1)*4+1));
+            Population(i,(j-1)*4+2) = round(Population(i,(j-1)*4+2));
+            Population(i,(j-1)*4+3) = round(Population(i,(j-1)*4+3));
+            Population(i,(j-1)*4+4) = Population(i,(j-1)*4+4);
+        end
+%         Y(i)=pre_result.scores(i,1)*2^0+pre_result.scores(i,2)*2^1+pre_result.scores(i,3)*2^2;    
+        Y(i,1)=Scores(i,1);
+        Y(i,2)=Scores(i,2);
+        Y(i,3)=Scores(i,3);
+    end
     
-%     X = Population;
+    X = Population;
     
-    X = xbest;
-    Y = ybest;
+    %% type 2
+%     X = xbest;
+%     Y = ybest;
     
     X=X';
     Y=Y';
-    hiddenLayerSize = 10;
-    net = fitnet(hiddenLayerSize);
+    hiddenLayerSize = 20;
+    net = fitnet(hiddenLayerSize,'trainbr');
     net.divideParam.trainRatio = 70/100;
     net.divideParam.valRatio = 15/100;
     net.divideParam.testRatio = 15/100;
-    net.trainParam.epochs = 300;
+    net.trainParam.epochs = 500;
     net.trainParam.goal = 1e-6;
     [net,tr] = train(net,X,Y); 
     
@@ -130,7 +132,7 @@ elseif hour > 1
     options_new.InitialPopulationMatrix = Population;
     options_new.FunctionTolerance = 0;
     options_new.ConstraintTolerance = 0;
-    options_new.Display = 'iter';
+%     options_new.Display = 'iter';
     [x_new,fval_new,exitflag_new,output_new,population_new,scores_new] = gamultiobj(@NNPredict_UUV,4*num_incidents,[],[],[],[],lb,ub,@myconuuv_normal_test,options_new);
 %     [x,fval,exitflag,output,population,scores] = gamultiobj(@uuv_normal_test,4*num_incidents,[],[],[],[],lb,ub,@myconuuv_normal_test,options);
     [m,n] = size(population_new);

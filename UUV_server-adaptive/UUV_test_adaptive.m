@@ -7,7 +7,7 @@ num_incidents = 5;
 global iter
 population_size = 500;
 total_generation = 300;
-iter = 10;
+iter = 3;
 global datafolder
 % da = date;
 da = fix(datevec(now));
@@ -27,12 +27,12 @@ for hour = 1:iter
                 ub((i-1)*4+j) = 256+i+0.49;
             elseif j == 2 %% conditon_no
                 lb((i-1)*4+j) = 1-0.5;
-                ub((i-1)*4+j) = 4+0.49;
+                ub((i-1)*4+j) = 3+0.49;
             elseif j == 3 %% sensor_no
                 lb((i-1)*4+j) = 1-0.5;
                 ub((i-1)*4+j) = 5+0.49;
             else
-                lb((i-1)*4+j) = -1;
+                lb((i-1)*4+j) = 0;
                 ub((i-1)*4+j) = 2;
             end
         end

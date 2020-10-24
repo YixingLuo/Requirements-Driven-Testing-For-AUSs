@@ -50,4 +50,5 @@ for i = 1:uuv.N_s
     end
 end
 ceq = [ceq, sum-1];
+% c = [c, sum-1];
 
