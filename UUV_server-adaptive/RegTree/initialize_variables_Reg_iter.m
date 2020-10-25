@@ -68,13 +68,38 @@ elseif hour > 1
     X=[];
     Y=[];
     %% type1
-    for model_index = 1:model_num
-        name = 'ga-multiobj-adaptive-iter-' + string(iter) + '-'+ string(model_index) + '.mat';
-        pre_result_name = strcat(datafolder,'/',name);
-        pre_result = load(pre_result_name);
-        Population = [Population;pre_result.population];
-        Scores = [Scores; pre_result.scores];
-    end
+%     for model_index = 1:model_num
+%         name = 'ga-multiobj-adaptive-iter-' + string(iter) + '-'+ string(model_index) + '.mat';
+%         pre_result_name = strcat(datafolder,'/',name);
+%         pre_result = load(pre_result_name);
+%         Population = [Population;pre_result.population];
+%         Scores = [Scores; pre_result.scores];
+%     end
+%     [m,n] = size(Population);
+%     for i = 1:m
+%         for j = 1:num_incidents
+%             Population(i,(j-1)*4+1) = round(Population(i,(j-1)*4+1));
+%             Population(i,(j-1)*4+2) = round(Population(i,(j-1)*4+2));
+%             Population(i,(j-1)*4+3) = round(Population(i,(j-1)*4+3));
+%             Population(i,(j-1)*4+4) = Population(i,(j-1)*4+4);
+%         end   
+%         Y(i,1)=Scores(i,1);
+%         Y(i,2)=Scores(i,2);
+%         Y(i,3)=Scores(i,3);
+%     end
+%     
+%     X = Population;
+    
+    %% type 2
+    X = xbest;
+    Y = ybest;
+    
+    name = 'ga-multiobj-adaptive-iter-' + string(iter) + '-'+ string(model_num) + '.mat';
+    pre_result_name = strcat(datafolder,'/',name);
+    pre_result = load(pre_result_name);
+    Population = pre_result.population;
+    Scores =  pre_result.scores;
+    
     [m,n] = size(Population);
     for i = 1:m
         for j = 1:num_incidents
@@ -82,30 +107,12 @@ elseif hour > 1
             Population(i,(j-1)*4+2) = round(Population(i,(j-1)*4+2));
             Population(i,(j-1)*4+3) = round(Population(i,(j-1)*4+3));
             Population(i,(j-1)*4+4) = Population(i,(j-1)*4+4);
-        end
-%         Y(i)=pre_result.scores(i,1)*2^0+pre_result.scores(i,2)*2^1+pre_result.scores(i,3)*2^2;    
+        end   
         Y(i,1)=Scores(i,1);
         Y(i,2)=Scores(i,2);
         Y(i,3)=Scores(i,3);
     end
     
-    X = Population;
-    
-    %% type 2
-%     X = xbest;
-%     Y = ybest;
-    
-%     Mdl1 = fitrtree(X,Y1,'OptimizeHyperparameters','auto',...
-%     'HyperparameterOptimizationOptions',struct('AcquisitionFunctionName',...
-%     'expected-improvement-plus'));
-% 
-%     Mdl2 = fitrtree(X,Y2,'OptimizeHyperparameters','auto',...
-%     'HyperparameterOptimizationOptions',struct('AcquisitionFunctionName',...
-%     'expected-improvement-plus'));
-% 
-%     Mdl3 = fitrtree(X,Y3,'OptimizeHyperparameters','auto',...
-%     'HyperparameterOptimizationOptions',struct('AcquisitionFunctionName',...
-%     'expected-improvement-plus'));
     
     for i = 1:3
         Mdl = fitrtree(X,Y(:,i),'OptimizeHyperparameters','auto',...
@@ -140,7 +147,7 @@ elseif hour > 1
     option_temp = load('options.mat');
     options_new = option_temp.options;
     options_new.PopulationSize = totalpopulation;
-    options_new.InitialPopulationMatrix = Population;
+    options_new.InitialPopulationMatrix = xbest;
     options_new.FunctionTolerance = 0;
     options_new.ConstraintTolerance = 0;
     options_new.MaxGenerations = 100;

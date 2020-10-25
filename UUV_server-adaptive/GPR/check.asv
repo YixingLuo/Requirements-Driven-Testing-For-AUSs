@@ -10,17 +10,17 @@
 
 data_predict = [];
 data_raw = [];
-datefolder = 'Datalog-2020-10-24-19-28-Reg-iter\';
+datefolder = 'Datalog-2020-10-25-0-10-Reg-iter\';
 for i = 1:9
     sco_predict = [];
     sco_raw = [];
-    model_name = strcat (datefolder , 'Reg_model-10-',string(i),'-1');
+    model_name = strcat (datefolder , 'Reg_model-10-',string(i)+'-1');
     mdl1 = load (model_name);
-    model_name = strcat(datefolder, 'Reg_model-10-',string(i),'-2');
+    model_name = datefolder + 'Reg_model-10-'+string(i)+'-2';
     mdl2 = load (model_name);
-    model_name = strcat(datefolder , 'Reg_model-10-',string(i),'-3');
+    model_name = datefolder + 'Reg_model-10-'+string(i)+'-3';
     mdl3 = load (model_name);
-    pop_name = strcat(datefolder, 'Initial-Population-iter-10-',string(i+1));
+    pop_name = datefolder + 'Initial-Population-iter-10-'+string(i+1);
     Pop = load(pop_name);
     for j = 1:500     
         sco_raw(j,:) = uuv_normal_test(Pop.Population(j,:));

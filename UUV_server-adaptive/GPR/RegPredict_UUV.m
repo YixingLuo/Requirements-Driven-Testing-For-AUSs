@@ -17,7 +17,6 @@ model_num = hour - 1;
 for i = 1:3
     model_name = 'Reg_model-'+ string(iter) + '-'+ string(model_num)+ '-'+ string(i);
     model_path = strcat(datafolder, '/', model_name);
-%     model_path = 'Reg_model-'+ string(i);
     mdl = load(model_path);
     f(i) = predict(mdl.Mdl,XTest);
 end

@@ -13,7 +13,7 @@ global datafolder
 da = fix(datevec(now));
 % datafolder = strcat('Datalog-',string(da(1)),'-',string(da(2)),'-',string(da(3)),'-',string(da(4)),'-',string(da(5)), '-Adapt');
 % datafolder = strcat('Datalog-',string(da(1)),'-',string(da(2)),'-',string(da(3)),'-',string(da(4)),'-',string(da(5)), '-NN-iter');
-datafolder = strcat('Datalog-',string(da(1)),'-',string(da(2)),'-',string(da(3)),'-',string(da(4)),'-',string(da(5)), '-Reg-iter-type2');
+datafolder = strcat('Datalog-',string(da(1)),'-',string(da(2)),'-',string(da(3)),'-',string(da(4)),'-',string(da(5)), '-Reg-iter');
 mkdir(datafolder);
 addpath(datafolder);
 global xbest

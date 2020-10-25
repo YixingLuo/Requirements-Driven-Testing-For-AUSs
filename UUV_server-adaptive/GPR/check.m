@@ -1,30 +1,55 @@
-sco = [];
-for i = 1:10
-    pop_name = 'Datalog-2020-10-24-19-28-Reg-iter\ga-multiobj-adaptive-iter-10'+string(i);
-    Population = load(pop_name);
-    for j = 1:500
-        sco(j,:) = uuv_normal_test(Population.population(j,:));
+% sco = [];
+% for i = 1:10
+%     pop_name = 'Datalog-2020-10-25-0-10-Reg-iter\ga-multiobj-adaptive-iter-10-'+string(i);
+%     Population = load(pop_name);
+%     for j = 1:500
+%         sco(j,:) = uuv_normal_test(Population.population(j,:));
+%     end
+%     data(i,:) = mean(sco);
+% end
+
+data_predict = [];
+data_raw = [];
+datefolder = 'Datalog-2020-10-24-19-28-Reg-iter\';
+for i = 1:9
+    sco_predict = [];
+    sco_raw = [];
+    model_name = strcat (datefolder , 'Reg_model-10-',string(i),'-1');
+    mdl1 = load (model_name);
+    model_name = strcat(datefolder, 'Reg_model-10-',string(i),'-2');
+    mdl2 = load (model_name);
+    model_name = strcat(datefolder , 'Reg_model-10-',string(i),'-3');
+    mdl3 = load (model_name);
+    pop_name = strcat(datefolder, 'Initial-Population-iter-10-',string(i+1));
+    Pop = load(pop_name);
+    for j = 1:500     
+        sco_raw(j,:) = uuv_normal_test(Pop.Population(j,:));
+        sco_predict(j,1) = predict(mdl1.Mdl,Pop.Population(j,:));
+        sco_predict(j,2) = predict(mdl2.Mdl,Pop.Population(j,:));
+        sco_predict(j,3) = predict(mdl3.Mdl,Pop.Population(j,:));
     end
-    data(i,:) = mean(sco);
+%    perf(i) = perform(mdl.net,sco_raw, sco_predict);
+   data_predict(i,:) = mean(sco_predict);
+   data_raw(i,:) = mean(sco_raw);
+   for j = 1:3
+       train_err = sco_predict(:,j) - sco_raw(:,j);
+       n1 = length(sco_raw(:,j));
+       train_RMSE(i,j) = sqrt(sum((train_err).^2)/n1);
+   end
+   for j = 1:3
+       if j == 1
+            partitionedModel = crossval(mdl1.Mdl, 'KFold', 5);
+       elseif j == 2
+           partitionedModel = crossval(mdl2.Mdl, 'KFold', 5);
+       else
+           partitionedModel = crossval(mdl3.Mdl, 'KFold', 5);
+       end
+       validationPredictions = kfoldPredict(partitionedModel);
+       validationRMSE(i,j) = sqrt(kfoldLoss(partitionedModel, 'LossFun', 'mse'));
+   end
 end
 
-% data_predict = [];
-% data_raw = [];
-% for i = 1:9
-%     sco_predict = [];
-%     sco_raw = [];
-%     model_name = 'Datalog-2020-10-24-19-28-Reg-iter\NN_fit_net10-'+string(i);
-%     mdl = load (model_name);
-%     pop_name = 'Datalog-2020-10-24-19-28-Reg-iter\Initial-Population-iter-10-'+string(i+1);
-%     Pop = load(pop_name);
-%     for j = 1:500     
-%         sco_raw(j,:) = uuv_normal_test(Pop.Population(j,:));
-%         sco_predict(j,:) = mdl.net(Pop.Population(j,:)'); 
-%     end
-%    perf(i) = perform(mdl.net,sco_raw, sco_predict);
-%    data_predict(i,:) = mean(sco_predict);
-%    data_raw(i,:) = mean(sco_raw);
-% end
+
 
 % sco = [];
 % for i = 1:500

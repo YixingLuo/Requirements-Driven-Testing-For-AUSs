@@ -12,18 +12,9 @@ global datafolder
 % da = date;
 da = fix(datevec(now));
 % datafolder = strcat('Datalog-',string(da(1)),'-',string(da(2)),'-',string(da(3)),'-',string(da(4)),'-',string(da(5)), '-Adapt');
-% datafolder = strcat('Datalog-',string(da(1)),'-',string(da(2)),'-',string(da(3)),'-',string(da(4)),'-',string(da(5)), '-NN-iter');
-datafolder = strcat('Datalog-',string(da(1)),'-',string(da(2)),'-',string(da(3)),'-',string(da(4)),'-',string(da(5)), '-Reg-iter-type2');
+datafolder = strcat('Datalog-',string(da(1)),'-',string(da(2)),'-',string(da(3)),'-',string(da(4)),'-',string(da(5)), '-NN');
 mkdir(datafolder);
 addpath(datafolder);
-global xbest
-global ybest
-global ReqTarget
-global ReqSatFlag
-xbest = [];
-ybest = [];
-ReqTarget = [0.9,1,1];
-ReqSatFlag = [0,0,0];
 for hour = 1:iter
  
     lb=[];
@@ -36,12 +27,12 @@ for hour = 1:iter
                 ub((i-1)*4+j) = 256+i+0.49;
             elseif j == 2 %% conditon_no
                 lb((i-1)*4+j) = 1-0.5;
-                ub((i-1)*4+j) = 4+0.49;
+                ub((i-1)*4+j) = 3+0.49;
             elseif j == 3 %% sensor_no
                 lb((i-1)*4+j) = 1-0.5;
                 ub((i-1)*4+j) = 5+0.49;
             else
-                lb((i-1)*4+j) = -1;
+                lb((i-1)*4+j) = 0;
                 ub((i-1)*4+j) = 2;
             end
         end
@@ -64,16 +55,14 @@ for hour = 1:iter
     %     'UseParallel',true,'NumStartPts',20});
     if hour > 1
 %         options = optimoptions(options,'CreationFcn',@initialize_variables_adaptive);
-%         options = optimoptions(options,'CreationFcn',@initialize_variables_NN);
-%         options = optimoptions(options,'CreationFcn',@initialize_variables_NN_iter);
-        options = optimoptions(options,'CreationFcn',@initialize_variables_Reg_iter);
+        options = optimoptions(options,'CreationFcn',@initialize_variables_NN);
     else
         options.CreationFcn = @gacreationnonlinearfeasible;
-    end   
-    options.OutputFcn = @gaoutputfcn;
+    end
+    % rng default
+    % x = ga(fun,nvars,A,b,Aeq,beq,lb,ub,nonlcon,IntCon,options)
 %     options.MaxTime = inf;
     options.MaxTime = 3600; %% 1 hour
-%     options.PlotFcn = @gaplotbestf;
 
     % Population = initialize_variables(3, @uuv_normal_test, options);
 

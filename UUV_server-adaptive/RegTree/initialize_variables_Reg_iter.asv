@@ -68,32 +68,51 @@ elseif hour > 1
     X=[];
     Y=[];
     %% type1
-    for model_index = 1:model_num
-        name = 'ga-multiobj-adaptive-iter-' + string(iter) + '-'+ string(model_index) + '.mat';
-        pre_result_name = strcat(datafolder,'/',name);
-        pre_result = load(pre_result_name);
-        Population = [Population;pre_result.population];
-        Scores = [Scores; pre_result.scores];
-    end
-    [m,n] = size(Population);
-    for i = 1:m
-        for j = 1:num_incidents
-            Population(i,(j-1)*4+1) = round(Population(i,(j-1)*4+1));
-            Population(i,(j-1)*4+2) = round(Population(i,(j-1)*4+2));
-            Population(i,(j-1)*4+3) = round(Population(i,(j-1)*4+3));
-            Population(i,(j-1)*4+4) = Population(i,(j-1)*4+4);
-        end
-%         Y(i)=pre_result.scores(i,1)*2^0+pre_result.scores(i,2)*2^1+pre_result.scores(i,3)*2^2;    
-        Y(i,1)=Scores(i,1);
-        Y(i,2)=Scores(i,2);
-        Y(i,3)=Scores(i,3);
-    end
-    
-    X = Population;
+%     for model_index = 1:model_num
+%         name = 'ga-multiobj-adaptive-iter-' + string(iter) + '-'+ string(model_index) + '.mat';
+%         pre_result_name = strcat(datafolder,'/',name);
+%         pre_result = load(pre_result_name);
+%         Population = [Population;pre_result.population];
+%         Scores = [Scores; pre_result.scores];
+%     end
+%     [m,n] = size(Population);
+%     for i = 1:m
+%         for j = 1:num_incidents
+%             Population(i,(j-1)*4+1) = round(Population(i,(j-1)*4+1));
+%             Population(i,(j-1)*4+2) = round(Population(i,(j-1)*4+2));
+%             Population(i,(j-1)*4+3) = round(Population(i,(j-1)*4+3));
+%             Population(i,(j-1)*4+4) = Population(i,(j-1)*4+4);
+%         end   
+%         Y(i,1)=Scores(i,1);
+%         Y(i,2)=Scores(i,2);
+%         Y(i,3)=Scores(i,3);
+%     end
+%     
+%     X = Population;
     
     %% type 2
-%     X = xbest;
-%     Y = ybest;
+    X = xbest;
+    Y = ybest;
+    
+    %     for model_index = 1:model_num
+%         name = 'ga-multiobj-adaptive-iter-' + string(iter) + '-'+ string(model_index) + '.mat';
+%         pre_result_name = strcat(datafolder,'/',name);
+%         pre_result = load(pre_result_name);
+%         Population = [Population;pre_result.population];
+%         Scores = [Scores; pre_result.scores];
+%     end
+%     [m,n] = size(Population);
+%     for i = 1:m
+%         for j = 1:num_incidents
+%             Population(i,(j-1)*4+1) = round(Population(i,(j-1)*4+1));
+%             Population(i,(j-1)*4+2) = round(Population(i,(j-1)*4+2));
+%             Population(i,(j-1)*4+3) = round(Population(i,(j-1)*4+3));
+%             Population(i,(j-1)*4+4) = Population(i,(j-1)*4+4);
+%         end   
+%         Y(i,1)=Scores(i,1);
+%         Y(i,2)=Scores(i,2);
+%         Y(i,3)=Scores(i,3);
+%     end
     
 %     Mdl1 = fitrtree(X,Y1,'OptimizeHyperparameters','auto',...
 %     'HyperparameterOptimizationOptions',struct('AcquisitionFunctionName',...
@@ -108,12 +127,9 @@ elseif hour > 1
 %     'expected-improvement-plus'));
     
     for i = 1:3
-%         Mdl = fitrtree(X,Y(:,i),'OptimizeHyperparameters','auto',...
-%         'HyperparameterOptimizationOptions',struct('AcquisitionFunctionName',...
-%         'expected-improvement-plus'));
-        t = templateTree('Reproducible',true);
-        Mdl = fitrensemble(X,Y(:,i),'OptimizeHyperparameters','auto','Learners',t, ...
-        'HyperparameterOptimizationOptions',struct('AcquisitionFunctionName','expected-improvement-plus'))
+        Mdl = fitrtree(X,Y(:,i),'OptimizeHyperparameters','auto',...
+        'HyperparameterOptimizationOptions',struct('AcquisitionFunctionName',...
+        'expected-improvement-plus'));
         model_name = 'Reg_model-'+ string(iter) + '-'+ string(model_num)+ '-'+ string(i);
         model_name = strcat(datafolder,'/',model_name);
         save (model_name,'Mdl')
@@ -143,10 +159,10 @@ elseif hour > 1
     option_temp = load('options.mat');
     options_new = option_temp.options;
     options_new.PopulationSize = totalpopulation;
-    options_new.InitialPopulationMatrix = Population;
+    options_new.InitialPopulationMatrix = xbest;
     options_new.FunctionTolerance = 0;
     options_new.ConstraintTolerance = 0;
-    options_new.MaxGenerations = 10;
+    options_new.MaxGenerations = 100;
 %     options_new.Display = 'iter';
     [x_new,fval_new,exitflag_new,output_new,population_new,scores_new] = gamultiobj(@RegPredict_UUV,4*num_incidents,[],[],[],[],lb,ub,@myconuuv_normal_test,options_new);
 %     [x,fval,exitflag,output,population,scores] = gamultiobj(@uuv_normal_test,4*num_incidents,[],[],[],[],lb,ub,@myconuuv_normal_test,options);

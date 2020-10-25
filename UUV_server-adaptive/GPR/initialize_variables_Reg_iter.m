@@ -82,8 +82,7 @@ elseif hour > 1
             Population(i,(j-1)*4+2) = round(Population(i,(j-1)*4+2));
             Population(i,(j-1)*4+3) = round(Population(i,(j-1)*4+3));
             Population(i,(j-1)*4+4) = Population(i,(j-1)*4+4);
-        end
-%         Y(i)=pre_result.scores(i,1)*2^0+pre_result.scores(i,2)*2^1+pre_result.scores(i,3)*2^2;    
+        end   
         Y(i,1)=Scores(i,1);
         Y(i,2)=Scores(i,2);
         Y(i,3)=Scores(i,3);
@@ -108,12 +107,12 @@ elseif hour > 1
 %     'expected-improvement-plus'));
     
     for i = 1:3
+        Mdl = fitrgp(X,Y(:,i),'KernelFunction','squaredexponential',...
+    'OptimizeHyperparameters','auto','HyperparameterOptimizationOptions',...
+    struct('AcquisitionFunctionName','expected-improvement-plus'));
 %         Mdl = fitrtree(X,Y(:,i),'OptimizeHyperparameters','auto',...
 %         'HyperparameterOptimizationOptions',struct('AcquisitionFunctionName',...
 %         'expected-improvement-plus'));
-        t = templateTree('Reproducible',true);
-        Mdl = fitrensemble(X,Y(:,i),'OptimizeHyperparameters','auto','Learners',t, ...
-        'HyperparameterOptimizationOptions',struct('AcquisitionFunctionName','expected-improvement-plus'))
         model_name = 'Reg_model-'+ string(iter) + '-'+ string(model_num)+ '-'+ string(i);
         model_name = strcat(datafolder,'/',model_name);
         save (model_name,'Mdl')
@@ -146,7 +145,7 @@ elseif hour > 1
     options_new.InitialPopulationMatrix = Population;
     options_new.FunctionTolerance = 0;
     options_new.ConstraintTolerance = 0;
-    options_new.MaxGenerations = 10;
+    options_new.MaxGenerations = 100;
 %     options_new.Display = 'iter';
     [x_new,fval_new,exitflag_new,output_new,population_new,scores_new] = gamultiobj(@RegPredict_UUV,4*num_incidents,[],[],[],[],lb,ub,@myconuuv_normal_test,options_new);
 %     [x,fval,exitflag,output,population,scores] = gamultiobj(@uuv_normal_test,4*num_incidents,[],[],[],[],lb,ub,@myconuuv_normal_test,options);

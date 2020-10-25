@@ -7,13 +7,13 @@ num_incidents = 5;
 global iter
 population_size = 500;
 total_generation = 300;
-iter = 10;
+iter = 5;
 global datafolder
 % da = date;
 da = fix(datevec(now));
 % datafolder = strcat('Datalog-',string(da(1)),'-',string(da(2)),'-',string(da(3)),'-',string(da(4)),'-',string(da(5)), '-Adapt');
 % datafolder = strcat('Datalog-',string(da(1)),'-',string(da(2)),'-',string(da(3)),'-',string(da(4)),'-',string(da(5)), '-NN-iter');
-datafolder = strcat('Datalog-',string(da(1)),'-',string(da(2)),'-',string(da(3)),'-',string(da(4)),'-',string(da(5)), '-Reg-iter-type2');
+datafolder = strcat('Datalog-',string(da(1)),'-',string(da(2)),'-',string(da(3)),'-',string(da(4)),'-',string(da(5)), '-Reg-iter');
 mkdir(datafolder);
 addpath(datafolder);
 global xbest
@@ -72,7 +72,7 @@ for hour = 1:iter
     end   
     options.OutputFcn = @gaoutputfcn;
 %     options.MaxTime = inf;
-    options.MaxTime = 3600; %% 1 hour
+    options.MaxTime = 360; %% 1 hour
 %     options.PlotFcn = @gaplotbestf;
 
     % Population = initialize_variables(3, @uuv_normal_test, options);
