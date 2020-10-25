@@ -95,8 +95,12 @@ elseif hour > 1
     
     X=X';
     Y=Y';
-    hiddenLayerSize = 20;
-    net = fitnet(hiddenLayerSize,'trainbr');
+%     hiddenLayerSize = 20;
+    hiddenLayer1Size = 20;
+    hiddenLayer2Size = 10;
+    trainFcn = 'trainbr'; 
+    net = fitnet([hiddenLayer1Size hiddenLayer2Size],  trainFcn);
+%     net = fitnet(hiddenLayerSize,'trainbr');
     net.divideParam.trainRatio = 70/100;
     net.divideParam.valRatio = 15/100;
     net.divideParam.testRatio = 15/100;
@@ -106,7 +110,7 @@ elseif hour > 1
     
     model_name = 'NN_fit_net'+ string(iter) + '-'+ string(model_num);
     model_name = strcat(datafolder,'/',model_name);
-    save (model_name,'net')
+    save (model_name,'net','tr')
     fprintf('UUV_test_adaptive:generating the requirements violaiton predictior %d \n', model_num);
     %% initial population generation
     lb=[];
