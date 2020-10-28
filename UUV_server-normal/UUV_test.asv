@@ -47,8 +47,6 @@ for i = 1:num_incidents
         elseif j == 3 %% sensor_no
             lb((i-1)*4+j) = 1-0.5;
             ub((i-1)*4+j) = 5+0.49;
-            
-            
         else
             lb((i-1)*4+j) = -1;
             ub((i-1)*4+j) = 2;

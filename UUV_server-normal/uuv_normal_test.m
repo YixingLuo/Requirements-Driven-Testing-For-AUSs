@@ -10,7 +10,7 @@ for i = 1:m
     x_test(i,3) = round(x_test_initial((i-1)*4+3));
     x_test(i,4) = x_test_initial((i-1)*4+4);
 end
-x_test;
+x_test
 global uuv
 uuv = UnmannedUnderwaterVehicle();
 global pastdistance
@@ -61,7 +61,7 @@ while(1)
             DS_E = 1- (pastenergy - uuv.energy_target / uuv.energy_target);
         end
 %         DS_E = min(1,(1-(pastenergy - uuv.energy_target)/(uuv.energy_budget-uuv.energy_target)));
-        data = [DS_A, pastaccuracy, DS_D, pastdistance, DS_E, pastenergy];
+        data = [DS_A, pastaccuracy, DS_D, pastdistance, DS_E, pastenergy]
         VD_A = pastaccuracy - 1;
         VD_D = (pastdistance - uuv.distance_target)/uuv.distance_target;
         VD_E = (uuv.energy_target - pastenergy) /uuv.energy_target;
