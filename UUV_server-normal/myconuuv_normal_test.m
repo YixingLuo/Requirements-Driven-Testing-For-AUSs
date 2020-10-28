@@ -1,5 +1,9 @@
 function [c,ceq] = myconuuv_normal_test(x_initial)
 global num_incidents
+global pastdistance
+global pasttime
+global pastenergy
+global pastaccuracy
 c=[];
 ceq=[];
 m = num_incidents;
@@ -33,4 +37,7 @@ end
 for i = 1:m-1
     c = [c, x(i,1)-x(i+1,1)+1];
 end
+
+% c = [c, pastdistance - 100*1000];
+% c = [c, 5.4*1e6 - pastenergy];
 

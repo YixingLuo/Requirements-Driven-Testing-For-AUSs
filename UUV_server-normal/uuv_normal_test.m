@@ -55,14 +55,23 @@ while(1)
 %         fprintf('last step\n');
         DS_A = min(1,pastaccuracy);
         DS_D = min(1,pastdistance/uuv.distance_target);
-        DS_E = min(1,(1-(pastenergy - uuv.energy_target)/(uuv.energy_budget-uuv.energy_target)));
+        if pastenergy <= uuv.energy_target
+            DS_E = 1;
+        else
+            DS_E = 1- (pastenergy - uuv.energy_target / uuv.energy_target);
+        end
+%         DS_E = min(1,(1-(pastenergy - uuv.energy_target)/(uuv.energy_budget-uuv.energy_target)));
         data = [DS_A, pastaccuracy, DS_D, pastdistance, DS_E, pastenergy];
+        VD_A = pastaccuracy - 1;
+        VD_D = (pastdistance - uuv.distance_target)/uuv.distance_target;
+        VD_E = (uuv.energy_target - pastenergy) /uuv.energy_target;
 %         [DS_A, DS_D, DS_E]
 %         f = DS_A + DS_D + DS_E
 %         f(1) = DS_A;
 %         f(2) = DS_D;
 %         f(3) = DS_E;
-        f = [DS_A; DS_D; DS_E];
+        f = [DS_D; DS_E];
+%         f = [VD_D,VD_E];
         break
     end
     
@@ -104,7 +113,7 @@ while(1)
     if current_step == 1
         need_replan = 1;
     end
-    exitflag = 0;
+       exitflag = 0;
     if need_replan == 1 
         t1=clock;
         for iternum = 1:1:20
@@ -129,76 +138,77 @@ while(1)
             end     
         end
         planning_time = [planning_time; t2];
+    end
         
-        if exitflag < 0
-            for iternum = 1:1:20
-                lb=[];
-                ub=[];
-                x0=[];
-                for i = 1 : uuv.N_s % portion of time
-                    lb(i) = 0;
-                    ub(i) = 1;
-                    x0(i) = unifrnd(0,1);
-                end
-                options.Algorithm = 'sqp'; 
-                options.Display = 'off';
-                tic;
-                [x,fval,exitflag]=fmincon(@objuuv_relax,x0,[],[],[],[],lb,ub,@myconuuv_relax,options);
-                t2 = toc;
-                if exitflag > 0 
-%                     fprintf(2,'uuv_relax: have solution at current step: %d , %d\n',exitflag, current_step);
-                    fval_pre = fval;
-                    x_pre = x;            
-                    break
-                end     
-            end
-        end
+%         if exitflag < 0
+%             for iternum = 1:1:20
+%                 lb=[];
+%                 ub=[];
+%                 x0=[];
+%                 for i = 1 : uuv.N_s % portion of time
+%                     lb(i) = 0;
+%                     ub(i) = 1;
+%                     x0(i) = unifrnd(0,1);
+%                 end
+%                 options.Algorithm = 'sqp'; 
+%                 options.Display = 'off';
+%                 tic;
+%                 [x,fval,exitflag]=fmincon(@objuuv_relax,x0,[],[],[],[],lb,ub,@myconuuv_relax,options);
+%                 t2 = toc;
+%                 if exitflag > 0 
+% %                     fprintf(2,'uuv_relax: have solution at current step: %d , %d\n',exitflag, current_step);
+%                     fval_pre = fval;
+%                     x_pre = x;            
+%                     break
+%                 end     
+%             end
+%         end
 
-        %% distance
-        speed_now = 0;
-        for i = 1:uuv.N_s
-            if uuv.s_work(i) == 1
-                speed_now = speed_now + x(i)*uuv.s_speed(i);
-            end
-        end
-        speed = [speed, speed_now];
-        pastdistance = pastdistance + speed_now * uuv.time_step;
-        distance_list = [distance_list, pastdistance];
-        
-       %% accuracy
-        acc = 0;
-        for i = 1:uuv.N_s
-            if uuv.s_work(i) == 1
-                acc = acc + x(i)*uuv.s_accuracy(i);
-            end
-        end
-        acc_list = [acc_list, acc];
-        pastaccuracy = (pastaccuracy * pasttime + acc * uuv.time_step) / (pasttime + uuv.time_step);
-         
-        %% energy
-        engy = 0;
-        for i = 1:uuv.N_s
-           if uuv.s_work(i) == 1
-            engy = engy + x(i)*uuv.s_energy(i);     
-           end
-        end
-        pastenergy = pastenergy + engy * uuv.time_step;
-        energy_list = [energy_list, engy];       
-    
-        %% time
-        pasttime = pasttime + uuv.time_step;   
-        
-        %% sensor usage
-        index = 1;
-        for i = 1:length(uuv.s_work)
-            if uuv.s_work(i) == 1                  
-                usage_plan(current_step, i) = x(index);
-                index = index+1;
-            else
-                usage_plan(current_step, i) = 0;
-            end
-        end
-    else
+%         %% distance
+%         speed_now = 0;
+%         for i = 1:uuv.N_s
+%             if uuv.s_work(i) == 1
+%                 speed_now = speed_now + x(i)*uuv.s_speed(i);
+%             end
+%         end
+%         speed = [speed, speed_now];
+%         pastdistance = pastdistance + speed_now * uuv.time_step;
+%         distance_list = [distance_list, pastdistance];
+%         
+%        %% accuracy
+%         acc = 0;
+%         for i = 1:uuv.N_s
+%             if uuv.s_work(i) == 1
+%                 acc = acc + x(i)*uuv.s_accuracy(i);
+%             end
+%         end
+%         acc_list = [acc_list, acc];
+%         pastaccuracy = (pastaccuracy * pasttime + acc * uuv.time_step) / (pasttime + uuv.time_step);
+%          
+%         %% energy
+%         engy = 0;
+%         for i = 1:uuv.N_s
+%            if uuv.s_work(i) == 1
+%             engy = engy + x(i)*uuv.s_energy(i);     
+%            end
+%         end
+%         pastenergy = pastenergy + engy * uuv.time_step;
+%         energy_list = [energy_list, engy];       
+%     
+%         %% time
+%         pasttime = pasttime + uuv.time_step;   
+%         
+%         %% sensor usage
+%         index = 1;
+%         for i = 1:length(uuv.s_work)
+%             if uuv.s_work(i) == 1                  
+%                 usage_plan(current_step, i) = x(index);
+%                 index = index+1;
+%             else
+%                 usage_plan(current_step, i) = 0;
+%             end
+%         end
+%     else
         %% distance
         speed_now = 0;
         for i = 1:uuv.N_s
@@ -244,7 +254,7 @@ while(1)
                 usage_plan(current_step, i) = 0;
             end
         end       
-    end
+%     end
     current_step = current_step + 1;
 
     end
