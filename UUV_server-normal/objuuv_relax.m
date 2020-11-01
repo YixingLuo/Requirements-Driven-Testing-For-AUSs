@@ -38,5 +38,5 @@ for i = 1:uuv.N_s
 end
 energy = pastenergy + time_left * engy;
 
-f = ((accuracy - uuv.acc_target)/(uuv.acc_target-uuv.acc_budget)).^2 + ((distance - uuv.distance_target) / (uuv.distance_target-uuv.distance_budget)).^2 + ((uuv.energy_target - energy) / (uuv.energy_budget - uuv.energy_target)).^2;
+f = ((accuracy - uuv.acc_target)/(uuv.acc_target-uuv.acc_budget)).^2 + ((distance - uuv.distance_target) / (uuv.distance_target)).^2 + ((uuv.energy_target - energy) / (uuv.energy_target)).^2;
 % f = max(0,(uuv.acc_target-accuracy)/(uuv.acc_target-uuv.acc_budget)) + max(0,(uuv.distance_target-distance)/ (uuv.distance_target-uuv.distance_budget)) + max(0,(energy -  uuv.energy_target)/ (uuv.energy_budget - uuv.energy_target));

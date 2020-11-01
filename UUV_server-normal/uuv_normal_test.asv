@@ -62,7 +62,7 @@ while(1)
             DS_E = 0;
         end
 %         DS_E = min(1,(1-(pastenergy - uuv.energy_target)/(uuv.energy_budget-uuv.energy_target)));
-        data = [DS_A, pastaccuracy, DS_D, pastdistance, DS_E, pastenergy];
+        data = [DS_A, pastaccuracy, DS_D, pastdistance, DS_E, pastenergy]
         VD_A = pastaccuracy - 1;
         VD_D = (pastdistance - uuv.distance_target)/uuv.distance_target;
         VD_E = (uuv.energy_target - pastenergy) /uuv.energy_target;
@@ -71,12 +71,27 @@ while(1)
 %         f(1) = DS_A;
 %         f(2) = DS_D;
 %         f(3) = DS_E;
-        f = [-DS_A; DS_D; DS_E];
+        f = [-DS_A, DS_D; DS_E];
 %         f = [VD_D,VD_E];
         break
     end
-
-  
+    
+%     if  plan_num > 0 && current_step == indextemp(index_cond)        
+%         need_replan = 1;
+%         plan_num = plan_num - 1;      
+%         if cond.condition(index_cond,1) == 1
+%             uuv = SensorError(uuv, cond.condition(index_cond,2), cond.condition(index_cond,3));  
+%         elseif cond.condition(index_cond,1) == 2
+%             uuv = EnergyDisturbance(uuv, cond.condition(index_cond,2), cond.condition(index_cond,3));
+%             elseif cond.condition(index_cond,1) == 3
+%                  uuv = SpeedDisturbance(uuv, cond.condition(index_cond,2), cond.condition(index_cond,3));
+%                 elseif cond.condition(index_cond,1) == 4
+%                     uuv = SensorFailure(uuv, cond.condition(index_cond,2));    
+%         end
+%         index_cond = index_cond+1;
+%     end
+    
+    
     for i = 1:m
         if current_step == x_test(i,1)
             need_replan = 1;
@@ -99,7 +114,7 @@ while(1)
     if current_step == 1
         need_replan = 1;
     end
-    exitflag = 0;
+       exitflag = 0;
     if need_replan == 1 
         t1=clock;
         for iternum = 1:1:20
@@ -124,6 +139,7 @@ while(1)
             end     
         end
         planning_time = [planning_time; t2];
+    end
         
         if exitflag < 0
             for iternum = 1:1:20
