@@ -9,7 +9,7 @@ function [condition, index] = randomsituation(num,k)
 global uuv
 uuv = UnmannedUnderwaterVehicle();
 l = 1:1:15;
-disturb = randi([1,4],1,l(k));
+disturb = randi([1,3],1,l(k));
 a=2:359;
 K=randperm(length(a));
 N=length(disturb);

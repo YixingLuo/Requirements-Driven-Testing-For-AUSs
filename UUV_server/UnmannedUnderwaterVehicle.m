@@ -39,6 +39,19 @@ N_s = 5;
         function uuv = SensorError(uuv, no, acc)
             uuv.s_accuracy(no) = acc;
         end
+        function uuv = EnergyBudget(uuv, energy_target)
+            uuv.energy_target = energy_target;
+%             uuv.energy_budget = energy_target * 1.05;
+        end 
+        function uuv = DistanceBudget(uuv, distance_target)
+            uuv.distance_target = distance_target;
+%             uuv.distance_budget = distance_target * 0.95;
+        end 
+        function uuv = AccuracyBudget(uuv, accuracy_target)
+            uuv.acc_target = accuracy_target;
+%             uuv.acc_budget = accuracy_target*0.9;
+%             uuv.acc_target = min(max(uuv.s_accuracy),accuracy_target);
+        end 
  end
 end
 

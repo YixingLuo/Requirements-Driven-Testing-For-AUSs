@@ -32,7 +32,7 @@ for i = 1:uuv.N_s
     end
 end
 
-%% distance_control
+%% energy_control
 dis_control_now = dis_control_pre + 0.1*((uuv.distance_target-pastdistance)/(time_left) - dis_pre);
 
 
