@@ -25,7 +25,7 @@ N_s = 5;
         end
         function uuv = SensorFailure(uuv, no)
             uuv.s_accuracy(no) = 0;
-            uuv.s_energy(no) = 0;
+            uuv.s_energy(no) = inf;
             uuv.s_speed(no) = 0;
             uuv.s_work(no) = 0;
             uuv.N_s = length(uuv.s_accuracy);   

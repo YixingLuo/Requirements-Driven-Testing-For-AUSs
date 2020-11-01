@@ -8,6 +8,8 @@ global pastaccuracy
 global x_pre
 global energy_control_pre
 global dis_control_pre
+global pole
+pole = 0.1;
 energy_control_pre = 0;
 dis_control_pre  =0;
 pastdistance = 0;
@@ -30,7 +32,7 @@ results =[];
 % x_pre = [0.2, 0.2, 0.2, 0.2, 0.2];
 x_pre = [0, 0, 0, 0, 0];
 planning_time = [];
-current_step = 1;
+current_step = 0;
 name = 'condition' + string(1) + '.mat';
 % name = 'condition' + string(nnum) + '.mat';
 cond = load(name);
@@ -45,7 +47,7 @@ while(1)
     need_replan = 1;
 %     fprintf('uuv_normal: current step %d\n', current_step);
     
-    if current_step > 360
+    if current_step == 360
         fprintf('last step\n');
         DS_A = min(1,pastaccuracy);
         DS_D = min(1,pastdistance/uuv.distance_target);
@@ -102,7 +104,8 @@ while(1)
             for i = 1 : uuv.N_s % portion of time
                 lb(i) = 0;
                 ub(i) = 1;
-                x0(i) = unifrnd(0,1);
+%                 x0(i) = unifrnd(0,1);
+                x0(i) = 0.2 ;
             end
             options.Algorithm = 'sqp'; 
             options.Display = 'off';
@@ -151,7 +154,7 @@ while(1)
                 dis_pre = dis_pre + x_pre(i)*uuv.s_speed(i);
             end
         end
-        dis_control_pre = dis_control_pre + 0.1*((uuv.distance_target-pastdistance)/(time_left) - dis_pre);
+        dis_control_pre = dis_control_pre + pole*((uuv.distance_target-pastdistance)/(time_left) - dis_pre);
         
         speed_now = 0;
         for i = 1:uuv.N_s
@@ -181,7 +184,7 @@ while(1)
             end
         end
         
-        energy_control_pre = energy_control_pre + 0.1*((uuv.energy_target-pastenergy)/(uuv.time_target - pasttime) - engy_pre);
+        energy_control_pre = energy_control_pre + pole*((uuv.energy_target-pastenergy)/(uuv.time_target - pasttime) - engy_pre);
         
         engy = 0;
         for i = 1:uuv.N_s
@@ -197,10 +200,10 @@ while(1)
         index = 1;
         for i = 1:length(uuv.s_work)
             if uuv.s_work(i) == 1                  
-                usage_plan(current_step, i) = x(index);
+                usage_plan(current_step+1, i) = x(index);
                 index = index+1;
             else
-                usage_plan(current_step, i) = 0;
+                usage_plan(current_step+1, i) = 0;
             end
         end
         
@@ -249,10 +252,10 @@ while(1)
         index = 1;
         for i = 1:length(uuv.s_work)
             if uuv.s_work(i) == 1                  
-                usage_plan(current_step, i) = x_pre(index);
+                usage_plan(current_step+1, i) = x_pre(index);
                 index = index+1;
             else
-                usage_plan(current_step, i) = 0;
+                usage_plan(current_step+1, i) = 0;
             end
         end       
     end

@@ -9,6 +9,7 @@ global pastaccuracy
 global x_pre
 global energy_control_pre
 global dis_control_pre
+global pole
 
 %% time
 time_left = uuv.time_target - pasttime;
@@ -22,7 +23,7 @@ for i = 1:uuv.N_s
 end
 
 %% energy_control
-energy_control_now = energy_control_pre + 0.1*((uuv.energy_target-pastenergy)/(time_left) - engy_pre);
+energy_control_now = energy_control_pre + pole*((uuv.energy_target-pastenergy)/(time_left) - engy_pre);
 
 %% distance signal at previous adaptation step energy
 dis_pre = 0;
@@ -33,7 +34,7 @@ for i = 1:uuv.N_s
 end
 
 %% distance_control
-dis_control_now = dis_control_pre + 0.1*((uuv.distance_target-pastdistance)/(time_left) - dis_pre);
+dis_control_now = dis_control_pre + pole*((uuv.distance_target-pastdistance)/(time_left) - dis_pre);
 
 
 %% accuracy
