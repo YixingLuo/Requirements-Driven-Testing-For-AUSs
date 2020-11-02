@@ -27,9 +27,9 @@ end
 %         ceq = [ceq, x(i,4)];
 %     elseif x(i,2)== 5 || x(i,2) == 6
 %         ceq = [ceq, x(i,3)];
-% %     else
-% %         c = [c, -x(i,4)];
-% %         c = [c, x(i,4)-20];
+%     else
+%         c = [c, -x(i,4)];
+%         c = [c, x(i,4)-20];
 %     end
 % end
 

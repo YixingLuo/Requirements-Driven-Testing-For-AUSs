@@ -1,24 +1,24 @@
 function f  = uuv_normal_test(x_test_initial)
 global num_incidents
 m = num_incidents;
-x_test_initial
+x_test_initial;
 x_test = [];
 % [m,n] = size(x_test);
 for i = 1:m
     x_test(i,1) = round(x_test_initial((i-1)*4+1));
     x_test(i,2) = round(x_test_initial((i-1)*4+2));
-%     if (x_test(i,2) == 5) || (x_test(i,2) == 6)
-%         x_test(i,3) = 0;
-%     else
+    if (x_test(i,2) == 5) || (x_test(i,2) == 6)
+        x_test(i,3) = 0;
+    else
         x_test(i,3) = round(x_test_initial((i-1)*4+3));
-%     end
-%     if x_test(i,3) == 4
-%         x_test(i,4) = 0;
-%     else
+    end
+    if x_test(i,3) == 4
+        x_test(i,4) = 0;
+    else
         x_test(i,4) = max(0,x_test_initial((i-1)*4+4));
-%     end
+    end
 end
-x_test
+x_test;
 global uuv
 uuv = UnmannedUnderwaterVehicle();
 global pastdistance
@@ -67,7 +67,7 @@ while(1)
 %     fprintf('uuv_normal: current step %d\n', current_step);
     
     if current_step == 360
-        fprintf('last step\n');
+%         fprintf('last step\n');
         DS_A = min(1,pastaccuracy/uuv.acc_target);
         DS_D = min(1,pastdistance/uuv.distance_target);
         if pastenergy <=  uuv.energy_target
@@ -76,13 +76,13 @@ while(1)
             DS_E = 1-(pastenergy - uuv.energy_target)/uuv.energy_target;
         end
 %         DS_E = min(1,(1-(pastenergy - uuv.energy_target)/(uuv.energy_budget-uuv.energy_target)));
-        data = [DS_A, pastaccuracy, DS_D, pastdistance, DS_E, pastenergy]
+        data = [DS_A, pastaccuracy, DS_D, pastdistance, DS_E, pastenergy];
 
-        f = DS_A + DS_D + DS_E
+%         f = DS_A + DS_D + DS_E
 %         f(1) = DS_A;
 %         f(2) = DS_D;
 %         f(3) = DS_E;
-%         f = [ DS_E]
+        f = [DS_A, DS_D, DS_E];
 %         f = [VD_D,VD_E];
         break
     end
@@ -132,7 +132,7 @@ while(1)
             [x,fval,exitflag]=fmincon(@objuuv_normal,x0,[],[],[],[],lb,ub,@myconuuv_normal,options);
             t2 = toc;
             if exitflag > 0 
-                fprintf(2,'uuv_normal: have solution at current step: %d , %d\n',exitflag, current_step);
+%                 fprintf(2,'uuv_normal: have solution at current step: %d , %d\n',exitflag, current_step);
                 fval_pre = fval;
 %                 x_pre = x;            
                 break

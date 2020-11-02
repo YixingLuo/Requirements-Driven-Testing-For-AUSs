@@ -1,7 +1,7 @@
 clc
 clear
-% delete(gcp('nocreate'))
-% parpool('local')
+delete(gcp('nocreate'))
+parpool('local')
 global hour
 global num_incidents
 num_incidents = 5; 
