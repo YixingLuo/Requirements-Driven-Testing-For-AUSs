@@ -16,6 +16,9 @@ tstart =tic;
 while(1)
     tused = toc(tstart) ;
     if tused > 10*3600
+        time = datestr(now,30);
+        name = 'data' + string(time) + '.mat';
+        save(name);
         break;
     end
     num = num + 1;
@@ -24,7 +27,7 @@ while(1)
     
 
     [condition, indextemp] = randomsituation(num,k);
-    index(num,:) = indextemp;
+    
     forward = 36*ones(1,5);
     cc = 0;
     for i = 1:length(forward)
@@ -36,7 +39,7 @@ while(1)
     for i = 1:cc
         indextemp2(i) = i;
     end
-    index2(num,:) = indextemp2;
+   
 
     iter = mod(num,iternum);
     if iter == 0
@@ -46,7 +49,7 @@ while(1)
     data = zeros(1,6);
     [data,usage_plan,planning_time] = uuv_normal(num, indextemp, condition);
     [data_,usage_plan,planning_time] = uuv_normal(num, indextemp2, condition);
-    if (data_(1) > data(1)) && (abs(data_(3)-data(3)) < 1e-6) && (abs(data_(5)-data(5)) < 1e-6)
+    if (data_(1) > data(1)) &&  data_(3)>=data(3) && data_(5)>= data(5)
         count = [count,num];
         name = 'condition' + string(num) + '.mat';
         save(name, 'condition');
@@ -54,7 +57,9 @@ while(1)
         save(name, 'indextemp');
         data1(num,:) = data;
         data2(num,:) = data_;
-    elseif (data_(3) > data(3)) && (abs(data_(1)-data(1)) < 1e-6) && (abs(data_(5)-data(5)) < 1e-6)
+        index(num,:) = indextemp;
+        index2(num,:) = indextemp2;
+    elseif (data_(3) > data(3)) &&  data_(5)>=data(5) && data_(1)>= data(1)
         count = [count,num];
         name = 'condition' + string(num) + '.mat';
         save(name, 'condition');
@@ -62,7 +67,9 @@ while(1)
         save(name, 'indextemp');
         data1(num,:) = data;
         data2(num,:) = data_;
-    elseif (data_(5) > data(5)) && (abs(data_(1)-data(1)) < 1e-6) && (abs(data_(3)-data(3)) < 1e-6)
+        index(num,:) = indextemp;
+        index2(num,:) = indextemp2;
+    elseif (data_(5) > data(5)) &&  data_(1)>=data(1) && data_(3)>= data(3)
         count = [count,num];
         name = 'condition' + string(num) + '.mat';
         save(name, 'condition');
@@ -70,6 +77,8 @@ while(1)
         save(name, 'indextemp');
         data1(num,:) = data;
         data2(num,:) = data_;
+        index(num,:) = indextemp;
+        index2(num,:) = indextemp2;
     end
 %     while data(1)>=0.95 && data(3) == 1 && data(5)==1
 %         [data,usage_plan,planning_time] = uuv_normal(num, indextemp);
