@@ -42,10 +42,10 @@ for i = 1: length(disturb)
         condition(i,:) = [4,idx,-1];
     end
 end
-name = 'condition' + string(num) + '.mat';
-save(name, 'condition');
-name = 'index' + string(num) + '.mat';
-save(name, 'index');
+% name = 'condition' + string(num) + '.mat';
+% save(name, 'condition');
+% name = 'index' + string(num) + '.mat';
+% save(name, 'index');
 
 
 

@@ -1,7 +1,7 @@
 clc
 clear
-delete(gcp('nocreate'))
-parpool('local')
+% delete(gcp('nocreate'))
+% parpool('local')
 global hour
 global num_incidents
 num_incidents = 5; 
@@ -57,7 +57,7 @@ options.CreationFcn = @gacreationnonlinearfeasible;
 % rng default
 % x = ga(fun,nvars,A,b,Aeq,beq,lb,ub,nonlcon,IntCon,options)
 options.MaxTime = hour * 3600;
-options.UseParallel = true;
+% options.UseParallel = true;
 options.Display = 'iter';
 % options = optimoptions('gamultiobj','UseParallel', true, 'UseVectorized', false);
 % Population = initialize_variables(3, @uuv_normal_test, options);
