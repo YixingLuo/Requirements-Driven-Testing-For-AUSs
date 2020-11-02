@@ -1,4 +1,4 @@
-% function [data,usage_plan,planning_time] = uuv_normal(nnum, indextemp)
+function [data,usage_plan,planning_time] = uuv_normal(nnum, indextemp)
 global uuv
 uuv = UnmannedUnderwaterVehicle();
 global pastdistance
@@ -33,13 +33,13 @@ results =[];
 x_pre = [0, 0, 0, 0, 0];
 planning_time = [];
 current_step = 0;
-name = 'condition' + string(1) + '.mat';
-% name = 'condition' + string(nnum) + '.mat';
+% name = 'condition' + string(1) + '.mat';
+name = 'condition' + string(nnum) + '.mat';
 cond = load(name);
 need_replan = 0;
-name = 'index' + string(1) + '.mat';
-index = load(name);
-indextemp = index.index;
+% name = 'index' + string(1) + '.mat';
+% index = load(name);
+% indextemp = index.index;
 plan_num = length(indextemp);
 index_cond = 1;
 
@@ -49,47 +49,77 @@ while(1)
     
     if current_step == 360
         fprintf('last step\n');
-        DS_A = min(1,pastaccuracy);
+        DS_A = min(1,pastaccuracy/uuv.acc_target);
         DS_D = min(1,pastdistance/uuv.distance_target);
-        DS_E = min(1,(1-(pastenergy - uuv.energy_target)/(uuv.energy_budget-uuv.energy_target)));
+        if pastenergy <=  uuv.energy_target
+            DS_E = 1;
+        else
+            DS_E = 1-(pastenergy - uuv.energy_target)/uuv.energy_target;
+        end
+%         DS_E = min(1,(1-(pastenergy - uuv.energy_target)/(uuv.energy_budget-uuv.energy_target)));
         data = [DS_A, pastaccuracy, DS_D, pastdistance, DS_E, pastenergy];
         break
     end
-%     
-%     if  plan_num > 0 && current_step == indextemp(index_cond)        
+    
+    if  plan_num > 0 && current_step == indextemp(index_cond)        
+        need_replan = 1;
+        plan_num = plan_num - 1;      
+        if cond.condition(index_cond,1) == 1
+            uuv = SensorError(uuv, cond.condition(index_cond,2), cond.condition(index_cond,3));  
+        elseif cond.condition(index_cond,1) == 2
+            uuv = EnergyDisturbance(uuv, cond.condition(index_cond,2), cond.condition(index_cond,3));
+            elseif cond.condition(index_cond,1) == 3
+                 uuv = SpeedDisturbance(uuv, cond.condition(index_cond,2), cond.condition(index_cond,3));
+                elseif cond.condition(index_cond,1) == 4
+                    uuv = SensorFailure(uuv, cond.condition(index_cond,2));
+                    elseif cond.condition(index_cond,1) == 5
+                        uuv = EnergyBudget(uuv, cond.condition(index_cond,2));
+                        elseif cond.condition(index_cond,1) == 6
+                            uuv = DistanceBudget(uuv, cond.condition(index_cond,2));
+        end
+        index_cond = index_cond+1;
+    end
+    
+    if  plan_num > 0 && current_step == indextemp(index_cond)        
+        need_replan = 1;
+        plan_num = plan_num - 1;
+        if cond.condition(index_cond,1) == 1
+            uuv = EnergyBudget(uuv, cond.condition(index_cond,2));
+        elseif cond.condition(index_cond,1) == 2
+            uuv = DistanceBudget(uuv, cond.condition(index_cond,2));
+            elseif cond.condition(index_cond,1) == 3
+                uuv = AccuracyBudget(uuv, cond.condition(index_cond,2));
+                elseif cond.condition(index_cond,1) == 4
+                    uuv = SensorError(uuv, cond.condition(index_cond,2), cond.condition(index_cond,3));
+%                     elseif cond.condition(index_cond,1) == 5
+%                         uuv = SensorFailure(uuv, cond.condition(index_cond,2));            
+                        elseif cond.condition(index_cond,1) == 5
+                            uuv = EnergyDisturbance(uuv, cond.condition(index_cond,2), cond.condition(index_cond,3));
+        else
+             uuv = SpeedDisturbance(uuv, cond.condition(index_cond,2), cond.condition(index_cond,3));
+        end
+        index_cond = index_cond+1;
+    end
+    
+%     if current_step == 100
+%         uuv = EnergyBudget(uuv, 5 * 1e6);
 %         need_replan = 1;
-%         plan_num = plan_num - 1;      
-%         if cond.condition(index_cond,1) == 1
-%             uuv = SensorError(uuv, cond.condition(index_cond,2), cond.condition(index_cond,3));  
-%         elseif cond.condition(index_cond,1) == 2
-%             uuv = EnergyDisturbance(uuv, cond.condition(index_cond,2), cond.condition(index_cond,3));
-%             elseif cond.condition(index_cond,1) == 3
-%                  uuv = SpeedDisturbance(uuv, cond.condition(index_cond,2), cond.condition(index_cond,3));
-%                 elseif cond.condition(index_cond,1) == 4
-%                     uuv = SensorFailure(uuv, cond.condition(index_cond,2));    
-%         end
-%         index_cond = index_cond+1;
 %     end
-    
-    if current_step == 100
-        uuv = EnergyBudget(uuv, 5 * 1e6);
-        need_replan = 1;
-    end
-    
-    if current_step == 160
-        uuv = DistanceBudget(uuv, 105*1000);
-        need_replan = 1;
-    end
-    
-    if current_step == 220
-        uuv = SensorError(uuv, 3, 0.43);
-        need_replan = 1;
-    end
-    
-    if current_step == 290
-        uuv = SensorFailure(uuv, 4);
-        need_replan = 1;
-    end
+%     
+%     if current_step == 160
+%         uuv = DistanceBudget(uuv, 105*1000);
+%         need_replan = 1;
+%     end
+%     
+%     if current_step == 220
+%         uuv = SensorError(uuv, 3, 0.43);
+%         need_replan = 1;
+%     end
+%     
+%     if current_step == 290
+%         uuv = SensorFailure(uuv, 4);
+%         need_replan = 1;
+%     end
     
     if current_step == 1
         need_replan = 1;
@@ -97,7 +127,7 @@ while(1)
     exitflag = 0;
     if need_replan == 1 
         t1=clock;
-        for iternum = 1:1:20
+        for iternum = 1:1:1
             lb=[];
             ub=[];
             x0=[];
@@ -262,4 +292,4 @@ while(1)
     current_step = current_step + 1;
 
     end
-% end
+end

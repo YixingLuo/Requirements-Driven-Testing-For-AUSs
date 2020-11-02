@@ -9,7 +9,7 @@ function [condition, index] = randomsituation(num,k)
 global uuv
 uuv = UnmannedUnderwaterVehicle();
 l = 1:1:15;
-disturb = randi([1,3],1,l(k));
+disturb = randi([1,6],1,l(k));
 a=2:359;
 K=randperm(length(a));
 N=length(disturb);
@@ -40,6 +40,14 @@ for i = 1: length(disturb)
             idx = unidrnd(5);
         end
         condition(i,:) = [4,idx,-1];
+    elseif disturb(i) == 5
+        energy_ratio = 45 + unidrnd(10);
+        energy = energy_ratio * 1e5;
+        condition(i,:) = [5,energy,0];
+    elseif disturb(i) == 6
+        distance_ratio = 100 + unidrnd(10);
+        distance = distance_ratio * 1e3;
+        condition(i,:) = [6,distance,0];
     end
 end
 name = 'condition' + string(num) + '.mat';

@@ -1,8 +1,8 @@
 clc
 clear
+% delete(gcp('nocreate'))
+% parpool('local')
 global hour
-
-
 global num_incidents
 num_incidents = 5; 
 global datafolder
@@ -18,23 +18,7 @@ for hour = 1:1:10
   
 lb=[];
 ub=[];
-% for i = 1:num_incidents
-%     for j = 1:4
-%         if j == 1 %% index
-%             lb(i,j) = 1+i-0.5;
-%             ub(i,j) = 256+i+0.49;
-%         elseif j == 2 %% conditon_no
-%             lb(i,j) = 1-0.5;
-%             ub(i,j) = 4+0.49;
-%         elseif j == 3 %% sensor_no
-%             lb(i,j) = 1-0.5;
-%             ub(i,j) = 5+0.49;
-%         else
-%             lb(i,j) = -1;
-%             ub(i,j) = 2;
-%         end
-%     end
-% end
+
 
 for i = 1:num_incidents
     for j = 1:4
@@ -43,15 +27,13 @@ for i = 1:num_incidents
             ub((i-1)*4+j) = 256+i+0.49;
         elseif j == 2 %% conditon_no
             lb((i-1)*4+j) = 1-0.5;
-            ub((i-1)*4+j) = 3+0.49;
+            ub((i-1)*4+j) = 6+0.49;
         elseif j == 3 %% sensor_no
-            lb((i-1)*4+j) = 1-0.5;
-            ub((i-1)*4+j) = 5+0.49;
-            
-            
+            lb((i-1)*4+j) = 0.5;
+            ub((i-1)*4+j) = 5+0.49;           
         else
-            lb((i-1)*4+j) = -1;
-            ub((i-1)*4+j) = 2;
+            lb((i-1)*4+j) = 0;
+            ub((i-1)*4+j) = 20;
         end
     end
 end
@@ -75,7 +57,9 @@ options.CreationFcn = @gacreationnonlinearfeasible;
 % rng default
 % x = ga(fun,nvars,A,b,Aeq,beq,lb,ub,nonlcon,IntCon,options)
 options.MaxTime = hour * 3600;
-
+options.UseParallel = true;
+options.Display = 'iter';
+% options = optimoptions('gamultiobj','UseParallel', true, 'UseVectorized', false);
 % Population = initialize_variables(3, @uuv_normal_test, options);
 
 [x,fval,exitflag,output,population,scores] = gamultiobj(@uuv_normal_test,4*num_incidents,[],[],[],[],lb,ub,@myconuuv_normal_test,options);

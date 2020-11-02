@@ -11,7 +11,7 @@ tag_list3 = zeros(100,100);
 
 
 
-for num = 1:15*iternum
+for num = 5*iternum + 1:15*iternum
     fprintf('current iteration %d\n', num);
     k = ceil(num/iternum);
 

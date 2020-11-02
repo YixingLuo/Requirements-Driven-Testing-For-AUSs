@@ -1,6 +1,6 @@
 sco = [];
-for i = 1:10
-    pop_name = 'Datalog-2020-10-25-19--Reg-iter\ga-multiobj-adaptive-iter-10-'+string(i);
+for i = 1:4
+    pop_name = 'Datalog-2020-11-1-23-16\ga-multiobj-iternum-'+string(i);
     Population = load(pop_name);
     for j = 1:500
         sco(j,:) = uuv_normal_test(Population.population(j,:));
@@ -10,8 +10,8 @@ end
 
 % data_predict = [];
 % data_raw = [];
-% datefolder = 'Datalog-2020-10-25-19-41-Reg-iter\';
-% for i = 1:9
+% datefolder = 'Datalog-2020-11-1-23-13\';
+% for i = 1:4
 %     sco_predict = [];
 %     sco_raw = [];
 %     model_name = strcat (datefolder , 'Reg_model-10-',string(i),'-1');

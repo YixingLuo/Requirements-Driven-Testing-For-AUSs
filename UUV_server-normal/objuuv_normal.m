@@ -40,4 +40,5 @@ energy = pastenergy + time_left * engy;
 
 
 
-f = - accuracy;
+% f = - accuracy;
+f = -acc;
