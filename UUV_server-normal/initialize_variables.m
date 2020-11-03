@@ -7,7 +7,7 @@ global uuv
 for pop = 1:1:totalpopulation
 uuv = UnmannedUnderwaterVehicle();
 l = 1:1:15;
-disturb = randi([1,4],1,l(num_incidents));
+disturb = randi([1,6],1,l(num_incidents));
 a=2:359;
 K=randperm(length(a));
 N=length(disturb);

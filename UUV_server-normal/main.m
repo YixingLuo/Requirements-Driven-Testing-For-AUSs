@@ -70,7 +70,7 @@ while(1)
     end
     name = 'condition' + string(num) + '.mat';
     path = strcat(datafolder,'/',name);
-    save(path, 'condition');
+    save(path, 'cond');
     
     if  ((data_(1) > data(1)) &&  data_(3)>=data(3) && data_(5)>= data(5) ) ||((data_(3) > data(3)) &&  data_(5)>=data(5) && data_(1)>= data(1)) || ((data_(5) > data(5)) &&  data_(1)>=data(1) && data_(3)>= data(3))
         count = [count,num];

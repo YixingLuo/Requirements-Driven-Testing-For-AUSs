@@ -32,23 +32,23 @@
 % end
 
 %% establish regression tree
-datafolder = 'soft-goal-violation';
-datalog = 
+datafolder = 'soft-goal-violation-2';
+datalog_name = strcat(datafolder,'/data20201103T233307','.mat');
+datalog = load(datalog_name);
 num = 1;
 for i = 1:1000
     name = strcat(datafolder,'/condition', string(i),'.mat');
-    name_idx = strcat(datafolder,'/index', string(i),'.mat');
+%     name_idx = strcat(datafolder,'/index', string(i),'.mat');
     if exist(name)
-        cond = load(name);
-        index = load(name_idx);
-        [data,usage_plan,planning_time] = uuv_normal(index.indextemp, cond.condition);
-        for j = 1:size(cond.condition,1)
-            X(num,(j-1)*4+1) = index.indextemp(j);
-            X(num,(j-1)*4+2) = cond.condition(j,1);
-            X(num,(j-1)*4+3) = cond.condition(j,2);
-            X(num,(j-1)*4+4) = cond.condition(j,3);
+%         cond = load(name);
+%         index = load(name_idx);
+        for j = 1:size(cond.cond,1)
+            X(num,(j-1)*4+1) = cond.cond(j,1);
+            X(num,(j-1)*4+2) = cond.cond(j,2);
+            X(num,(j-1)*4+3) = cond.cond(j,3);
+            X(num,(j-1)*4+4) = cond.cond(j,4);
         end
-        Y(num,:) = [data(1),data(3),data(5)];
+        Y(num,:) = [datalog.data1(i,1), datalog.data1(i,3), datalog.data1(i,5)];
         num = num + 1;      
     end
 end
@@ -57,7 +57,7 @@ for i = 1:3
     Mdl = fitrtree(X,Y(:,i),'OptimizeHyperparameters','auto',...
     'HyperparameterOptimizationOptions',struct('AcquisitionFunctionName',...
     'expected-improvement-plus'));
-    model_name = 'Reg_model-'+ string(iter) + '-'+ string(model_num)+ '-'+ string(i);
+    model_name = 'Reg_model-all-'+ string(i);
     model_name = strcat(datafolder,'/',model_name);
     save (model_name,'Mdl')
 end
