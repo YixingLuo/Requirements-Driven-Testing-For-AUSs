@@ -34,7 +34,7 @@ failure_list = [];
             if any (idx == failure_list)
                 idx = unidrnd(5);
             end
-            condition(i,:) = [4,idx,-1];
+            condition(i,:) = [4,idx,0];
         elseif disturb(i) == 5 
             idx = unidrnd(5);
             energy_target_ratio = 20*rand;

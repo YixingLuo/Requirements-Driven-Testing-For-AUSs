@@ -9,7 +9,7 @@ function [condition, index] = randomsituation(num,k)
 global uuv
 uuv = UnmannedUnderwaterVehicle();
 l = 1:1:15;
-disturb = randi([1,4],1,l(k));
+disturb = randi([1,6],1,l(k));
 a=2:359;
 K=randperm(length(a));
 N=length(disturb);
@@ -21,25 +21,33 @@ failure_list = [];
 for i = 1: length(disturb)
     if disturb(i) == 1
         idx = unidrnd(5);   
-        acc_ratio = unidrnd(100);
-        acc = uuv.s_accuracy(idx)*acc_ratio/100;
-        condition(i,:) = [1,idx,acc];
+        acc_ratio = 20*rand;
+%             acc = uuv.s_accuracy(idx)*acc_ratio/100;
+        condition(i,:) = [1,idx,acc_ratio];
     elseif disturb(i) == 2
         idx = unidrnd(5);
-        energy_ratio = 100 + unidrnd(100);
-        energy = uuv.s_energy(idx)*energy_ratio/100;
-        condition(i,:) = [2,idx,energy];
+        energy_ratio = 20*rand;
+%             energy = uuv.s_energy(idx)*energy_ratio/100;
+        condition(i,:) = [2,idx,energy_ratio];
    elseif disturb(i) == 3
         idx = unidrnd(5);
-        speed_ratio = unidrnd(100);
-        speed = uuv.s_speed(idx)*speed_ratio/100;
-        condition(i,:) = [3,idx,speed];   
+        speed_ratio = 20*rand;
+%             speed = uuv.s_speed(idx)*speed_ratio/100;
+        condition(i,:) = [3,idx,speed_ratio];   
     elseif disturb(i) == 4
         idx = unidrnd(5);
         if any (idx == failure_list)
             idx = unidrnd(5);
         end
-        condition(i,:) = [4,idx,-1];
+        condition(i,:) = [4,idx,0];
+    elseif disturb(i) == 5 
+        idx = unidrnd(5);
+        energy_target_ratio = 20*rand;
+        condition(i,:) = [5,0,energy_target_ratio]; 
+    elseif disturb(i) == 6
+        idx = unidrnd(5);
+        dis_target_ratio = 20*rand;
+        condition(i,:) = [6,0,dis_target_ratio]; 
     end
 end
 % name = 'condition' + string(num) + '.mat';

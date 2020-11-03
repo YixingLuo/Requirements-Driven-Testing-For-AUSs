@@ -27,7 +27,8 @@ for i = 1:num_incidents
             ub((i-1)*4+j) = 256+i+0.49;
         elseif j == 2 %% conditon_no
             lb((i-1)*4+j) = 1-0.5;
-            ub((i-1)*4+j) = 6+0.49;
+%             ub((i-1)*4+j) = 6+0.49;
+            ub((i-1)*4+j) = 4+0.49;
         elseif j == 3 %% sensor_no
             lb((i-1)*4+j) = 0.5;
             ub((i-1)*4+j) = 5+0.49;           
@@ -38,7 +39,7 @@ for i = 1:num_incidents
     end
 end
 
-% options.PopulationSize = 500;
+
 % options.SelectionFcn = 'selectiontournament';
 % options.PlotFcn = 'gaplotpareto';
 % options = optimoptions('gamultiobj','PlotFcn',@gaplotpareto);
@@ -46,14 +47,15 @@ option_temp = load('options.mat');
 options = option_temp.options;
 options.FunctionTolerance = 0;
 options.ConstraintTolerance = 0;
-options.PopulationSize = 500;
+options.PopulationSize = 100;
+options.CrossoverFcn = @crossoversinglepoint;
+options.CrossoverFraction = 0.6;
 % options.Display = 'iter';
 % options.MaxGenerations = total_generation;
 options.MaxGenerations = inf;
-% options = optimoptions(options,'CreationFcn',{@gacreationnonlinearfeasible,...
-%     'UseParallel',true,'NumStartPts',20});
-% options = optimoptions(options,'CreationFcn',@initialize_variables);
-options.CreationFcn = @gacreationnonlinearfeasible;
+options = optimoptions(options,'CreationFcn',@initialize_variables);
+% options.CreationFcn = @gacreationnonlinearfeasible;
+% options.HybridFcn = {@fgoalattain,[]};
 % rng default
 % x = ga(fun,nvars,A,b,Aeq,beq,lb,ub,nonlcon,IntCon,options)
 options.MaxTime = hour * 3600;

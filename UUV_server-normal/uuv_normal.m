@@ -1,4 +1,4 @@
-function [data,usage_plan,planning_time] = uuv_normal(nnum, indextemp, condition)
+function [data,usage_plan,planning_time] = uuv_normal(indextemp, condition)
 global uuv
 uuv = UnmannedUnderwaterVehicle();
 global pastdistance
@@ -50,13 +50,13 @@ while(1)
 %     fprintf('uuv_normal: current step %d\n', current_step);
     
     if current_step == 360
-        fprintf('last step\n');
+%         fprintf('last step\n');
         DS_A = min(1,pastaccuracy/uuv.acc_target);
         DS_D = min(1,pastdistance/uuv.distance_target);
         if pastenergy <=  uuv.energy_target
             DS_E = 1;
         else
-            DS_E = 1-(pastenergy - uuv.energy_target)/uuv.energy_target;
+            DS_E = (uuv.energy_budget - pastenergy)/(uuv.energy_budget - uuv.energy_target);
         end
 %         DS_E = min(1,(1-(pastenergy - uuv.energy_target)/(uuv.energy_budget-uuv.energy_target)));
         data = [DS_A, pastaccuracy, DS_D, pastdistance, DS_E, pastenergy];
