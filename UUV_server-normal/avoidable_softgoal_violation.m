@@ -76,6 +76,8 @@ clear
 datafolder = 'soft-goal-violation-2';
 datalog_name = strcat(datafolder,'/data20201104T001415','.mat');
 datalog = load(datalog_name);
+
+
 cnt = datalog.count;
 num = 1;
 % for i = 1:length(cnt)

@@ -23,13 +23,15 @@ end
 % end
 
 % for i = 1:m
-%     if x(i,2) == 4
+%     if x(i,2) > 4
 %         ceq = [ceq, x(i,4)];
-%     elseif x(i,2)== 5 || x(i,2) == 6
-%         ceq = [ceq, x(i,3)];
+% %     elseif x(i,2)== 5 || x(i,2) == 6
+% %         ceq = [ceq, x(i,3)];
+% %     else
+% %         c = [c, -x(i,4)];
+% %         c = [c, x(i,4)-20];
 %     else
-%         c = [c, -x(i,4)];
-%         c = [c, x(i,4)-20];
+%         c = [c, x(i,4)-0.5];
 %     end
 % end
 

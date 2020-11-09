@@ -1,0 +1,86 @@
+{
+    "config": {
+        "auto_close_on_reach_the_objective": "1",
+        "auto_close_x_position": "10",
+        "auto_close_y_position": "0",
+        "map_no": "2",
+        "horizon": "80",
+        "speed_horizon_factor": "3.0",
+        "lon_interval": "10.0",
+        "lat_interval": "1.75",
+        "road_width": 3.5,
+        "infinity_cost": "100000000",
+        "sampling_step": "0.1",
+        "k_thr": "0.172",
+        "ego_width": "1.84",
+        "ego_length": "4.86",
+        "s0": 162.74400763182445,
+        "l0": 1.5,
+        "v0": 4.2840238721025585,
+        "theta0": 1.57,
+        "speed_limit": "16.6",
+        "k_limit": "5.0",
+        "a_max_soft": "0.98",
+        "a_min_soft": "-2.94",
+        "latg_max_soft": "2.94",
+        "curve_rate_limit": "1",
+        "time_step": "0.1",
+        "lane_cost_factor": "1.5",
+        "map_type": "1",
+        "dynamic_obstacle_lethal_cost": "100000000",
+        "dynamic_obstacle_high_cost": "10000",
+        "minimum_horizon": "30",
+        "total_time_weight": "1.0",
+        "total_dist_weight": "1.0",
+        "max_eval_trajs": "200000",
+        "pena_low_speed": "100",
+        "auto_close_on_crash": "1",
+        "same_acc_bonus": "-10"
+    },
+    "dynamic_obs": [
+        {
+            "pos_x": 36.457124932925794,
+            "pos_y": 208.5057856623012,
+            "dir": 3.14,
+            "width": 1.8,
+            "length": 4.8,
+            "velo": 14.403178606488996,
+            "acc": 1.0536513503202938
+        },
+        {
+            "pos_x": -62.14243965981429,
+            "pos_y": 212.40652531456033,
+            "dir": 0,
+            "width": 1.8,
+            "length": 4.8,
+            "velo": 7.267130081518344,
+            "acc": 2.0206203692091758
+        },
+        {
+            "pos_x": 1.9965453474248687,
+            "pos_y": 189.33400418191718,
+            "dir": -1.57,
+            "width": 1.8,
+            "length": 4.8,
+            "velo": 8.519264895719811,
+            "acc": 2.26678557826719
+        }
+    ],
+    "static_obs": [
+        {
+            "pos_s": "38.85863301072356",
+            "pos_l": "205",
+            "width": "1.8",
+            "length": "4.8"
+        }
+    ],
+    "traffic_signal": [
+        {
+            "green_time": "18.0",
+            "yellow_time": "2.0",
+            "red_time": "5.0",
+            "start_s": "190",
+            "end_s": "220"
+        }
+    ]
+}

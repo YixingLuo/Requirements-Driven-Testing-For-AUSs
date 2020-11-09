@@ -95,10 +95,10 @@ while(1)
                          uuv = SpeedDisturbance(uuv, x_test(index_cond,3), x_test(index_cond,4));
                         elseif x_test(index_cond,2) == 4
                             uuv = SensorFailure(uuv, x_test(index_cond,3));    
-%                             elseif x_test(index_cond,2) == 5
-%                                 uuv = EnergyBudget(uuv, x_test(index_cond,4));
-%                                     elseif x_test(index_cond,2) == 6
-%                                         uuv = DistanceBudget(uuv, x_test(index_cond,4));
+                            elseif x_test(index_cond,2) == 5
+                                uuv = EnergyBudget(uuv, x_test(index_cond,4));
+                                    elseif x_test(index_cond,2) == 6
+                                        uuv = DistanceBudget(uuv, x_test(index_cond,4));
                 end
             break
         end

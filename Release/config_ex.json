@@ -1,0 +1,96 @@
+{
+    "config": {
+        "map_no" :  "3",
+        "horizon": "80",
+        "speed_horizon_factor": "3.0",
+        "lon_interval": "10.0",
+        "lat_interval": "1.75",
+        "road_width": "3.5",
+        "infinity_cost": "100000000",
+        "sampling_step": "0.1",
+        "k_thr": "0.172",
+        "ego_width": "1.84",
+        "ego_length": "4.86",
+        "s0": <uniform 0 20>,
+        "l0": <uniform 0 10>,
+        "v0": <uniform 0 40>,
+        "theta0": "1.5707963267",
+        "speed_limit": "16.6",
+        "k_limit": "5.0",
+        "a_max_soft": "0.98",
+        "a_min_soft": "-2.94",
+        "pena_max_latg": "5.0",
+        "pena_latg": "3000",
+        "pena_spd": "250",
+        "pena_a_max": "20",
+        "pena_a_min": "20",
+        "pena_curv_rate": "20",
+        "latg_max_soft": "2.94",
+        "curve_rate_limit": "1",
+        "time_step": "0.1",
+        "lane_cost_factor": "1.5",
+        "map_type" : "1",
+        "dynamic_obstacle_lethal_cost" : "100000000",
+        "dynamic_obstacle_high_cost" : "10000",
+        "minimum_horizon" : "30",
+        "total_time_weight" : "1.0",
+        "total_dist_weight" : "1.0",
+        "max_eval_trajs" : "200000",
+        "pena_low_speed" : "0",
+        "same_acc_bonus": "-10"
+    },
+    "static_obs": [
+       <repeat 5>
+        {
+            "pos_s": <uniform 40 300>,
+            "pos_l": <uniform -10 10>
+        }
+       </repeat>
+    ],
+    "traffic_signal": [
+        {
+            "start_s": "199",
+            "end_s": "220",
+            "green_time": "18.0",
+            "yellow_time": "2.0",
+            "red_time": "5.0"
+        }  
+    ],
+    "dynamic_obs": [
+       <repeat 5>
+        {
+            "pos_x": <uniform 0 6>,
+            "pos_y": <uniform 300 350>,
+            "dir": "-1.570796326794897",
+            "width": <uniform 1 2>,
+            "length": <uniform 1 8>,
+            "velo": <uniform 0 20>,
+            "acc": "0"
+    	}
+      </repeat>
+      ,
+      <repeat 3>
+        {
+            "pos_x": <uniform -2 -1>,
+            "pos_y": <uniform 50 60>,
+            "dir": "1.570796326794897",
+            "width": <uniform 1 2>,
+            "length": <uniform 1 8>,
+            "velo": <uniform 0 20>,
+            "acc": "0"
+    	}
+      </repeat>
+      ,
+      <repeat 3>
+        {
+           "pos_x": <uniform -10 10>,
+           "pos_y": <uniform 0 200>,
+           "dir": <uniform -3.14159 3.14159>,
+           "width": <uniform 0 4>,
+           "length": <uniform 0 4>,
+           "velo": <uniform 0 20>,
+           "acc": "0"
+        }
+      </repeat>
+    ]	
+}
