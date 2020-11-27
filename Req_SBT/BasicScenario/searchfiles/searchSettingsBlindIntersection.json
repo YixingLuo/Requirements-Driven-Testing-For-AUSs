@@ -1,0 +1,29 @@
+{
+    "scenario": "scenarios/BlindIntersection.json",
+    "multiObjective": true,
+    "pathPlannerTimeout": 60,
+    "maxIterations": 1200,
+    "populationSize": 100,
+    "searchTimeout": 360000,
+    "config": [
+        {"name": "pena_latg", "interval": [2000, 4000]},
+        {"name": "pena_spd", "interval": [150, 350]},
+        {"name": "dynamic_obstacle_lethal_cost", "interval": [90000000, 110000000]},
+        {"name": "pena_max_latg", "interval": [4, 6]},
+        {"name": "pena_a_max", "interval": [10, 30]},
+        {"name": "pena_a_min", "interval": [10, 30]},
+        {"name": "pena_curv_rate", "interval": [10, 30]},
+        {"name": "dynamic_obstacle_high_cost", "interval": [9000, 11000]}
+    ],
+    "dynamic_objects": [
+        {
+            "index": 5,
+            "fields": [
+                {"name": "pos_x", "interval": [5, 7]},
+                {"name": "pos_y", "interval": [220, 260]},
+                {"name": "velo", "interval": [8, 15]},
+                {"name": "acc", "interval": [0, 2]}
+            ]
+        }
+    ]
+}

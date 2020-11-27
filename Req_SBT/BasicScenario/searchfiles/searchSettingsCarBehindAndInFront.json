@@ -1,0 +1,36 @@
+{
+    "scenario": "scenarios/CarBehindAndInFront.json",
+    "multiObjective": true,
+    "pathPlannerTimeout": 90,
+    "maxIterations": 1200,
+    "populationSize": 100,
+    "searchTimeout": 360000,
+    "config": [
+        {"name": "pena_latg", "interval": [2000, 4000]},
+        {"name": "pena_spd", "interval": [150, 350]},
+        {"name": "dynamic_obstacle_lethal_cost", "interval": [90000000, 110000000]},
+        {"name": "pena_max_latg", "interval": [4, 6]},
+        {"name": "pena_a_max", "interval": [10, 30]},
+        {"name": "pena_a_min", "interval": [10, 30]},
+        {"name": "pena_curv_rate", "interval": [10, 30]},
+        {"name": "dynamic_obstacle_high_cost", "interval": [9000, 11000]}
+    ],
+    "dynamic_objects": [
+        {
+            "index": 0,
+            "fields": [
+                {"name": "pos_y", "interval": [20, 30]},
+                {"name": "velo", "interval": [5, 10]},
+                {"name": "acc", "interval": [-2, 1]}
+            ]
+        },
+        {
+            "index": 1,
+            "fields": [
+                {"name": "pos_y", "interval": [-10, 15]},
+                {"name": "velo", "interval": [4, 15]},
+                {"name": "acc", "interval": [0, 2]}
+            ]
+        }
+    ]
+}
