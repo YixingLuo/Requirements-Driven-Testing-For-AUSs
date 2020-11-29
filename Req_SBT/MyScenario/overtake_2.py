@@ -10,11 +10,20 @@ from read_log import evaluate_distance, evaluate_speed, evaluate_comfort, evalua
 import globalvar
 # from bestpop import BestPop
 import math
+import uuid
 
 
+def get_time_stamp():
+    ct = time.time()
+    local_time = time.localtime(ct)
+    data_head = time.strftime("%Y%m%d%H%M%S", local_time)
+    data_secs = (ct - int(ct)) * 1000
+    time_stamp = "%s_%03d" % (data_head, data_secs)
+    return time_stamp
 
-# def create_run_scenario_overtake (Vars, config, file_dir_sce, file_dir_data, file_dir_eval):
-def create_run_scenario_overtake(Vars, num_sce, file_dir_sce, file_dir_data, file_dir_eval):
+
+def create_run_scenario_overtake (Vars, BestPop):
+# def create_run_scenario_overtake(Vars, num_sce, file_dir_sce, file_dir_data, file_dir_eval):
 
     # bestlog = globalvar.get_value('BestPop')
     # print(bestlog.round)
@@ -40,9 +49,14 @@ def create_run_scenario_overtake(Vars, num_sce, file_dir_sce, file_dir_data, fil
     # population = Vars.shape[0]
 
     config = configure()
+    # config =  globalvar.get_value('Configure')
     population = config.population
 
     result = np.zeros((population, config.goal_num), float)
+
+    file_dir_sce = config.file_dir_sce
+    file_dir_data = config.file_dir_data
+    file_dir_eval = config.file_dir_eval
 
     # for num_sce in range(population):
 
@@ -64,10 +78,13 @@ def create_run_scenario_overtake(Vars, num_sce, file_dir_sce, file_dir_data, fil
                        "red_time": Vars[6]}
             ret_dic[key].append(objDict)
 
+
+
         elif key == "static_obs":
             obsList = ret_dic[key]
             obsList[0]["pos_s"] = Vars[7]
             obsList[1]["pos_s"] = Vars[8]
+
 
 
         elif key == "dynamic_obs":
@@ -81,10 +98,19 @@ def create_run_scenario_overtake(Vars, num_sce, file_dir_sce, file_dir_data, fil
             obsList[1]["acc"] = Vars[14]
             obsList[1]["start_time"] = Vars[15]
 
+
+    traffic_light = ret_dic["traffic_signal"]
+    st_obsList = ret_dic["static_obs"]
+    dy_obsList  = ret_dic["dynamic_obs"]
+    # print(traffic_light, st_obsList, dy_obsList)
+
     # global bestpop
-    bestlog = globalvar.get_value('BestPop')
-    print("\033[1;32m scenario round: \033[0m", bestlog.round)
-    scenario_name = file_dir_sce + "/scenario-" + str(bestlog.round) +'-' + str(num_sce) + ".json"
+    # bestlog = globalvar.get_value('BestPop')
+    # print("\033[1;32m scenario round: \033[0m", bestlog.round)
+    now_time = get_time_stamp()
+    uuid_str = uuid.uuid4().hex
+    scenario_name = file_dir_sce + "/scenario_" + now_time + "_" + uuid_str + ".json"
+    # scenario_name = file_dir_sce + "/scenario_" + str(bestlog.round) +'-' + str(num_sce) + ".json"
     # print(scenario_name)
     with open(scenario_name, 'w', encoding='utf-8') as f:
         json.dump(ret_dic, f, ensure_ascii=False, indent=4)
@@ -94,8 +120,8 @@ def create_run_scenario_overtake(Vars, num_sce, file_dir_sce, file_dir_data, fil
 
     file_path = os.path.abspath(os.path.join(os.getcwd(), ".."))
     # print(file_path)
-    # scenario_name = file_dir_sce + "\scenario_" + str(num_sce) + ".json"
-    log_name = file_dir_data + "/datalog-" + str(bestlog.round)  +'-' + str(num_sce) + ".txt"
+
+    log_name = file_dir_data + "/datalog_" + now_time  + "_" + uuid_str + ".txt"
     cmd = "C:/Users/lenovo/Documents/GitHub/mazda-path-planner-sbt_changes/mazda-path-planner-sbt_changes/ERATO_planning/x64/Release/" \
           "dynamic_cost -c %d -v EGO_TESTER -a -i %s > %s" % (duration, scenario_name, log_name)
 
@@ -108,21 +134,23 @@ def create_run_scenario_overtake(Vars, num_sce, file_dir_sce, file_dir_data, fil
     # print('totally cost', elapsed)
 
 
-    # print(log_name)
 
-    with open(scenario_name, 'r', encoding='utf-8') as f:
-        ret_dic = json.load(f)
-        for key in ret_dic:
-            if key == "dynamic_obs":
-                dy_obsList = ret_dic[key]
-                num_dynamic_obs = len(dy_obsList)
-                # print(dy_obsList)
-                # print(dy_obsList[0]["width"])
-            if key == "static_obs":
-                st_obsList = ret_dic[key]
-                num_static_obs = len(st_obsList)
-            if key == "traffic_signal":
-                traffic_light = ret_dic[key]
+    # with open(scenario_name, 'r', encoding='utf-8') as f:
+    #     ret_dic = json.load(f)
+    #     for key in ret_dic:
+    #         if key == "dynamic_obs":
+    #             dy_obsList = ret_dic[key]
+    #             num_dynamic_obs = len(dy_obsList)
+    #             # print(dy_obsList)
+    #             # print(dy_obsList[0]["width"])
+    #         if key == "static_obs":
+    #             st_obsList = ret_dic[key]
+    #             num_static_obs = len(st_obsList)
+    #         if key == "traffic_signal":
+    #             traffic_light = ret_dic[key]
+
+    num_dynamic_obs = 2
+    num_static_obs = 2
 
     ego_vehicle_state = []
     dynamic_vehicle_state = [[] for i in range(num_dynamic_obs)]
@@ -160,7 +188,7 @@ def create_run_scenario_overtake(Vars, num_sce, file_dir_sce, file_dir_data, fil
 
 
 
-    # print(dynamic_vehicle_state.shape[0])
+
 
     comfort = evaluate_comfort(ego_vehicle_state)
     speed = evaluate_speed(ego_vehicle_state)
@@ -181,25 +209,26 @@ def create_run_scenario_overtake(Vars, num_sce, file_dir_sce, file_dir_data, fil
     # result[5] = comfort
 
 
-    # bestpop = globalvar.get_value('BestPop')
-    print("Scenario: %d %d" %(bestlog.round, num_sce) )
+    # global _global_dict
+    # _global_dict
+    # BestPopulation.round = 2
+    # print(BestPopulation.round)
+    # bestlog = globalvar.get_value('BestPop')
+    # print("Scenario:", BestPopulation.round)
     # print("Variables:", Vars)
     print("Results:", result)
     # print("Weights:", bestlog.weights)
     # print("Round: %d" %(bestpop.round))
 
-    result_name = file_dir_eval + "/result-" + str(bestlog.round)  +'-' + str(num_sce) + ".txt"
+    result_name = file_dir_eval + "/result_" + now_time  + "_"  + uuid_str + ".txt"
     # print(result_name)
     np.savetxt(result_name, result, fmt="%f", delimiter=" ")
 
-    weights = bestlog.weights
+    weights = BestPop.weights
     for i in range (config.goal_num):
         result[i] = weights[i] *  result[i]
 
-
-    # print(result.shape)
-
-
+    print("Results after weight:", result)
 
     return result
 

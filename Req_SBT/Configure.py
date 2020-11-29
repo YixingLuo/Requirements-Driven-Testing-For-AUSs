@@ -1,6 +1,10 @@
 #!/usr/bin/python
 # -*- coding:utf-8 -*-
 
+import time
+import os
+import shutil
+
 class configure:
     def __init__(self):
         # self.auto_close_on_reach_the_objective= 1
@@ -41,11 +45,12 @@ class configure:
         self.speed_limit = 16.67
         self.speed_max = 33.3
         self.duration = 60
-        self.population = 8
+        self.population = 50
         self.goal_num = 6
-        self.maxIterations = 1000
+        self.maxIterations = 10000
         self.searchTimeout = 360000
-        self.interval = 10
+        self.interval = 20
+        self.num_variables = 16
         self.PoolType = "Thread"
         # self.PoolType = "Process"
 
@@ -74,6 +79,43 @@ class configure:
         self.velo_2 = [4, 16]
         self.acc_2 = [0, 3]
         self.start_time_2 = [0,2]
+
+        self.file_dir_sce = os.getcwd() + '/' + str(time.strftime("%Y_%m_%d")) + '_NSGAII_scenarios_' + str(
+            self.maxIterations)
+        if not os.path.exists(self.file_dir_sce):
+            os.mkdir(self.file_dir_sce)
+
+        self.file_dir_data = os.getcwd() + '/' + str(time.strftime("%Y_%m_%d")) + '_NSGAII_datalog_' + str(
+            self.maxIterations)
+        if not os.path.exists(self.file_dir_data):
+            os.mkdir(self.file_dir_data)
+
+        self.file_dir_eval = os.getcwd() + '/' + str(time.strftime("%Y_%m_%d")) + '_NSGAII_results_' + str(
+            self.maxIterations)
+        if not os.path.exists(self.file_dir_eval):
+            os.mkdir(self.file_dir_eval)
+
+    # def createfolders (self,):
+    #     self.file_dir_sce = os.getcwd() + '/' + str(time.strftime("%Y_%m_%d")) + '_NSGAII_scenarios_' + str(self.maxIterations)
+    #     if os.path.exists(self.file_dir_sce):
+    #         shutil.rmtree(self.file_dir_sce)
+    #         os.mkdir(self.file_dir_sce)
+    #     else:
+    #         os.mkdir(self.file_dir_sce)
+    #
+    #     self.file_dir_data = os.getcwd() + '/' + str(time.strftime("%Y_%m_%d")) + '_NSGAII_datalog_' + str(self.maxIterations)
+    #     if os.path.exists(self.file_dir_data):
+    #         shutil.rmtree(self.file_dir_data)
+    #         os.mkdir(self.file_dir_data)
+    #     else:
+    #         os.mkdir(self.file_dir_data)
+    #
+    #     self.file_dir_eval = os.getcwd() + '/' + str(time.strftime("%Y_%m_%d")) + '_NSGAII_results_' + str(self.maxIterations)
+    #     if os.path.exists(self.file_dir_eval):
+    #         shutil.rmtree(self.file_dir_eval)
+    #         os.mkdir(self.file_dir_eval)
+    #     else:
+    #         os.mkdir(self.file_dir_eval)
 
 
 

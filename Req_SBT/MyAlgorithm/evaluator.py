@@ -1,11 +1,10 @@
 import functools
 from abc import ABC, abstractmethod
-import itertools
 from multiprocessing.pool import ThreadPool, Pool
 from typing import TypeVar, List, Generic
-# from pathos.multiprocessing import ProcessingPoll as Pool
-import pathos
-import globalvar
+import globalvar as gl
+from multiprocessing import Pool, Lock, Manager
+import itertools
 
 try:
     import dask
@@ -19,6 +18,11 @@ except ImportError:
 
 from jmetal.core.problem import Problem
 
+
+# def init(l):
+# 	global lock
+# 	lock = l
+
 S = TypeVar('S')
 
 
@@ -29,61 +33,18 @@ class Evaluator(Generic[S], ABC):
         pass
 
     @staticmethod
-    def evaluate_solution(idx, solution: S, problem: Problem) -> None:
-        problem.evaluate(idx, solution)
+    def evaluate_solution(solution: S, problem: Problem) -> None:
+        problem.evaluate(solution)
 
 
 class SequentialEvaluator(Evaluator[S]):
 
     def evaluate(self, solution_list: List[S], problem: Problem) -> List[S]:
-        for idx, solution in enumerate(solution_list):
-            Evaluator.evaluate_solution(idx, solution, problem)
-
-        return solution_list
-
-class MultiprocessEvaluator(Evaluator[S]):
-    def __init__(self, processes: int = None):
-        super().__init__()
-        # self.pool = Pool(processes)
-        self.pool = pathos.multiprocessing.ProcessingPool(processes)
-
-    def evaluate(self, solution_list: List[S], problem: Problem) -> List[S]:
-        x = [solution_list.index(x) for x in solution_list]
-        #
-        # for solution in solution_list :
-        #     result = solution.objectives
-        #     print(result)
-        # x_y = zip(x, y)
-        # return self.pool.map(functools.partial(Evaluator.evaluate_solution, problem=problem), x_y)
-        # return self.pool.map(Evaluator.evaluate_solution, zip(x, solution_list, itertools.repeat(problem)))
-
-        # return self.pool.map(Evaluator.evaluate_solution, x, y, itertools.repeat(problem))
-
-        self.pool.map(Evaluator.evaluate_solution, x, solution_list, itertools.repeat(problem))
-
-        print(type(reee))
-
-        bestlog = globalvar.get_value('BestPop')
-
         for solution in solution_list:
-            result = solution.objectives
-            print("final result", result)
-            # print("final result", reee[solution].objectives)
-            bestlog.update_bestpop(result)
-            globalvar.set_value('BestPop', bestlog)
-            print("\033[1;32m bestlog.pop \033[0m", bestlog.pop)
-
-        # global bestpop
-        # bestlog = globalvar.get_value('BestPop')
-        bestlog.update_weight()
-        bestlog.update_round()
-        print("\033[1;31m new round \033[0m", bestlog.round)
-        globalvar.set_value('BestPop', bestlog)
-        bestpop2 = globalvar.get_value('BestPop')
-        print("\033[1;31m new round \033[0m", bestpop2.round, bestpop2.pop)
-
+            Evaluator.evaluate_solution(solution, problem)
 
         return solution_list
+
 
 class MapEvaluator(Evaluator[S]):
 
@@ -91,10 +52,80 @@ class MapEvaluator(Evaluator[S]):
         self.pool = ThreadPool(processes)
 
     def evaluate(self, solution_list: List[S], problem: Problem) -> List[S]:
-        x = [solution_list.index(x) for x in solution_list]
-        y = solution_list
-        # z = problem * len(x)
-        x_y = zip(x, y)
-        solution_list_out = self.pool.map(Evaluator.evaluate_solution, x, y, itertools.repeat(problem))
+        self.pool.map(lambda solution: Evaluator.evaluate_solution(solution, problem), solution_list)
 
-        return solution_list_out
+        return solution_list
+
+
+class MultiprocessEvaluator(Evaluator[S]):
+    def __init__(self, processes: int = None):
+        super().__init__()
+        # lock = Lock()
+        self.pool = Pool(processes)
+        # self.pool = Pool(processes, initializer = init, initargs = (lock,))
+
+    def evaluate(self, solution_list: List[S], problem: Problem) -> List[S]:
+
+        problem.bestpop.update_round()
+        print("\033[1;31m new round \033[0m", problem.bestpop.round)
+
+        if problem.bestpop.round > 1:
+            # print(problem.bestpop.pop)
+            problem.bestpop.add_results()
+            problem.bestpop.update_weight()
+
+
+        # gl.set_value('BestPop', bestlog)
+        # bestpop2 = gl.get_value('BestPop')
+        # print("\033[1;31m new round \033[0m", bestpop2.round, bestpop2.pop)
+
+        # results_list = self.pool.map(functools.partial(evaluate_solution, problem=problem), solution_list)
+        #
+        # self.pool.close()
+        # self.pool.join()
+        # manager = Manager()
+        # lock = manager.Lock()
+        # func = functools.partial(evaluate_solution, problem=problem, lock = lock)
+
+        # return self.pool.map(func, solution_list)
+        return self.pool.map(functools.partial(evaluate_solution, problem=problem), solution_list)
+
+# class MultiprocessEvaluator(Evaluator[S]):
+#     def __init__(self, processes: int = None):
+#         super().__init__()
+#         self.pool = Pool(processes)
+#
+#     def evaluate(self, solution_list: List[S], problem: Problem) -> List[S]:
+#         return self.pool.map(functools.partial(evaluate_solution, problem=problem), solution_list)
+
+
+class SparkEvaluator(Evaluator[S]):
+    def __init__(self, processes: int = 8):
+        self.spark_conf = SparkConf().setAppName("jmetalpy").setMaster(f"local[{processes}]")
+        self.spark_context = SparkContext(conf=self.spark_conf)
+
+        logger = self.spark_context._jvm.org.apache.log4j
+        logger.LogManager.getLogger("org").setLevel(logger.Level.WARN)
+
+    def evaluate(self, solution_list: List[S], problem: Problem) -> List[S]:
+        solutions_to_evaluate = self.spark_context.parallelize(solution_list)
+
+        return solutions_to_evaluate \
+            .map(lambda s: problem.evaluate(s)) \
+            .collect()
+
+
+def evaluate_solution(solution, problem):
+    Evaluator[S].evaluate_solution(solution, problem)
+    return solution
+
+
+class DaskEvaluator(Evaluator[S]):
+    def __init__(self, scheduler='processes'):
+        self.scheduler = scheduler
+
+    def evaluate(self, solution_list: List[S], problem: Problem) -> List[S]:
+        with dask.config.set(scheduler=self.scheduler):
+            return list(dask.compute(*[
+                dask.delayed(evaluate_solution)(solution=solution, problem=problem) for solution in solution_list
+            ]))

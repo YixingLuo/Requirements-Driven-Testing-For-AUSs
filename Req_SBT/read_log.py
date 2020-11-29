@@ -258,6 +258,7 @@ def evaluate_traffic_light (ego_vehicle_state, traffic_light):
     t_green = traffic_light[0]["green_time"]
     t_yellow = traffic_light[0]["yellow_time"]
     t_red = traffic_light[0]["red_time"]
+    t_start = traffic_light[0]["start_s"]
     # print(t_green, t_yellow, t_red)
     ego_velocity = []
     for i in range(len(ego_vehicle_state)):
@@ -283,13 +284,14 @@ def evaluate_traffic_light (ego_vehicle_state, traffic_light):
     #     elif (ego_vehicle_state[i][2] == red_start) and (ego_vehicle_state[i][1]>200):
     #         satisfaction = 1
 
-    if ego_vehicle_state[-1][2] < red_start: ## not start
-        satisfaction = 1
-    elif ego_vehicle_state[index][1] < 196 : ## red light previous
-        satisfaction = 1
-    elif ego_vehicle_state[index][1] > 200.8: ## red light behind
-        satisfaction = 1
-    return satisfaction
+    if len(ego_vehicle_state):
+        if ego_vehicle_state[-1][2] < red_start: ## not start
+            satisfaction = 1
+        elif ego_vehicle_state[index][1] < t_start : ## red light previous 196
+            satisfaction = 1
+        elif ego_vehicle_state[index][1] > t_start+ 5: ## red light behind 200.8
+            satisfaction = 1
+        return satisfaction
 
 
 
