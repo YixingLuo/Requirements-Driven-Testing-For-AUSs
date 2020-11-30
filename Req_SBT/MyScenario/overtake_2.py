@@ -22,7 +22,7 @@ def get_time_stamp():
     return time_stamp
 
 
-def create_run_scenario_overtake (Vars, BestPop):
+def create_run_scenario_overtake (Vars, BestPop, Configure):
 # def create_run_scenario_overtake(Vars, num_sce, file_dir_sce, file_dir_data, file_dir_eval):
 
     # bestlog = globalvar.get_value('BestPop')
@@ -48,7 +48,7 @@ def create_run_scenario_overtake (Vars, BestPop):
     # population = config.population
     # population = Vars.shape[0]
 
-    config = configure()
+    config = Configure
     # config =  globalvar.get_value('Configure')
     population = config.population
 

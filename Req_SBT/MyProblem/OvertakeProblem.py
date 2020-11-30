@@ -60,7 +60,7 @@ class OvertakeProblem(FloatProblem):
         # bestlog = gl.get_value('BestPop')
         # print("\033[1;32m round: \033[0m",bestlog.round)
 
-        result = create_run_scenario_overtake(Vars, self.bestpop)
+        result = create_run_scenario_overtake(Vars, self.bestpop, self.config)
 
         solution.objectives = result
 

@@ -56,6 +56,7 @@ class BestPop:
         fileList.sort()
         for i in range (self.generation):
             textname = self.configure.file_dir_eval + '/' + fileList[(self.round-2) * self.generation + i]
+            print(textname)
             result = np.loadtxt(textname)
             self.pop.append(list(result))
             if (self.round - 1) % self.interval == 0:
