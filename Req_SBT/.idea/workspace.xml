@@ -12,16 +12,26 @@
   <component name="CoverageDataManager">
     <SUITE FILE_PATH="coverage/Req_SBT$test.coverage" NAME="test Coverage Results" MODIFIED="1606649555574" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/Req_SBT$run_scenario.coverage" NAME="run_scenario Coverage Results" MODIFIED="1606442605506" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
-    <SUITE FILE_PATH="coverage/Req_SBT$parallel_nsgaii.coverage" NAME="parallel_nsgaii Coverage Results" MODIFIED="1606655369185" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/Req_SBT$data_process.coverage" NAME="data_process Coverage Results" MODIFIED="1606790432376" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/DataProcessing" />
+    <SUITE FILE_PATH="coverage/Req_SBT$parallel_nsgaii.coverage" NAME="parallel_nsgaii Coverage Results" MODIFIED="1606790997443" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/Req_SBT$MOGA.coverage" NAME="MOGA Coverage Results" MODIFIED="1606405114733" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
+      <file leaf-file-name="read_log.py" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/read_log.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="387">
+              <caret line="138" column="94" selection-start-line="138" selection-start-column="94" selection-end-line="138" selection-end-column="94" />
+            </state>
+          </provider>
+        </entry>
+      </file>
       <file leaf-file-name="evaluator.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/MyAlgorithm/evaluator.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="145">
-              <caret line="73" selection-start-line="73" selection-end-line="73" />
+            <state relative-caret-position="390">
+              <caret line="71" column="58" selection-start-line="71" selection-start-column="58" selection-end-line="71" selection-end-column="58" />
               <folding>
                 <element signature="e#0#16#0" expanded="true" />
               </folding>
@@ -29,11 +39,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="bestpop.py" pinned="false" current-in-tab="true">
+      <file leaf-file-name="bestpop.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/bestpop.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="145">
-              <caret line="57" selection-start-line="57" selection-end-line="57" />
+            <state relative-caret-position="918">
+              <caret line="54" selection-start-line="54" selection-end-line="62" selection-end-column="46" />
               <folding>
                 <element signature="e#41#72#0" expanded="true" />
               </folding>
@@ -44,8 +54,8 @@
       <file leaf-file-name="Configure.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/Configure.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="188">
-              <caret line="47" column="28" selection-start-line="47" selection-start-column="26" selection-end-line="47" selection-end-column="28" />
+            <state relative-caret-position="137">
+              <caret line="83" column="65" selection-start-line="83" selection-start-column="58" selection-end-line="83" selection-end-column="65" />
             </state>
           </provider>
         </entry>
@@ -53,11 +63,17 @@
       <file leaf-file-name="OvertakeProblem.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/MyProblem/OvertakeProblem.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="235">
-              <caret line="60" column="27" selection-start-line="60" selection-start-column="17" selection-end-line="60" selection-end-column="27" />
-              <folding>
-                <element signature="e#0#13#0" expanded="true" />
-              </folding>
+            <state relative-caret-position="340">
+              <caret line="19" column="20" selection-start-line="19" selection-start-column="5" selection-end-line="19" selection-end-column="20" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="data_process.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/DataProcessing/data_process.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="117">
+              <caret line="68" column="1" selection-start-line="68" selection-start-column="1" selection-end-line="68" selection-end-column="1" />
             </state>
           </provider>
         </entry>
@@ -65,8 +81,8 @@
       <file leaf-file-name="overtake_2.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/MyScenario/overtake_2.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="358">
-              <caret line="229" selection-start-line="229" selection-end-line="229" />
+            <state relative-caret-position="1088">
+              <caret line="121" column="22" selection-start-line="121" selection-start-column="22" selection-end-line="121" selection-end-column="22" />
             </state>
           </provider>
         </entry>
@@ -74,8 +90,11 @@
       <file leaf-file-name="parallel_nsgaii.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/parallel_nsgaii.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="102">
-              <caret line="9" selection-start-line="9" selection-end-line="9" />
+            <state relative-caret-position="340">
+              <caret line="56" selection-start-line="56" selection-end-line="56" />
+              <folding>
+                <element signature="e#0#57#0" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -87,18 +106,6 @@
               <caret line="47" column="131" selection-start-line="47" selection-start-column="85" selection-end-line="47" selection-end-column="131" />
               <folding>
                 <element signature="e#0#11#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="MOGA.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/MOGA.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="493">
-              <caret line="132" column="22" selection-start-line="131" selection-end-line="132" selection-end-column="22" />
-              <folding>
-                <element signature="e#43#61#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -135,6 +142,10 @@
       <find>str(uuid.uuid4())</find>
       <find>pos_s</find>
       <find>0.99792, 0.84416, 0.996558, 1.0, 1.0, 0.950422</find>
+      <find>c</find>
+      <find>New weights</find>
+      <find>configure</find>
+      <find>configu</find>
     </findStrings>
     <replaceStrings>
       <replace />
@@ -165,13 +176,14 @@
         <option value="$PROJECT_DIR$/test2.py" />
         <option value="$PROJECT_DIR$/GlobalMap.py" />
         <option value="D:/Anaconda/envs/tensorflow/Lib/site-packages/jmetal/util/evaluator.py" />
-        <option value="$PROJECT_DIR$/MyProblem/OvertakeProblem.py" />
         <option value="$PROJECT_DIR$/parallel_nsgaii.py" />
-        <option value="$PROJECT_DIR$/MyScenario/overtake_2.py" />
-        <option value="$PROJECT_DIR$/MyAlgorithm/evaluator.py" />
         <option value="$PROJECT_DIR$/test.py" />
-        <option value="$PROJECT_DIR$/Configure.py" />
+        <option value="$PROJECT_DIR$/MyProblem/OvertakeProblem.py" />
+        <option value="$PROJECT_DIR$/MyScenario/overtake_2.py" />
         <option value="$PROJECT_DIR$/bestpop.py" />
+        <option value="$PROJECT_DIR$/DataProcessing/data_process.py" />
+        <option value="$PROJECT_DIR$/Configure.py" />
+        <option value="$PROJECT_DIR$/MyAlgorithm/evaluator.py" />
       </list>
     </option>
   </component>
@@ -211,7 +223,7 @@
   </component>
   <component name="PropertiesComponent">
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/../../jMetalPy" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
     <property name="nodejs_npm_path_reset_for_default_project" value="true" />
     <property name="settings.editor.selected.configurable" value="File.Encoding" />
@@ -251,6 +263,25 @@
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
       <option name="SCRIPT_NAME" value="$PROJECT_DIR$/MOGA.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+    </configuration>
+    <configuration name="data_process" type="PythonConfigurationType" factoryName="Python" temporary="true">
+      <module name="Req_SBT" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/DataProcessing" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/DataProcessing/data_process.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
@@ -318,10 +349,12 @@
       <item itemvalue="Python.run_scenario" />
       <item itemvalue="Python.parallel_nsgaii" />
       <item itemvalue="Python.test" />
+      <item itemvalue="Python.data_process" />
     </list>
     <recent_temporary>
       <list>
         <item itemvalue="Python.parallel_nsgaii" />
+        <item itemvalue="Python.data_process" />
         <item itemvalue="Python.test" />
         <item itemvalue="Python.run_scenario" />
         <item itemvalue="Python.MOGA" />
@@ -343,19 +376,18 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
-    <editor active="true" />
     <layout>
       <window_info anchor="bottom" id="TODO" order="6" />
       <window_info anchor="bottom" id="Event Log" order="7" side_tool="true" />
       <window_info anchor="bottom" id="Database Changes" order="7" show_stripe_button="false" />
       <window_info anchor="bottom" id="Version Control" order="7" show_stripe_button="false" />
       <window_info anchor="bottom" id="Python Console" order="7" weight="0.32897604" />
-      <window_info active="true" anchor="bottom" id="Run" order="2" visible="true" weight="0.4694989" />
+      <window_info active="true" anchor="bottom" id="Run" order="2" visible="true" weight="0.3093682" />
       <window_info anchor="bottom" id="Terminal" order="7" weight="0.32897604" />
-      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.27238807" />
+      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.19722815" />
       <window_info anchor="bottom" id="Docker" order="7" show_stripe_button="false" />
       <window_info anchor="right" id="Database" order="3" />
-      <window_info anchor="right" id="SciView" order="3" />
+      <window_info anchor="right" id="SciView" order="3" visible="true" weight="0.11247335" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.39978212" />
@@ -403,34 +435,6 @@
     </breakpoint-manager>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://D:/Anaconda/envs/tensorflow/Lib/site-packages/jmetal/util/comparator.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="2006">
-          <caret line="123" column="21" selection-start-line="123" selection-start-column="21" selection-end-line="123" selection-end-column="21" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://D:/Anaconda/envs/tensorflow/Lib/site-packages/jmetal/core/algorithm.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1207">
-          <caret line="79" selection-start-line="79" selection-end-line="79" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/MyScenario/overtake_2.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="3043">
-          <caret line="179" column="26" selection-start-line="179" selection-start-column="19" selection-end-line="179" selection-end-column="26" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/read_log.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="68">
-          <caret line="9" selection-start-line="9" selection-end-line="9" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/run_scenario.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="51">
@@ -628,13 +632,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/read_log.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="2397">
-          <caret line="146" column="32" selection-start-line="146" selection-start-column="32" selection-end-line="146" selection-end-column="32" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/NSGAII_iteration.txt">
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
@@ -670,23 +667,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/MyScenario/overtake_2.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="358">
-          <caret line="229" selection-start-line="229" selection-end-line="229" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/MyProblem/OvertakeProblem.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="235">
-          <caret line="60" column="27" selection-start-line="60" selection-start-column="17" selection-end-line="60" selection-end-column="27" />
-          <folding>
-            <element signature="e#0#13#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/MOGA.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="493">
@@ -707,24 +687,44 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/parallel_nsgaii.py">
+    <entry file="file://$PROJECT_DIR$/2020_11_30_NSGAII_scenarios_10000/scenario_20201201080449_177_7299d6886adf4df49f98f8d4984966e7.json">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/2020_11_30_NSGAII_results_10000/result_20201201080348_226_9e04fc82896a4e6c8ed67dfb195c2a53.txt">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/2020_11_30_NSGAII_results_10000/result_20201201080449_177_7299d6886adf4df49f98f8d4984966e7.txt">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="102">
-          <caret line="9" selection-start-line="9" selection-end-line="9" />
+        <state relative-caret-position="17">
+          <caret line="1" column="8" lean-forward="true" selection-start-line="1" selection-start-column="8" selection-end-line="1" selection-end-column="8" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/MyProblem/OvertakeProblem.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="340">
+          <caret line="19" column="20" selection-start-line="19" selection-start-column="5" selection-end-line="19" selection-end-column="20" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/DataProcessing/data_process.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="117">
+          <caret line="68" column="1" selection-start-line="68" selection-start-column="1" selection-end-line="68" selection-end-column="1" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/Configure.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="188">
-          <caret line="47" column="28" selection-start-line="47" selection-start-column="26" selection-end-line="47" selection-end-column="28" />
+        <state relative-caret-position="137">
+          <caret line="83" column="65" selection-start-line="83" selection-start-column="58" selection-end-line="83" selection-end-column="65" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/MyAlgorithm/evaluator.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="145">
-          <caret line="73" selection-start-line="73" selection-end-line="73" />
+        <state relative-caret-position="390">
+          <caret line="71" column="58" selection-start-line="71" selection-start-column="58" selection-end-line="71" selection-end-column="58" />
           <folding>
             <element signature="e#0#16#0" expanded="true" />
           </folding>
@@ -733,11 +733,35 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/bestpop.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="145">
-          <caret line="57" selection-start-line="57" selection-end-line="57" />
+        <state relative-caret-position="918">
+          <caret line="54" selection-start-line="54" selection-end-line="62" selection-end-column="46" />
           <folding>
             <element signature="e#41#72#0" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/parallel_nsgaii.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="340">
+          <caret line="56" selection-start-line="56" selection-end-line="56" />
+          <folding>
+            <element signature="e#0#57#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/MyScenario/overtake_2.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1088">
+          <caret line="121" column="22" selection-start-line="121" selection-start-column="22" selection-end-line="121" selection-end-column="22" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/read_log.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="387">
+          <caret line="138" column="94" selection-start-line="138" selection-start-column="94" selection-end-line="138" selection-end-column="94" />
         </state>
       </provider>
     </entry>

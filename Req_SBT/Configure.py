@@ -80,20 +80,25 @@ class configure:
         self.acc_2 = [0, 3]
         self.start_time_2 = [0,2]
 
-        self.file_dir_sce = os.getcwd() + '/' + str(time.strftime("%Y_%m_%d")) + '_NSGAII_scenarios_' + str(
+        ## algorithm
+        self.algorithm = "NSGA_II" ## "NSGA_II": NSGA_II, "Adapt": NSGA_II_Goal_Adapt
+
+        self.file_dir_sce = os.getcwd() + '/' + str(time.strftime("%Y_%m_%d")) + '_' + str(self.algorithm) + '_scenarios_' + str(
             self.maxIterations)
         if not os.path.exists(self.file_dir_sce):
             os.mkdir(self.file_dir_sce)
 
-        self.file_dir_data = os.getcwd() + '/' + str(time.strftime("%Y_%m_%d")) + '_NSGAII_datalog_' + str(
+        self.file_dir_data = os.getcwd() + '/' + str(time.strftime("%Y_%m_%d")) + '_' + str(self.algorithm) + '_datalog_' + str(
             self.maxIterations)
         if not os.path.exists(self.file_dir_data):
             os.mkdir(self.file_dir_data)
 
-        self.file_dir_eval = os.getcwd() + '/' + str(time.strftime("%Y_%m_%d")) + '_NSGAII_results_' + str(
+        self.file_dir_eval = os.getcwd() + '/' + str(time.strftime("%Y_%m_%d")) + '_' + str(self.algorithm) + '_results_' + str(
             self.maxIterations)
         if not os.path.exists(self.file_dir_eval):
             os.mkdir(self.file_dir_eval)
+
+
 
     # def createfolders (self,):
     #     self.file_dir_sce = os.getcwd() + '/' + str(time.strftime("%Y_%m_%d")) + '_NSGAII_scenarios_' + str(self.maxIterations)
