@@ -6,6 +6,7 @@ import globalvar as gl
 from multiprocessing import Pool, Lock, Manager
 import itertools
 
+
 try:
     import dask
 except ImportError:
@@ -68,6 +69,7 @@ class MultiprocessEvaluator(Evaluator[S]):
 
         problem.bestpop.update_round()
         print("\033[1;31m new round \033[0m", problem.bestpop.round)
+        problem.bestpop.clear()
 
         if problem.bestpop.configure.algorithm == "Adapt":
             if problem.bestpop.round > 1:

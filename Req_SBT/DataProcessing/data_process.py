@@ -3,28 +3,41 @@ sys.path.append("..")
 import json
 import numpy as np
 import random
-from Configure import configure
 import os
 import time
-from read_log import evaluate_distance, evaluate_speed, evaluate_comfort, evaluate_stability, evaluate_traffic_light
-import globalvar as gl
 import seaborn as sns
 import matplotlib.pyplot as plt
 import pandas as pd
 
-file_folder = os.path.abspath(os.path.join(os.getcwd(), "..")) + "/2020_11_30_NSGAII_results_10000"
+file_folder_orgin = os.path.abspath(os.path.join(os.getcwd(), "..")) + "/2020_12_01_NSGA_II_results_10000"
+file_folder_adapt = os.path.abspath(os.path.join(os.getcwd(), "..")) + "/2020_11_30_NSGAII_results_10000"
 
-sum_list = []
-fileList = os.listdir(file_folder)
+sum_list_orgin = []
+fileList = os.listdir(file_folder_orgin)
 fileList.sort()
 for i in range(len(fileList)):
-    textname = file_folder + '/' + fileList[i]
+    textname = file_folder_orgin + '/' + fileList[i]
     # print(textname)
     result = np.loadtxt(textname)
     sum = 0
     for j in range(len(result)):
-        sum += result[j] * np.power(2, j)
-    sum_list.append(sum)
+        if result[j] == 1:
+            sum += result[j] * np.power(2, j)
+    sum_list_orgin.append(sum)
+
+
+sum_list_adapt = []
+fileList = os.listdir(file_folder_adapt)
+fileList.sort()
+for i in range(len(fileList)):
+    textname = file_folder_adapt + '/' + fileList[i]
+    # print(textname)
+    result = np.loadtxt(textname)
+    sum = 0
+    for j in range(len(result)):
+        if result[j] == 1:
+            sum += result[j] * np.power(2, j)
+    sum_list_adapt.append(sum)
 
 # num_files = 0
 
@@ -67,13 +80,13 @@ for i in range(len(fileList)):
 #             sum += req_flag[i][j][k]*np.power(2,k)
 #         sum_list.append(sum)
 #
-print(len(sum_list))
+# print(len(sum_list))
 
 
 sns.set_style("darkgrid")
 fig,axes = plt.subplots(1,2)
-# sns.displot(sum_list, norm_hist = True, kde = False, ax = axes[0])
-sns.displot(sum_list, kde = False, ax = axes[1])
+sns.displot(sum_list_orgin, kde = False, ax = axes[0])
+sns.displot(sum_list_adapt, kde = False, ax = axes[1])
 
 # sns.displot(sum_list)
 # sns.histplot(sum_list)
@@ -84,8 +97,12 @@ plt.show()
 
 
 ##count the number
-# se = pd.Series(sum_list)
-# countDict = dict(se.value_counts())
-# proportitionDict = dict(se.value_counts(normalize=True))
-# print(countDict)
-# print(proportitionDict)
+se = pd.Series(sum_list_orgin)
+countDict = dict(se.value_counts())
+proportitionDict = dict(se.value_counts(normalize=True))
+print(countDict)
+print(proportitionDict)
+se = pd.Series(sum_list_adapt)
+countDict = dict(se.value_counts())
+proportitionDict = dict(se.value_counts(normalize=True))
+print(countDict)

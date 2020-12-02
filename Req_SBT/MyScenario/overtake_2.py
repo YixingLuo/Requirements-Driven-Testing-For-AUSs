@@ -224,11 +224,12 @@ def create_run_scenario_overtake (Vars, BestPop, Configure):
     # print(result_name)
     np.savetxt(result_name, result, fmt="%f", delimiter=" ")
 
-    weights = BestPop.weights
-    for i in range (config.goal_num):
-        result[i] = weights[i] *  result[i]
+    if Configure.algorithm == 'Adapt':
+        weights = BestPop.weights
+        for i in range (config.goal_num):
+            result[i] = weights[i] *  result[i]
 
-    print("Results after weight:", result)
+        print("Results after weight:", result)
 
     return result
 

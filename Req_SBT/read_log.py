@@ -208,7 +208,8 @@ def evaluate_speed (ego_vehicle_state):
     return  np.mean(satisfaction_list), min(satisfaction_list)
 
 def evaluate_comfort (ego_vehicle_state):
-    comfort_list = []
+    comfort_list_1 = []
+    comfort_list_2 = []
 
     for i in range(len(ego_vehicle_state)-1):
         a_pre = [ego_vehicle_state[i][6]*math.cos(ego_vehicle_state[i][3]), ego_vehicle_state[i][6]*math.sin(ego_vehicle_state[i][3])]
@@ -221,7 +222,7 @@ def evaluate_comfort (ego_vehicle_state):
         comfort_now_2 = math.exp(- delta_v)
 
         comfort_list_1.append (comfort_now_1)
-        comfort_list_2.append(comfort_now_2)
+        comfort_list_2.append (comfort_now_2)
         # print(a_pre, a_next, np.sqrt(np.sum(np.square(np.array(a_pre)-np.array(a_next)))), comfort_now)
 
     if len(comfort_list_1) == 0:
@@ -258,7 +259,7 @@ def evaluate_stability (ego_vehicle_state):
     else:
         satisfaction_curvature = 1/(len(curvature_list))*sum(curvature_list)
         # satisfaction_curvature = min (satisfaction)
-    return satisfaction_curvature, min (satisfaction)
+    return satisfaction_curvature, min(curvature_list)
 
 def evaluate_traffic_light (ego_vehicle_state, traffic_light):
     t_green = traffic_light[0]["green_time"]

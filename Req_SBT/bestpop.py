@@ -5,6 +5,7 @@ import math
 import globalvar
 import os
 import numpy as np
+import shutil
 
 class BestPop:
     def __init__(self, configure):
@@ -62,6 +63,10 @@ class BestPop:
             if (self.round - 1) % self.interval == 0:
                 self.best.append(list(result))
 
+    def clear(self,):
+        filefolder = self.configure.file_dir_data
+        shutil.rmtree(filefolder)
+        os.mkdir(filefolder)
 
     # def update_weight (self,idx):
     #     if (idx + 1) % self.generation == 0 and self.round % self.interval==0:
