@@ -190,14 +190,14 @@ def create_run_scenario_overtake (Vars, BestPop, Configure):
 
 
 
-    comfort = evaluate_comfort(ego_vehicle_state)
-    speed = evaluate_speed(ego_vehicle_state)
-    min_dis, min_satisfaction, avg_satisfaction = evaluate_distance(ego_vehicle_state, dynamic_vehicle_state,
+    comfort1, comfort2 = evaluate_comfort(ego_vehicle_state)
+    avg_speed, min_speed = evaluate_speed(ego_vehicle_state)
+    min_dis, avg_dis_satisfaction, min_dis_satisfaction = evaluate_distance(ego_vehicle_state, dynamic_vehicle_state,
                                                                     dy_obsList, static_vehicle_state, st_obsList)
-    stable = evaluate_stability(ego_vehicle_state)
+    avg_stable, min_stable = evaluate_stability(ego_vehicle_state)
     traffic_light = evaluate_traffic_light(ego_vehicle_state, traffic_light)
 
-    result = [stable, min_satisfaction, avg_satisfaction, speed, traffic_light, comfort]
+    result = [avg_stable, min_stable, avg_dis_satisfaction, min_dis_satisfaction, avg_speed, min_speed, traffic_light, comfort1, comfort2]
 
 
     # result[0] = stable

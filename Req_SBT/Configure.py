@@ -46,7 +46,7 @@ class configure:
         self.speed_max = 33.3
         self.duration = 60
         self.population = 50
-        self.goal_num = 6
+        self.goal_num = 9
         self.maxIterations = 10000
         self.searchTimeout = 360000
         self.interval = 20
@@ -81,7 +81,7 @@ class configure:
         self.start_time_2 = [0,2]
 
         ## algorithm
-        self.algorithm = "NSGA_II" ## "NSGA_II": NSGA_II, "Adapt": NSGA_II_Goal_Adapt
+        self.algorithm = "NSGA_III" ## "NSGA_II": NSGA_II, "Adapt": NSGA_II_Goal_Adapt
 
         self.file_dir_sce = os.getcwd() + '/' + str(time.strftime("%Y_%m_%d")) + '_' + str(self.algorithm) + '_scenarios_' + str(
             self.maxIterations)
