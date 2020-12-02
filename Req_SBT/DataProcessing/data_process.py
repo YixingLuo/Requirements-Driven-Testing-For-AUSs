@@ -22,13 +22,13 @@ for i in range(len(fileList)):
     # print(textname)
     result = np.loadtxt(textname)
     sum = 0
-    flag = 0
-    for j in range(len(result)):
-    	if not (result[j] >=0 and result[j] <= 1):
-            flag = 1
-    		break
-    if not flag:
-    	result_list.append(list(result))
+    # flag = 0
+    # for j in range(len(result)):
+    # 	if not (result[j] >=0 and result[j] <= 1):
+    #         flag = 1
+    # 		break
+    # if not flag:
+    result_list.append(list(result))
     for j in range(len(result)):
         if result[j] == 1:
             sum += result[j] * np.power(2, j)
@@ -98,6 +98,7 @@ for i in range(len(fileList)):
 # print(result_list)
 sns.set_style("darkgrid")
 data = DataFrame(result_list)
+data.dropna(axis=0,how='any')
 print(data)
 data.corr()
 # sns.pairplot(data)
@@ -108,7 +109,7 @@ g = sns.PairGrid(data)
 g.map_diag(sns.distplot)
 g.map_upper(plt.scatter)
 g.map_lower(sns.kdeplot)
-# sns.distplot(data['total_bill'])
+# sns.distplot(data['0'])
 
 
 
