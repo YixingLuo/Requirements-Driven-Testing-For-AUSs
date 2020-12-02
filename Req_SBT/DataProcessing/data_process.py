@@ -8,11 +8,13 @@ import time
 import seaborn as sns
 import matplotlib.pyplot as plt
 import pandas as pd
+from pandas.core.frame import DataFrame
 
 file_folder_orgin = os.path.abspath(os.path.join(os.getcwd(), "..")) + "/2020_12_01_NSGA_II_results_10000"
-file_folder_adapt = os.path.abspath(os.path.join(os.getcwd(), "..")) + "/2020_11_30_NSGAII_results_10000"
+# file_folder_adapt = os.path.abspath(os.path.join(os.getcwd(), "..")) + "/2020_11_30_NSGAII_results_10000"
 
 sum_list_orgin = []
+result_list = []
 fileList = os.listdir(file_folder_orgin)
 fileList.sort()
 for i in range(len(fileList)):
@@ -20,24 +22,31 @@ for i in range(len(fileList)):
     # print(textname)
     result = np.loadtxt(textname)
     sum = 0
+    flag = 0
+    for j in range(len(result)):
+    	if not (result[j] >=0 and result[j] <= 1):
+            flag = 1
+    		break
+    if not flag:
+    	result_list.append(list(result))
     for j in range(len(result)):
         if result[j] == 1:
             sum += result[j] * np.power(2, j)
     sum_list_orgin.append(sum)
 
 
-sum_list_adapt = []
-fileList = os.listdir(file_folder_adapt)
-fileList.sort()
-for i in range(len(fileList)):
-    textname = file_folder_adapt + '/' + fileList[i]
-    # print(textname)
-    result = np.loadtxt(textname)
-    sum = 0
-    for j in range(len(result)):
-        if result[j] == 1:
-            sum += result[j] * np.power(2, j)
-    sum_list_adapt.append(sum)
+# sum_list_adapt = []
+# fileList = os.listdir(file_folder_adapt)
+# fileList.sort()
+# for i in range(len(fileList)):
+#     textname = file_folder_adapt + '/' + fileList[i]
+#     # print(textname)
+#     result = np.loadtxt(textname)
+#     sum = 0
+#     for j in range(len(result)):
+#         if result[j] == 1:
+#             sum += result[j] * np.power(2, j)
+#     sum_list_adapt.append(sum)
 
 # num_files = 0
 
@@ -83,26 +92,46 @@ for i in range(len(fileList)):
 # print(len(sum_list))
 
 
+
+
+## plot
+# print(result_list)
 sns.set_style("darkgrid")
-fig,axes = plt.subplots(1,2)
-sns.displot(sum_list_orgin, kde = False, ax = axes[0])
-sns.displot(sum_list_adapt, kde = False, ax = axes[1])
+data = DataFrame(result_list)
+print(data)
+data.corr()
+# sns.pairplot(data)
+# sns.pairplot(data , markers=["o", "s"])
+sns.heatmap(data.corr())
+sns.clustermap(data.corr())
+g = sns.PairGrid(data)
+g.map_diag(sns.distplot)
+g.map_upper(plt.scatter)
+g.map_lower(sns.kdeplot)
+# sns.distplot(data['total_bill'])
+
+
+
+# sns.set_style("darkgrid")
+# fig,axes = plt.subplots(1,2)
+# sns.displot(sum_list_orgin, kde = False, ax = axes[0])
+# sns.displot(sum_list_adapt, kde = False, ax = axes[1])
 
 # sns.displot(sum_list)
 # sns.histplot(sum_list)
 # plt.show()
 # current_palette = sns.color_palette("hls",12)
 # sns.boxplot(data=sum_list,palette=current_palette) #使用颜色就是传递参数给palette
-plt.show()
+# plt.show()
 
 
 ##count the number
-se = pd.Series(sum_list_orgin)
-countDict = dict(se.value_counts())
-proportitionDict = dict(se.value_counts(normalize=True))
-print(countDict)
-print(proportitionDict)
-se = pd.Series(sum_list_adapt)
-countDict = dict(se.value_counts())
-proportitionDict = dict(se.value_counts(normalize=True))
-print(countDict)
+# se = pd.Series(sum_list_orgin)
+# countDict = dict(se.value_counts())
+# proportitionDict = dict(se.value_counts(normalize=True))
+# print(countDict)
+# print(proportitionDict)
+# se = pd.Series(sum_list_adapt)
+# countDict = dict(se.value_counts())
+# proportitionDict = dict(se.value_counts(normalize=True))
+# print(countDict)
