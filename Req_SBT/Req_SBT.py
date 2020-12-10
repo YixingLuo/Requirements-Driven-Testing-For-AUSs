@@ -1,13 +1,15 @@
 # -*- coding: utf-8 -*-
 
 # from jmetal.algorithm.multiobjective.nsgaii import NSGAII
-from MyAlgorithm.nsgaiii import NSGAII
 from jmetal.algorithm.multiobjective.random_search import RandomSearch
-from jmetal.algorithm.multiobjective.nsgaiii import NSGAIII, UniformReferenceDirectionFactory
+# from jmetal.algorithm.multiobjective.nsgaiii import NSGAIII
+from jmetal.algorithm.multiobjective.nsgaiii import UniformReferenceDirectionFactory
 from jmetal.operator import SBXCrossover, PolynomialMutation
 from jmetal.util.solution import print_function_values_to_file, print_variables_to_file
 # from jmetal.util.termination_criterion import StoppingByEvaluations
 # from jmetal.util.evaluator import SequentialEvaluator,MultiprocessEvaluator
+from MyAlgorithm.nsgaiii import NSGAIII
+from MyAlgorithm.nsgaii import NSGAII
 from MyAlgorithm.termination_criterion import StoppingByEvaluations, StoppingByQualityIndicator
 from MyAlgorithm.evaluator import MultiprocessEvaluator
 from Settings.CarBehindAndInFrontConfigure import CarBehindAndInFrontConfigure
@@ -76,8 +78,8 @@ if __name__ == '__main__':
             offspring_population_size = Configuration.population,
             mutation=PolynomialMutation(probability=1.0 / problem.number_of_variables, distribution_index=20),
             crossover=SBXCrossover(probability=1.0, distribution_index=20),
-            # termination_criterion = StoppingByEvaluations(max_evaluations=max_evaluations)
-            termination_criterion = StoppingByQualityIndicator(quality_indicator=FitnessValue, expected_value=1, degree=0.9)
+            termination_criterion = StoppingByEvaluations(max_evaluations=max_evaluations)
+            # termination_criterion = StoppingByQualityIndicator(quality_indicator=FitnessValue, expected_value=1, degree=0.9)
             # selection = BinaryTournamentSelection()
         )
     elif Configuration.algorithm == "NSGA_III" or Configuration.algorithm == "NSGA_III_Adapt":

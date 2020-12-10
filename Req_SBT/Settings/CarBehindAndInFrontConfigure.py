@@ -46,11 +46,11 @@ class CarBehindAndInFrontConfigure:
         self.speed_limit = 16.67
         self.speed_max = 33.3
         self.duration = 120
-        self.population = 30
+        self.population = 20
         self.goal_num = 7
         self.maxIterations = 10000
         self.searchTimeout = 360000
-        self.interval = 20
+        self.interval = 50
         self.num_variables = 19
         self.PoolType = "Thread"
         # self.PoolType = "Process"
