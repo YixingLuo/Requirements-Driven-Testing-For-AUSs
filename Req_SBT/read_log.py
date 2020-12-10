@@ -193,7 +193,7 @@ def evaluate_speed (ego_vehicle_state):
     ## type 2
     satisfaction_list = []
     for i in range(len(speed_list)):
-        if speed_list[i]<= config.speed_limit:
+        if speed_list[i] <= config.speed_limit:
             ds = 1
         elif  speed_list[i] > config.speed_max:
             ds = 0
@@ -262,19 +262,20 @@ def evaluate_stability (ego_vehicle_state):
     return satisfaction_curvature, min(curvature_list)
 
 def evaluate_traffic_light (ego_vehicle_state, traffic_light):
-    t_green = traffic_light[0]["green_time"]
-    t_yellow = traffic_light[0]["yellow_time"]
-    t_red = traffic_light[0]["red_time"]
-    t_start = traffic_light[0]["start_s"]
+    t_green = float(traffic_light[0]["green_time"])
+    t_yellow = float(traffic_light[0]["yellow_time"])
+    t_red = float(traffic_light[0]["red_time"])
+    t_start = float(traffic_light[0]["start_s"])
     # print(t_green, t_yellow, t_red)
     ego_velocity = []
     for i in range(len(ego_vehicle_state)):
         if (ego_vehicle_state[i][2] >= t_green + t_yellow) and (ego_vehicle_state[i][2] <= t_green + t_yellow + t_red):
             # print(ego_vehicle_state[i][4])
-            if abs(ego_vehicle_state[i][4]) < 0.1:
+            if abs(ego_vehicle_state[i][4]) < 1:
                 ego_velocity.append(ego_vehicle_state[i][4])
     stop_time = 0.1 * len(ego_velocity)
-    if stop_time < 0:
+    if stop_time <= 0:
+        # print(1)
         satisfaction = 0
     else:
         satisfaction = stop_time/t_red
@@ -283,23 +284,43 @@ def evaluate_traffic_light (ego_vehicle_state, traffic_light):
     red_start = t_green + t_yellow
     red_end = t_green + t_yellow + t_red
     index = int(red_start/0.1)
-    index_2 = int(red_start/0.1)
+    index_2 = int(red_end/0.1)
     # print(red_start,index,  ego_vehicle_state[index][2], len(ego_vehicle_state), ego_vehicle_state[index][1])
     # for i in range(len(ego_vehicle_state)):
     #     if (ego_vehicle_state[i][2] == red_start):
     #         print(ego_vehicle_state[i])
-    #     elif (ego_vehicle_state[i][2] == red_start) and (ego_vehicle_state[i][1]>200):
+    #     elif (ego_vehicle_state[i][2]· == red_start) and (ego_vehicle_state[i][1]>200):
     #         satisfaction = 1
 
-    if len(ego_vehicle_state):
-        if ego_vehicle_state[-1][2] < red_start: ## not start
+    # print(ego_velocity)
+    # print(satisfaction,len(ego_vehicle_state))
+    if len(ego_vehicle_state) <= index:
+        satisfaction = 1
+    elif len(ego_vehicle_state) > index:
+        if ego_vehicle_state[index][1] > t_start: ## not start
             satisfaction = 1
-        elif ego_vehicle_state[index][1] < t_start : ## red light previous 196
+    elif len(ego_vehicle_state) > index_2:
+        if ego_vehicle_state[index_2][1] < t_start : ## red light previous 196
+            # print(ego_vehicle_state[index], index)
+            # print(2)
             satisfaction = 1
-        elif ego_vehicle_state[index][1] > t_start+ 5: ## red light behind 200.8
-            satisfaction = 1
-        return satisfaction
+        # elif ego_vehicle_state[index][1] > t_start+ 5: ## red light behind 200.8
+        #     print(3)
+        #     satisfaction = 1
+    return satisfaction
 
+def evaluate_cross_lane (ego_vehicle_state):
+    satisfaction = 1
+    total_time = 0
+    # print(ego_vehicle_state)
+    for i in range (len(ego_vehicle_state)):
+        if ego_vehicle_state[i][0] > 0:
+            total_time += 1
+    # print(total_time, len(ego_vehicle_state))
+    if not total_time:
+        return satisfaction
+    else:
+        return total_time/len(ego_vehicle_state)
 
 
 

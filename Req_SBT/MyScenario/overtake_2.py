@@ -6,7 +6,7 @@ import random
 from Configure import configure
 import os
 import time
-from read_log import evaluate_distance, evaluate_speed, evaluate_comfort, evaluate_stability, evaluate_traffic_light
+from read_log import evaluate_distance, evaluate_speed, evaluate_comfort, evaluate_stability, evaluate_traffic_light, evaluate_cross_lane
 import globalvar
 # from bestpop import BestPop
 import math
@@ -57,6 +57,7 @@ def create_run_scenario_overtake (Vars, BestPop, Configure):
     file_dir_sce = config.file_dir_sce
     file_dir_data = config.file_dir_data
     file_dir_eval = config.file_dir_eval
+    file_dir_var = config.file_dir_var
 
     # for num_sce in range(population):
 
@@ -115,6 +116,12 @@ def create_run_scenario_overtake (Vars, BestPop, Configure):
     with open(scenario_name, 'w', encoding='utf-8') as f:
         json.dump(ret_dic, f, ensure_ascii=False, indent=4)
 
+
+    var_name = file_dir_var + "/var_" + now_time + "_" + uuid_str + ".txt"
+
+    with open(var_name, 'w', encoding='utf-8') as f:
+        json.dump(Vars, f, ensure_ascii=False, indent=4)
+
     ## run the scenario
     duration = config.duration
 
@@ -122,9 +129,10 @@ def create_run_scenario_overtake (Vars, BestPop, Configure):
     # print(file_path)
 
     log_name = file_dir_data + "/datalog_" + now_time  + "_" + uuid_str + ".txt"
-    cmd = "C:/Users/lenovo/Documents/GitHub/mazda-path-planner-sbt_changes/mazda-path-planner-sbt_changes/ERATO_planning/x64/Release/" \
-          "dynamic_cost -c %d -v EGO_TESTER -a -i %s > %s" % (duration, scenario_name, log_name)
+    # cmd = "C:/Users/lenovo/Documents/GitHub/mazda-path-planner-sbt_changes/mazda-path-planner-sbt_changes/ERATO_planning/x64/Release/dynamic_cost.exe -c %d -v EGO_TESTER -i %s > %s" % (duration, scenario_name, log_name)
 
+    ## weiming
+    cmd = "wine /gpfs/share/home/1801111354/Release/dynamic_cost.exe -c %d -v EGO_TESTER -i %s > %s" % (duration, scenario_name, log_name)
 
     # print(cmd)
     start = time.clock()
@@ -196,8 +204,16 @@ def create_run_scenario_overtake (Vars, BestPop, Configure):
                                                                     dy_obsList, static_vehicle_state, st_obsList)
     avg_stable, min_stable = evaluate_stability(ego_vehicle_state)
     traffic_light = evaluate_traffic_light(ego_vehicle_state, traffic_light)
+    cross_lane = evaluate_cross_lane(ego_vehicle_state)
 
-    result = [avg_stable, min_stable, avg_dis_satisfaction, min_dis_satisfaction, avg_speed, min_speed, traffic_light, comfort1, comfort2]
+    # result = [avg_stable, min_stable, avg_dis_satisfaction, min_dis_satisfaction, avg_speed, min_speed, traffic_light, cross_lane, comfort1,
+    #           comfort2]
+    #
+    #
+    # result = [avg_stable, avg_dis_satisfaction, min_dis_satisfaction, avg_speed, min_speed, traffic_light,
+    #       cross_lane, comfort1, comfort2]
+
+    result = [min_dis, min_stable, min_speed, traffic_light, cross_lane, comfort1, comfort2]
 
 
     # result[0] = stable
@@ -216,7 +232,9 @@ def create_run_scenario_overtake (Vars, BestPop, Configure):
     # bestlog = globalvar.get_value('BestPop')
     # print("Scenario:", BestPopulation.round)
     # print("Variables:", Vars)
-    print("Results:", result)
+
+    # print("Results:", len(result), result)
+
     # print("Weights:", bestlog.weights)
     # print("Round: %d" %(bestpop.round))
 
@@ -224,12 +242,12 @@ def create_run_scenario_overtake (Vars, BestPop, Configure):
     # print(result_name)
     np.savetxt(result_name, result, fmt="%f", delimiter=" ")
 
-    if Configure.algorithm == 'Adapt':
+    if Configure.algorithm == 'NSGA_III_Adapt':
         weights = BestPop.weights
         for i in range (config.goal_num):
             result[i] = weights[i] *  result[i]
 
-        print("Results after weight:", result)
+        # print("Results after weight:", result)
 
     return result
 

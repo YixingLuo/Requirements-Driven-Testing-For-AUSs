@@ -71,11 +71,12 @@ class MultiprocessEvaluator(Evaluator[S]):
         print("\033[1;31m new round \033[0m", problem.bestpop.round)
         problem.bestpop.clear()
 
-        if problem.bestpop.configure.algorithm == "Adapt":
+        if problem.bestpop.configure.algorithm == "NSGA_III_Adapt":
             if problem.bestpop.round > 1:
                 # print(problem.bestpop.pop)
                 problem.bestpop.add_results()
                 problem.bestpop.update_weight()
+                print("\033[1;31m new weight \033[0m", problem.bestpop.weights)
 
 
         # gl.set_value('BestPop', bestlog)

@@ -39,12 +39,13 @@ class OvertakeProblem(FloatProblem):
         self.obj_directions = [self.MINIMIZE] * M
         self.obj_labels = ['stable', 'acda', 'mini', 'speed', 'traffic_light', 'comfort']
 
-        self.lower_bound = [self.config.ego_s0[0], self.config.ego_v0[0], self.config.start_s[0], self.config.end_s[0], self.config.green_time[0], self.config.yellow_time[0],
-                    self.config.red_time[0], self.config.pos_s[0], self.config.pos_s[0], self.config.pos_y_1[0], self.config.velo_1[0], self.config.acc_1[0],
-                    self.config.pos_y_1[0], self.config.velo_1[0], self.config.acc_1[0], self.config.start_time_2[0]]  # 决策变量下界
-        self.upper_bound = [self.config.ego_s0[1], self.config.ego_v0[1], self.config.start_s[1], self.config.end_s[1], self.config.green_time[1], self.config.yellow_time[1],
-                    self.config.red_time[1], self.config.pos_s[1], self.config.pos_s[1], self.config.pos_y_1[1], self.config.velo_1[1], self.config.acc_1[1],
-                    self.config.pos_y_1[1], self.config.velo_1[1], self.config.acc_1[1], self.config.start_time_2[1]] # 决策变量上界
+        self.lower_bound = [self.config.ego_s0[0], self.config.ego_v0[0], self.config.start_s[0], self.config.end_s[0], self.config.green_time[0],
+                            self.config.yellow_time[0], self.config.red_time[0], self.config.pos_s_1[0], self.config.pos_s_2[0], self.config.pos_y_1[0],
+                            self.config.velo_1[0], self.config.acc_1[0], self.config.pos_y_1[0], self.config.velo_1[0], self.config.acc_1[0],
+                            self.config.start_time_2[0]]  # 决策变量下界
+        self.upper_bound = [self.config.ego_s0[1], self.config.ego_v0[1], self.config.start_s[1], self.config.end_s[1], self.config.green_time[1],
+                            self.config.yellow_time[1], self.config.red_time[1], self.config.pos_s_1[1], self.config.pos_s_2[1], self.config.pos_y_1[1],
+                            self.config.velo_1[1], self.config.acc_1[1], self.config.pos_y_1[1], self.config.velo_1[1], self.config.acc_1[1], self.config.start_time_2[1]] # 决策变量上界
 
         # self.file_dir_sce = file_dir_sce
         # self.file_dir_data = file_dir_data

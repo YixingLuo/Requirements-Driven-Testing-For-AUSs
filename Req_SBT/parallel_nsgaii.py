@@ -60,12 +60,12 @@ if __name__ == '__main__':
     # global BestPopulation
     BestPopulation = BestPop(Configuration)
     # config.createfolders()
-    Goal_num = Configuration.goal_num
+    Goal_num = Configuration.goal_numqq
 
-    file_name = text_create(Configuration )
-    output = sys.stdout
-    outputfile = codecs.open(file_name,  'w', 'utf-8')
-    sys.stdout = outputfile
+    # file_name = text_create(Configuration )
+    # output = sys.stdout
+    # outputfile = codecs.open(file_name,  'w', 'utf-8')
+    # sys.stdout = outputfile
 
     """===============================实例化问题对象============================"""
     problem = OvertakeProblem(Goal_num, Configuration, BestPopulation)
@@ -75,7 +75,7 @@ if __name__ == '__main__':
 
     if Configuration.algorithm == "NSGA_II":
         algorithm = NSGAII(
-            population_evaluator=MultiprocessEvaluator(8),
+            population_evaluator=MultiprocessEvaluator(Configuration.ProcessNum),
             # population_evaluator=SequentialEvaluator(),
             problem=problem,
             population_size = Configuration.population,
@@ -87,7 +87,19 @@ if __name__ == '__main__':
         )
     elif Configuration.algorithm == "NSGA_III":
         algorithm = NSGAIII(
-            population_evaluator=MultiprocessEvaluator(8),
+            population_evaluator=MultiprocessEvaluator(Configuration.ProcessNum),
+            problem=problem,
+            population_size = Configuration.population,
+            reference_directions=UniformReferenceDirectionFactory(Configuration.goal_num, n_points= Configuration.population - 1),
+            # offspring_population_size = Configuration.population,
+            mutation=PolynomialMutation(probability=1.0 / problem.number_of_variables, distribution_index=20),
+            crossover=SBXCrossover(probability=1.0, distribution_index=20),
+            termination_criterion = StoppingByEvaluations(max_evaluations=max_evaluations)
+            # selection = BinaryTournamentSelection()
+        )
+    elif Configuration.algorithm == "NSGA_III_Adapt":
+        algorithm = NSGAIII(
+            population_evaluator=MultiprocessEvaluator(Configuration.ProcessNum),
             problem=problem,
             population_size = Configuration.population,
             reference_directions=UniformReferenceDirectionFactory(Configuration.goal_num, n_points= Configuration.population - 1),
@@ -113,5 +125,5 @@ if __name__ == '__main__':
     print(f'Problem: ${problem.get_name()}')
     print(f'Computing time: ${algorithm.total_computing_time}')
 
-    outputfile.close()
+    # outputfile.close()
 

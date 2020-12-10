@@ -10,7 +10,7 @@ import matplotlib.pyplot as plt
 import pandas as pd
 from pandas.core.frame import DataFrame
 
-file_folder_orgin = os.path.abspath(os.path.join(os.getcwd(), "..")) + "/2020_12_01_NSGA_II_results_10000"
+file_folder_orgin = os.path.abspath(os.path.join(os.getcwd(), "..")) + "/2020_12_08_Random_results_1000"
 # file_folder_adapt = os.path.abspath(os.path.join(os.getcwd(), "..")) + "/2020_11_30_NSGAII_results_10000"
 
 sum_list_orgin = []
@@ -28,6 +28,9 @@ for i in range(len(fileList)):
     #         flag = 1
     # 		break
     # if not flag:
+    # result_new = [result[0],result[1],result[2],result[3],result[5]]
+    # if result[-3]<1:
+        # print (textname)
     result_list.append(list(result))
     for j in range(len(result)):
         if result[j] == 1:
@@ -39,6 +42,8 @@ for i in range(len(fileList)):
 # fileList = os.listdir(file_folder_adapt)
 # fileList.sort()
 # for i in range(len(fileList)):
+
+
 #     textname = file_folder_adapt + '/' + fileList[i]
 #     # print(textname)
 #     result = np.loadtxt(textname)
@@ -94,22 +99,33 @@ for i in range(len(fileList)):
 
 
 
+
+
+
+
+
+
 ## plot
 # print(result_list)
-sns.set_style("darkgrid")
-data = DataFrame(result_list)
-data.dropna(axis=0,how='any')
-print(data)
-data.corr()
+# sns.set_style("darkgrid")
+# data = DataFrame(result_list)
+# # data.rename(columns={0:'a',1:'b',2:'c',3:'d',4:'e'},inplace=True)#注意这里0和1都不是字符串
+# data.dropna(axis=0,how='any')
+# print(data)
+# sns.distplot(data['a'])
+# plt.show()
+# print(data.corr())
 # sns.pairplot(data)
-# sns.pairplot(data , markers=["o", "s"])
-sns.heatmap(data.corr())
-sns.clustermap(data.corr())
-g = sns.PairGrid(data)
-g.map_diag(sns.distplot)
-g.map_upper(plt.scatter)
-g.map_lower(sns.kdeplot)
-# sns.distplot(data['0'])
+# # sns.pairplot(data , markers=["o", "s"])
+# sns.heatmap(data.corr())
+# plt.show()
+# sns.clustermap(data.corr())
+# g = sns.PairGrid(data)
+# g.map_diag(sns.distplot)
+# g.map_upper(plt.scatter)
+# g.map_lower(sns.kdeplot)
+# # sns.distplot(data['0'])
+# plt.show()
 
 
 
@@ -127,11 +143,11 @@ g.map_lower(sns.kdeplot)
 
 
 ##count the number
-# se = pd.Series(sum_list_orgin)
-# countDict = dict(se.value_counts())
-# proportitionDict = dict(se.value_counts(normalize=True))
-# print(countDict)
-# print(proportitionDict)
+se = pd.Series(sum_list_orgin)
+countDict = dict(se.value_counts())
+proportitionDict = dict(se.value_counts(normalize=True))
+print(countDict)
+print(proportitionDict)
 # se = pd.Series(sum_list_adapt)
 # countDict = dict(se.value_counts())
 # proportitionDict = dict(se.value_counts(normalize=True))

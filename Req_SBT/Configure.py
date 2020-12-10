@@ -4,6 +4,7 @@
 import time
 import os
 import shutil
+import psutil
 
 class configure:
     def __init__(self):
@@ -44,7 +45,7 @@ class configure:
         self.a_min_soft = -2.94
         self.speed_limit = 16.67
         self.speed_max = 33.3
-        self.duration = 60
+        self.duration = 120
         self.population = 50
         self.goal_num = 9
         self.maxIterations = 10000
@@ -53,20 +54,22 @@ class configure:
         self.num_variables = 16
         self.PoolType = "Thread"
         # self.PoolType = "Process"
+        self.ProcessNum = psutil.cpu_count()
 
         ## ego
         self.ego_s0 = [10, 20]
         self.ego_v0 = [10, 16]
 
         ## traffic_signals
-        self.start_s = [80, 85]
+        self.start_s = [70, 75]
         self.end_s = [90, 95]
-        self.green_time = [10, 15]
+        self.green_time = [5, 10]
         self.yellow_time = [1, 2]
-        self.red_time = [2, 3]
+        self.red_time = [2, 4]
 
         ## static_obstacle
-        self.pos_s = [60, 80]
+        self.pos_s_1 = [60, 70]
+        self.pos_s_2 = [70, 80]
 
         ## dynamic_obstacle_1
         self.pos_y_1 = [30, 60]
@@ -81,7 +84,7 @@ class configure:
         self.start_time_2 = [0,2]
 
         ## algorithm
-        self.algorithm = "NSGA_III" ## "NSGA_II": NSGA_II, "Adapt": NSGA_II_Goal_Adapt
+        self.algorithm = "Random" ## "NSGA_II": NSGA_II, "NSGA_III_Adapt": NSGA_II_Goal_Adapt
 
         self.file_dir_sce = os.getcwd() + '/' + str(time.strftime("%Y_%m_%d")) + '_' + str(self.algorithm) + '_scenarios_' + str(
             self.maxIterations)
@@ -98,6 +101,10 @@ class configure:
         if not os.path.exists(self.file_dir_eval):
             os.mkdir(self.file_dir_eval)
 
+        self.file_dir_var = os.getcwd() + '/' + str(time.strftime("%Y_%m_%d")) + '_' + str(self.algorithm) + '_variable_' + str(
+            self.maxIterations)
+        if not os.path.exists(self.file_dir_var):
+            os.mkdir(self.file_dir_var)
 
 
     # def createfolders (self,):
