@@ -21,7 +21,7 @@ config = configure()
 
 def evaluate_distance (ego_vehicle_state, dynamic_vehicle_state,dy_obsList, static_vehicle_state,st_obsList):
 
-    # print(len(static_vehicle_state[0][0]), len(dynamic_vehicle_state[0]))
+    # print(dynamic_vehicle_state,dy_obsList)
 
     dis_list = []
     dis_satisfaction = []
@@ -36,21 +36,32 @@ def evaluate_distance (ego_vehicle_state, dynamic_vehicle_state,dy_obsList, stat
     num_dynamic_obs = len(dy_obsList)
     num_static_obs = len(st_obsList)
 
-    range_list_dy = len(dynamic_vehicle_state[0])
+    if num_dynamic_obs:
+        range_list_dy = len(dynamic_vehicle_state[0])
+    else:
+        range_list_dy = 0
     # print(range_list_dy)
     for obs in range (1,num_dynamic_obs):
         range_list_dy = min(range_list_dy,len(dynamic_vehicle_state[obs]))
     # print(range_list_dy)
 
-    range_list_st = len(static_vehicle_state[0])
+    if num_static_obs:
+        range_list_st = len(static_vehicle_state[0])
+    else:
+        range_list_st = 0
     # print(range_list_st)
     for obs in range (1,num_static_obs):
         range_list_st = min(range_list_st,len(static_vehicle_state[obs]))
     # print(range_list_st)
 
-    if range_list_dy < range_list_st:
-        range_list = min(len(ego_vehicle_state),range_list_dy)
-    else:
+    if num_dynamic_obs and num_static_obs:
+        if range_list_dy < range_list_st:
+            range_list = min(len(ego_vehicle_state),range_list_dy)
+        else:
+            range_list = min(len(ego_vehicle_state), range_list_st)
+    elif num_dynamic_obs:
+        range_list = min(len(ego_vehicle_state), range_list_dy)
+    elif num_static_obs:
         range_list = min(len(ego_vehicle_state), range_list_st)
 
     # print(range_list)

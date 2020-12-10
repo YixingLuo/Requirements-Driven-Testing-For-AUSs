@@ -2,10 +2,7 @@ import functools
 from abc import ABC, abstractmethod
 from multiprocessing.pool import ThreadPool, Pool
 from typing import TypeVar, List, Generic
-import globalvar as gl
-from multiprocessing import Pool, Lock, Manager
-import itertools
-
+from multiprocessing import Pool
 
 try:
     import dask
@@ -77,6 +74,8 @@ class MultiprocessEvaluator(Evaluator[S]):
                 problem.bestpop.add_results()
                 problem.bestpop.update_weight()
                 print("\033[1;31m new weight \033[0m", problem.bestpop.weights)
+
+
 
 
         # gl.set_value('BestPop', bestlog)

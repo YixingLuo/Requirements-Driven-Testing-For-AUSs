@@ -1,23 +1,10 @@
-import random
-from math import sqrt, exp, pow, sin
-
-from jmetal.core.problem import FloatProblem, BinaryProblem, Problem
-from jmetal.core.solution import FloatSolution, BinarySolution, CompositeSolution, IntegerSolution
+from jmetal.core.problem import FloatProblem
+from jmetal.core.solution import FloatSolution
 # from MyAlgorithm.solution import FloatSolution
-import numpy as np
-import json
-import random
-from Configure import configure
-import os
-import time
-from read_log import evaluate_distance, evaluate_speed, evaluate_comfort, evaluate_stability, evaluate_traffic_light
 from MyScenario.overtake_2 import create_run_scenario_overtake
-from multiprocessing import Pool as ProcessPool
-from multiprocessing.dummy import Pool as ThreadPool
+
+
 # from scoop import futures
-import globalvar as gl
-from bestpop import BestPop
-from multiprocessing import freeze_support,Lock, Value
 
 class OvertakeProblem(FloatProblem):
     """ Problem ZDT1Modified.

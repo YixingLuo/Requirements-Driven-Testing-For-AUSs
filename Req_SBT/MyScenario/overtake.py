@@ -2,13 +2,11 @@ import sys
 sys.path.append("..")
 import json
 import numpy as np
-import random
 from Configure import configure
 import os
 import time
 from read_log import evaluate_distance, evaluate_speed, evaluate_comfort, evaluate_stability, evaluate_traffic_light
-import globalvar as gl
-from bestpop import BestPop
+from trash import globalvar as gl
 
 
 # def create_run_scenario_overtake (Vars, config, file_dir_sce, file_dir_data, file_dir_eval):

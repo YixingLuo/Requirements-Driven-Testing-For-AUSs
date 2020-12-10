@@ -1,8 +1,5 @@
 #!/usr/bin/python
 # -*- coding:utf-8 -*-
-from Configure import configure
-import math
-import globalvar
 import os
 import numpy as np
 import shutil

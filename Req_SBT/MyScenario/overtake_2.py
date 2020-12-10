@@ -2,14 +2,10 @@ import sys
 sys.path.append("..")
 import json
 import numpy as np
-import random
-from Configure import configure
 import os
 import time
 from read_log import evaluate_distance, evaluate_speed, evaluate_comfort, evaluate_stability, evaluate_traffic_light, evaluate_cross_lane
-import globalvar
 # from bestpop import BestPop
-import math
 import uuid
 
 
