@@ -73,7 +73,7 @@ global start_generation
 
 %   Copyright 2004-2016 The MathWorks, Inc.
 
-
+% disp(state.FunEval)
 optchanged = false;
 
 if state.isFeas
@@ -101,7 +101,7 @@ switch flag
     case 'init'
         disp('Starting the algorithm');
     case {'iter','interrupt'}
-%         disp('Iterating ...')
+        disp('Iterating ...')
     case 'done'
         disp('Performing final task');
 end

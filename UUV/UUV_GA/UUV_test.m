@@ -47,13 +47,12 @@ end
 % options.PlotFcn = 'gaplotpareto';
 % options = optimoptions('gamultiobj','PlotFcn',@gaplotpareto);
 option_temp = load('options.mat');
-options = option_temp;
+options = option_temp.options;
 options.FunctionTolerance = 0;
 options.ConstraintTolerance = 0;
 options.PopulationSize = 100;
 options.CrossoverFcn = @crossoversinglepoint;
 options.CrossoverFraction = 0.6;
-% options.Display = 'iter';
 options.MaxGenerations = total_generation;
 % options.MaxGenerations = inf;
 options.CreationFcn = @initialize_variables;
