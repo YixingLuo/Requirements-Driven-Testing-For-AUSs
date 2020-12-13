@@ -43,7 +43,7 @@ need_replan = 0;
 % indextemp = index.index;
 plan_num = length(indextemp);
 index_cond = 1;
-% indextemp = indextemp-36;
+
 
 while(1)
     need_replan = 1;

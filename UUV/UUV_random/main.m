@@ -10,12 +10,11 @@ mkdir(datafolder);
 addpath(datafolder);
 
 tstart =tic; 
-while(1)
-    tused = toc(tstart) ;
-    if tused > 3*3600 || num == 2000*100
+for num = 0:1:10000
+    if num == 10000
         time = datestr(now,30);
-        path = strcat(datafolder,'/data',time);
-        save(path);
+        name = 'data' + string(time) + '.mat';
+        save(name);
         break;
     end
     num = num + 1;

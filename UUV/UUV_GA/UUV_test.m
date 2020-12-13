@@ -15,7 +15,7 @@ addpath(datafolder);
 global start_generation
 start_generation = 0;
 
-total_generation = 2000;
+total_generation = 1000;
 hour = 24;
 % while hour <= 2
   
@@ -50,7 +50,7 @@ option_temp = load('options.mat');
 options = option_temp.options;
 options.FunctionTolerance = 0;
 options.ConstraintTolerance = 0;
-options.PopulationSize = 100;
+options.PopulationSize = 50;
 options.CrossoverFcn = @crossoversinglepoint;
 options.CrossoverFraction = 0.6;
 options.MaxGenerations = total_generation;

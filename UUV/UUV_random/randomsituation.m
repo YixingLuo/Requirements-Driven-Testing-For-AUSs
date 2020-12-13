@@ -8,8 +8,9 @@ function [condition, index] = randomsituation(num,k)
 % disturb = randperm(7);
 global uuv
 uuv = UnmannedUnderwaterVehicle();
-l = 1:1:15;
-disturb = randi([1,6],1,l(k));
+% l = 1:1:15;
+% disturb = randi([1,6],1,l(k));
+disturb = unidrnd(4,1,k);
 a=2:359;
 K=randperm(length(a));
 N=length(disturb);
@@ -50,10 +51,10 @@ for i = 1: length(disturb)
         condition(i,:) = [6,0,dis_target_ratio]; 
     end
 end
-% name = 'condition' + string(num) + '.mat';
-% save(name, 'condition');
-% name = 'index' + string(num) + '.mat';
-% save(name, 'index');
+name = 'conditions/condition' + string(num) + '.mat';
+save(name, 'condition');
+name = 'conditions/index' + string(num) + '.mat';
+save(name, 'index');
 
 
 
