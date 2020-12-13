@@ -15,7 +15,7 @@ addpath(datafolder);
 global start_generation
 start_generation = 0;
 
-total_generation = 1000;
+total_generation = 200;
 hour = 24;
 % while hour <= 2
   
@@ -48,8 +48,8 @@ end
 % options = optimoptions('gamultiobj','PlotFcn',@gaplotpareto);
 option_temp = load('options.mat');
 options = option_temp.options;
-options.FunctionTolerance = 0;
-options.ConstraintTolerance = 0;
+options.FunctionTolerance = 1e-3;
+options.ConstraintTolerance = 1e-3;
 options.PopulationSize = 50;
 options.CrossoverFcn = @crossoversinglepoint;
 options.CrossoverFraction = 0.6;
