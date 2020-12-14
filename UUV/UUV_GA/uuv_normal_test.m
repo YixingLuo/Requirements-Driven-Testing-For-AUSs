@@ -93,7 +93,7 @@ while(1)
         Scores = [Scores; abs(pastaccuracy),  abs(pastdistance), abs(pastenergy)];
 %         f = DS_A + DS_D + DS_E;
 %         f = [DS_A, DS_D, DS_E];
-        f = [pastaccuracy,pastdistance, - 0.5*pastenergy];
+        f = [pastaccuracy,pastdistance, -pastenergy];
         break
     end
 

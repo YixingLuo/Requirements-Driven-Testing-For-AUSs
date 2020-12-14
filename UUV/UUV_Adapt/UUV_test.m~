@@ -1,3 +1,4 @@
+for round = 1:1:5
 clc
 clear
 % delete(gcp('nocreate'))
@@ -21,8 +22,8 @@ addpath(datafolder);
 global start_generation
 start_generation = 1;
 
-% total_generation = 8*goal_round;
-total_generation = 50;
+total_generation = 8*goal_round;
+% total_generation = 50;
 hour = 24;
 % while hour <= 2
   
@@ -59,10 +60,10 @@ options.FunctionTolerance = 0;
 options.ConstraintTolerance = 0;
 options.PopulationSize = 50;
 options.CrossoverFcn = @crossoversinglepoint;
-options.CrossoverFraction = 0.6;
+options.CrossoverFraction = 0.8;
 options.MaxGenerations = total_generation;
 % options.MaxGenerations = inf;
-options.CreationFcn = @initialize_variables;
+% options.CreationFcn = @initialize_variables;
 options.CreationFcn = @gacreationuniform;
 options.OutputFcn = @gaoutputfcn;
 % options.HybridFcn = {@fgoalattain,[]};
@@ -91,4 +92,4 @@ fprintf('UUV_test: iteration number %d, Time is %s \n', goal_round, string(time)
 
 
 % hour = hour + 1;
-% end
+end

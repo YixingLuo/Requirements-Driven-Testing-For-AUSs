@@ -1,28 +1,34 @@
+global Scores
+global goal_round
+global hour
+global num_incidents
+global goal_selection_flag
+global datafolder
+global start_generation
+
+for round = 1:1:5
 clc
 clear
 % delete(gcp('nocreate'))
 % parpool('local')
-global hour
-global num_incidents
-global goal_selection_flag
+
 goal_selection_flag = [0, 0, 0];
-global goal_round
+
 goal_round = 50;
-global Scores
+
 Scores = [];
 num_incidents = 5; 
-global datafolder
+
 da = fix(datevec(now));
 datafolder = strcat('Datalog-',string(da(1)),'-',string(da(2)),'-',string(da(3)),'-',string(da(4)),'-',string(da(5)));
 mkdir(datafolder);
 addpath(datafolder);
 
 % for hour = 1:1:10
-global start_generation
 start_generation = 1;
 
-% total_generation = 8*goal_round;
-total_generation = 50;
+total_generation = 8*goal_round;
+% total_generation = 50;
 hour = 24;
 % while hour <= 2
   
@@ -44,7 +50,7 @@ for i = 1:num_incidents
             ub((i-1)*4+j) = 5+0.49;           
         else
             lb((i-1)*4+j) = 0;
-            ub((i-1)*4+j) = 20;
+            ub((i-1)*4+j) = 40;
         end
     end
 end
@@ -91,4 +97,4 @@ fprintf('UUV_test: iteration number %d, Time is %s \n', goal_round, string(time)
 
 
 % hour = hour + 1;
-% end
+end
