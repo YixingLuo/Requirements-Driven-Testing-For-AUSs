@@ -69,7 +69,7 @@ options.OutputFcn = @gaoutputfcn;
 % rng default
 % x = ga(fun,nvars,A,b,Aeq,beq,lb,ub,nonlcon,IntCon,options)
 options.MaxTime = hour * 3600;
-options.UseParallel = 1;
+options.UseParallel = true;
 options.Display = 'iter';
 options.MaxStallGenerations = inf;
 % options = optimoptions('gamultiobj','UseParallel', true, 'UseVectorized', false);
