@@ -2,7 +2,7 @@
 # -*- coding:utf-8 -*-
 import numpy as np
 import math
-from Configure import configure
+# from Configure import configure
 import os
 import time
 import json
@@ -16,10 +16,10 @@ static_vehicle_state
 static_vehicle_state: x,y, euclidean_distance
 """
 
-config = configure()
+# config = configure()
 
 
-def evaluate_distance (ego_vehicle_state, dynamic_vehicle_state,dy_obsList, static_vehicle_state,st_obsList):
+def evaluate_distance (ego_vehicle_state, dynamic_vehicle_state,dy_obsList, static_vehicle_state,st_obsList, config):
 
     # print(dynamic_vehicle_state,dy_obsList)
 
@@ -189,7 +189,7 @@ def evaluate_distance (ego_vehicle_state, dynamic_vehicle_state,dy_obsList, stat
     return min_dis, avg_satisfaction, min_satisfaction
 
 
-def evaluate_speed (ego_vehicle_state):
+def evaluate_speed (ego_vehicle_state, config):
     speed_list = []
     for i in range(len(ego_vehicle_state)):
         speed_list.append(ego_vehicle_state[i][4])
@@ -218,7 +218,7 @@ def evaluate_speed (ego_vehicle_state):
     # return np.mean(satisfaction_list)
     return  np.mean(satisfaction_list), min(satisfaction_list)
 
-def evaluate_comfort (ego_vehicle_state):
+def evaluate_comfort (ego_vehicle_state, config):
     comfort_list_1 = []
     comfort_list_2 = []
 
@@ -245,7 +245,7 @@ def evaluate_comfort (ego_vehicle_state):
 
     return satisfaction_comfort_1,satisfaction_comfort_2
 
-def evaluate_stability (ego_vehicle_state):
+def evaluate_stability (ego_vehicle_state, config):
     curvature_list = []
 
     for i in range(len(ego_vehicle_state) - 1):

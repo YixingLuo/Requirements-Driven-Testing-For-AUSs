@@ -293,7 +293,7 @@ class NSGAIII(NSGAII):
         self.ideal_point = np.full(self.problem.number_of_objectives, np.inf)
         self.worst_point = np.full(self.problem.number_of_objectives, -np.inf)
         self.generation = 0
-        self.file_pareto_front = os.getcwd() + '/' + str(time.strftime("%Y_%m_%d")) + '_PARETO_'
+        self.file_pareto_front = os.getcwd() + '/' + str(time.strftime("%Y_%m_%d")) + '_PARETO'
         if not os.path.exists(self.file_pareto_front):
             os.mkdir(self.file_pareto_front)
 
@@ -422,10 +422,10 @@ class NSGAIII(NSGAII):
             observable_data['TERMINATION_CRITERIA_IS_MET'] = True
             self.observable.notify_all(**observable_data)
 
-            self.restart()
-            self.init_progress()
-
-            self.completed_iterations += 1
+            # self.restart()
+            # self.init_progress()
+            #
+            # self.completed_iterations += 1
         else:
             front = self.get_result()
 

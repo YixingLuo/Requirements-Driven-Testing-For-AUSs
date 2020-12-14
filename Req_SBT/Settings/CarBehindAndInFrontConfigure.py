@@ -93,7 +93,7 @@ class CarBehindAndInFrontConfigure:
 
         ## algorithm
         ## "NSGA_II": NSGA_II, "NSGA_III": NSGA_III ,"NSGA_III_Adapt": NSGA_II_Goal_Adapt
-        self.algorithm = "NSGA_III"
+        self.algorithm = "Random"
 
         self.file_dir_sce = os.getcwd() + '/' + str(time.strftime("%Y_%m_%d")) + '_' + str(self.algorithm) + '_scenarios_' + str(
             self.maxIterations)
