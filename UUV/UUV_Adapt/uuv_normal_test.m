@@ -73,6 +73,7 @@ while(1)
 %         DS_E = min(1,(1-(pastenergy - uuv.energy_target)/(uuv.energy_budget-uuv.energy_target)));
         data = [DS_A, pastaccuracy, DS_D, pastdistance, DS_E, pastenergy];
 %         f = [DS_A, DS_D, DS_E];
+        f = [];
         if goal_selection_flag(1) == 0 %% maximize this goal
             f = [f, -pastaccuracy];
         else %% minimize this goal
