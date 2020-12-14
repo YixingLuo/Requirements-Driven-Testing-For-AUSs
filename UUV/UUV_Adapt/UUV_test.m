@@ -7,7 +7,7 @@ global num_incidents
 global goal_selection_flag
 goal_selection_flag = [0, 0, 0];
 global goal_round
-goal_round = 25;
+goal_round = 50;
 global Scores
 Scores = [];
 num_incidents = 5; 
