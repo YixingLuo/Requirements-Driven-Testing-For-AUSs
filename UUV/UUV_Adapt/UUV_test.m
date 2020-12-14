@@ -21,7 +21,8 @@ addpath(datafolder);
 global start_generation
 start_generation = 1;
 
-total_generation = 8*goal_round;
+% total_generation = 8*goal_round;
+total_generation = 50;
 hour = 24;
 % while hour <= 2
   
@@ -39,8 +40,8 @@ for i = 1:num_incidents
 %             ub((i-1)*4+j) = 6+0.49;
             ub((i-1)*4+j) = 4+0.49;
         elseif j == 3 %% sensor_no
-            lb((i-1)*4+j) = 1;
-            ub((i-1)*4+j) = 5;           
+            lb((i-1)*4+j) = 1-0.5;
+            ub((i-1)*4+j) = 5+0.49;           
         else
             lb((i-1)*4+j) = 0;
             ub((i-1)*4+j) = 20;
@@ -62,13 +63,13 @@ options.CrossoverFraction = 0.6;
 options.MaxGenerations = total_generation;
 % options.MaxGenerations = inf;
 options.CreationFcn = @initialize_variables;
-% options.CreationFcn = @gacreationnonlinearfeasible;
+options.CreationFcn = @gacreationuniform;
 options.OutputFcn = @gaoutputfcn;
 % options.HybridFcn = {@fgoalattain,[]};
 % rng default
 % x = ga(fun,nvars,A,b,Aeq,beq,lb,ub,nonlcon,IntCon,options)
 options.MaxTime = hour * 3600;
-% options.UseParallel = true;
+options.UseParallel = 1;
 options.Display = 'iter';
 options.MaxStallGenerations = inf;
 % options = optimoptions('gamultiobj','UseParallel', true, 'UseVectorized', false);

@@ -6,6 +6,8 @@ global hour
 global num_incidents
 global goal_selection_flag
 goal_selection_flag = [0, 0, 0];
+global goal_round
+goal_round = 50;
 global Scores
 Scores = [];
 num_incidents = 5; 
@@ -17,9 +19,10 @@ addpath(datafolder);
 
 % for hour = 1:1:10
 global start_generation
-start_generation = 0;
+start_generation = 1;
 
-total_generation = 8*50;
+% total_generation = 8*goal_round;
+total_generation = 50;
 hour = 24;
 % while hour <= 2
   
@@ -37,8 +40,8 @@ for i = 1:num_incidents
 %             ub((i-1)*4+j) = 6+0.49;
             ub((i-1)*4+j) = 4+0.49;
         elseif j == 3 %% sensor_no
-            lb((i-1)*4+j) = 1;
-            ub((i-1)*4+j) = 5;           
+            lb((i-1)*4+j) = 1-0.5;
+            ub((i-1)*4+j) = 5+0.49;           
         else
             lb((i-1)*4+j) = 0;
             ub((i-1)*4+j) = 20;
@@ -60,7 +63,7 @@ options.CrossoverFraction = 0.6;
 options.MaxGenerations = total_generation;
 % options.MaxGenerations = inf;
 options.CreationFcn = @initialize_variables;
-% options.CreationFcn = @gacreationnonlinearfeasible;
+options.CreationFcn = @gacreationuniform;
 options.OutputFcn = @gaoutputfcn;
 % options.HybridFcn = {@fgoalattain,[]};
 % rng default
@@ -68,6 +71,7 @@ options.OutputFcn = @gaoutputfcn;
 options.MaxTime = hour * 3600;
 % options.UseParallel = true;
 options.Display = 'iter';
+options.MaxStallGenerations = inf;
 % options = optimoptions('gamultiobj','UseParallel', true, 'UseVectorized', false);
 % Population = initialize_variables(3, @uuv_normal_test, options);
 
@@ -76,14 +80,14 @@ options.Display = 'iter';
 
 time = datestr(now,30);
 % name =  'ga-multiobj-iternum-'+ string(total_generation)+ '.mat';
-name =  'ga-multiobj-iternum-'+ string(hour)+ '.mat';
+name =  'ga-multiobj-iternum-'+ string(goal_round)+ '.mat';
 path = strcat(datafolder,'/',name);
 save(path);
 % figurename =  'ga-multiobj-figure-iternum-' + string(total_generation);
-figurename =  'ga-multiobj-figure-iternum-' + string(hour);
+figurename =  'ga-multiobj-figure-iternum-' + string(goal_round);
 figpath = strcat(datafolder,'/',figurename);
 savefig(figpath);
-fprintf('UUV_test: iteration number %d, Time is %s \n', hour, string(time));
+fprintf('UUV_test: iteration number %d, Time is %s \n', goal_round, string(time));
 
 
 % hour = hour + 1;

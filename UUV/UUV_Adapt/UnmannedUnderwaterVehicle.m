@@ -11,10 +11,10 @@ distance_target = 100*1000;
 time_budget = 10*60*60;
 time_target = 10*60*60;
 time_step = 100;
-energy_budget = 170*1.2*100*360;
+energy_budget = 170*1.1*100*360;
 energy_target = 5.4*1e6;
 acc_budget = 0;
-acc_target = 0.909469349294465;
+acc_target = 0.9;
 
 N = 5;
 N_s = 5;
