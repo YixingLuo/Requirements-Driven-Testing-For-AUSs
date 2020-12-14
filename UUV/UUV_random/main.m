@@ -5,7 +5,7 @@ usage_plan1 = [];
 count = [];
 num = 0;
 
-datafolder = 'conditions';
+datafolder = 'conditions2';
 mkdir(datafolder);
 addpath(datafolder);
 

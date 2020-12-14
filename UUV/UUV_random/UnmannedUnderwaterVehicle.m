@@ -31,19 +31,19 @@ N_s = 5;
             uuv.N_s = length(uuv.s_accuracy);   
         end
         function uuv = EnergyDisturbance(uuv, no, energy_ratio)
-            energy = uuv.s_energy(no)*(100+energy_ratio)/100;
+            energy = uuv.s_energy(no)*(90+energy_ratio)/100;
             uuv.s_energy(no) = energy;
         end 
         function uuv = SpeedDisturbance(uuv, no, speed_ratio)
-            speed = uuv.s_speed(no)*(80 + speed_ratio)/100;
+            speed = uuv.s_speed(no)*(90 + speed_ratio)/100;
             uuv.s_speed(no) = speed;
         end 
         function uuv = SensorError(uuv, no, acc_ratio)
-            acc = uuv.s_accuracy(no)*min(1,(80 + acc_ratio)/100);
+            acc = uuv.s_accuracy(no)*min(1,(90 + acc_ratio)/100);
             uuv.s_accuracy(no) = acc;
         end
         function uuv = EnergyBudget(uuv, energy_target_ratio)
-            uuv.energy_target = uuv.energy_target*(80 + energy_target_ratio)/100;
+            uuv.energy_target = uuv.energy_target*(90 + energy_target_ratio)/100;
         end 
         function uuv = DistanceBudget(uuv, distance_target_ratio)
             uuv.distance_target = uuv.distance_target*(100 + distance_target_ratio)/100;
