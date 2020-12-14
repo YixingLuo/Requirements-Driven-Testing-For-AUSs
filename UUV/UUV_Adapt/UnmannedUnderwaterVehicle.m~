@@ -42,7 +42,7 @@ N_s = 5;
         end 
         function uuv = SensorError(uuv, no, acc_ratio)
 %             acc = uuv.s_accuracy(no)*min(1,(80 + acc_ratio)/100);
-            acc = uuv.s_accuracy(no)*min(1,(90 + acc_ratio)/100);
+            acc = uuv.s_accuracy(no)*min(1,(80 + acc_ratio)/100);
             uuv.s_accuracy(no) = acc;
         end
         function uuv = EnergyBudget(uuv, energy_target_ratio)

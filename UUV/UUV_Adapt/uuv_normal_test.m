@@ -83,9 +83,9 @@ while(1)
         else %% minimize this goal
             f = [f, pastdistance];
         end
-        if goal_selection_flag(3) == 0 %% maximize this goal
+        if goal_selection_flag(3) == 0 %% minimize this goal
             f = [f, pastenergy];
-        else %% minimize this goal
+        else %% maximize this goal
             f = [f, -pastenergy];
         end
 %         f = [goal_selection_flag(1)*pastaccuracy, goal_selection_flag(2)*pastdistance, -goal_selection_flag(3)*pastenergy];

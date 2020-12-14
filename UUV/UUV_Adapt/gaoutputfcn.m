@@ -97,7 +97,7 @@ if state.isFeas
     name =  'interval-results-'+ string(start_generation)+ '.mat';
     path = strcat(datafolder,'/',name);
     
-    goal_iter = ceil(start_generation/goal_round);
+    goal_iter = floor((start_generation-1)/goal_round);
     dec_flag = dec2bin(goal_iter,3);
     for k = 1:3
         if dec_flag(k) == '0'
