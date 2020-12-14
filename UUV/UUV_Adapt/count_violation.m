@@ -3,8 +3,13 @@ clear
 result = [];
 count = zeros(1,8);
 count_list = [];
+<<<<<<< Updated upstream
 for iter = 0:1:1000
     filename = 'Datalog-2020-12-14-14-27/interval-results-' + string(iter) + '.mat';
+=======
+for iter = 1:1:1000
+    filename = 'Datalog-2020-12-14-20-24/interval-results-' + string(iter) + '.mat';
+>>>>>>> Stashed changes
     if exist(filename,'file')==0
         count_list = [count_list; count];
         break

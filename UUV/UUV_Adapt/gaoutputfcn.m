@@ -90,9 +90,12 @@ if state.isFeas
             Pop(i,(j-1)*4+3) = round(state.Population(i,(j-1)*4+3));
             Pop(i,(j-1)*4+4) = state.Population(i,(j-1)*4+4);
         end
-        fitness(i,1)=state.Score(i,1);
-        fitness(i,2)=state.Score(i,2);
-        fitness(i,3)=state.Score(i,3);
+        for fun_num = 1:size(state.Score,2)
+            fitness(i,fun_num) = state.Score(i,fun_num);
+        end
+%         fitness(i,1)=state.Score(i,1);
+%         fitness(i,2)=state.Score(i,2);
+%         fitness(i,3)=state.Score(i,3);
     end
     name =  'interval-results-'+ string(start_generation)+ '.mat';
     path = strcat(datafolder,'/',name);
