@@ -1,11 +1,17 @@
 
-for round = 1:1:5
+% for round = 1:1:5
 clc
 clear
 % delete(gcp('nocreate'))
 % parpool('local')
 global hour
 global num_incidents
+global goal_selection_flag
+goal_selection_flag = [1, 1, 1];
+global goal_round
+goal_round = 50;
+global Scores
+Scores = [];
 num_incidents = 5; 
 global datafolder
 da = fix(datevec(now));
@@ -17,7 +23,7 @@ addpath(datafolder);
 global start_generation
 start_generation = 0;
 
-total_generation = 200;
+total_generation = 100;
 hour = 24;
   
 lb=[];
@@ -34,11 +40,11 @@ for i = 1:num_incidents
 %             ub((i-1)*4+j) = 6+0.49;
             ub((i-1)*4+j) = 4+0.49;
         elseif j == 3 %% sensor_no
-            lb((i-1)*4+j) = 1;
-            ub((i-1)*4+j) = 5;           
+            lb((i-1)*4+j) = 1-0.5;
+            ub((i-1)*4+j) = 5+0.49;           
         else
             lb((i-1)*4+j) = 0;
-            ub((i-1)*4+j) = 20;
+            ub((i-1)*4+j) = 40;
         end
     end
 end
@@ -53,17 +59,17 @@ options.FunctionTolerance = 0;
 options.ConstraintTolerance = 0;
 options.PopulationSize = 50;
 options.CrossoverFcn = @crossoversinglepoint;
-options.CrossoverFraction = 0.6;
+options.CrossoverFraction = 0.8;
 options.MaxGenerations = total_generation;
 % options.MaxGenerations = inf;
-options.CreationFcn = @initialize_variables;
-% options.CreationFcn = @gacreationnonlinearfeasible;
+% options.CreationFcn = @initialize_variables;
+options.CreationFcn = @gacreationuniform;
 options.OutputFcn = @gaoutputfcn;
 % options.HybridFcn = {@fgoalattain,[]};
 options.MaxTime = hour * 3600;
 options.MaxStallGenerations = total_generation; 
 % options.UseParallel = true;
-% options.Display = 'iter';
+options.Display = 'iter';
 
 
 [x,fval,exitflag,output,population,scores] = gamultiobj(@uuv_normal_test,4*num_incidents,[],[],[],[],lb,ub,@myconuuv_normal_test,options);
@@ -82,4 +88,4 @@ fprintf('UUV_test: iteration number %d, Time is %s \n', start_generation, string
 
 
 % hour = hour + 1;
-end
+% end

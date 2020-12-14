@@ -1,5 +1,7 @@
 function f  = uuv_normal_test(x_test_initial)
 global num_incidents
+global goal_selection_flag
+global Scores
 m = num_incidents;
 x_test_initial;
 x_test = [];
@@ -70,8 +72,28 @@ while(1)
         end
 %         DS_E = min(1,(1-(pastenergy - uuv.energy_target)/(uuv.energy_budget-uuv.energy_target)));
         data = [DS_A, pastaccuracy, DS_D, pastdistance, DS_E, pastenergy];
+
+%         f = [];
+%         if goal_selection_flag(1) == 0 %% maximize this goal
+%             f = [f, -pastaccuracy];
+%         else %% minimize this goal
+%             f = [f, pastaccuracy];
+%         end
+%         if goal_selection_flag(2) == 0 %% maximize this goal
+%             f = [f, -pastdistance];
+%         else %% minimize this goal
+%             f = [f, pastdistance];
+%         end
+%         if goal_selection_flag(3) == 0 %% minimize this goal
+%             f = [f, pastenergy];
+%         else %% maximize this goal
+%             f = [f, -pastenergy];
+%         end
+%         f = [goal_selection_flag(1)*pastaccuracy, goal_selection_flag(2)*pastdistance, -goal_selection_flag(3)*pastenergy];
+        Scores = [Scores; abs(pastaccuracy),  abs(pastdistance), abs(pastenergy)];
+%         f = DS_A + DS_D + DS_E;
 %         f = [DS_A, DS_D, DS_E];
-        f = [pastaccuracy, pastdistance, -pastenergy];
+        f = [pastaccuracy,pastdistance, - 0.5*pastenergy];
         break
     end
 

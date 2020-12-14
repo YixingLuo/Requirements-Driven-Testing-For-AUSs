@@ -14,7 +14,7 @@ time_step = 100;
 energy_budget = 170*1.2*100*360;
 energy_target = 5.4*1e6;
 acc_budget = 0;
-acc_target = 0.909469349294465;
+acc_target = 0.9;
 
 N = 5;
 N_s = 5;
@@ -31,7 +31,7 @@ N_s = 5;
             uuv.N_s = length(uuv.s_accuracy);   
         end
         function uuv = EnergyDisturbance(uuv, no, energy_ratio)
-            energy = uuv.s_energy(no)*(100+energy_ratio)/100;
+            energy = uuv.s_energy(no)*(80+energy_ratio)/100;
             uuv.s_energy(no) = energy;
         end 
         function uuv = SpeedDisturbance(uuv, no, speed_ratio)
@@ -42,12 +42,12 @@ N_s = 5;
             acc = uuv.s_accuracy(no)*min(1,(80 + acc_ratio)/100);
             uuv.s_accuracy(no) = acc;
         end
-        function uuv = EnergyBudget(uuv, energy_target_ratio)
-            uuv.energy_target = uuv.energy_target*(80 + energy_target_ratio)/100;
-        end 
-        function uuv = DistanceBudget(uuv, distance_target_ratio)
-            uuv.distance_target = uuv.distance_target*(100 + distance_target_ratio)/100;
-        end 
+%         function uuv = EnergyBudget(uuv, energy_target_ratio)
+%             uuv.energy_target = uuv.energy_target*(80 + energy_target_ratio)/100;
+%         end 
+%         function uuv = DistanceBudget(uuv, distance_target_ratio)
+%             uuv.distance_target = uuv.distance_target*(100 + distance_target_ratio)/100;
+%         end 
 
 %         function uuv = EnergyDisturbance(uuv, no, energy)
 %             uuv.s_energy(no) = energy;
