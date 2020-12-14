@@ -71,14 +71,14 @@ options.MaxStallGenerations = total_generation;
 
 time = datestr(now,30);
 % name =  'ga-multiobj-iternum-'+ string(total_generation)+ '.mat';
-name =  'ga-multiobj-iternum-'+ string(hour)+ '.mat';
+name =  'ga-multiobj-iternum-'+ string(start_generation)+ '.mat';
 path = strcat(datafolder,'/',name);
 save(path);
 % figurename =  'ga-multiobj-figure-iternum-' + string(total_generation);
-figurename =  'ga-multiobj-figure-iternum-' + string(hour);
+figurename =  'ga-multiobj-figure-iternum-' + string(start_generation);
 figpath = strcat(datafolder,'/',figurename);
 savefig(figpath);
-fprintf('UUV_test: iteration number %d, Time is %s \n', hour, string(time));
+fprintf('UUV_test: iteration number %d, Time is %s \n', start_generation, string(time));
 
 
 % hour = hour + 1;
