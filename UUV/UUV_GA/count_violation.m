@@ -3,8 +3,11 @@ clear
 result = [];
 count = zeros(1,8);
 count_list = [];
-for iter = 0:1:199
-    filename = 'Datalog-2020-12-12-0-23/interval-results-' + string(iter);
+for iter = 0:1:1000
+    filename = 'Datalog-2020-12-12-0-23/interval-results-' + string(iter) + '.mat';
+    if exist(filename,'file')==0
+       break
+    end
     
     data = load(filename);
     data1 = data.scores;
@@ -28,10 +31,10 @@ for iter = 0:1:199
         count(sum) = count(sum) + 1;
         
     end
-    if mod(iter+1,1) == 0
+    if mod(iter+1,10) == 0
 %         mod(iter+1,50), iter
         count_list = [count_list; count];
     end  
     
 end
-count_list
+count_list, size(result,1)

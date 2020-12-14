@@ -1,3 +1,5 @@
+
+for round = 1:1:5
 clc
 clear
 % delete(gcp('nocreate'))
@@ -17,7 +19,6 @@ start_generation = 0;
 
 total_generation = 200;
 hour = 24;
-% while hour <= 2
   
 lb=[];
 ub=[];
@@ -48,8 +49,8 @@ end
 % options = optimoptions('gamultiobj','PlotFcn',@gaplotpareto);
 option_temp = load('options.mat');
 options = option_temp.options;
-options.FunctionTolerance = 1e-3;
-options.ConstraintTolerance = 1e-3;
+options.FunctionTolerance = 0;
+options.ConstraintTolerance = 0;
 options.PopulationSize = 50;
 options.CrossoverFcn = @crossoversinglepoint;
 options.CrossoverFraction = 0.6;
@@ -59,13 +60,11 @@ options.CreationFcn = @initialize_variables;
 % options.CreationFcn = @gacreationnonlinearfeasible;
 options.OutputFcn = @gaoutputfcn;
 % options.HybridFcn = {@fgoalattain,[]};
-% rng default
-% x = ga(fun,nvars,A,b,Aeq,beq,lb,ub,nonlcon,IntCon,options)
 options.MaxTime = hour * 3600;
+options.MaxStallGenerations = total_generation; 
 % options.UseParallel = true;
-options.Display = 'iter';
-% options = optimoptions('gamultiobj','UseParallel', true, 'UseVectorized', false);
-% Population = initialize_variables(3, @uuv_normal_test, options);
+% options.Display = 'iter';
+
 
 [x,fval,exitflag,output,population,scores] = gamultiobj(@uuv_normal_test,4*num_incidents,[],[],[],[],lb,ub,@myconuuv_normal_test,options);
 % [x,fval,exitflag,output,population,scores] = ga(@uuv_normal_test,4*num_incidents,[],[],[],[],lb,ub,@myconuuv_normal_test)
@@ -83,4 +82,4 @@ fprintf('UUV_test: iteration number %d, Time is %s \n', hour, string(time));
 
 
 % hour = hour + 1;
-% end
+end

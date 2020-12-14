@@ -7,7 +7,7 @@ global num_incidents
 global goal_selection_flag
 goal_selection_flag = [0, 0, 0];
 global goal_round
-goal_round = 50;
+goal_round = 25;
 global Scores
 Scores = [];
 num_incidents = 5; 
@@ -19,7 +19,7 @@ addpath(datafolder);
 
 % for hour = 1:1:10
 global start_generation
-start_generation = 0;
+start_generation = 1;
 
 total_generation = 8*goal_round;
 hour = 24;
@@ -79,14 +79,14 @@ options.MaxStallGenerations = inf;
 
 time = datestr(now,30);
 % name =  'ga-multiobj-iternum-'+ string(total_generation)+ '.mat';
-name =  'ga-multiobj-iternum-'+ string(hour)+ '.mat';
+name =  'ga-multiobj-iternum-'+ string(goal_round)+ '.mat';
 path = strcat(datafolder,'/',name);
 save(path);
 % figurename =  'ga-multiobj-figure-iternum-' + string(total_generation);
-figurename =  'ga-multiobj-figure-iternum-' + string(hour);
+figurename =  'ga-multiobj-figure-iternum-' + string(goal_round);
 figpath = strcat(datafolder,'/',figurename);
 savefig(figpath);
-fprintf('UUV_test: iteration number %d, Time is %s \n', hour, string(time));
+fprintf('UUV_test: iteration number %d, Time is %s \n', goal_round, string(time));
 
 
 % hour = hour + 1;

@@ -97,7 +97,6 @@ if state.isFeas
     name =  'interval-results-'+ string(start_generation)+ '.mat';
     path = strcat(datafolder,'/',name);
     
-    start_generation = start_generation + 1;
     goal_iter = ceil(start_generation/goal_round);
     dec_flag = dec2bin(goal_iter,3);
     for k = 1:3
@@ -109,6 +108,7 @@ if state.isFeas
     end
     save(path,'Pop', 'fitness','goal_selection_flag', 'Scores');
     Scores = [];
+    start_generation = start_generation + 1;  
 end
 
 switch flag

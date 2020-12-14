@@ -1,8 +1,8 @@
 
 result = [];
 count = zeros(1,8);
-for iter = 0:293
-    filename = 'Datalog-2020-12-13-0-32/interval-results-' + string(iter);
+for iter = 0:349
+    filename = 'Datalog-2020-12-13-14-30/interval-results-' + string(iter);
     
     data = load(filename);
     data1 = data.Scores;
