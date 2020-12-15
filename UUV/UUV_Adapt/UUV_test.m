@@ -7,8 +7,8 @@ global datafolder
 global start_generation
 
 for round = 1:1:5
-clc
-clear
+% clc
+% clear
 % delete(gcp('nocreate'))
 % parpool('local')
 
