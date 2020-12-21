@@ -6,7 +6,7 @@ count_list = [];
 for iter = 0:1:1000
     
     
-    filename = 'Datalog-2020-12-14-17-0/interval-results-' + string(iter) + '.mat';
+    filename = 'Datalog-2020-12-15-15-41/interval-results-' + string(iter) + '.mat';
     if exist(filename,'file')==0
         count_list = [count_list; count];
         break
