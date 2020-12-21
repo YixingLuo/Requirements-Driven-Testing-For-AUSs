@@ -2,24 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="5f6be2e7-f6e0-4dfc-ba56-9b914322d642" name="Default" comment="">
-      <change afterPath="$PROJECT_DIR$/MyAlgorithm/random_search.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/2020_12_10_NSGA_III_datalog_10000/datalog_20201210213134_186_50f20cd23d9a4cffb534054993c3a5fa.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/2020_12_10_NSGA_III_datalog_10000/datalog_20201210213134_186_80c1852d13e6468eb6aa454e0ad11ccd.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/2020_12_10_NSGA_III_datalog_10000/datalog_20201210213134_186_b98be2c66d5342ec95c57a3a75ff5cc9.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/2020_12_10_NSGA_III_datalog_10000/datalog_20201210213134_186_d662ca4fa13e449ab8bdb9b1033466fb.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/2020_12_10_NSGA_III_datalog_10000/datalog_20201210213134_187_1e6ffd45aefd42b4b6ecab34bef49693.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/2020_12_10_NSGA_III_datalog_10000/datalog_20201210213134_187_2fc09cbaf9864349830a6db1c86fa346.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/2020_12_10_NSGA_III_datalog_10000/datalog_20201210213134_187_66cdd445f94b4017bbe2496fdfd3788e.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/2020_12_10_NSGA_III_datalog_10000/datalog_20201210213134_187_6832a21ebda34de3934d09b2ba9f7664.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/2020_12_10_NSGA_III_datalog_10000/datalog_20201210213134_187_86aa15d5b7044c6c914d69bd7d841de6.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/2020_12_10_NSGA_III_datalog_10000/datalog_20201210213134_187_a1eec00137af40a0b4d93b25f251873e.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/DataProcessing/data_process.py" beforeDir="false" afterPath="$PROJECT_DIR$/DataProcessing/data_process.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/MyAlgorithm/nsgaiii.py" beforeDir="false" afterPath="$PROJECT_DIR$/MyAlgorithm/nsgaiii.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/MyScenario/CarBehindAndInFront.py" beforeDir="false" afterPath="$PROJECT_DIR$/MyScenario/CarBehindAndInFront.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Req_SBT.py" beforeDir="false" afterPath="$PROJECT_DIR$/Req_SBT.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Settings/CarBehindAndInFrontConfigure.py" beforeDir="false" afterPath="$PROJECT_DIR$/Settings/CarBehindAndInFrontConfigure.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/read_log.py" beforeDir="false" afterPath="$PROJECT_DIR$/read_log.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../UUV/UUV_GA/gaoutputfcn.asv" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -393,11 +377,11 @@
       <method v="2" />
     </configuration>
     <list>
-      <item itemvalue="Python.CarBehindAndInFrontConfigure" />
-      <item itemvalue="Python.Req_SBT" />
-      <item itemvalue="Python.data_process" />
       <item itemvalue="Python.parallel_nsgaii" />
+      <item itemvalue="Python.data_process" />
       <item itemvalue="Python.random_baseline" />
+      <item itemvalue="Python.Req_SBT" />
+      <item itemvalue="Python.CarBehindAndInFrontConfigure" />
     </list>
     <recent_temporary>
       <list>

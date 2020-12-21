@@ -2,8 +2,10 @@ function [state,options,optchanged] = gaoutputfcn(options,state,flag)
 global datafolder
 global start_generation
 global goal_selection_flag
-global Scores
+global goal_scores
 global goal_round
+global priority_list
+global scenario_pop
 %GAOUTPUTFCNTEMPLATE Template to write custom OutputFcn for GA or GAMULTIOBJ.
 %   [STATE, OPTIONS, OPTCHANGED] = GAOUTPUTFCNTEMPLATE(OPTIONS,STATE,FLAG)
 %
@@ -82,37 +84,85 @@ optchanged = false;
 if state.isFeas
     Pop = [];
     fitness = [];
+    result = [];
     [m,n] = size(state.Population);
     for i = 1:m
         for j = 1:floor(n/4)
             Pop(i,(j-1)*4+1) = round(state.Population(i,(j-1)*4+1));
             Pop(i,(j-1)*4+2) = round(state.Population(i,(j-1)*4+2));
             Pop(i,(j-1)*4+3) = round(state.Population(i,(j-1)*4+3));
-            Pop(i,(j-1)*4+4) = state.Population(i,(j-1)*4+4);
+            if Pop(i,(j-1)*4+3) == 3
+                Pop(i,(j-1)*4+4) = 0;
+            else
+                Pop(i,(j-1)*4+4) =  max(0, state.Population(i,(j-1)*4+4));
+            end
         end
         for fun_num = 1:size(state.Score,2)
-            fitness(i,fun_num)=state.Score(i,fun_num);
+            fitness(i,fun_num) = state.Score(i,fun_num);
+        end
+        for j = 1:size(scenario_pop,1)
+            if scenario_pop(j,:) == Pop(i,:)
+                result = [result; goal_scores(j,:)];
+                break
+            end
         end
 %         fitness(i,1)=state.Score(i,1);
-
-
 %         fitness(i,2)=state.Score(i,2);
 %         fitness(i,3)=state.Score(i,3);
     end
+%     datafolder, start_generation
     name =  'interval-results-'+ string(start_generation)+ '.mat';
     path = strcat(datafolder,'/',name);
+    save(path,'Pop', 'fitness','goal_selection_flag', 'goal_scores','result','scenario_pop');
     
-    goal_iter = floor((start_generation-1)/goal_round);
-    dec_flag = dec2bin(goal_iter,3);
-    for k = 1:3
-        if dec_flag(k) == '0'
-            goal_selection_flag (4-k) = 0;
-        else
-            goal_selection_flag (4-k) = 1;
+    result = [];
+    count = zeros(1,8);
+    count_list = [];
+    for k = 1:1000
+        name = 'interval-results-' + string(k) + '.mat';
+        filename = strcat(datafolder,'/',name);
+        if exist(filename,'file')==0
+            count_list = [count_list; count];
+            break
+        end
+        data = load(filename);
+        data1 = data.fitness;
+        [m,n] = size(data1);
+    
+        for i = 1:1:m
+            temp_result = data1(m,:);
+            goal_flag = zeros(1,3);
+            if abs(temp_result(1))< 0.9
+                goal_flag(1) = 1;
+            end
+            if abs(temp_result(2))< 100*1000
+                goal_flag(2) = 1;
+            end
+            if abs(temp_result(3))> 5.4*1e6
+                goal_flag(3) = 1;
+            end
+            sum = goal_flag(1)*2^0 + goal_flag(2)*2^1 + goal_flag(3)*2^2 + 1;
+            for j = 1:size(priority_list,1)
+                if priority_list(j,:) == goal_flag
+                    count(j) = count(j) + 1;
+                    break
+                end
+            end
         end
     end
-    save(path,'Pop', 'fitness','goal_selection_flag', 'Scores');
-    Scores = [];
+    if mod (start_generation,goal_round)==0 
+        start = 1;
+        for i = 1:size(priority_list,1)
+            if count(i) == 0
+                start = i;
+                break;
+            end
+        end
+    goal_selection_flag = priority_list(start,:);        
+    end
+    
+    goal_scores = [];
+    scenario_pop = [];
     start_generation = start_generation + 1;  
 end
 
