@@ -1,8 +1,8 @@
 function f  = uuv_normal_test(x_test_initial)
 global num_incidents
 global goal_selection_flag
-global goal_scores
-global scenario_pop
+% global goal_scores
+% global scenario_pop
 m = num_incidents;
 x_test_initial;
 x_test = [];
@@ -103,7 +103,7 @@ while(1)
 %         f = DS_E - DS_A - DS_D;
         %% type3
 %         f = pastenergy;
-        goal_scores = [goal_scores; abs(pastaccuracy),  abs(pastdistance), abs(pastenergy)];
+%         goal_scores = [goal_scores; abs(pastaccuracy),  abs(pastdistance), abs(pastenergy)];
         break
     end
 

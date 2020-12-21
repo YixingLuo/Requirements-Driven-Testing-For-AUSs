@@ -13,7 +13,7 @@ priority_list = [1,1,1;
                  0,0,0;];
 
 for iter = 1:1:50
-    filename = 'Datalog-2020-12-15-0-58/interval-results-' + string(iter) + '.mat';
+    filename = 'Datalog-2020-12-15-11-44/interval-results-' + string(iter) + '.mat';
     if exist(filename,'file')==0
         count_list = [count_list; count];
         break

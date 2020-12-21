@@ -1,8 +1,8 @@
 clc
 clear
 
-% global goal_scores
-% global scenario_pop
+global goal_scores
+global scenario_pop
 global goal_round
 global hour
 global num_incidents
@@ -10,6 +10,13 @@ global goal_selection_flag
 global datafolder
 global start_generation
 global priority_list
+
+% for round = 1:1:5
+
+% delete(gcp('nocreate'))
+% parpool('local')
+
+% goal_selection_flag = [1, 1, 1];
 
 priority_list = [1,1,1; 
                  0,1,1;
@@ -23,7 +30,7 @@ global violation_pattern_to_search
 violation_pattern_to_search = priority_list;
 goal_selection_flag = violation_pattern_to_search(1,:);
 global violation_pattern_distance
-global violation_pattern_relation
+global violation_pattern_rea
 
 
 goal_round = 50;
