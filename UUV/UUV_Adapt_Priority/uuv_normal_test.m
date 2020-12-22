@@ -1,13 +1,12 @@
 function f  = uuv_normal_test(x_test_initial)
 global num_incidents
 global goal_selection_flag
-% global goal_scores
-% global scenario_pop
+
 m = num_incidents;
 x_test_initial;
 x_test = [];
 % [m,n] = size(x_test);
-scenario = [];
+% scenario = [];
 for i = 1:m
     x_test(i,1) = round(x_test_initial((i-1)*4+1));
     x_test(i,2) = round(x_test_initial((i-1)*4+2));
@@ -21,10 +20,9 @@ for i = 1:m
     else
         x_test(i,4) = max(0,x_test_initial((i-1)*4+4));
     end
-    scenario = [scenario, x_test(i,:)];
+%     scenario = [scenario, x_test(i,:)];
 end
-for i = 1:m
-scenario_pop = [scenario_pop; scenario];
+
 global uuv
 uuv = UnmannedUnderwaterVehicle();
 global pastdistance

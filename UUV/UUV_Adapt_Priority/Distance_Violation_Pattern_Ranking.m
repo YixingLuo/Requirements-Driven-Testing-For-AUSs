@@ -1,13 +1,13 @@
-function sorted_violation_pattern_list = Distance_Violation_Pattern_Ranking (violation_pattern_to_search, population, scores)
+function [sorted_violation_pattern_list,sorted_pop] = Distance_Violation_Pattern_Ranking (violation_pattern_to_search, population, scores)
 sorted_violation_pattern_list = [];
 sorted_pop = zeros(size(population,1),size(population,2),size(violation_pattern_to_search,1));
 distance = zeros(size(violation_pattern_to_search,1), size(population,1));
 
-for i = 1:size(violation_pattern_to_search,1)
-    for j = 1:size(population,1)
+% for i = 1:size(violation_pattern_to_search,1)
+%     for j = 1:size(population,1)
 
-% for i = 1:1
-%     for j = 1:1       
+for i = 1:1
+    for j = 1:size(population,1)      
         violation_pattern = violation_pattern_to_search(i,:);
         dist = 0;
         if violation_pattern(1) == 0
@@ -69,5 +69,15 @@ for i = 1:length(sort_dist_rank)
     sorted_violation_pattern_list = [sorted_violation_pattern_list; violation_pattern_to_search(index,:)];
 end
 
-
+distance =  distance';
+index_list = 1:1:size(distance,1);
+distance_index = [index_list', distance];
+for i = 2:size(distance_index,2)
+% for i = 2:2
+    sort_dist_each_pattern = sortrows(distance_index,i);
+    index = sort_dist_each_pattern(:,1);
+    for j = 1:size(population,1) 
+        sorted_pop (j,:,i-1) = population(index(j),:);
+    end
+end
 

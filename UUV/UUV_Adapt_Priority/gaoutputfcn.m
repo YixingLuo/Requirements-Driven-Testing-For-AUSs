@@ -13,7 +13,6 @@ optchanged = false;
 if state.isFeas
     Pop = [];
     fitness = [];
-    result = [];
     [m,n] = size(state.Population);
     for i = 1:m
         for j = 1:floor(n/4)
@@ -32,8 +31,8 @@ if state.isFeas
     end
     name =  'interval-results-'+ string(start_generation)+ '.mat';
     path = strcat(datafolder,'/',name);
-    save(path,'Pop', 'fitness','goal_selection_flag', 'goal_scores','result','scenario_pop');
-    
+    save(path,'Pop', 'fitness','goal_selection_flag','violation_pattern_distance','violation_pattern_relation','violation_pattern_to_search');
+
 
     if mod (start_generation,goal_round)==0 
         evaluation = [];
@@ -79,8 +78,8 @@ if state.isFeas
             end
         end
         
-        violation_pattern_distance = Distance_Violation_Pattern_Ranking (violation_pattern_to_search, population);
-        violation_pattern_relation = Relation_Violation_Pattern_Ranking (violation_pattern_to_search, priority_list);
+        [violation_pattern_distance, sorted_pop] = Distance_Violation_Pattern_Ranking (violation_pattern_to_search, population, evaluation);
+        violation_pattern_relation = Relation_Violation_Pattern_Ranking (violation_pattern_to_search, goal_selection_flag);
 
         violation_pattern_to_search = Ensemble_Ranking(violation_pattern_distance, violation_pattern_relation, violation_pattern_to_search);
         

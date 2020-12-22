@@ -24,7 +24,11 @@ violation_pattern_to_search = priority_list;
 goal_selection_flag = violation_pattern_to_search(1,:);
 global violation_pattern_distance
 global violation_pattern_relation
-
+global parent_list
+global child_list
+[parent_list, child_list] = Relation(priority_list);
+violation_pattern_distance = [];
+violation_pattern_relation = [];
 
 goal_round = 50;
 
