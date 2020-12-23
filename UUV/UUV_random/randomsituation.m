@@ -7,6 +7,7 @@
 function [condition, index] = randomsituation(num,k)
 % disturb = randperm(7);
 global uuv
+global datafolder
 uuv = UnmannedUnderwaterVehicle();
 % l = 1:1:15;
 % disturb = randi([1,6],1,l(k));
@@ -22,17 +23,17 @@ failure_list = [];
 for i = 1: length(disturb)
     if disturb(i) == 1
         idx = unidrnd(5);   
-        acc_ratio = 20*rand;
+        acc_ratio = 40*rand;
 %             acc = uuv.s_accuracy(idx)*acc_ratio/100;
         condition(i,:) = [1,idx,acc_ratio];
     elseif disturb(i) == 2
         idx = unidrnd(5);
-        energy_ratio = 20*rand;
+        energy_ratio = 40*rand;
 %             energy = uuv.s_energy(idx)*energy_ratio/100;
         condition(i,:) = [2,idx,energy_ratio];
    elseif disturb(i) == 3
         idx = unidrnd(5);
-        speed_ratio = 20*rand;
+        speed_ratio = 40*rand;
 %             speed = uuv.s_speed(idx)*speed_ratio/100;
         condition(i,:) = [3,idx,speed_ratio];   
     elseif disturb(i) == 4
@@ -51,9 +52,9 @@ for i = 1: length(disturb)
         condition(i,:) = [6,0,dis_target_ratio]; 
     end
 end
-name = 'conditions/condition' + string(num) + '.mat';
+name = datafolder + '/condition' + string(num) + '.mat';
 save(name, 'condition');
-name = 'conditions/index' + string(num) + '.mat';
+name = datafolder + '/index' + string(num) + '.mat';
 save(name, 'index');
 
 

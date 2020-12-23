@@ -25,7 +25,7 @@ mkdir(datafolder);
 addpath(datafolder);
 
 % for hour = 1:1:10
-start_generation = 1;
+start_generation =  1;
 
 total_generation = 8*goal_round;
 % total_generation = 50;
@@ -63,13 +63,13 @@ option_temp = load('options.mat');
 options = option_temp.options;
 options.FunctionTolerance = 0;
 options.ConstraintTolerance = 0;
-options.PopulationSize = 50;
+options.PopulationSize = 100;
 options.CrossoverFcn = @crossoversinglepoint;
 options.CrossoverFraction = 0.8;
 options.MaxGenerations = total_generation;
 % options.MaxGenerations = inf;
-% options.CreationFcn = @initialize_variables;
-options.CreationFcn = @gacreationuniform;
+options.CreationFcn = @initialize_variables;
+% options.CreationFcn = @gacreationuniform;
 options.OutputFcn = @gaoutputfcn;
 % options.HybridFcn = {@fgoalattain,[]};
 % rng default

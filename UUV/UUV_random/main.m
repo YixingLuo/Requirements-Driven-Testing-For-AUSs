@@ -4,14 +4,15 @@ data1 = [];
 usage_plan1 = [];
 count = [];
 num = 0;
-
-datafolder = 'conditions2';
+global datafolder
+time = datestr(now,30);
+datafolder = 'conditions' + string(time);
 mkdir(datafolder);
 addpath(datafolder);
 
 tstart =tic; 
-for num = 0:1:10000
-    if num == 10000
+for num = 0:1:40000
+    if num == 40000
         time = datestr(now,30);
         name = 'data' + string(time) + '.mat';
         save(name);
