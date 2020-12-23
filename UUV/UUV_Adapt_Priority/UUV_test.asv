@@ -24,13 +24,20 @@ violation_pattern_to_search = priority_list;
 goal_selection_flag = violation_pattern_to_search(1,:);
 global violation_pattern_distance
 global violation_pattern_relation
+global violation_pattern_ranking
 global parent_list
 global child_list
 [parent_list, child_list] = Relation(priority_list);
 violation_pattern_distance = [];
 violation_pattern_relation = [];
+violation_pattern_ranking = [];
+global initial_ratio
+global best_pop
+best_pop = [];
 
-goal_round = 50;
+initial_ratio = 0.5;
+% goal_round = [100,200,300,400];
+goal_round = [50,100,150,200];
 
 goal_scores = [];
 scenario_pop = [];
@@ -80,13 +87,13 @@ option_temp = load('options.mat');
 options = option_temp.options;
 options.FunctionTolerance = 0;
 options.ConstraintTolerance = 0;
-options.PopulationSize = 50;
+options.PopulationSize = 100;
 options.CrossoverFcn = @crossoversinglepoint;
 options.CrossoverFraction = 0.8;
 options.MaxGenerations = total_generation;
 % options.MaxGenerations = inf;
-% options.CreationFcn = @initialize_variables;
-options.CreationFcn = @gacreationuniform;
+options.CreationFcn = @initialize_variables;
+% options.CreationFcn = @gacreationuniform;
 options.OutputFcn = @gaoutputfcn;
 % options.HybridFcn = {@fgoalattain,[]};
 % rng default

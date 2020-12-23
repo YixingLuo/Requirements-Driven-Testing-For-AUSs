@@ -3,11 +3,11 @@ sorted_violation_pattern_list = [];
 sorted_pop = zeros(size(population,1),size(population,2),size(violation_pattern_to_search,1));
 distance = zeros(size(violation_pattern_to_search,1), size(population,1));
 
-% for i = 1:size(violation_pattern_to_search,1)
-%     for j = 1:size(population,1)
+for i = 1:size(violation_pattern_to_search,1)
+    for j = 1:size(population,1)
 
-for i = 1:1
-    for j = 1:size(population,1)      
+% for i = 1:1
+%     for j = 1:size(population,1)      
         violation_pattern = violation_pattern_to_search(i,:);
         dist = 0;
         if violation_pattern(1) == 0

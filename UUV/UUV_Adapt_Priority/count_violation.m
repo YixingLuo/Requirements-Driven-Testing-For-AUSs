@@ -12,17 +12,16 @@ priority_list = [1,1,1;
                  1,0,0;
                  0,0,0;];
 
-% for iter = 1:1:50
-%     filename = 'Datalog-2020-12-15-11-44/interval-results-' + string(iter) + '.mat';
-%     if exist(filename,'file')==0
-%         count_list = [count_list; count];
-%         break
-%     end
-%     
-%         data = load(filename);
-%         data1 = data.goal_scores;
-%         
-    data1 = fitness;
+for iter = 1:1:400
+    filename = 'Datalog-2020-12-23-12-8/interval-results-' + string(iter) + '.mat';
+    if exist(filename,'file')==0
+        count_list = [count_list; count];
+        break
+    end
+    
+    data = load(filename);
+        
+    data1 = data.fitness;
     [m,n] = size(data1);
     for i = 1:1:m
         temp_result = data1(i,:);
@@ -36,8 +35,6 @@ priority_list = [1,1,1;
         if abs(temp_result(3))> 5.4*1e6
             goal_flag(3) = 1;
         end
-        sum = goal_flag(1)*2^0 + goal_flag(2)*2^1 + goal_flag(3)*2^2 + 1;
-        result = [result, sum];
 %         count(sum) = count(sum) + 1;
         for j = 1:size(priority_list,1)
             if priority_list(j,:) == goal_flag
@@ -47,15 +44,15 @@ priority_list = [1,1,1;
             end
         end
     end
-%     if mod(iter+1,50) == 0
-% %         mod(iter+1,50), iter
-%         count_list = [count_list; count];
-%     end  
+    if mod(iter,50) == 0
+%         mod(iter+1,50), iter
+        count_list = [count_list; count];
+    end  
     
-% end
+end
 
 % count_list, size(result,1)
-count
+count_list, count
 % start_generation = 50;
 % goal_round = 50;
 % if mod (start_generation,goal_round)==0 

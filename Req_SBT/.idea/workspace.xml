@@ -3,7 +3,6 @@
   <component name="ChangeListManager">
     <list default="true" id="5f6be2e7-f6e0-4dfc-ba56-9b914322d642" name="Default" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../UUV/UUV_GA/gaoutputfcn.asv" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -377,11 +376,11 @@
       <method v="2" />
     </configuration>
     <list>
-      <item itemvalue="Python.parallel_nsgaii" />
-      <item itemvalue="Python.data_process" />
-      <item itemvalue="Python.random_baseline" />
-      <item itemvalue="Python.Req_SBT" />
       <item itemvalue="Python.CarBehindAndInFrontConfigure" />
+      <item itemvalue="Python.Req_SBT" />
+      <item itemvalue="Python.data_process" />
+      <item itemvalue="Python.parallel_nsgaii" />
+      <item itemvalue="Python.random_baseline" />
     </list>
     <recent_temporary>
       <list>
