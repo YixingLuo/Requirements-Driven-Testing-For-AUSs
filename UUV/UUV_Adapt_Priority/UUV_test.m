@@ -36,8 +36,8 @@ global best_pop
 best_pop = [];
 
 initial_ratio = 0.5;
-% goal_round = [100,200,300,400];
-goal_round = [50,100,150,200];
+goal_round = [100,200,300,400];
+% goal_round = [50,100,150,200];
 
 goal_scores = [];
 scenario_pop = [];
@@ -48,7 +48,7 @@ datafolder = strcat('Datalog-',string(da(1)),'-',string(da(2)),'-',string(da(3))
 mkdir(datafolder);
 addpath(datafolder);
 start_generation = 1;
-total_generation = 200;
+total_generation = 400;
 hour = 24;
 
   
@@ -83,7 +83,7 @@ option_temp = load('options.mat');
 options = option_temp.options;
 options.FunctionTolerance = 0;
 options.ConstraintTolerance = 0;
-options.PopulationSize = 50;
+options.PopulationSize = 100;
 options.CrossoverFcn = @crossoversinglepoint;
 options.CrossoverFraction = 0.8;
 options.MaxGenerations = total_generation;
@@ -96,7 +96,7 @@ options.OutputFcn = @gaoutputfcn;
 % x = ga(fun,nvars,A,b,Aeq,beq,lb,ub,nonlcon,IntCon,options)
 options.MaxTime = hour * 3600;
 % options.UseParallel = true;
-options.Display = 'iter';
+% options.Display = 'iter';
 options.MaxStallGenerations = inf;
 % options = optimoptions('gamultiobj','UseParallel', true, 'UseVectorized', false);
 % Population = initialize_variables(3, @uuv_normal_test, options);
