@@ -7,6 +7,7 @@
 function [condition, index] = randomsituation(num,k)
 % disturb = randperm(7);
 global uuv
+global datafolder
 uuv = UnmannedUnderwaterVehicle();
 % l = 1:1:15;
 % disturb = randi([1,6],1,l(k));
@@ -51,9 +52,9 @@ for i = 1: length(disturb)
         condition(i,:) = [6,0,dis_target_ratio]; 
     end
 end
-name = 'conditions/condition' + string(num) + '.mat';
+name = datafolder + '/condition' + string(num) + '.mat';
 save(name, 'condition');
-name = 'conditions/index' + string(num) + '.mat';
+name = datafolder + '/index' + string(num) + '.mat';
 save(name, 'index');
 
 

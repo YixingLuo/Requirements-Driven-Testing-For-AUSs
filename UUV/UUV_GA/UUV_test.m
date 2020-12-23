@@ -6,7 +6,7 @@ global Scores
 global datafolder
 global start_generation
 
-for round = 1:1:5
+% for round = 1:1:5
 % clc
 % clear
 % delete(gcp('nocreate'))
@@ -18,7 +18,7 @@ Scores = [];
 num_incidents = 5; 
 
 da = fix(datevec(now));
-datafolder = strcat('Datalog-',string(da(1)),'-',string(da(2)),'-',string(da(3)),'-',string(da(4)),'-',string(da(5)));
+datafolder = strcat('UniforInitial-Datalog-',string(da(1)),'-',string(da(2)),'-',string(da(3)),'-',string(da(4)),'-',string(da(5)));
 mkdir(datafolder);
 addpath(datafolder);
 
@@ -65,8 +65,8 @@ options.CrossoverFcn = @crossoversinglepoint;
 options.CrossoverFraction = 0.8;
 options.MaxGenerations = total_generation;
 % options.MaxGenerations = inf;
-options.CreationFcn = @initialize_variables;
-% options.CreationFcn = @gacreationuniform;
+% options.CreationFcn = @initialize_variables;
+options.CreationFcn = @gacreationuniform;
 options.OutputFcn = @gaoutputfcn;
 % options.HybridFcn = {@fgoalattain,[]};
 options.MaxTime = hour * 3600;
@@ -91,4 +91,4 @@ fprintf('UUV_test: iteration number %d, Time is %s \n', start_generation, string
 
 
 % hour = hour + 1;
-end
+% end
