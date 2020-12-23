@@ -5,15 +5,15 @@ count = zeros(1,8);
 for i = 1:1:m
     temp_result = data1(i,:);
     flag = zeros(1,3);
-    if abs(temp_result(2)) < 0.9
+    if abs(temp_result(2)) < 0.80
         0.9 - temp_result(2);
         flag(1) = 1;
     end
-    if abs(temp_result(4)) < 100*1000 
+    if abs(temp_result(4)) < 95*1000 
         100*1000 - temp_result(4);
         flag(2) = 1;
     end
-    if temp_result(6) > 5.4*1e6
+    if temp_result(6) > 5.6*1e6
         temp_result(6) - 5.4*1e6;
         flag(3) = 1;
     end

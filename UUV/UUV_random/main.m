@@ -5,13 +5,13 @@ usage_plan1 = [];
 count = [];
 num = 0;
 
-datafolder = 'conditions2';
+datafolder = 'conditions3';
 mkdir(datafolder);
 addpath(datafolder);
 
 tstart =tic; 
-for num = 0:1:10000
-    if num == 10000
+for num = 0:1:20000
+    if num == 20000
         time = datestr(now,30);
         name = 'data' + string(time) + '.mat';
         save(name);

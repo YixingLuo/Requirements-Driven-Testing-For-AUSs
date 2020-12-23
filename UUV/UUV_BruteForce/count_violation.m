@@ -19,10 +19,10 @@ for iter = 1:1:1000
     for i = 1:1:m
         temp_result = data1(i,:);
         flag = zeros(1,3);
-        if abs(temp_result(1))< 0.9
+        if abs(temp_result(1))< 0.85
             flag(1) = 1;
         end
-        if abs(temp_result(2))< 100*1000
+        if abs(temp_result(2))< 95*1000
             flag(2) = 1;
         end
         if abs(temp_result(3))> 5.4*1e6

@@ -1,8 +1,8 @@
-clc
-clear
+% clc
+% clear
 result = [];
 count_list = zeros(1,8);
-for iter = 0:1:1000
+for iter = 1:1:1000
     
     
     filename = 'Datalog-2020-12-14-23-56/interval-results-' + string(iter) + '.mat';
@@ -19,10 +19,10 @@ for iter = 0:1:1000
     for i = 1:1:m
         temp_result = data1(i,:);
         flag = zeros(1,3);
-        if abs(temp_result(1))< 0.9
+        if abs(temp_result(1))< 0.80
             flag(1) = 1;
         end
-        if abs(temp_result(2))< 100*1000
+        if abs(temp_result(2))< 95*1000
             flag(2) = 1;
         end
         if abs(temp_result(3))> 5.4*1e6

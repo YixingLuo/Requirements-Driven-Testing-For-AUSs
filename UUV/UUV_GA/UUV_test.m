@@ -24,9 +24,9 @@ addpath(datafolder);
 
 % for hour = 1:1:10
 
-start_generation = 0;
+start_generation = 1;
 
-total_generation = 100;
+total_generation = 400;
 hour = 24;
   
 lb=[];
@@ -60,19 +60,19 @@ option_temp = load('options.mat');
 options = option_temp.options;
 options.FunctionTolerance = 0;
 options.ConstraintTolerance = 0;
-options.PopulationSize = 50;
+options.PopulationSize = 100;
 options.CrossoverFcn = @crossoversinglepoint;
 options.CrossoverFraction = 0.8;
 options.MaxGenerations = total_generation;
 % options.MaxGenerations = inf;
-% options.CreationFcn = @initialize_variables;
-options.CreationFcn = @gacreationuniform;
+options.CreationFcn = @initialize_variables;
+% options.CreationFcn = @gacreationuniform;
 options.OutputFcn = @gaoutputfcn;
 % options.HybridFcn = {@fgoalattain,[]};
 options.MaxTime = hour * 3600;
-options.MaxStallGenerations = total_generation; 
+options.MaxStallGenerations = inf;
 % options.UseParallel = true;
-options.Display = 'iter';
+% options.Display = 'iter';
 
 
 [x,fval,exitflag,output,population,scores] = gamultiobj(@uuv_normal_test,4*num_incidents,[],[],[],[],lb,ub,@myconuuv_normal_test,options);
