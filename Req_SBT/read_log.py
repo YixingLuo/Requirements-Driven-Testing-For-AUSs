@@ -2,11 +2,12 @@
 # -*- coding:utf-8 -*-
 import numpy as np
 import math
-# from Configure import configure
+from Settings.CarBehindAndInFrontConfigure import CarBehindAndInFrontConfigure
 import os
 import time
 import json
-
+from shapely.geometry import Point, LineString, Polygon
+from shapely import affinity
 
 """
 ego_state: X, Y, Time, Direction, Velocity, Acceleration Profile (aidx), Acceleration
@@ -17,6 +18,128 @@ static_vehicle_state: x,y, euclidean_distance
 """
 
 # config = configure()
+
+
+def evaluate_collision (ego_vehicle_state, dynamic_vehicle_state,dy_obsList, static_vehicle_state,st_obsList, config):
+    dis_list = []
+    dis_satisfaction = []
+
+    ## in case that the size are not same
+    num_dynamic_obs = len(dy_obsList)
+    num_static_obs = len(st_obsList)
+
+    if num_dynamic_obs:
+        range_list_dy = len(dynamic_vehicle_state[0])
+    else:
+        range_list_dy = 0
+    for obs in range (1,num_dynamic_obs):
+        range_list_dy = min(range_list_dy,len(dynamic_vehicle_state[obs]))
+
+    if num_static_obs:
+        range_list_st = len(static_vehicle_state[0])
+    else:
+        range_list_st = 0
+    for obs in range (1,num_static_obs):
+        range_list_st = min(range_list_st,len(static_vehicle_state[obs]))
+
+    if num_dynamic_obs and num_static_obs:
+        if range_list_dy < range_list_st:
+            range_list = min(len(ego_vehicle_state),range_list_dy)
+        else:
+            range_list = min(len(ego_vehicle_state), range_list_st)
+    elif num_dynamic_obs:
+        range_list = min(len(ego_vehicle_state), range_list_dy)
+    elif num_static_obs:
+        range_list = min(len(ego_vehicle_state), range_list_st)
+
+    for i in range (range_list):
+        min_dist = 1000
+        flag = 0
+        ego_direction = ego_vehicle_state[i][3]
+        x = ego_vehicle_state[i][0]
+        y = ego_vehicle_state[i][1]
+        ego_vehicle_center = Point(x, y)
+        point1 = Point(x - config.ego_length/2, y - config.ego_width/2)
+        point2 = Point(x + config.ego_length/2, y - config.ego_width/2)
+        point3 = Point(x + config.ego_length/2, y + config.ego_width/2)
+        point4 = Point(x - config.ego_length/2, y + config.ego_width/2)
+        ego_rect = Polygon([point1, point2, point3, point4])
+        angle = ego_direction * (180.0 / math.pi)
+        rect_ego = affinity.rotate(ego_rect, angle)
+
+
+        for num in range (len(dynamic_vehicle_state)):
+            vehicle_width = float(dy_obsList[num]["width"])
+            vehicle_length = float(dy_obsList[num]["length"])
+
+            veh_x = dynamic_vehicle_state[num][i][4]
+            veh_y = dynamic_vehicle_state[num][i][5]
+            other_vehicle_center = Point(veh_x, veh_y)
+            point1 = Point(veh_x - vehicle_length / 2, veh_y - vehicle_width / 2)
+            point2 = Point(veh_x + vehicle_length / 2, veh_y - vehicle_width / 2)
+            point3 = Point(veh_x + vehicle_length / 2, veh_y + vehicle_width / 2)
+            point4 = Point(veh_x - vehicle_length / 2, veh_y + vehicle_width / 2)
+            other_rect = Polygon([point1, point2, point3, point4])
+
+            intersection = rect_ego.intersection(other_rect)
+            if not intersection.is_empty:
+                flag = -1
+                min_dist = -1
+                break
+            else:
+                dist = ego_vehicle_center.distance(other_vehicle_center)
+                if dist < min_dist:
+                    min_dist = dist
+
+
+        for num in range (len(static_vehicle_state)):
+            vehicle_width = float(st_obsList[num]["width"])
+            vehicle_length = float(st_obsList[num]["length"])
+
+            veh_x = dynamic_vehicle_state[num][i][4]
+            veh_y = dynamic_vehicle_state[num][i][5]
+            other_vehicle_center = Point(veh_x, veh_y)
+            point1 = Point(veh_x - vehicle_length / 2, veh_y - vehicle_width / 2)
+            point2 = Point(veh_x + vehicle_length / 2, veh_y - vehicle_width / 2)
+            point3 = Point(veh_x + vehicle_length / 2, veh_y + vehicle_width / 2)
+            point4 = Point(veh_x - vehicle_length / 2, veh_y + vehicle_width / 2)
+            other_rect = Polygon([point1, point2, point3, point4])
+
+            intersection = rect_ego.intersection(other_rect)
+            if not intersection.is_empty:
+                flag = -1
+                min_dist = -1
+                break
+            else:
+                dist = ego_vehicle_center.distance(other_vehicle_center)
+                if dist < min_dist:
+                    min_dist = dist
+
+
+
+        dis_list.append(min_dist)
+        # print(min_dist)
+        if min_dist >= config.minimumseperation:
+            satisfaction = 1
+        elif min_dist < config.assured_clear_distance_ahead:
+            satisfaction = 0
+        else:
+            satisfaction =(min_dist- config.assured_clear_distance_ahead)/(config.minimumseperation - config.assured_clear_distance_ahead)
+
+        dis_satisfaction.append(satisfaction)
+
+    # print(dis_list, dis_satisfaction, dis_satisfaction)
+
+    if len(dis_list) and len(dis_satisfaction):
+        min_dis = min(dis_list)
+        min_satisfaction = min(dis_satisfaction)
+        avg_satisfaction = np.mean(dis_satisfaction)
+    else:
+        min_dis = -1
+        min_satisfaction = -1
+        avg_satisfaction = -1
+
+    return min_dis, avg_satisfaction, min_satisfaction
 
 
 def evaluate_distance (ego_vehicle_state, dynamic_vehicle_state,dy_obsList, static_vehicle_state,st_obsList, config):
@@ -337,86 +460,87 @@ def evaluate_cross_lane (ego_vehicle_state):
 
 if __name__=='__main__':
 
-    file_dir_sce = os.getcwd() + '/scenarios_' + str(time.strftime("%Y_%m_%d"))
-    file_dir_data = os.getcwd() + '/datalog_' + str(time.strftime("%Y_%m_%d"))
-
-    file_path = os.path.abspath(os.path.join(os.getcwd(), ".."))
-    scenario_name = file_dir_sce + "\scenario_" + str(0) + ".json"
-    log_name = file_dir_data + "\datalog_" + str(0) + ".txt"
-
-    cmd = file_path+"\dynamic_cost -c %d -v EGO_TESTER -a -i %s > %s" % (100, scenario_name, log_name)
-
-    # print(cmd)
-    os.system(cmd)
-    print(log_name)
-
+    # file_dir_sce = os.getcwd() + '/scenarios_' + str(time.strftime("%Y_%m_%d"))
+    # file_dir_data = os.getcwd() + '/datalog_' + str(time.strftime("%Y_%m_%d"))
+    #
+    # file_path = os.path.abspath(os.path.join(os.getcwd(), ".."))
+    # scenario_name = file_dir_sce + "\scenario_" + str(0) + ".json"
+    # log_name = file_dir_data + "\datalog_" + str(0) + ".txt"
+    #
+    # cmd = file_path+"\dynamic_cost -c %d -v EGO_TESTER -a -i %s > %s" % (100, scenario_name, log_name)
+    #
+    # os.system(cmd)
+    # print(log_name)
+    #
+    scenario_name = 'SCENAR1.json'
+    log_name = 'datalog1.txt'
+    config = CarBehindAndInFrontConfigure()
 
     with open(scenario_name, 'r', encoding='utf-8') as f:
         ret_dic = json.load(f)
-        for key in ret_dic:
-            if key == "dynamic_obs":
-                dy_obsList = ret_dic[key]
-                num_dynamic_obs = len(dy_obsList)
-                # print(dy_obsList)
-                # print(dy_obsList[0]["width"])
-            if key == "static_obs":
-                st_obsList = ret_dic[key]
-                num_static_obs = len(st_obsList)
-            if key == "traffic_signal":
-                traffic_light = ret_dic[key]
+
+    traffic_light = ret_dic["traffic_signal"]
+    st_obsList = ret_dic["static_obs"]
+    dy_obsList  = ret_dic["dynamic_obs"]
+
+    num_dynamic_obs = 3
+    num_static_obs = 0
 
     ego_vehicle_state = []
+    dynamic_vehicle_state = [[] for i in range(num_dynamic_obs)]
+    static_vehicle_state = [[] for i in range(num_static_obs)]
     with open(log_name, 'r') as f:
         my_data = f.readlines()  # txt中所有字符串读入data，得到的是一个list
         # 对list中的数据做分隔和类型转换
-        for line in my_data:
-            line_data = line.split()
-            numbers_float = map(float, line_data)  # 转化为浮点数
+        # for line in my_data:
+        #     line_data = line.split()
+        #     numbers_float = map(float, line_data)  # 转化为浮点数
 
         for line in my_data:
             data = line.split()
-            if data[0] == "EGO_STATUS":
+            if data[0] == "EGO_STATUS" and len(data) == 8:
                 log = []
                 for i in range(1, len(data)):
                     log.append(float(data[i]))
-                ego_vehicle_state.append(log)
+                if len(log) == 7:
+                    ego_vehicle_state.append(log)
 
-    dynamic_vehicle_state = np.zeros((num_dynamic_obs, len(ego_vehicle_state), 8), float)
-    # print(dynamic_vehicle_state.shape)
-    static_vehicle_state = np.zeros((num_static_obs, len(ego_vehicle_state), 8), float)
-    width = config.ego_width
-    length = config.ego_length
+            if data[0] == "DYNAMIC_OBS_INFO" and len(data) == 10:
+                log = []
+                for i in range(2, len(data)):
+                    log.append(float(data[i]))
+                    # print(log)
+                if len(log) == 8:
+                    dynamic_vehicle_state[int(data[1])].append(log)
+            elif data[0] == "STATIC_OBS_INFO" and len(data) == 5:
+                log = []
+                for i in range(2, len(data)):
+                    log.append(float(data[i]))
+                    # print(log)
+                if len(log) == 3:
+                    static_vehicle_state[int(data[1])].append(log)
 
-    with open(log_name, 'r') as f:
-        my_data = f.readlines()  # txt中所有字符串读入data，得到的是一个list
-        # 对list中的数据做分隔和类型转换
-        for line in my_data:
-            line_data = line.split()
-            numbers_float = map(float, line_data)  # 转化为浮点数
 
-        for i in range(num_dynamic_obs):
-            time_step = 0
-            for line in my_data:
-                data = line.split()
-                if data[0] == "DYNAMIC_OBS_INFO" and data[1] == str(i):
-                    for j in range(2, len(data)):
-                        # log.append(float(data[j]))
-                        # print(i, time_step, j-2)
-                        dynamic_vehicle_state[i][time_step][j - 2] = float(data[j])
-                    time_step = time_step + 1
 
-                    # print(log, dynamic_vehicle_state[i])
-                    # dynamic_vehicle_state[i].append(log)
-        # print(dynamic_vehicle_state)
 
-    # print(dynamic_vehicle_state.shape[0])
 
-    comfort = evaluate_comfort(ego_vehicle_state)
-    speed = evaluate_speed(ego_vehicle_state)
-    min_dis, min_satisfaction, avg_satisfaction = evaluate_distance(ego_vehicle_state, dynamic_vehicle_state,
-                                                                    dy_obsList)
-    stable = evaluate_stability(ego_vehicle_state)
+    comfort1, comfort2 = evaluate_comfort(ego_vehicle_state, config)
+    avg_speed, min_speed = evaluate_speed(ego_vehicle_state, config)
+    min_dis, avg_dis_satisfaction, min_dis_satisfaction = evaluate_distance(ego_vehicle_state, dynamic_vehicle_state,
+                                                                    dy_obsList, static_vehicle_state, st_obsList, config)
+    min_dis2, avg_dis_satisfaction2, min_dis_satisfaction2 = evaluate_collision (ego_vehicle_state, dynamic_vehicle_state, dy_obsList, static_vehicle_state, st_obsList, config)
+    print(min_dis, avg_dis_satisfaction, min_dis_satisfaction)
+    print(min_dis2, avg_dis_satisfaction2, min_dis_satisfaction2)
+    avg_stable, min_stable = evaluate_stability(ego_vehicle_state, config)
     traffic_light = evaluate_traffic_light(ego_vehicle_state, traffic_light)
+    cross_lane = evaluate_cross_lane(ego_vehicle_state)
 
-    result = [stable, min_satisfaction, avg_satisfaction, speed, traffic_light, comfort]
+    # result = [avg_stable, min_stable, avg_dis_satisfaction, min_dis_satisfaction, avg_speed, min_speed, traffic_light, cross_lane, comfort1,
+    #           comfort2]
+    #
+    #
+    # result = [avg_stable, avg_dis_satisfaction, min_dis_satisfaction, avg_speed, min_speed, traffic_light,
+    #       cross_lane, comfort1, comfort2]
+
+    result = [min_stable, min_dis, min_speed, traffic_light, cross_lane, comfort1, comfort2]
     print(result)

@@ -1,5 +1,8 @@
 import sys
-sys.path.append("..")
+sys.path.append("../Adapt_Priority")
+sys.path.append("../Brute_Force")
+sys.path.append("../GA")
+sys.path.append("../Random")
 import json
 import numpy as np
 import os
@@ -30,7 +33,7 @@ def create_run_scenario_overtake (Vars, BestPop, Configure):
     file_dir_eval = config.file_dir_eval
     file_dir_var = config.file_dir_var
 
-    with open('MyScenario/Overtake.json', 'r', encoding='utf-8') as f:
+    with open('Overtake.json', 'r', encoding='utf-8') as f:
         ret_dic = json.load(f)
 
     for key in ret_dic:
@@ -97,7 +100,7 @@ def create_run_scenario_overtake (Vars, BestPop, Configure):
     ## run the scenario
     duration = config.duration
 
-    file_path = os.path.abspath(os.path.join(os.getcwd(), ".."))
+    file_path = os.path.abspath(os.path.join(os.getcwd(), "../Random"))
     # print(file_path)
 
     log_name = file_dir_data + "/datalog_" + now_time  + "_" + uuid_str + ".txt"
@@ -169,7 +172,7 @@ def create_run_scenario_overtake (Vars, BestPop, Configure):
     # result = [avg_stable, avg_dis_satisfaction, min_dis_satisfaction, avg_speed, min_speed, traffic_light,
     #       cross_lane, comfort1, comfort2]
 
-    result = [min_dis, min_stable, min_speed, traffic_light, cross_lane, comfort1, comfort2]
+    result = [min_stable, min_dis, min_speed, traffic_light, cross_lane, comfort1, comfort2]
     # result = [-min_dis, -min_stable, min_speed, traffic_light, -cross_lane, -comfort1, comfort2]
 
     # global _global_dict

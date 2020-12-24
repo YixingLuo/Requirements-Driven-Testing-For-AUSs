@@ -1,28 +1,41 @@
+import sys
+sys.path.append("../Random")
 import json
 import numpy as np
-import random
 from Configure import configure
 import os
 import time
 from read_log import evaluate_distance, evaluate_speed, evaluate_comfort, evaluate_stability, evaluate_traffic_light
+from trash import globalvar as gl
 
 
-def create_run_scenario_overtake (args):
-    Vars = args[0]
-    config = args[1]
-    file_dir_sce = args[2]
-    file_dir_data = args[3]
-    file_dir_eval = args[4]
+# def create_run_scenario_overtake (Vars, config, file_dir_sce, file_dir_data, file_dir_eval):
+def create_run_scenario_overtake(Vars, file_dir_sce, file_dir_data, file_dir_eval):
+    alg = gl.get_value('Algorithm')
+    bestpop = gl.get_value('BestPop')
+    bestpop.call_iteration(alg)
+    # print(args)
+    # Vars = args[0]
+    # config = args[1]
+    # file_dir_sce = args[2]
+    # file_dir_data = args[3]
+    # file_dir_eval = args[4]
+    #
+    #
+    # print(config.type)
+    # population = config.population
+    # population = Vars.shape[0]
 
-    population = Vars.shape[0]
-    # print(Vars.shape, population)
+    config = configure()
+    population = config.population
+
     result = np.zeros((population, config.goal_num), float)
 
     for num_sce in range(population):
 
         # print(num_sce)
 
-        with open('../MyScenario/example.json', 'r', encoding='utf-8') as f:
+        with open('MyScenario/example.json', 'r', encoding='utf-8') as f:
             ret_dic = json.load(f)
 
         for key in ret_dic:
@@ -34,7 +47,8 @@ def create_run_scenario_overtake (args):
 
             elif key == "traffic_signal":
                 ret_dic[key] = []
-                objDict = {"start_s": Vars[num_sce][2], "end_s": Vars[num_sce][3], "green_time": Vars[num_sce][4], "yellow_time": Vars[num_sce][5], "red_time": Vars[num_sce][6]}
+                objDict = {"start_s": Vars[num_sce][2], "end_s": Vars[num_sce][3], "green_time": Vars[num_sce][4], "yellow_time": Vars[num_sce][5],
+                           "red_time": Vars[num_sce][6]}
                 ret_dic[key].append(objDict)
 
             elif key == "static_obs":
@@ -56,8 +70,7 @@ def create_run_scenario_overtake (args):
 
 
 
-
-        scenario_name = file_dir_sce + "/scenario_" + str(num_sce) + ".json"
+        scenario_name = file_dir_sce + "/scenario-" + str(alg.currentGen) +'-' + str(num_sce) + ".json"
         # print(scenario_name)
         with open(scenario_name, 'w', encoding='utf-8') as f:
             json.dump(ret_dic, f, ensure_ascii=False, indent=4)
@@ -65,20 +78,23 @@ def create_run_scenario_overtake (args):
         ## run the scenario
         duration = config.duration
 
-        file_path = os.path.abspath(os.path.join(os.getcwd(), "../.."))
+        file_path = os.path.abspath(os.path.join(os.getcwd(), "../Random"))
         # print(file_path)
         # scenario_name = file_dir_sce + "\scenario_" + str(num_sce) + ".json"
-        log_name = file_dir_data + "/datalog_" + str(num_sce) + ".txt"
+        log_name = file_dir_data + "/datalog-" + str(alg.currentGen) +'-' + str(num_sce) + ".txt"
         cmd = "C:/Users/lenovo/Documents/GitHub/mazda-path-planner-sbt_changes/mazda-path-planner-sbt_changes/ERATO_planning/x64/Release/" \
               "dynamic_cost -c %d -v EGO_TESTER -a -i %s > %s" % (duration, scenario_name, log_name)
+
 
         # print(cmd)
         start = time.clock()
 
         os.system(cmd)
         elapsed = (time.clock() - start)
-        # print('totally cost', elapsed)
-        # print(log_name)
+        print('totally cost', elapsed)
+
+
+        print(log_name)
 
         with open(scenario_name, 'r', encoding='utf-8') as f:
             ret_dic = json.load(f)
@@ -95,8 +111,8 @@ def create_run_scenario_overtake (args):
                     traffic_light = ret_dic[key]
 
         ego_vehicle_state = []
-        dynamic_vehicle_state = []*num_dynamic_obs
-        static_vehicle_state = []*num_static_obs
+        dynamic_vehicle_state = [[] for i in range(num_dynamic_obs)]
+        static_vehicle_state = [[] for i in range(num_static_obs)]
         with open(log_name, 'r') as f:
             my_data = f.readlines()  # txt中所有字符串读入data，得到的是一个list
             # 对list中的数据做分隔和类型转换
@@ -110,27 +126,23 @@ def create_run_scenario_overtake (args):
                     log = []
                     for i in range(1, len(data)):
                         log.append(float(data[i]))
-                    ego_vehicle_state.append(log)
+                    if len(log) == 7:
+                        ego_vehicle_state.append(log)
 
-            # dynamic_vehicle_state = np.zeros((num_dynamic_obs, len(ego_vehicle_state), 8), float)
-            # print(dynamic_vehicle_state.shape)
-            # static_vehicle_state = np.zeros((num_static_obs, len(ego_vehicle_state), 3), float)
-            # width = config.ego_width
-            # length = config.ego_length
-
-            # for line in my_data:
-            #     data = line.split()
-                if data[0] == "DYNAMIC_OBS_INFO":
+                if data[0] == "DYNAMIC_OBS_INFO" and len(data) == 10:
                     log = []
-                    for j in range(2, len(data)):
+                    for i in range(2, len(data)):
                         log.append(float(data[i]))
-                    dynamic_vehicle_state[str(data[1])].append(log)
-                elif data[0] == "STATIC_OBS_INFO":
+                        # print(log)
+                    if len(log) == 8:
+                        dynamic_vehicle_state[int(data[1])].append(log)
+                elif data[0] == "STATIC_OBS_INFO" and len(data) == 5:
                     log = []
-                    for j in range(2, len(data)):
+                    for i in range(2, len(data)):
                         log.append(float(data[i]))
-                    static_vehicle_state[str(data[1])].append(log)
-
+                        # print(log)
+                    if len(log) == 3:
+                        static_vehicle_state[int(data[1])].append(log)
 
 
 
@@ -144,19 +156,33 @@ def create_run_scenario_overtake (args):
         traffic_light = evaluate_traffic_light(ego_vehicle_state, traffic_light)
 
         # result = [stable, min_satisfaction, avg_satisfaction, speed, traffic_light, comfort]
+
+
         result[num_sce][0] = stable
-        result[num_sce][1] = min_dis
-        result[num_sce][2] = min_satisfaction
-        result[num_sce][3] = avg_satisfaction
-        result[num_sce][4] = speed
-        result[num_sce][5] = traffic_light
-        result[num_sce][6] = comfort
+        # result[num_sce][1] = min_dis
+        result[num_sce][1] = min_satisfaction
+        result[num_sce][2] = avg_satisfaction
+        result[num_sce][3] = speed
+        result[num_sce][4] = traffic_light
+        result[num_sce][5] = comfort
 
-        # print("Scenario %d, the result is %s" %(num_sce , str(result[num_sce])))
+        bestpop.update_bestpop(result[num_sce])
 
-        result_name = file_dir_eval + "/result_" + str(num_sce) + ".txt"
+        print("Scenario: %d %d, Result: %s" %(alg.currentGen, num_sce , str(result[num_sce])))
+        print("Scenario: %d %d" %(alg.currentGen, num_sce))
+        print("Variables:", Vars[num_sce])
+        print("Results:", result[num_sce])
+        print("Weights:", bestpop.weights)
+        print("Round: %d, Iteration: %d" %(bestpop.round, bestpop.curiteration))
+
+        result_name = file_dir_eval + "/result-" + str(alg.currentGen) +'-' + str(num_sce) + ".txt"
         # print(result_name)
         np.savetxt(result_name, result, fmt="%f", delimiter=" ")
+
+        weights = bestpop.weights
+        for i in range (config.goal_num):
+            result[num_sce][i] = weights[i] *  result[num_sce][i]
+
 
     # print(result.shape)
 
