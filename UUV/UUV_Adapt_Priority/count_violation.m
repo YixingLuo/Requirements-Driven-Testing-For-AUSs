@@ -1,67 +1,53 @@
-% clc
-% clear
+clc
+clear
 result = [];
-count = zeros(1,8);
-count_list = [];
-priority_list = [1,1,1; 
-                 0,1,1;
-                 1,0,1;
-                 1,1,0;
-                 0,0,1;
-                 0,1,0;
-                 1,0,0;
-                 0,0,0;];
-
-for iter = 1:1:400
-    filename = 'Datalog-2020-12-23-12-8/interval-results-' + string(iter) + '.mat';
+count_list = zeros(1,8);
+for iter = 1:1:1000
+   
+    
+    filename = 'Datalog-2020-12-23-15-39/interval-results-' + string(iter) + '.mat';
     if exist(filename,'file')==0
-        count_list = [count_list; count];
+%         count_list = [count_list; count_list];
         break
     end
     
     data = load(filename);
-        
     data1 = data.fitness;
+    
     [m,n] = size(data1);
+    
+    
+    
     for i = 1:1:m
         temp_result = data1(i,:);
-        goal_flag = zeros(1,3);
-        if abs(temp_result(1))< 0.8
-            goal_flag(1) = 1;
+        flag = zeros(1,3);
+        if abs(temp_result(1))< 0.85
+            flag(1) = 1;
         end
-        if abs(temp_result(2))< 90*1000
-            goal_flag(2) = 1;
+        if abs(temp_result(2))< 95*1000
+            flag(2) = 1;
         end
         if abs(temp_result(3))> 5.4*1e6
-            goal_flag(3) = 1;
+            flag(3) = 1;
         end
-%         count(sum) = count(sum) + 1;
-        for j = 1:size(priority_list,1)
-            if priority_list(j,:) == goal_flag
-%                 goal_flag, priority_list(j,:),j
-                count(j) = count(j) + 1;
-                break
-            end
+        result = [result; flag];
+        violation_pattern = flag(1)*2^0 + flag(2)*2^1 + flag(3)*2^2 + 1;
+        if violation_pattern > 0
+            count_list(violation_pattern) = count_list(violation_pattern) + 1;
         end
+        
     end
-    if mod(iter,50) == 0
-%         mod(iter+1,50), iter
-        count_list = [count_list; count];
-    end  
+%     if mod(iter+1,50) == 0
+% %         mod(iter+1,50), iter
+%         count_list = [count_list; count];
+%     end  
     
 end
+count_list, size(result,1)
 
-% count_list, size(result,1)
-count_list, count
-% start_generation = 50;
-% goal_round = 50;
-% if mod (start_generation,goal_round)==0 
-%     start = 1;
-%     for i = 1:size(priority_list,1)
-%         if count(i) == 0
-%             start = i
-%             break;
-%         end
-%     end
-% goal_selection_flag = priority_list(start,:)    
-% end
+criticality = 0;
+for i = 1:8
+    criticality = criticality + (i-1)/7*count_list(i);
+end
+criticality/sum(count_list)
+

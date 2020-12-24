@@ -2,159 +2,9 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="5f6be2e7-f6e0-4dfc-ba56-9b914322d642" name="Default" comment="">
-      <change afterPath="$PROJECT_DIR$/Adapt_Priority/AdaptObj.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Adapt_Priority/Configure.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Adapt_Priority/MyAlgorithm/DistributeNSGAii.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Adapt_Priority/MyAlgorithm/My_moea_NSGA2_templet.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Adapt_Priority/MyAlgorithm/My_moea_NSGA3_templet.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Adapt_Priority/MyAlgorithm/evaluator.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Adapt_Priority/MyAlgorithm/nsgaii.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Adapt_Priority/MyAlgorithm/nsgaiii.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Adapt_Priority/MyAlgorithm/problem.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Adapt_Priority/MyAlgorithm/random_search.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Adapt_Priority/MyAlgorithm/solution.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Adapt_Priority/MyAlgorithm/termination_criterion.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Adapt_Priority/MyProblem/CarBehindAndInFront.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Adapt_Priority/MyProblem/OvertakeProblem.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Adapt_Priority/MyProblem/__init__.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Adapt_Priority/MyScenario/CarBehindAndInFront.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Adapt_Priority/MyScenario/Overtake.json" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Adapt_Priority/MyScenario/__init__.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Adapt_Priority/Req_SBT.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Adapt_Priority/Settings/__init__.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Adapt_Priority/__init__.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Adapt_Priority/bestpop.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Adapt_Priority/datalog1.txt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Adapt_Priority/imgui.ini" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Adapt_Priority/read_log.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Adapt_Priority/runtime.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Brute_Force/AdaptObj.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Brute_Force/Configure.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Brute_Force/DataProcessing/.ipynb_checkpoints/Untitled-checkpoint.ipynb" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Brute_Force/DataProcessing/Untitled.ipynb" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Brute_Force/DataProcessing/__init__.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Brute_Force/DataProcessing/data_process.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Brute_Force/DataProcessing/datalog_example.txt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Brute_Force/DataProcessing/quality_indicator.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Brute_Force/DataProcessing/run_scenario.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Brute_Force/MyAlgorithm/DistributeNSGAii.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Brute_Force/MyAlgorithm/My_moea_NSGA2_templet.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Brute_Force/MyAlgorithm/My_moea_NSGA3_templet.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Brute_Force/MyAlgorithm/__init__.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Brute_Force/MyAlgorithm/evaluator.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Brute_Force/MyAlgorithm/nsgaii.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Brute_Force/MyAlgorithm/nsgaiii.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Brute_Force/MyAlgorithm/problem.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Brute_Force/MyAlgorithm/random_search.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Brute_Force/MyAlgorithm/solution.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Brute_Force/MyAlgorithm/termination_criterion.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Brute_Force/MyProblem/CarBehindAndInFront.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Brute_Force/MyProblem/OvertakeProblem.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Brute_Force/MyProblem/__init__.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Brute_Force/MyScenario/CarBehindAndInFront.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Brute_Force/MyScenario/Overtake.json" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Brute_Force/MyScenario/__init__.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Brute_Force/Req_SBT.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Brute_Force/Settings/CarBehindAndInFrontConfigure.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Brute_Force/Settings/__init__.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Brute_Force/__init__.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Brute_Force/bestpop.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Brute_Force/imgui.ini" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Brute_Force/read.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Brute_Force/read_log.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/GA/AdaptObj.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/GA/Configure.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/GA/DataProcessing/.ipynb_checkpoints/Untitled-checkpoint.ipynb" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/GA/DataProcessing/Untitled.ipynb" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/GA/DataProcessing/__init__.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/GA/DataProcessing/data_process.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/GA/DataProcessing/datalog_example.txt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/GA/DataProcessing/quality_indicator.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/GA/DataProcessing/run_scenario.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/GA/MyAlgorithm/DistributeNSGAii.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/GA/MyAlgorithm/My_moea_NSGA2_templet.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/GA/MyAlgorithm/My_moea_NSGA3_templet.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/GA/MyAlgorithm/__init__.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/GA/MyAlgorithm/evaluator.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/GA/MyAlgorithm/nsgaii.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/GA/MyAlgorithm/nsgaiii.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/GA/MyAlgorithm/problem.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/GA/MyAlgorithm/random_search.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/GA/MyAlgorithm/solution.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/GA/MyAlgorithm/termination_criterion.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/GA/MyProblem/CarBehindAndInFront.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/GA/MyProblem/OvertakeProblem.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/GA/MyProblem/__init__.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/GA/MyScenario/CarBehindAndInFront.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/GA/MyScenario/Overtake.json" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/GA/MyScenario/__init__.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/GA/Overtake.json" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/GA/Req_SBT.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/GA/Settings/CarBehindAndInFrontConfigure.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/GA/Settings/__init__.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/GA/__init__.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/GA/bestpop.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/GA/imgui.ini" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/GA/read_log.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Random/AdaptObj.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Random/DataProcessing/.ipynb_checkpoints/Untitled-checkpoint.ipynb" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Random/DataProcessing/Untitled.ipynb" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Random/DataProcessing/__init__.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Random/DataProcessing/data_process.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Random/DataProcessing/datalog_example.txt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Random/DataProcessing/quality_indicator.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Random/DataProcessing/run_scenario.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Random/MyAlgorithm/DistributeNSGAii.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Random/MyAlgorithm/My_moea_NSGA2_templet.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Random/MyAlgorithm/My_moea_NSGA3_templet.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Random/MyAlgorithm/__init__.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Random/MyAlgorithm/evaluator.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Random/MyAlgorithm/nsgaii.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Random/MyAlgorithm/nsgaiii.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Random/MyAlgorithm/problem.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Random/MyAlgorithm/random_search.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Random/MyAlgorithm/solution.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Random/MyAlgorithm/termination_criterion.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Random/MyProblem/CarBehindAndInFront.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Random/MyProblem/OvertakeProblem.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Random/MyProblem/__init__.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Random/MyScenario/CarBehindAndInFront.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Random/MyScenario/Overtake.json" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Random/MyScenario/__init__.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Random/Req_SBT.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Random/Settings/CarBehindAndInFrontConfigure.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Random/Settings/__init__.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Random/__init__.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Random/bestpop.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Random/imgui.ini" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Random/random_sce_generation.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Random/read_log.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/trash/Configure.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/trash/Overtake.json" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/trash/SCENAR1.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/DataProcessing/.ipynb_checkpoints/Untitled-checkpoint.ipynb" beforeDir="false" afterPath="$PROJECT_DIR$/Adapt_Priority/DataProcessing/.ipynb_checkpoints/Untitled-checkpoint.ipynb" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/DataProcessing/Untitled.ipynb" beforeDir="false" afterPath="$PROJECT_DIR$/Adapt_Priority/DataProcessing/Untitled.ipynb" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/DataProcessing/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/Adapt_Priority/DataProcessing/__init__.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/DataProcessing/data_process.py" beforeDir="false" afterPath="$PROJECT_DIR$/Adapt_Priority/DataProcessing/data_process.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/DataProcessing/datalog_example.txt" beforeDir="false" afterPath="$PROJECT_DIR$/Adapt_Priority/DataProcessing/datalog_example.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/DataProcessing/quality_indicator.py" beforeDir="false" afterPath="$PROJECT_DIR$/Adapt_Priority/DataProcessing/quality_indicator.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/DataProcessing/run_scenario.py" beforeDir="false" afterPath="$PROJECT_DIR$/Adapt_Priority/DataProcessing/run_scenario.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/MyAlgorithm/My_moea_NSGA2_templet.py" beforeDir="false" afterPath="$PROJECT_DIR$/MyAlgorithm/My_moea_NSGA2_templet.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/MyAlgorithm/solution.py" beforeDir="false" afterPath="$PROJECT_DIR$/MyAlgorithm/solution.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/MyProblem/CarBehindAndInFront.py" beforeDir="false" afterPath="$PROJECT_DIR$/MyProblem/CarBehindAndInFront.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/MyScenario/CarBehindAndInFront.py" beforeDir="false" afterPath="$PROJECT_DIR$/MyScenario/CarBehindAndInFront.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/MyScenario/SCENAR1.json" beforeDir="false" afterPath="$PROJECT_DIR$/Adapt_Priority/SCENAR1.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/MyScenario/SCENAR2.json" beforeDir="false" afterPath="$PROJECT_DIR$/trash/SCENAR2.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/MyScenario/example.json" beforeDir="false" afterPath="$PROJECT_DIR$/trash/example.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/MyScenario/example2.json" beforeDir="false" afterPath="$PROJECT_DIR$/trash/example2.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/MyScenario/intersaction.py" beforeDir="false" afterPath="$PROJECT_DIR$/trash/intersaction.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/MyScenario/overtake.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/MyScenario/overtake_2.py" beforeDir="false" afterPath="$PROJECT_DIR$/trash/overtake_2.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Settings/CarBehindAndInFrontConfigure.py" beforeDir="false" afterPath="$PROJECT_DIR$/Adapt_Priority/Settings/CarBehindAndInFrontConfigure.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Settings/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/Adapt_Priority/MyAlgorithm/__init__.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/read_log.py" beforeDir="false" afterPath="$PROJECT_DIR$/read_log.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/trash/overtake.py" beforeDir="false" afterPath="$PROJECT_DIR$/trash/overtake.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Brute_Force/Settings/CarBehindAndInFrontConfigure.py" beforeDir="false" afterPath="$PROJECT_DIR$/Brute_Force/Settings/CarBehindAndInFrontConfigure.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Brute_Force/goal_selection_index.txt" beforeDir="false" afterPath="$PROJECT_DIR$/Brute_Force/goal_selection_index.txt" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -422,7 +272,7 @@
       <recent name="C:\Users\lenovo\Documents\GitHub\Requirements-Driven-Testing-For-AUSs\Req_SBT\old" />
     </key>
   </component>
-  <component name="RunManager" selected="Python.random_sce_generation">
+  <component name="RunManager" selected="Python.Req_SBT (3)">
     <configuration name="Req_SBT (3)" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="Req_SBT" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -537,8 +387,8 @@
     </list>
     <recent_temporary>
       <list>
-        <item itemvalue="Python.random_sce_generation" />
         <item itemvalue="Python.Req_SBT (3)" />
+        <item itemvalue="Python.random_sce_generation" />
         <item itemvalue="Python.Req_SBT" />
         <item itemvalue="Python.read_log (1)" />
         <item itemvalue="Python.read_log" />

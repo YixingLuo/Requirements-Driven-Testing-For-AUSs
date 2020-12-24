@@ -3,11 +3,13 @@
 
 import time
 import os
+import csv
+import numpy
 import shutil
 # import psutil
 
 class CarBehindAndInFrontConfigure:
-    def __init__(self):
+    def __init__(self,goal_index,population,search_round):
         # self.auto_close_on_reach_the_objective= 1
         # self.auto_close_x_position = 10
         # self.auto_close_y_position = 0
@@ -46,9 +48,10 @@ class CarBehindAndInFrontConfigure:
         self.speed_limit = 16.67
         self.speed_max = 33.3
         self.duration = 90
-        self.population = 20
+        self.population = population
+        self.round = search_round
         self.goal_num = 7
-        self.maxIterations = 20000
+        self.maxIterations = self.population * self.round
         self.searchTimeout = 360000
         self.interval = 50
         self.num_variables = 19
@@ -114,6 +117,18 @@ class CarBehindAndInFrontConfigure:
             self.maxIterations)
         if not os.path.exists(self.file_dir_var):
             os.mkdir(self.file_dir_var)
+
+        self.priority_list = []
+        with open("priority_list.csv") as csvfile:
+            csv_file = csv.reader(csvfile)
+            for row in csv_file:
+                self.priority_list.append(row)
+            priority_list = [[float(x) for x in row] for row in self.priority_list]
+
+
+        self.priority_list = numpy.array(priority_list)
+
+        self.goal_selection_flag = self.priority_list[goal_index]
 
 
 
