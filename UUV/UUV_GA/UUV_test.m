@@ -18,7 +18,7 @@ Scores = [];
 num_incidents = 5; 
 
 da = fix(datevec(now));
-datafolder = strcat('UniforInitial-Datalog-',string(da(1)),'-',string(da(2)),'-',string(da(3)),'-',string(da(4)),'-',string(da(5)));
+datafolder = strcat('Myinitial-Datalog-',string(da(1)),'-',string(da(2)),'-',string(da(3)),'-',string(da(4)),'-',string(da(5)));
 mkdir(datafolder);
 addpath(datafolder);
 
@@ -26,7 +26,7 @@ addpath(datafolder);
 
 start_generation = 1;
 
-total_generation = 400;
+total_generation = 800;
 hour = 24;
   
 lb=[];
@@ -60,13 +60,13 @@ option_temp = load('options.mat');
 options = option_temp.options;
 options.FunctionTolerance = 0;
 options.ConstraintTolerance = 0;
-options.PopulationSize = 100;
+options.PopulationSize = 50;
 options.CrossoverFcn = @crossoversinglepoint;
 options.CrossoverFraction = 0.8;
 options.MaxGenerations = total_generation;
 % options.MaxGenerations = inf;
-% options.CreationFcn = @initialize_variables;
-options.CreationFcn = @gacreationuniform;
+options.CreationFcn = @initialize_variables;
+% options.CreationFcn = @gacreationuniform;
 options.OutputFcn = @gaoutputfcn;
 % options.HybridFcn = {@fgoalattain,[]};
 options.MaxTime = hour * 3600;
@@ -79,16 +79,10 @@ options.MaxStallGenerations = inf;
 % [x,fval,exitflag,output,population,scores] = ga(@uuv_normal_test,4*num_incidents,[],[],[],[],lb,ub,@myconuuv_normal_test)
 
 time = datestr(now,30);
-% name =  'ga-multiobj-iternum-'+ string(total_generation)+ '.mat';
-name =  'ga-multiobj-iternum-'+ string(start_generation)+ '.mat';
+name =  'ga-multiobj-iternum-'+ string(total_generation)+ '-'+ string(options.PopulationSize) + '.mat';
 path = strcat(datafolder,'/',name);
 save(path);
-% figurename =  'ga-multiobj-figure-iternum-' + string(total_generation);
-figurename =  'ga-multiobj-figure-iternum-' + string(start_generation);
+figurename =  'ga-multiobj-figure-iternum-' + string(total_generation)+ '-'+ string(options.PopulationSize);
 figpath = strcat(datafolder,'/',figurename);
 savefig(figpath);
-fprintf('UUV_test: iteration number %d, Time is %s \n', start_generation, string(time));
-
-
-% hour = hour + 1;
-% end
+fprintf('UUV_test: iteration number %d, Time is %s \n', goal_round, string(time));

@@ -6,17 +6,22 @@ global goal_selection_flag
 global datafolder
 global start_generation
 
-for round = 1:1:5
-% clc
-% clear
-% delete(gcp('nocreate'))
-% parpool('local')
+global priority_list
 
-goal_selection_flag = [0, 0, 0];
+priority_list = [1,1,1; 
+                 0,1,1;
+                 1,0,1;
+                 1,1,0;
+                 0,0,1;
+                 0,1,0;
+                 1,0,0;
+                 0,0,0;];
 
-goal_round = 50;
 
-Scores = [];
+goal_selection_flag = priority_list(1,:);
+
+goal_round = 100;
+
 num_incidents = 5; 
 
 da = fix(datevec(now));
@@ -24,13 +29,11 @@ datafolder = strcat('Datalog-',string(da(1)),'-',string(da(2)),'-',string(da(3))
 mkdir(datafolder);
 addpath(datafolder);
 
-% for hour = 1:1:10
-start_generation =  1;
 
+start_generation =  1;
 total_generation = 8*goal_round;
-% total_generation = 50;
 hour = 24;
-% while hour <= 2
+
   
 lb=[];
 ub=[];
@@ -63,7 +66,7 @@ option_temp = load('options.mat');
 options = option_temp.options;
 options.FunctionTolerance = 0;
 options.ConstraintTolerance = 0;
-options.PopulationSize = 100;
+options.PopulationSize = 50;
 options.CrossoverFcn = @crossoversinglepoint;
 options.CrossoverFraction = 0.8;
 options.MaxGenerations = total_generation;
@@ -76,7 +79,7 @@ options.OutputFcn = @gaoutputfcn;
 % x = ga(fun,nvars,A,b,Aeq,beq,lb,ub,nonlcon,IntCon,options)
 options.MaxTime = hour * 3600;
 % options.UseParallel = true;
-options.Display = 'iter';
+% options.Display = 'iter';
 options.MaxStallGenerations = inf;
 % options = optimoptions('gamultiobj','UseParallel', true, 'UseVectorized', false);
 % Population = initialize_variables(3, @uuv_normal_test, options);
@@ -85,16 +88,10 @@ options.MaxStallGenerations = inf;
 % [x,fval,exitflag,output,population,scores] = ga(@uuv_normal_test,4*num_incidents,[],[],[],[],lb,ub,@myconuuv_normal_test)
 
 time = datestr(now,30);
-% name =  'ga-multiobj-iternum-'+ string(total_generation)+ '.mat';
-name =  'ga-multiobj-iternum-'+ string(goal_round)+ '.mat';
+name =  'ga-multiobj-iternum-'+ string(goal_round)+ '-'+ string(options.PopulationSize) + '.mat';
 path = strcat(datafolder,'/',name);
 save(path);
-% figurename =  'ga-multiobj-figure-iternum-' + string(total_generation);
-figurename =  'ga-multiobj-figure-iternum-' + string(goal_round);
+figurename =  'ga-multiobj-figure-iternum-' + string(goal_round)+ '-'+ string(options.PopulationSize);
 figpath = strcat(datafolder,'/',figurename);
 savefig(figpath);
 fprintf('UUV_test: iteration number %d, Time is %s \n', goal_round, string(time));
-
-
-% hour = hour + 1;
-end

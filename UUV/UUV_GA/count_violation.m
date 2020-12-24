@@ -1,5 +1,5 @@
-% clc
-% clear
+clc
+clear
 result = [];
 count = zeros(1,8);
 priority_list = [1,1,1; 
@@ -10,30 +10,30 @@ priority_list = [1,1,1;
                  0,1,0;
                  1,0,0;
                  0,0,0;];
-for iter = 1:1:1000
+for iter = 1:1:400
     
     
-    filename = 'Datalog-2020-12-22-21-5/interval-results-' + string(iter) + '.mat';
-    if exist(filename,'file')==0
-%         count_list = [count_list; count_list];
-        break
-    end
+    filename = 'Myinitial-Datalog-2020-12-22-21-5/interval-results-' + string(iter) + '.mat';
+%     if exist(filename,'file')==0
+% %         count_list = [count_list; count_list];
+%         break
+%     end
     
     data = load(filename);
     data1 = data.fitness;
     
     [m,n] = size(data1);
-    
+   
     for i = 1:1:m
         temp_result = data1(i,:);
         flag = zeros(1,3);
-        if abs(temp_result(1))< 0.80
+        if abs(temp_result(1)) < 0.9*0.9
             flag(1) = 1;
         end
-        if abs(temp_result(2))< 95*1000
+        if abs(temp_result(2)) < 100*0.99*1000 
             flag(2) = 1;
         end
-        if abs(temp_result(3))> 5.4*1e6
+        if abs(temp_result(3)) > 5.4*1.001*1e6
             flag(3) = 1;
         end
         result = [result; flag];

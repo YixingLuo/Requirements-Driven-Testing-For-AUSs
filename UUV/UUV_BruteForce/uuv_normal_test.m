@@ -1,7 +1,6 @@
 function f  = uuv_normal_test(x_test_initial)
 global num_incidents
 global goal_selection_flag
-global Scores
 m = num_incidents;
 x_test_initial;
 x_test = [];
@@ -99,7 +98,6 @@ while(1)
 %         f = DS_E - DS_A - DS_D;
         %% type3
 %         f = pastenergy;
-        Scores = [Scores; abs(pastaccuracy),  abs(pastdistance), abs(pastenergy)];
         break
     end
 
