@@ -4,24 +4,22 @@
 # sys.path.append("../MyProblem")
 # sys.path.append("../MyScenario")
 # from jmetal.algorithm.multiobjective.nsgaii import NSGAII
-from jmetal.algorithm.multiobjective.random_search import RandomSearch
 # from jmetal.algorithm.multiobjective.nsgaiii import NSGAIII
 from jmetal.algorithm.multiobjective.nsgaiii import UniformReferenceDirectionFactory
 from jmetal.operator import SBXCrossover, PolynomialMutation
 from jmetal.util.solution import print_function_values_to_file, print_variables_to_file
 # from jmetal.util.termination_criterion import StoppingByEvaluations
-from jmetal.util.evaluator import SequentialEvaluator,MultiprocessEvaluator
+from jmetal.util.evaluator import MultiprocessEvaluator
 from MyAlgorithm.nsgaiii import NSGAIII
 from MyAlgorithm.nsgaii import NSGAII
 from MyAlgorithm.random_search import RandomSearch
-from MyAlgorithm.termination_criterion import StoppingByEvaluations, StoppingByQualityIndicator
+from MyAlgorithm.termination_criterion import StoppingByEvaluations
 # from MyAlgorithm.evaluator import MultiprocessEvaluator
 from Settings.CarBehindAndInFrontConfigure import CarBehindAndInFrontConfigure
 import os
 import time
-from bestpop import BestPop
+from trash.initial_files.bestpop import BestPop
 from MyProblem.CarBehindAndInFront import CarBehindAndInFront
-from jmetal.core.quality_indicator import GenerationalDistance, InvertedGenerationalDistance, HyperVolume, FitnessValue
 from jmetal.util.observer import ProgressBarObserver
 
 

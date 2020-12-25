@@ -3,6 +3,7 @@
 
 import time
 import os
+import csv
 import shutil
 # import psutil
 
@@ -115,6 +116,15 @@ class CarBehindAndInFrontConfigure:
         if not os.path.exists(self.file_dir_var):
             os.mkdir(self.file_dir_var)
 
+        self.priority_list = []
+        with open("priority_list.csv") as csvfile:
+            csv_file = csv.reader(csvfile)
+            for row in csv_file:
+                self.priority_list.append(row)
+            priority_list = [[float(x) for x in row] for row in self.priority_list]
+
+
+        self.priority_list = numpy.array(priority_list)
 
 
 

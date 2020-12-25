@@ -2,10 +2,10 @@ import sys
 sys.path.append("../Random")
 import json
 import numpy as np
-from Configure import configure
+from trash.initial_files.Configure import configure
 import os
 import time
-from read_log import evaluate_distance, evaluate_speed, evaluate_comfort, evaluate_stability, evaluate_traffic_light
+from trash.initial_files.read_log import evaluate_distance, evaluate_speed, evaluate_comfort, evaluate_stability, evaluate_traffic_light
 from trash import globalvar as gl
 
 

@@ -1,21 +1,15 @@
 # -*- coding: utf-8 -*-
 """ QuickStart """
-import numpy as np
 import sys
 import geatpy as ea
-import json
-import random
-from Configure import configure
+from trash.initial_files.Configure import configure
 import os
 import time
-from MyProblem import MyProblem
-from AdaptObj import AdaptObj
-from MyAlgorithm.My_moea_NSGA3_templet import My_moea_NSGA3_templet
+from trash.initial_files.AdaptObj import AdaptObj
 from MyAlgorithm.My_moea_NSGA2_templet import My_moea_NSGA2_templet
 import globalvar as gl
 import codecs
-import multiprocessing as mp
-from bestpop import BestPop
+from trash.initial_files.bestpop import BestPop
 
 
 

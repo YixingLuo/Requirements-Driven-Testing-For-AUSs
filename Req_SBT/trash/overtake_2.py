@@ -4,7 +4,7 @@ import json
 import numpy as np
 import os
 import time
-from read_log import evaluate_distance, evaluate_speed, evaluate_comfort, evaluate_stability, evaluate_traffic_light, evaluate_cross_lane
+from trash.initial_files.read_log import evaluate_distance, evaluate_speed, evaluate_comfort, evaluate_stability, evaluate_traffic_light, evaluate_cross_lane
 # from bestpop import BestPop
 import uuid
 

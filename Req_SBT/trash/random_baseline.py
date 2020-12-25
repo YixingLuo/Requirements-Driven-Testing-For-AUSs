@@ -4,8 +4,8 @@ from jmetal.algorithm.multiobjective.random_search import RandomSearch
 from jmetal.util.solution import print_function_values_to_file, print_variables_to_file
 from jmetal.util.termination_criterion import StoppingByEvaluations
 
-from Configure import configure
-from bestpop import BestPop
+from trash.initial_files.Configure import configure
+from trash.initial_files.bestpop import BestPop
 from MyProblem.OvertakeProblem import OvertakeProblem
 
 if __name__ == '__main__':

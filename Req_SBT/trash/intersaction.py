@@ -1,10 +1,8 @@
 import json
 import numpy as np
-import random
-from Configure import configure
 import os
 import time
-from read_log import evaluate_distance, evaluate_speed, evaluate_comfort, evaluate_stability, evaluate_traffic_light
+from trash.initial_files.read_log import evaluate_distance, evaluate_speed, evaluate_comfort, evaluate_stability, evaluate_traffic_light
 
 
 def create_run_scenario_intersaction (Vars, config, file_dir_sce, file_dir_data, file_dir_eval):

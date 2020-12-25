@@ -2,17 +2,10 @@
 """ QuickStart """
 import numpy as np
 import geatpy as ea
-import json
-import random
-from Configure import configure
-import os
-import time
-from read_log import evaluate_distance, evaluate_speed, evaluate_comfort, evaluate_stability, evaluate_traffic_light
 from MyScenario.overtake import create_run_scenario_overtake
 from multiprocessing import Pool as ProcessPool
 from multiprocessing.dummy import Pool as ThreadPool
 # from scoop import futures
-import globalvar as gl
 
 
 class MyProblem(ea.Problem):  # 继承Problem父类

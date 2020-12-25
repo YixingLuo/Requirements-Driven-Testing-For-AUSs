@@ -1,12 +1,9 @@
 #!/usr/bin/python
 # -*- coding:utf-8 -*-
-import numpy as np
 import os
-from threading import Thread
-from Configure import configure
-import time
+from trash.initial_files.Configure import configure
 import json
-from read_log import evaluate_distance, evaluate_speed, evaluate_comfort, evaluate_stability, evaluate_traffic_light, evaluate_cross_lane
+from trash.initial_files.read_log import evaluate_distance, evaluate_speed, evaluate_comfort, evaluate_stability, evaluate_traffic_light, evaluate_cross_lane
 
 config = configure()
 
