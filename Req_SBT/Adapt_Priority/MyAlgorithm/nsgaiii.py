@@ -279,7 +279,8 @@ class NSGAIII(NSGAII):
                  # population_generator: Generator = RandomGenerator(),
                  population_evaluator: Evaluator = store.default_evaluator,
                  dominance_comparator: Comparator = store.default_comparator,
-                 initial_population: float = None):
+                 initial_population: List[float]= None):
+        self.initial_population = initial_population
         self.reference_directions = reference_directions.compute()
 
         if not population_size:
@@ -309,7 +310,7 @@ class NSGAIII(NSGAII):
         if not os.path.exists(self.file_pareto_front):
             os.mkdir(self.file_pareto_front)
 
-        self.initial_population = initial_population
+        # self.initial_population = InitialPop
 
     def replacement(self, population: List[S], offspring_population: List[S]) -> List[S]:
 
@@ -486,14 +487,15 @@ class NSGAIII(NSGAII):
             return [self.population_generator.new(self.problem)
                 for _ in range(self.population_size)]
         else:
-            random_population = [self.population_generator.new(self.problem) for _ in range(int(0.5*self.population_size))]
-            existing_population = []
+            population = [self.population_generator.new(self.problem) for _ in range(int(0.5*self.population_size))]
+            # existing_population = []
             for i in range (self.population_size - int(0.5*self.population_size)):
                 new_solution = FloatSolution(
                     self.problem.lower_bound,
                     self.problem.upper_bound,
                     self.problem.number_of_objectives,
                     self.problem.number_of_constraints)
-                new_solution.variables = self.initial_population[i]
-                existing_population.append(new_solution)
-            return random_population.extend(existing_population)
+                new_solution.variables = self.initial_population[self.problem.config.goal_selection_index][i]
+                # print(i, self.initial_population[self.problem.config.goal_selection_index][i])
+                population.append(new_solution)
+            return population

@@ -130,6 +130,12 @@ class CarBehindAndInFrontConfigure:
 
         self.goal_selection_flag = goal_selection_flag
 
+        for j in range (self.priority_list.shape[0]):
+            if (numpy.array(self.priority_list[j]) == numpy.array(self.goal_selection_flag)).all():
+                self.goal_selection_index = j
+                break
+
+
 
 
 

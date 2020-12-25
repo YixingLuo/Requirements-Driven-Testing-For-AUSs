@@ -51,6 +51,7 @@ class CarBehindAndInFront(FloatProblem):
 
     def evaluate(self, solution: FloatSolution) -> FloatSolution:
         Vars = solution.variables
+        # print("Variables:", Vars)
 
         result = create_run_scenario_overtake(Vars, self.config)
 

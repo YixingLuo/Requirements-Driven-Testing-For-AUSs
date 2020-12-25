@@ -64,23 +64,27 @@ if __name__ == '__main__':
 
 
 
-    interation_round = 2
+    interation_round = 8
     for round_index in range (interation_round):
         ## read_files
-        population = 10
-        search_round = 10
+        population = 50
+        search_round = 50
         evaluation = []
         variables = []
         sorted_pop = []
+        # vars_file_name = "2020_12_26_Adapt_Priority_variable_0"
+        # results_file_name = "2020_12_26_Adapt_Priority_results_0"
 
         ## caculate goal_index
         if round_index == 0:
+            # print(round_index)
             goal_selection_flag = numpy.ones(7)
             Configuration = CarBehindAndInFrontConfigure(goal_selection_flag, population, search_round, round_index)
             vars_file_name = Configuration.file_dir_var
             results_file_name = Configuration.file_dir_eval
 
         else:
+            # print(round_index, vars_file_name, results_file_name)
             fileList = os.listdir(results_file_name)
             fileList.sort()
 
@@ -89,8 +93,8 @@ if __name__ == '__main__':
                 # print(textname)
                 result = numpy.loadtxt(textname)
                 evaluation.append(result)
-                goal_flag = numpy.zeros((Configuration.goal_num), dtype=int)
-                for j in range(Configuration.goal_num):
+                goal_flag = numpy.zeros((7), dtype=int)
+                for j in range(7):
                     if abs(result[j]) < target_value_threshold[j]:
                         goal_flag[j] = 1
                     else:
@@ -118,7 +122,7 @@ if __name__ == '__main__':
 
             violation_pattern_ranking = sorted_pattern_distance
 
-            if numpy.array(violation_pattern_ranking.shape[0]) == 0:
+            if numpy.array(violation_pattern_ranking).shape[0] == 0:
                 goal_selection_flag = numpy.ones(7)
             else:
                 goal_selection_flag = violation_pattern_ranking[0]
@@ -131,7 +135,7 @@ if __name__ == '__main__':
 
         pattern_name = 'req_violation_pattern' + str(round_index) + '.txt'
         numpy.savetxt(pattern_name, goal_selection_flag, fmt="%d")  # 保存为整数
-
+        # print(sorted_pop)
         Goal_num = Configuration.goal_num
 
         # file_name = text_create(Configuration )
@@ -160,8 +164,8 @@ if __name__ == '__main__':
             )
         elif Configuration.algorithm == "NSGA_III" or Configuration.algorithm == "Adapt_Priority":
             algorithm = NSGAIII(initial_population = sorted_pop,
-                # population_evaluator=MultiprocessEvaluator(Configuration.ProcessNum),
-                population_evaluator=SequentialEvaluator(),
+                population_evaluator=MultiprocessEvaluator(Configuration.ProcessNum),
+                # population_evaluator=SequentialEvaluator(),
                 problem=problem,
                 population_size = Configuration.population,
                 reference_directions=UniformReferenceDirectionFactory(Configuration.goal_num, n_points= Configuration.population - 1),
