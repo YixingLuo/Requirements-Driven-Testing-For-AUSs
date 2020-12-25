@@ -64,15 +64,15 @@ if __name__ == '__main__':
 
 
 
-    interation_round = 3
+    interation_round = 10
     for round_index in range (interation_round):
         ## read_files
-        population = 20
-        search_round = 10
+        population = 50
+        search_round = 50
         evaluation = []
         variables = []
         sorted_pop = []
-        
+
         ## caculate goal_index
         if round_index == 0:
             goal_selection_flag = numpy.ones(7)
