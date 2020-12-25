@@ -5,7 +5,7 @@ import math
 import os
 import csv
 
-
+target_value_threshold = [0.5, 0, 1, 1, 1, 0.95, 0.99]
 
 
 def Distance_Ranking (violation_pattern_to_search, population, scores):

@@ -49,7 +49,7 @@ def text_create(Configuration):
 
 if __name__ == '__main__':
 
-    target_value_threshold = [1, 1, 1, 1, 1, 1, 1]
+    target_value_threshold = [0.5, 0, 1, 1, 1, 0.95, 0.99]
 
     priority_list = []
     with open("priority_list.csv") as csvfile:
