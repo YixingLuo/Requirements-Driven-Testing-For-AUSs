@@ -2,7 +2,7 @@ import json
 import numpy as np
 import os
 import time
-from read_log import evaluate_speed, evaluate_comfort, evaluate_stability, evaluate_traffic_light, evaluate_cross_lane,evaluate_collision
+from MyScenario.read_log import evaluate_speed, evaluate_comfort, evaluate_stability, evaluate_traffic_light, evaluate_cross_lane,evaluate_collision
 import uuid
 import random
 
@@ -16,7 +16,7 @@ def get_time_stamp():
     return time_stamp
 
 
-def create_run_scenario_overtake (Vars, BestPop, Configure):
+def create_run_scenario_overtake (Vars, Configure):
 
     config = Configure
     population = config.population

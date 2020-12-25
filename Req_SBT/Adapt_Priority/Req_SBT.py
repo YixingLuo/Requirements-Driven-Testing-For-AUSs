@@ -7,22 +7,21 @@ from jmetal.algorithm.multiobjective.nsgaiii import UniformReferenceDirectionFac
 from jmetal.operator import SBXCrossover, PolynomialMutation
 from jmetal.util.solution import print_function_values_to_file, print_variables_to_file
 # from jmetal.util.termination_criterion import StoppingByEvaluations
-# from jmetal.util.evaluator import SequentialEvaluator,MultiprocessEvaluator
-from trash.MyAlgorithm import NSGAIII
-from trash.MyAlgorithm.nsgaii import NSGAII
-from trash.MyAlgorithm import RandomSearch
-from trash.MyAlgorithm.termination_criterion import StoppingByEvaluations
-from trash.MyAlgorithm.evaluator import MultiprocessEvaluator
+from jmetal.util.evaluator import SequentialEvaluator,MultiprocessEvaluator
+from MyAlgorithm.nsgaiii import NSGAIII
+from MyAlgorithm.nsgaii import NSGAII
+from MyAlgorithm.random_search import RandomSearch
+from MyAlgorithm.termination_criterion import StoppingByEvaluations
+# from MyAlgorithm.evaluator import MultiprocessEvaluator
 from Settings.CarBehindAndInFrontConfigure import CarBehindAndInFrontConfigure
 import os
 import time
-from trash.initial_files.bestpop import BestPop
-from trash.MyProblem import CarBehindAndInFront
+# from trash.initial_files.bestpop import BestPop
+from CarBehindAndInFront import CarBehindAndInFront
 from jmetal.util.observer import ProgressBarObserver
 import csv
 import numpy
 from RankingRules.DistanceRanking import Distance_Ranking
-from RankingRules.RelationRanking
 
 
 def text_create(Configuration):
@@ -65,14 +64,15 @@ if __name__ == '__main__':
 
 
 
-    interation_round = 8
+    interation_round = 3
     for round_index in range (interation_round):
         ## read_files
-        population = 50
-        search_round = 50
+        population = 20
+        search_round = 10
         evaluation = []
         variables = []
-
+        sorted_pop = []
+        
         ## caculate goal_index
         if round_index == 0:
             goal_selection_flag = numpy.ones(7)
@@ -115,6 +115,7 @@ if __name__ == '__main__':
             # sorted_pattern_relation = Relation_Violation_Pattern_Ranking (violation_pattern_to_search, goal_selection_flag)
             # violation_pattern_ranking =  Ensemble_Ranking(sorted_pattern_distance, sorted_pattern_relation, violation_pattern_to_search)
 
+
             violation_pattern_ranking = sorted_pattern_distance
 
             if numpy.array(violation_pattern_ranking.shape[0]) == 0:
@@ -128,10 +129,9 @@ if __name__ == '__main__':
             vars_file_name = Configuration.file_dir_var
             results_file_name = Configuration.file_dir_eval
 
+        pattern_name = 'req_violation_pattern' + str(round_index) + '.txt'
+        numpy.savetxt(pattern_name, goal_selection_flag, fmt="%d")  # 保存为整数
 
-        # global BestPopulation
-        BestPopulation = BestPop(Configuration)
-        # config.createfolders()
         Goal_num = Configuration.goal_num
 
         # file_name = text_create(Configuration )
@@ -140,7 +140,7 @@ if __name__ == '__main__':
         # sys.stdout = outputfile
 
         """===============================实例化问题对象============================"""
-        problem = CarBehindAndInFront(Goal_num, Configuration, BestPopulation)
+        problem = CarBehindAndInFront(Goal_num, Configuration)
 
         """=================================算法参数设置============================"""
         max_evaluations = Configuration.maxIterations
@@ -159,7 +159,7 @@ if __name__ == '__main__':
                 # selection = BinaryTournamentSelection()
             )
         elif Configuration.algorithm == "NSGA_III" or Configuration.algorithm == "Adapt_Priority":
-            algorithm = NSGAIII(
+            algorithm = NSGAIII(initial_population = sorted_pop,
                 population_evaluator=MultiprocessEvaluator(Configuration.ProcessNum),
                 problem=problem,
                 population_size = Configuration.population,

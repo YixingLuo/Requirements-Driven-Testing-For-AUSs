@@ -43,6 +43,7 @@ from jmetal.util.ranking import FastNonDominatedRanking
 from jmetal.util.replacement import RankingAndDensityEstimatorReplacement, RemovalPolicyType
 from jmetal.util.comparator import DominanceComparator, Comparator, MultiComparator
 from jmetal.util.termination_criterion import TerminationCriterion
+from jmetal.core.solution import FloatSolution
 
 
 """
@@ -253,6 +254,14 @@ def compute_niche_count(n_niches: int, niche_of_individuals):
 
     return niche_count
 
+# class RandomGenerator(Generator):
+#
+#     def new(self, problem: Problem):
+#         return problem.create_solution()
+#
+#     def existing (self, problem: Problem):
+#         return problem.create_solution()
+
 
 class NSGAIII(NSGAII):
 
@@ -267,8 +276,10 @@ class NSGAIII(NSGAII):
                                       CrowdingDistance.get_comparator()])),
                  termination_criterion: TerminationCriterion = store.default_termination_criteria,
                  population_generator: Generator = store.default_generator,
+                 # population_generator: Generator = RandomGenerator(),
                  population_evaluator: Evaluator = store.default_evaluator,
-                 dominance_comparator: Comparator = store.default_comparator):
+                 dominance_comparator: Comparator = store.default_comparator,
+                 initial_population: float = None):
         self.reference_directions = reference_directions.compute()
 
         if not population_size:
@@ -296,6 +307,7 @@ class NSGAIII(NSGAII):
         self.file_pareto_front = os.getcwd() + '/' + str(time.strftime("%Y_%m_%d")) + '_NSGAIII_pareto'
         if not os.path.exists(self.file_pareto_front):
             os.mkdir(self.file_pareto_front)
+        self.initial_population = initial_population
 
     def replacement(self, population: List[S], offspring_population: List[S]) -> List[S]:
 
@@ -466,3 +478,20 @@ class NSGAIII(NSGAII):
             #     print(str(front.index(solution)) + ": ", sep='  ', end='', flush=True)
             #     print(solution.objectives, sep='  ', end='', flush=True)
             #     print()
+
+    def create_initial_solutions(self) -> List[S]:
+        if self.problem.config.iteration_round == 0:
+            return [self.population_generator.new(self.problem)
+                for _ in range(self.population_size)]
+        else:
+            random_population = [self.population_generator.new(self.problem) for _ in range(int(0.5*self.population_size))]
+            existing_population = []
+            for i in range (self.population_size - int(0.5*self.population_size)):
+                new_solution = FloatSolution(
+                    self.problem.lower_bound,
+                    self.problem.upper_bound,
+                    self.problem.number_of_objectives,
+                    self.problem.number_of_constraints)
+                new_solution.variables = self.initial_population[i]
+                existing_population.append(new_solution)
+            return random_population.extend(existing_population)

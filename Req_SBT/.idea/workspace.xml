@@ -2,73 +2,13 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="5f6be2e7-f6e0-4dfc-ba56-9b914322d642" name="Default" comment="">
-      <change afterPath="$PROJECT_DIR$/Adapt_Priority/RankingRules/__init__.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Adapt_Priority/priority_list.csv" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/GA/CarBehindAndInFrontProblem.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/trash/MyAlgorithm/__init__.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/trash/MyProblem/__init__.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/trash/MyScenario/__init__.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Adapt_Priority/AdaptObj.py" beforeDir="false" afterPath="$PROJECT_DIR$/Adapt_Priority/AdaptObj.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Adapt_Priority/MyAlgorithm/evaluator.py" beforeDir="false" afterPath="$PROJECT_DIR$/Adapt_Priority/MyAlgorithm/evaluator.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Adapt_Priority/MyAlgorithm/problem.py" beforeDir="false" afterPath="$PROJECT_DIR$/Adapt_Priority/MyAlgorithm/problem.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Adapt_Priority/MyProblem/CarBehindAndInFront.py" beforeDir="false" afterPath="$PROJECT_DIR$/Adapt_Priority/MyProblem/CarBehindAndInFront.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Adapt_Priority/MyProblem/OvertakeProblem.py" beforeDir="false" afterPath="$PROJECT_DIR$/Adapt_Priority/MyProblem/OvertakeProblem.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Adapt_Priority/MyAlgorithm/nsgaiii.py" beforeDir="false" afterPath="$PROJECT_DIR$/Adapt_Priority/MyAlgorithm/nsgaiii.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Adapt_Priority/MyProblem/CarBehindAndInFront.py" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/Adapt_Priority/MyScenario/CarBehindAndInFront.py" beforeDir="false" afterPath="$PROJECT_DIR$/Adapt_Priority/MyScenario/CarBehindAndInFront.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Adapt_Priority/RankingRules/DistanceRanking.py" beforeDir="false" afterPath="$PROJECT_DIR$/Adapt_Priority/RankingRules/DistanceRanking.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Adapt_Priority/Req_SBT.py" beforeDir="false" afterPath="$PROJECT_DIR$/Adapt_Priority/Req_SBT.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Adapt_Priority/Settings/CarBehindAndInFrontConfigure.py" beforeDir="false" afterPath="$PROJECT_DIR$/Adapt_Priority/Settings/CarBehindAndInFrontConfigure.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Adapt_Priority/read_log.py" beforeDir="false" afterPath="$PROJECT_DIR$/Adapt_Priority/MyScenario/read_log.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Brute_Force/AdaptObj.py" beforeDir="false" afterPath="$PROJECT_DIR$/Brute_Force/AdaptObj.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Brute_Force/MyAlgorithm/evaluator.py" beforeDir="false" afterPath="$PROJECT_DIR$/Brute_Force/MyAlgorithm/evaluator.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Brute_Force/MyAlgorithm/nsgaiii.py" beforeDir="false" afterPath="$PROJECT_DIR$/Brute_Force/MyAlgorithm/nsgaiii.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Brute_Force/MyAlgorithm/problem.py" beforeDir="false" afterPath="$PROJECT_DIR$/Brute_Force/MyAlgorithm/problem.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Brute_Force/MyProblem/CarBehindAndInFront.py" beforeDir="false" afterPath="$PROJECT_DIR$/Brute_Force/CarBehindAndInFront.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Brute_Force/MyProblem/OvertakeProblem.py" beforeDir="false" afterPath="$PROJECT_DIR$/Brute_Force/MyProblem/OvertakeProblem.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Brute_Force/MyScenario/CarBehindAndInFront.py" beforeDir="false" afterPath="$PROJECT_DIR$/Brute_Force/MyScenario/CarBehindAndInFront.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Brute_Force/Req_SBT.py" beforeDir="false" afterPath="$PROJECT_DIR$/Brute_Force/Req_SBT.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Brute_Force/Settings/CarBehindAndInFrontConfigure.py" beforeDir="false" afterPath="$PROJECT_DIR$/Brute_Force/Settings/CarBehindAndInFrontConfigure.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Brute_Force/goal_selection_index.txt" beforeDir="false" afterPath="$PROJECT_DIR$/Brute_Force/goal_selection_index.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Brute_Force/read_log.py" beforeDir="false" afterPath="$PROJECT_DIR$/Brute_Force/MyScenario/read_log.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/GA/AdaptObj.py" beforeDir="false" afterPath="$PROJECT_DIR$/GA/AdaptObj.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/GA/Configure.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/GA/MyAlgorithm/evaluator.py" beforeDir="false" afterPath="$PROJECT_DIR$/GA/MyAlgorithm/evaluator.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/GA/MyAlgorithm/problem.py" beforeDir="false" afterPath="$PROJECT_DIR$/GA/MyAlgorithm/problem.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/GA/MyProblem/CarBehindAndInFront.py" beforeDir="false" afterPath="$PROJECT_DIR$/GA/MyProblem/CarBehindAndInFront.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/GA/MyProblem/OvertakeProblem.py" beforeDir="false" afterPath="$PROJECT_DIR$/GA/MyProblem/OvertakeProblem.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/GA/MyScenario/CarBehindAndInFront.py" beforeDir="false" afterPath="$PROJECT_DIR$/GA/MyScenario/CarBehindAndInFront.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/GA/Req_SBT.py" beforeDir="false" afterPath="$PROJECT_DIR$/GA/Req_SBT.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/GA/Settings/CarBehindAndInFrontConfigure.py" beforeDir="false" afterPath="$PROJECT_DIR$/GA/Settings/CarBehindAndInFrontConfigure.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/GA/read_log.py" beforeDir="false" afterPath="$PROJECT_DIR$/GA/MyScenario/read_log.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/MyAlgorithm/DistributeNSGAii.py" beforeDir="false" afterPath="$PROJECT_DIR$/trash/MyAlgorithm/DistributeNSGAii.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/MyAlgorithm/My_moea_NSGA2_templet.py" beforeDir="false" afterPath="$PROJECT_DIR$/trash/MyAlgorithm/My_moea_NSGA2_templet.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/MyAlgorithm/My_moea_NSGA3_templet.py" beforeDir="false" afterPath="$PROJECT_DIR$/trash/MyAlgorithm/My_moea_NSGA3_templet.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/MyAlgorithm/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/Adapt_Priority/RankingRules/DistanceRanking.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/MyAlgorithm/evaluator.py" beforeDir="false" afterPath="$PROJECT_DIR$/trash/MyAlgorithm/evaluator.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/MyAlgorithm/nsgaii.py" beforeDir="false" afterPath="$PROJECT_DIR$/trash/MyAlgorithm/nsgaii.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/MyAlgorithm/nsgaiii.py" beforeDir="false" afterPath="$PROJECT_DIR$/trash/MyAlgorithm/nsgaiii.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/MyAlgorithm/problem.py" beforeDir="false" afterPath="$PROJECT_DIR$/trash/MyAlgorithm/problem.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/MyAlgorithm/random_search.py" beforeDir="false" afterPath="$PROJECT_DIR$/trash/MyAlgorithm/random_search.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/MyAlgorithm/solution.py" beforeDir="false" afterPath="$PROJECT_DIR$/trash/MyAlgorithm/solution.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/MyAlgorithm/termination_criterion.py" beforeDir="false" afterPath="$PROJECT_DIR$/trash/MyAlgorithm/termination_criterion.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/MyProblem/CarBehindAndInFront.py" beforeDir="false" afterPath="$PROJECT_DIR$/trash/MyProblem/CarBehindAndInFront.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/MyProblem/OvertakeProblem.py" beforeDir="false" afterPath="$PROJECT_DIR$/trash/MyProblem/OvertakeProblem.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/MyProblem/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/Adapt_Priority/RankingRules/EnsembleRanking.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/MyScenario/CarBehindAndInFront.py" beforeDir="false" afterPath="$PROJECT_DIR$/trash/MyScenario/CarBehindAndInFront.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/MyScenario/Overtake.json" beforeDir="false" afterPath="$PROJECT_DIR$/trash/MyScenario/Overtake.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/MyScenario/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/Adapt_Priority/RankingRules/RelationRanking.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Random/MyAlgorithm/evaluator.py" beforeDir="false" afterPath="$PROJECT_DIR$/Random/MyAlgorithm/evaluator.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Random/MyAlgorithm/problem.py" beforeDir="false" afterPath="$PROJECT_DIR$/Random/MyAlgorithm/problem.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Random/MyProblem/CarBehindAndInFront.py" beforeDir="false" afterPath="$PROJECT_DIR$/Random/MyProblem/CarBehindAndInFront.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Random/MyProblem/OvertakeProblem.py" beforeDir="false" afterPath="$PROJECT_DIR$/Random/MyProblem/OvertakeProblem.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Random/MyScenario/CarBehindAndInFront.py" beforeDir="false" afterPath="$PROJECT_DIR$/Random/MyScenario/CarBehindAndInFront.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Random/Req_SBT.py" beforeDir="false" afterPath="$PROJECT_DIR$/Random/MyScenario/Req_SBT.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Random/random_sce_generation.py" beforeDir="false" afterPath="$PROJECT_DIR$/Random/random_sce_generation.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Random/read_log.py" beforeDir="false" afterPath="$PROJECT_DIR$/Random/MyScenario/read_log.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/trash/MOGA.py" beforeDir="false" afterPath="$PROJECT_DIR$/trash/MOGA.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/trash/MyProblem.py" beforeDir="false" afterPath="$PROJECT_DIR$/trash/MyProblem.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/trash/initial_files/AdaptObj.py" beforeDir="false" afterPath="$PROJECT_DIR$/trash/initial_files/AdaptObj.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/trash/initial_files/Req_SBT.py" beforeDir="false" afterPath="$PROJECT_DIR$/trash/initial_files/Req_SBT.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/trash/random_baseline.py" beforeDir="false" afterPath="$PROJECT_DIR$/trash/random_baseline.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Random/DataProcessing/Untitled.ipynb" beforeDir="false" afterPath="$PROJECT_DIR$/Random/DataProcessing/Untitled.ipynb" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -329,14 +269,14 @@
       <recent name="C:\Users\lenovo\Documents\GitHub\Requirements-Driven-Testing-For-AUSs\Req_SBT\Adapt_Priority\Settings" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\lenovo\Documents\GitHub\Requirements-Driven-Testing-For-AUSs\Req_SBT\Adapt_Priority" />
       <recent name="C:\Users\lenovo\Documents\GitHub\Requirements-Driven-Testing-For-AUSs\Req_SBT\Brute_Force" />
       <recent name="C:\Users\lenovo\Documents\GitHub\Requirements-Driven-Testing-For-AUSs\Req_SBT\GA" />
       <recent name="C:\Users\lenovo\Documents\GitHub\Requirements-Driven-Testing-For-AUSs\Req_SBT\trash" />
       <recent name="C:\Users\lenovo\Documents\GitHub\Requirements-Driven-Testing-For-AUSs\Req_SBT\Random\MyScenario" />
-      <recent name="C:\Users\lenovo\Documents\GitHub\Requirements-Driven-Testing-For-AUSs\Req_SBT\Random\MyAlgorithm" />
     </key>
   </component>
-  <component name="RunManager" selected="Python.Req_SBT (3)">
+  <component name="RunManager" selected="Python.Req_SBT">
     <configuration name="DistanceRanking" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="Req_SBT" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -350,27 +290,6 @@
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <option name="SCRIPT_NAME" value="$PROJECT_DIR$/Adapt_Priority/RankingRules/DistanceRanking.py" />
-      <option name="PARAMETERS" value="" />
-      <option name="SHOW_COMMAND_LINE" value="false" />
-      <option name="EMULATE_TERMINAL" value="false" />
-      <option name="MODULE_MODE" value="false" />
-      <option name="REDIRECT_INPUT" value="false" />
-      <option name="INPUT_FILE" value="" />
-      <method v="2" />
-    </configuration>
-    <configuration name="EnsembleRanking" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
-      <module name="Req_SBT" />
-      <option name="INTERPRETER_OPTIONS" value="" />
-      <option name="PARENT_ENVS" value="true" />
-      <envs>
-        <env name="PYTHONUNBUFFERED" value="1" />
-      </envs>
-      <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/Adapt_Priority/RankingRules" />
-      <option name="IS_MODULE_SDK" value="true" />
-      <option name="ADD_CONTENT_ROOTS" value="true" />
-      <option name="ADD_SOURCE_ROOTS" value="true" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/Adapt_Priority/RankingRules/EnsembleRanking.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
@@ -421,6 +340,27 @@
       <option name="INPUT_FILE" value="" />
       <method v="2" />
     </configuration>
+    <configuration name="Req_SBT" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+      <module name="Req_SBT" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/Adapt_Priority" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/Adapt_Priority/Req_SBT.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
     <configuration name="random_sce_generation" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="Req_SBT" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -445,17 +385,17 @@
     <list>
       <item itemvalue="Python.Req_SBT (3)" />
       <item itemvalue="Python.random_sce_generation" />
-      <item itemvalue="Python.EnsembleRanking" />
       <item itemvalue="Python.DistanceRanking" />
       <item itemvalue="Python.Req_SBT (1)" />
+      <item itemvalue="Python.Req_SBT" />
     </list>
     <recent_temporary>
       <list>
+        <item itemvalue="Python.Req_SBT" />
         <item itemvalue="Python.Req_SBT (3)" />
         <item itemvalue="Python.Req_SBT (1)" />
         <item itemvalue="Python.random_sce_generation" />
         <item itemvalue="Python.DistanceRanking" />
-        <item itemvalue="Python.EnsembleRanking" />
       </list>
     </recent_temporary>
   </component>

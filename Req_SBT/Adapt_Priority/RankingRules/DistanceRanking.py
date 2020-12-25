@@ -6,19 +6,7 @@ import os
 import csv
 
 
-target_value_threshold = [1, 1, 1, 1, 1, 1, 1]
-priority_list = []
-with open("../priority_list.csv") as csvfile:
-    csv_file = csv.reader(csvfile)
-    for row in csv_file:
-        priority_list.append(row)
-    priority_list = [[float(x) for x in row] for row in priority_list]
-priority_list = np.array(priority_list)
 
-violation_pattern_to_search = []
-# print(priority_list.shape[0])
-len_priority_list = priority_list.shape[0]
-pattern_count = np.zeros((priority_list.shape[0]),dtype=int)
 
 def Distance_Ranking (violation_pattern_to_search, population, scores):
     sorted_violation_pattern_list = []
@@ -66,6 +54,20 @@ def Distance_Ranking (violation_pattern_to_search, population, scores):
 if __name__ == '__main__':
     # violation_pattern = np.array([[1,1,1],[2,2,2]])
     # print(violation_pattern, violation_pattern.mean(axis=1))
+
+    target_value_threshold = [1, 1, 1, 1, 1, 1, 1]
+    priority_list = []
+    with open("../priority_list.csv") as csvfile:
+        csv_file = csv.reader(csvfile)
+        for row in csv_file:
+            priority_list.append(row)
+        priority_list = [[float(x) for x in row] for row in priority_list]
+    priority_list = np.array(priority_list)
+
+    violation_pattern_to_search = []
+    # print(priority_list.shape[0])
+    len_priority_list = priority_list.shape[0]
+    pattern_count = np.zeros((priority_list.shape[0]), dtype=int)
 
     evaluation = []
     variables = []
