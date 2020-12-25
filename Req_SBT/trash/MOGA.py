@@ -6,7 +6,7 @@ from trash.initial_files.Configure import configure
 import os
 import time
 from trash.initial_files.AdaptObj import AdaptObj
-from MyAlgorithm.My_moea_NSGA2_templet import My_moea_NSGA2_templet
+from trash.MyAlgorithm.My_moea_NSGA2_templet import My_moea_NSGA2_templet
 import globalvar as gl
 import codecs
 from trash.initial_files.bestpop import BestPop

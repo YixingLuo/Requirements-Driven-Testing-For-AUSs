@@ -6,7 +6,7 @@ sys.path.append("../Random")
 from jmetal.core.problem import FloatProblem
 from jmetal.core.solution import FloatSolution
 # from MyAlgorithm.solution import FloatSolution
-from MyScenario.CarBehindAndInFront import create_run_scenario_overtake
+from trash.MyScenario import create_run_scenario_overtake
 
 
 # from scoop import futures
@@ -45,7 +45,7 @@ class CarBehindAndInFront(FloatProblem):
     def evaluate(self, solution: FloatSolution) -> FloatSolution:
         Vars = solution.variables
 
-        result = create_run_scenario_overtake(Vars, self.bestpop, self.config)
+        result = create_run_scenario_overtake(Vars, self.config)
 
         solution.objectives = result
 

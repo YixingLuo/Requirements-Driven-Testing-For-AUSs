@@ -8,17 +8,16 @@ from jmetal.operator import SBXCrossover, PolynomialMutation
 from jmetal.util.solution import print_function_values_to_file, print_variables_to_file
 # from jmetal.util.termination_criterion import StoppingByEvaluations
 # from jmetal.util.evaluator import SequentialEvaluator,MultiprocessEvaluator
-from MyAlgorithm.nsgaiii import NSGAIII
-from MyAlgorithm.nsgaii import NSGAII
-from MyAlgorithm.random_search import RandomSearch
-from MyAlgorithm.termination_criterion import StoppingByEvaluations, StoppingByQualityIndicator
-from MyAlgorithm.evaluator import MultiprocessEvaluator
+from trash.MyAlgorithm import NSGAIII
+from trash.MyAlgorithm.nsgaii import NSGAII
+from trash.MyAlgorithm import RandomSearch
+from trash.MyAlgorithm.termination_criterion import StoppingByEvaluations
+from trash.MyAlgorithm.evaluator import MultiprocessEvaluator
 from Settings.CarBehindAndInFrontConfigure import CarBehindAndInFrontConfigure
 import os
 import time
 from bestpop import BestPop
-from MyProblem.CarBehindAndInFront import CarBehindAndInFront
-from jmetal.core.quality_indicator import GenerationalDistance, InvertedGenerationalDistance, HyperVolume, FitnessValue
+from trash.MyProblem import CarBehindAndInFront
 from jmetal.util.observer import ProgressBarObserver
 
 

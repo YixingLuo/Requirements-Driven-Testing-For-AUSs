@@ -2,7 +2,7 @@ import json
 import numpy as np
 import os
 import time
-from trash.initial_files.read_log import evaluate_speed, evaluate_comfort, evaluate_stability, evaluate_traffic_light, evaluate_cross_lane,evaluate_collision
+from MyScenario.read_log import evaluate_speed, evaluate_comfort, evaluate_stability, evaluate_traffic_light, evaluate_cross_lane,evaluate_collision
 import uuid
 import random
 
@@ -16,7 +16,7 @@ def get_time_stamp():
     return time_stamp
 
 
-def create_run_scenario_overtake (Vars, BestPop, Configure):
+def create_run_scenario_overtake (Vars, Configure):
 
     config = Configure
     population = config.population
@@ -90,8 +90,10 @@ def create_run_scenario_overtake (Vars, BestPop, Configure):
 
     var_name = file_dir_var + "/var_" + now_time + "_" + uuid_str + ".txt"
 
-    with open(var_name, 'w', encoding='utf-8') as f:
-        json.dump(Vars, f, ensure_ascii=False, indent=4)
+    # with open(var_name, 'w', encoding='utf-8') as f:
+    #     json.dump(Vars, f, ensure_ascii=False, indent=4)
+    np.savetxt(var_name, Vars, fmt="%f", delimiter=" ")
+
 
     ## run the scenario
     duration = config.duration
@@ -189,10 +191,10 @@ def create_run_scenario_overtake (Vars, BestPop, Configure):
     # print(result_name)
     np.savetxt(result_name, result, fmt="%f", delimiter=" ")
 
-    if Configure.algorithm == 'NSGA_III_Adapt':
-        weights = BestPop.weights
-        for i in range (config.goal_num):
-            result[i] = weights[i] *  result[i]
+    # if Configure.algorithm == 'NSGA_III_Adapt':
+    #     weights = BestPop.weights
+    #     for i in range (config.goal_num):
+    #         result[i] = weights[i] *  result[i]
 
         # print("Results after weight:", result)
 

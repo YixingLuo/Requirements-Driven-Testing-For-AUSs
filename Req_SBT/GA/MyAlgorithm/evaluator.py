@@ -64,18 +64,19 @@ class MultiprocessEvaluator(Evaluator[S]):
 
     def evaluate(self, solution_list: List[S], problem: Problem) -> List[S]:
 
+
+        # problem.bestpop.clear()
+
+        # if problem.bestpop.configure.algorithm == "Adapt_Priority":
+        #     if problem.bestpop.round > 0:
+        #         # print(problem.bestpop.pop)
+        #         problem.bestpop.add_results()
+        #         if problem.bestpop.round % problem.bestpop.configure.interval == 0:
+        #         # problem.bestpop.update_weight()
+        #         # print("\033[1;31m new weight \033[0m", problem.bestpop.weights)
+
         problem.bestpop.update_round()
         print("\033[1;31m new round \033[0m", problem.bestpop.round)
-        problem.bestpop.clear()
-
-        if problem.bestpop.configure.algorithm == "NSGA_III_Adapt":
-            if problem.bestpop.round > 1:
-                # print(problem.bestpop.pop)
-                problem.bestpop.add_results()
-                problem.bestpop.update_weight()
-                print("\033[1;31m new weight \033[0m", problem.bestpop.weights)
-
-
 
 
         # gl.set_value('BestPop', bestlog)

@@ -1,8 +1,8 @@
 import sys
-sys.path.append("../Adapt_Priority")
-sys.path.append("../Brute_Force")
+# sys.path.append("../Adapt_Priority")
+# sys.path.append("../Brute_Force")
 sys.path.append("../GA")
-sys.path.append("../Random")
+# sys.path.append("../Random")
 from jmetal.core.problem import FloatProblem
 from jmetal.core.solution import FloatSolution
 # from MyAlgorithm.solution import FloatSolution
@@ -11,20 +11,20 @@ from MyScenario.CarBehindAndInFront import create_run_scenario_overtake
 
 # from scoop import futures
 
-class CarBehindAndInFront(FloatProblem):
+class CarBehindAndInFrontProblem(FloatProblem):
     """ Problem ZDT1Modified.
 
     .. note:: Version including a loop for increasing the computing time of the evaluation functions.
     """
-    def __init__(self,  M, configure, bestpop):
+    def __init__(self,  M, configure):
         """ :param number_of_variables: Number of decision variables of the problem.
         """
-        super(CarBehindAndInFront, self).__init__()
+        super(CarBehindAndInFrontProblem, self).__init__()
         self.number_of_variables = configure.num_variables
         self.number_of_objectives =  configure.goal_num
         self.number_of_constraints = 0
         self.config = configure
-        self.bestpop = bestpop
+        # self.bestpop = bestpop
 
         self.obj_directions = [self.MINIMIZE] * M
         self.obj_labels = ['stable', 'acda', 'mini', 'speed', 'traffic_light', 'comfort']
@@ -45,7 +45,7 @@ class CarBehindAndInFront(FloatProblem):
     def evaluate(self, solution: FloatSolution) -> FloatSolution:
         Vars = solution.variables
 
-        result = create_run_scenario_overtake(Vars, self.bestpop, self.config)
+        result = create_run_scenario_overtake(Vars, self.config)
 
         solution.objectives = result
 
@@ -53,4 +53,4 @@ class CarBehindAndInFront(FloatProblem):
 
 
     def get_name(self):
-        return 'CarBehindAndInFront'
+        return 'CarBehindAndInFrontProblem'

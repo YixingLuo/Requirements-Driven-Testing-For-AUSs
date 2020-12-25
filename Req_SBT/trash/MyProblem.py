@@ -2,7 +2,7 @@
 """ QuickStart """
 import numpy as np
 import geatpy as ea
-from MyScenario.overtake import create_run_scenario_overtake
+from trash.MyScenario import create_run_scenario_overtake
 from multiprocessing import Pool as ProcessPool
 from multiprocessing.dummy import Pool as ThreadPool
 # from scoop import futures

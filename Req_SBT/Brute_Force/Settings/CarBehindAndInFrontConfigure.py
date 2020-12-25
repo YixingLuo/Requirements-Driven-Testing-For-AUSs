@@ -99,22 +99,22 @@ class CarBehindAndInFrontConfigure:
         self.algorithm = "Brute_Froce"
 
         self.file_dir_sce = os.getcwd() + '/' + str(time.strftime("%Y_%m_%d")) + '_' + str(self.algorithm) + '_scenarios_' + str(
-            self.maxIterations)
+            goal_index)
         if not os.path.exists(self.file_dir_sce):
             os.mkdir(self.file_dir_sce)
 
         self.file_dir_data = os.getcwd() + '/' + str(time.strftime("%Y_%m_%d")) + '_' + str(self.algorithm) + '_datalog_' + str(
-            self.maxIterations)
+            goal_index)
         if not os.path.exists(self.file_dir_data):
             os.mkdir(self.file_dir_data)
 
         self.file_dir_eval = os.getcwd() + '/' + str(time.strftime("%Y_%m_%d")) + '_' + str(self.algorithm) + '_results_' + str(
-            self.maxIterations)
+            goal_index)
         if not os.path.exists(self.file_dir_eval):
             os.mkdir(self.file_dir_eval)
 
         self.file_dir_var = os.getcwd() + '/' + str(time.strftime("%Y_%m_%d")) + '_' + str(self.algorithm) + '_variable_' + str(
-            self.maxIterations)
+            goal_index)
         if not os.path.exists(self.file_dir_var):
             os.mkdir(self.file_dir_var)
 
@@ -129,6 +129,7 @@ class CarBehindAndInFrontConfigure:
         self.priority_list = numpy.array(priority_list)
 
         self.goal_selection_flag = self.priority_list[goal_index]
+        self.goal_index = goal_index
 
 
 

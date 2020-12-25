@@ -7,17 +7,17 @@ from jmetal.algorithm.multiobjective.nsgaiii import UniformReferenceDirectionFac
 from jmetal.operator import SBXCrossover, PolynomialMutation
 from jmetal.util.solution import print_function_values_to_file, print_variables_to_file
 # from jmetal.util.termination_criterion import StoppingByEvaluations
-# from jmetal.util.evaluator import SequentialEvaluator,MultiprocessEvaluator
+from jmetal.util.evaluator import SequentialEvaluator,MultiprocessEvaluator
 from MyAlgorithm.nsgaiii import NSGAIII
 from MyAlgorithm.nsgaii import NSGAII
 from MyAlgorithm.random_search import RandomSearch
 from MyAlgorithm.termination_criterion import StoppingByEvaluations
-from MyAlgorithm.evaluator import MultiprocessEvaluator
+# from MyAlgorithm.evaluator import MultiprocessEvaluator
 from Settings.CarBehindAndInFrontConfigure import CarBehindAndInFrontConfigure
 import os
 import time
-from trash.initial_files.bestpop import BestPop
-from MyProblem.CarBehindAndInFront import CarBehindAndInFront
+# from trash.initial_files.bestpop import BestPop
+from CarBehindAndInFront import CarBehindAndInFront
 from jmetal.util.observer import ProgressBarObserver
 import random
 import numpy
@@ -64,13 +64,13 @@ if __name__ == '__main__':
     numpy.savetxt('goal_selection_index.txt', goal_selection_index, fmt="%d")  # 保存为整数
 
 
-    for goal_index in range (total_round):
+    for round_idx in range (total_round):
 
 
         # global Configuration
-        Configuration = CarBehindAndInFrontConfigure(goal_index,population,search_round)
+        Configuration = CarBehindAndInFrontConfigure(goal_selection_index[round_idx],population,search_round)
         # global BestPopulation
-        BestPopulation = BestPop(Configuration)
+        # BestPopulation = BestPop(Configuration)
         # config.createfolders()
         Goal_num = Configuration.goal_num
 
@@ -80,7 +80,7 @@ if __name__ == '__main__':
         # sys.stdout = outputfile
 
         """===============================实例化问题对象============================"""
-        problem = CarBehindAndInFront(Goal_num, Configuration, BestPopulation)
+        problem = CarBehindAndInFront(Goal_num, Configuration)
 
         """=================================算法参数设置============================"""
         max_evaluations = population * search_round

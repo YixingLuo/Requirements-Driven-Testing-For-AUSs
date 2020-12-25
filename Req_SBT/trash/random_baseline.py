@@ -6,7 +6,7 @@ from jmetal.util.termination_criterion import StoppingByEvaluations
 
 from trash.initial_files.Configure import configure
 from trash.initial_files.bestpop import BestPop
-from MyProblem.OvertakeProblem import OvertakeProblem
+from trash.MyProblem import OvertakeProblem
 
 if __name__ == '__main__':
 

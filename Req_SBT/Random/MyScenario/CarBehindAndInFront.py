@@ -2,7 +2,7 @@ import json
 import numpy as np
 import os
 import time
-from trash.initial_files.read_log import evaluate_speed, evaluate_comfort, evaluate_stability, evaluate_traffic_light, evaluate_cross_lane,evaluate_collision
+from trash.MyScenario import evaluate_speed, evaluate_comfort, evaluate_stability, evaluate_traffic_light, evaluate_cross_lane,evaluate_collision
 import uuid
 import random
 
@@ -16,7 +16,7 @@ def get_time_stamp():
     return time_stamp
 
 
-def create_run_scenario_overtake (Vars, BestPop, Configure):
+def create_run_scenario_overtake (Vars, Configure):
 
     config = Configure
     population = config.population
@@ -100,10 +100,10 @@ def create_run_scenario_overtake (Vars, BestPop, Configure):
     # print(file_path)
 
     log_name = file_dir_data + "/datalog_" + now_time  + "_" + uuid_str + ".txt"
-    # cmd = "C:/Users/lenovo/Documents/GitHub/mazda-path-planner-sbt_changes/mazda-path-planner-sbt_changes/ERATO_planning/x64/Release/dynamic_cost.exe -c %d -v EGO_TESTER -i %s > %s" % (duration, scenario_name, log_name)
+    cmd = "C:/Users/lenovo/Documents/GitHub/mazda-path-planner-sbt_changes/mazda-path-planner-sbt_changes/ERATO_planning/x64/Release/dynamic_cost.exe -c %d -v EGO_TESTER -i %s > %s" % (duration, scenario_name, log_name)
 
     ## weiming
-    cmd = "wine /gpfs/share/home/1801111354/Release/dynamic_cost.exe -c %d -v EGO_TESTER -i %s > %s" % (duration, scenario_name, log_name)
+    # cmd = "wine /gpfs/share/home/1801111354/Release/dynamic_cost.exe -c %d -v EGO_TESTER -i %s > %s" % (duration, scenario_name, log_name)
 
     # print(cmd)
     start = time.clock()
@@ -189,10 +189,10 @@ def create_run_scenario_overtake (Vars, BestPop, Configure):
     # print(result_name)
     np.savetxt(result_name, result, fmt="%f", delimiter=" ")
 
-    if Configure.algorithm == 'NSGA_III_Adapt':
-        weights = BestPop.weights
-        for i in range (config.goal_num):
-            result[i] = weights[i] *  result[i]
+    # if Configure.algorithm == 'NSGA_III_Adapt':
+    #     weights = BestPop.weights
+    #     for i in range (config.goal_num):
+    #         result[i] = weights[i] *  result[i]
 
         # print("Results after weight:", result)
 

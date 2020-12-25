@@ -1,7 +1,7 @@
 from jmetal.core.problem import FloatProblem
 from jmetal.core.solution import FloatSolution
 # from MyAlgorithm.solution import FloatSolution
-from MyScenario.overtake_2 import create_run_scenario_overtake
+from trash.MyScenario import create_run_scenario_overtake
 
 
 # from scoop import futures

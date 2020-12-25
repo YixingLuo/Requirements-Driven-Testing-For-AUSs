@@ -3,9 +3,8 @@ import random
 from abc import ABC, abstractmethod
 from typing import Generic, TypeVar, List
 
-from jmetal.core.observer import Observer
 # from jmetal.core.solution import BinarySolution, FloatSolution, IntegerSolution, PermutationSolution
-from MyAlgorithm.solution import FloatSolution
+from trash.MyAlgorithm import FloatSolution
 
 LOGGER = logging.getLogger('jmetal')
 
