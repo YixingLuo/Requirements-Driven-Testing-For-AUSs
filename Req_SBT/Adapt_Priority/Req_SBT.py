@@ -77,14 +77,14 @@ if __name__ == '__main__':
 
         ## caculate goal_index
         if round_index == 0:
-            # print(round_index)
+            print(round_index)
             goal_selection_flag = numpy.ones(7)
             Configuration = CarBehindAndInFrontConfigure(goal_selection_flag, population, search_round, round_index)
             vars_file_name = Configuration.file_dir_var
             results_file_name = Configuration.file_dir_eval
 
         else:
-            # print(round_index, vars_file_name, results_file_name)
+            print(round_index, vars_file_name, results_file_name)
             fileList = os.listdir(results_file_name)
             fileList.sort()
 
@@ -133,7 +133,7 @@ if __name__ == '__main__':
             vars_file_name = Configuration.file_dir_var
             results_file_name = Configuration.file_dir_eval
 
-        pattern_name = 'req_violation_pattern' + str(round_index) + '.txt'
+        pattern_name = 'req_violation_pattern_' + str(round_index) + '.txt'
         numpy.savetxt(pattern_name, goal_selection_flag, fmt="%d")  # 保存为整数
         # print(sorted_pop)
         Goal_num = Configuration.goal_num
