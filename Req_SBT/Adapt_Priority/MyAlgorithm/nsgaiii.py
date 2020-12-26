@@ -306,11 +306,11 @@ class NSGAIII(NSGAII):
         self.worst_point = np.full(self.problem.number_of_objectives, -np.inf)
 
         ## my code
-        self.generation = 0
-        self.file_pareto_front = os.getcwd() + '/' + str(time.strftime("%Y_%m_%d")) + '_' + str(problem.config.algorithm) + '_pareto_' + str(
-            problem.config.iteration_round)
-        if not os.path.exists(self.file_pareto_front):
-            os.mkdir(self.file_pareto_front)
+        # self.generation = 0
+        # self.file_pareto_front = os.getcwd() + '/' + str(time.strftime("%Y_%m_%d")) + '_' + str(problem.config.algorithm) + '_pareto_' + str(
+        #     problem.config.iteration_round)
+        # if not os.path.exists(self.file_pareto_front):
+        #     os.mkdir(self.file_pareto_front)
 
         # self.initial_population = InitialPop
 

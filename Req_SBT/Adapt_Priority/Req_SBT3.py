@@ -23,6 +23,7 @@ import csv
 import numpy
 from RankingRules.DistanceRanking import Distance_Ranking
 from RankingRules.EnsembleRanking import Ensemble_Ranking, Ensemble_Ranking2
+from RankingRules.RelationRanking import Relation_Ranking
 
 
 def text_create(Configuration):
@@ -74,13 +75,16 @@ if __name__ == '__main__':
         evaluation = []
         variables = []
         sorted_pop = []
+        searched_violation_pattern = []
         # vars_file_name = "2020_12_26_Adapt_Priority_variable_0"
         # results_file_name = "2020_12_26_Adapt_Priority_results_0"
 
         ## caculate goal_index
         if round_index == 0:
             goal_selection_flag = numpy.ones(7)
+            searched_violation_pattern.append(goal_selection_flag)
             search_round = 10 * sum(goal_selection_flag)
+            # search_round = 1
             if total_search_round < search_round:
                 search_round = total_search_round
             total_search_round = total_search_round - search_round
@@ -124,10 +128,11 @@ if __name__ == '__main__':
                     violation_pattern_to_search.append(priority_list[j])
             # print(numpy.array(violation_pattern_to_search).shape[0])
 
-            [sorted_pattern_distance, sorted_pop] = Distance_Ranking(violation_pattern_to_search, variables, evaluation)
-            # sorted_pattern_relation = Relation_Violation_Pattern_Ranking (violation_pattern_to_search, goal_selection_flag)
-            violation_pattern_ranking = Ensemble_Ranking2(sorted_pattern_distance, violation_pattern_to_search)
+            sorted_pattern_distance, sorted_pop = Distance_Ranking(violation_pattern_to_search, variables, evaluation)
+            sorted_pattern_relation = Relation_Ranking (violation_pattern_to_search, searched_violation_pattern, priority_list)
 
+            violation_pattern_ranking = Ensemble_Ranking(sorted_pattern_distance, sorted_pattern_relation, violation_pattern_to_search)
+            # violation_pattern_ranking = Ensemble_Ranking2(sorted_pattern_distance, violation_pattern_to_search)
             # violation_pattern_ranking = sorted_pattern_distance
 
             if numpy.array(violation_pattern_ranking).shape[0] == 0:
@@ -135,7 +140,9 @@ if __name__ == '__main__':
             else:
                 goal_selection_flag = violation_pattern_ranking[0]
 
+            searched_violation_pattern.append(goal_selection_flag)
             search_round = 10 * sum(goal_selection_flag)
+            # search_round = 1
             if total_search_round < search_round:
                 search_round = total_search_round
             total_search_round = total_search_round - search_round
@@ -153,6 +160,7 @@ if __name__ == '__main__':
 
         """=================================算法参数设置============================"""
         max_evaluations = Configuration.maxIterations
+        print(max_evaluations)
 
         if Configuration.algorithm == "NSGA_II":
             algorithm = NSGAII(

@@ -118,7 +118,7 @@ if __name__ == '__main__':
                     violation_pattern_to_search.append(priority_list[j])
             # print(numpy.array(violation_pattern_to_search).shape[0])
 
-            [sorted_pattern_distance, sorted_pop] = Distance_Ranking(violation_pattern_to_search,variables, evaluation)
+            sorted_pattern_distance, sorted_pop = Distance_Ranking(violation_pattern_to_search,variables, evaluation)
             # sorted_pattern_relation = Relation_Violation_Pattern_Ranking (violation_pattern_to_search, goal_selection_flag)
             violation_pattern_ranking =  Ensemble_Ranking2(sorted_pattern_distance, violation_pattern_to_search)
 
