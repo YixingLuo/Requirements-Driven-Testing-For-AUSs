@@ -1,0 +1,90 @@
+{
+    "config": {
+        "map_no": "3",
+        "horizon": "80",
+        "speed_horizon_factor": "3.0",
+        "lon_interval": "10.0",
+        "lat_interval": "1.75",
+        "road_width": "3.5",
+        "infinity_cost": "100000000",
+        "sampling_step": "0.1",
+        "k_thr": "0.172",
+        "ego_width": "1.84",
+        "ego_length": "4.86",
+        "s0": 16.648998548480115,
+        "l0": "5.75",
+        "theta0": "1.5707963267",
+        "v0": 8.470739936562417,
+        "speed_limit": "16.6",
+        "k_limit": "5.0",
+        "a_max_soft": "0.98",
+        "a_min_soft": "-2.94",
+        "pena_max_latg": "5.0",
+        "pena_latg": "3000",
+        "pena_spd": "250",
+        "pena_a_max": "20",
+        "pena_a_min": "20",
+        "pena_curv_rate": "20",
+        "latg_max_soft": "2.94",
+        "curve_rate_limit": "1",
+        "time_step": "0.1",
+        "lane_cost_factor": "1.5",
+        "map_type": "1",
+        "dynamic_obstacle_lethal_cost": "100000000",
+        "dynamic_obstacle_high_cost": "10000",
+        "minimum_horizon": "30",
+        "total_time_weight": "1.0",
+        "total_dist_weight": "1.0",
+        "max_eval_trajs": "200000",
+        "pena_low_speed": "0",
+        "same_acc_bonus": "-10",
+        "auto_close_on_crash": "0",
+        "auto_close_on_reach_the_objective": "1",
+        "auto_close_x_position": "-10",
+        "auto_close_y_position": "120",
+        "straight_map_length": "100",
+        "straight_map_roads": "2"
+    },
+    "static_obs": [],
+    "traffic_signal": [
+        {
+            "start_s": 71.24673219383487,
+            "end_s": 94.687511701829,
+            "green_time": 8.630786975381834,
+            "yellow_time": 1.3273647562069502,
+            "red_time": 3.4286854198890024
+        }
+    ],
+    "dynamic_obs": [
+        {
+            "pos_x": "-5.75",
+            "pos_y": 59.20830773706632,
+            "dir": "1.5707963267",
+            "width": "1.8",
+            "length": "4.8",
+            "velo": 15.634336066154294,
+            "acc": 2.201830330828363,
+            "start_time": 0.0
+        },
+        {
+            "pos_x": "-1.75",
+            "pos_y": 10.231718151004994,
+            "dir": "1.5707963267",
+            "width": "1.8",
+            "length": "4.8",
+            "velo": 13.206017555334443,
+            "acc": 2.873262808616051,
+            "start_time": 1.5607048956064293
+        },
+        {
+            "pos_x": "1.75",
+            "pos_y": 51.99719163231062,
+            "dir": "-1.5707963267",
+            "width": "1.8",
+            "length": "4.8",
+            "velo": 8.123606608410716,
+            "acc": 0.02201803046435946,
+            "start_time": 1.9013734008191134
+        }
+    ]
+}

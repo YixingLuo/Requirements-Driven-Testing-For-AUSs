@@ -304,6 +304,8 @@ class NSGAIII(NSGAII):
         self.extreme_points = None
         self.ideal_point = np.full(self.problem.number_of_objectives, np.inf)
         self.worst_point = np.full(self.problem.number_of_objectives, -np.inf)
+
+        ## my code
         self.generation = 0
         self.file_pareto_front = os.getcwd() + '/' + str(time.strftime("%Y_%m_%d")) + '_' + str(problem.config.algorithm) + '_pareto_' + str(
             problem.config.iteration_round)
@@ -392,18 +394,6 @@ class NSGAIII(NSGAII):
             survivors_idx = np.concatenate((until_last_front, last_front[S_idx].tolist()))
             pop = pop[survivors_idx]
 
-        # front = self.get_result()
-        # if type(front) is not list:
-        #     solutions = [front]
-        #
-        # for solution in front:
-        #     print(solution.variables[0])
-        #
-        # for solution in front:
-        #     print(str(front.index(solution)) + ": ", sep='  ', end='', flush=True)
-        #     print(solution.objectives, sep='  ', end='', flush=True)
-        #     print()
-
         return list(pop)
 
     def get_result(self):
@@ -414,10 +404,10 @@ class NSGAIII(NSGAII):
         return ranking.get_subfront(0)
 
     def get_name(self) -> str:
-        return 'NSGAIII'
+        return 'Adapt_Priority'
 
-    def restart(self):
-        self.solutions = self.evaluate(self.solutions)
+    # def restart(self):
+    #     self.solutions = self.evaluate(self.solutions)
 
     # def update_progress(self):
     #     if self.problem.the_problem_has_changed():
@@ -429,49 +419,49 @@ class NSGAIII(NSGAII):
     #
     #     self.evaluations += self.offspring_population_size
 
-    def stopping_condition_is_met(self):
-
-
-        if self.termination_criterion.is_met:
-            observable_data = self.get_observable_data()
-            observable_data['TERMINATION_CRITERIA_IS_MET'] = True
-            self.observable.notify_all(**observable_data)
-
-            # self.restart()
-            # self.init_progress()
-            #
-            # self.completed_iterations += 1
-        else:
-            front = self.get_result()
-
-            filename_var = self.file_pareto_front + "/VAR_" + str(self.generation)
-            filename_fun = self.file_pareto_front + "/FUNC_" + str(self.generation)
-            try:
-                os.makedirs(os.path.dirname(filename_var), exist_ok=True)
-            except FileNotFoundError:
-                pass
-
-            try:
-                os.makedirs(os.path.dirname(filename_fun), exist_ok=True)
-            except FileNotFoundError:
-                pass
-
-            if type(front) is not list:
-                solutions = [front]
-
-            with open(filename_var, 'w') as of:
-                for solution in front:
-                    for variables in solution.variables:
-                        of.write(str(variables) + " ")
-                    of.write("\n")
-
-            with open(filename_fun, 'w') as of:
-                for solution in front:
-                    for function_value in solution.objectives:
-                        of.write(str(function_value) + ' ')
-                    of.write('\n')
-
-            self.generation += 1
+    # def stopping_condition_is_met(self):
+    #
+    #
+    #     if self.termination_criterion.is_met:
+    #         observable_data = self.get_observable_data()
+    #         observable_data['TERMINATION_CRITERIA_IS_MET'] = True
+    #         self.observable.notify_all(**observable_data)
+    #
+    #         # self.restart()
+    #         # self.init_progress()
+    #         #
+    #         # self.completed_iterations += 1
+    #     else:
+    #         front = self.get_result()
+    #
+    #         filename_var = self.file_pareto_front + "/VAR_" + str(self.generation)
+    #         filename_fun = self.file_pareto_front + "/FUNC_" + str(self.generation)
+    #         try:
+    #             os.makedirs(os.path.dirname(filename_var), exist_ok=True)
+    #         except FileNotFoundError:
+    #             pass
+    #
+    #         try:
+    #             os.makedirs(os.path.dirname(filename_fun), exist_ok=True)
+    #         except FileNotFoundError:
+    #             pass
+    #
+    #         if type(front) is not list:
+    #             solutions = [front]
+    #
+    #         with open(filename_var, 'w') as of:
+    #             for solution in front:
+    #                 for variables in solution.variables:
+    #                     of.write(str(variables) + " ")
+    #                 of.write("\n")
+    #
+    #         with open(filename_fun, 'w') as of:
+    #             for solution in front:
+    #                 for function_value in solution.objectives:
+    #                     of.write(str(function_value) + ' ')
+    #                 of.write('\n')
+    #
+    #         self.generation += 1
 
 
             # for solution in front:

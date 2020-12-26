@@ -2,16 +2,16 @@
 
 # from jmetal.algorithm.multiobjective.nsgaii import NSGAII
 # from jmetal.algorithm.multiobjective.random_search import RandomSearch
-# from jmetal.algorithm.multiobjective.nsgaiii import NSGAIII
+from jmetal.algorithm.multiobjective.nsgaiii import NSGAIII
 from jmetal.algorithm.multiobjective.nsgaiii import UniformReferenceDirectionFactory
 from jmetal.operator import SBXCrossover, PolynomialMutation
 from jmetal.util.solution import print_function_values_to_file, print_variables_to_file
-# from jmetal.util.termination_criterion import StoppingByEvaluations
+from jmetal.util.termination_criterion import StoppingByEvaluations
 from jmetal.util.evaluator import SequentialEvaluator,MultiprocessEvaluator
-from MyAlgorithm.nsgaiii import NSGAIII
+# from MyAlgorithm.nsgaiii import NSGAIII
 from MyAlgorithm.nsgaii import NSGAII
 from MyAlgorithm.random_search import RandomSearch
-from MyAlgorithm.termination_criterion import StoppingByEvaluations
+# from MyAlgorithm.termination_criterion import StoppingByEvaluations
 # from MyAlgorithm.evaluator import MultiprocessEvaluator
 from Settings.CarBehindAndInFrontConfigure import CarBehindAndInFrontConfigure
 import os
@@ -63,10 +63,10 @@ if __name__ == '__main__':
     search_round = 20
     numpy.savetxt('goal_selection_index.txt', goal_selection_index, fmt="%d")  # 保存为整数
 
-
+    # round_idx = 0
     for round_idx in range (total_round):
 
-
+        # print(round_idx, goal_selection_index[round_idx])
         # global Configuration
         Configuration = CarBehindAndInFrontConfigure(goal_selection_index[round_idx],population,search_round)
         # global BestPopulation
@@ -84,6 +84,7 @@ if __name__ == '__main__':
 
         """=================================算法参数设置============================"""
         max_evaluations = population * search_round
+        # print(max_evaluations)
 
         if Configuration.algorithm == "NSGA_II":
             algorithm = NSGAII(
@@ -101,6 +102,7 @@ if __name__ == '__main__':
         elif Configuration.algorithm == "NSGA_III" or Configuration.algorithm == "Brute_Froce":
             algorithm = NSGAIII(
                 population_evaluator=MultiprocessEvaluator(Configuration.ProcessNum),
+                # population_evaluator=SequentialEvaluator(),
                 problem=problem,
                 population_size = Configuration.population,
                 reference_directions=UniformReferenceDirectionFactory(Configuration.goal_num, n_points= Configuration.population - 1),
@@ -128,8 +130,8 @@ if __name__ == '__main__':
 
         """==================================输出结果=============================="""
         # Save results to file
-        print_function_values_to_file(front, 'FUN.' + algorithm.label)
-        print_variables_to_file(front, 'VAR.'+ algorithm.label)
+        print_function_values_to_file(front, 'FUN.' + str(goal_selection_index[round_idx]) + '_' + algorithm.label)
+        print_variables_to_file(front, 'VAR.' + str(goal_selection_index[round_idx]) + '_' + algorithm.label)
 
         print(f'Algorithm: ${algorithm.get_name()}')
         print(f'Problem: ${problem.get_name()}')

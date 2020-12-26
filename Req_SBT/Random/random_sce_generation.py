@@ -1,7 +1,7 @@
 #coding: utf-8
 from multiprocessing import Pool
 from Settings.CarBehindAndInFrontConfigure import CarBehindAndInFrontConfigure
-from MyScenario import create_run_scenario_overtake_random
+from MyScenario.CarBehindAndInFront import create_run_scenario_overtake_random
 
 
 if __name__ == "__main__":

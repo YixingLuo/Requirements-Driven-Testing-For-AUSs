@@ -10,17 +10,19 @@ import matplotlib.pyplot as plt
 import pandas as pd
 from pandas.core.frame import DataFrame
 
-file_folder_orgin = os.path.abspath(os.path.join(os.getcwd(), "..")) + "/2020_12_10_NSGA_III_results_10000"
+file_folder_orgin = os.path.abspath(os.path.join(os.getcwd(), "..")) + "/2020_12_25_Random_results_20000"
 # file_folder_adapt = os.path.abspath(os.path.join(os.getcwd(), "..")) + "/2020_11_30_NSGAII_results_10000"
 
 sum_list_orgin = []
 result_list = []
 fileList = os.listdir(file_folder_orgin)
 fileList.sort()
-for i in range(len(fileList)):
+for i in range(100):
     textname = file_folder_orgin + '/' + fileList[i]
     # print(textname)
     result = np.loadtxt(textname)
+    if result[0] == 0:
+        print(textname)
     sum = 0
     # flag = 0
     # for j in range(len(result)):

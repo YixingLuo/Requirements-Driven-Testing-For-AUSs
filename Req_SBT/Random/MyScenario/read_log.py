@@ -2,7 +2,7 @@
 # -*- coding:utf-8 -*-
 import numpy as np
 import math
-# from Settings.CarBehindAndInFrontConfigure import CarBehindAndInFrontConfigure
+# from CarBehindAndInFrontConfigure import CarBehindAndInFrontConfigure
 import os
 import time
 import json
@@ -375,7 +375,7 @@ def evaluate_stability (ego_vehicle_state, config):
     for i in range(len(ego_vehicle_state) - 1):
         pre = [ego_vehicle_state[i][0], ego_vehicle_state[i][1]]
         next = [ego_vehicle_state[i+1][0], ego_vehicle_state[i+1][1]]
-        theta = abs (ego_vehicle_state[i+1][2] -ego_vehicle_state[i][2])
+        theta = abs (ego_vehicle_state[i+1][3] -ego_vehicle_state[i][3])
         delta_l = np.sqrt(np.sum(np.square(np.array(pre) - np.array(next))))
         if delta_l == 0:
             cur = 0
@@ -384,6 +384,7 @@ def evaluate_stability (ego_vehicle_state, config):
         if cur <= config.k_thr:
             satisfaction = 1
         elif cur > config.k_limit:
+            # print(cur, theta, delta_l, pre, next, ego_vehicle_state[i+1][2], ego_vehicle_state[i][2])
             satisfaction = 0
         else:
             satisfaction = 1 - (cur - config.k_thr)/(config.k_limit - config.k_thr)
@@ -394,6 +395,7 @@ def evaluate_stability (ego_vehicle_state, config):
     else:
         satisfaction_curvature = 1/(len(curvature_list))*sum(curvature_list)
         # satisfaction_curvature = min (satisfaction)
+    # print(curvature_list)
     return satisfaction_curvature, min(curvature_list)
 
 def evaluate_traffic_light (ego_vehicle_state, traffic_light):
@@ -473,8 +475,8 @@ if __name__=='__main__':
     # os.system(cmd)
     # print(log_name)
     #
-    scenario_name = 'SCENAR1.json'
-    log_name = 'datalog1.txt'
+    scenario_name = 'scenario_20201225181219_040_8c04e01fbf7b48c58fa80c42391aa511.json'
+    log_name = 'datalog.txt'
     config = CarBehindAndInFrontConfigure()
 
     with open(scenario_name, 'r', encoding='utf-8') as f:
@@ -484,8 +486,8 @@ if __name__=='__main__':
     st_obsList = ret_dic["static_obs"]
     dy_obsList  = ret_dic["dynamic_obs"]
 
-    num_dynamic_obs = 6
-    num_static_obs = 1
+    num_dynamic_obs = 3
+    num_static_obs = 0
 
     ego_vehicle_state = []
     dynamic_vehicle_state = [[] for i in range(num_dynamic_obs)]

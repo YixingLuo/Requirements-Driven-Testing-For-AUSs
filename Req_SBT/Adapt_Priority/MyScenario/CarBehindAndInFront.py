@@ -181,7 +181,7 @@ def create_run_scenario_overtake (Vars, Configure):
     # print("Scenario:", BestPopulation.round)
     # print("Variables:", Vars)
 
-    print("Results:", len(result), result)
+    # print("Results:", len(result), result)
 
 
     # print("Weights:", bestlog.weights)

@@ -49,7 +49,7 @@ def text_create(Configuration):
 
 if __name__ == '__main__':
 
-    target_value_threshold = [0.5, 0, 1, 1, 1, 0.95, 0.99]
+    target_value_threshold = [1, 0, 1, 1, 1, 0.95, 0.99]
 
     priority_list = []
     with open("priority_list.csv") as csvfile:
@@ -77,14 +77,14 @@ if __name__ == '__main__':
 
         ## caculate goal_index
         if round_index == 0:
-            print(round_index)
             goal_selection_flag = numpy.ones(7)
             Configuration = CarBehindAndInFrontConfigure(goal_selection_flag, population, search_round, round_index)
             vars_file_name = Configuration.file_dir_var
             results_file_name = Configuration.file_dir_eval
+            # print(round_index, vars_file_name, results_file_name)
 
         else:
-            print(round_index, vars_file_name, results_file_name)
+            print(round_index, sum(pattern_count))
             fileList = os.listdir(results_file_name)
             fileList.sort()
 
@@ -101,7 +101,7 @@ if __name__ == '__main__':
                         goal_flag[j] = 0
                 for j in range (priority_list.shape[0]):
                     if (numpy.array(goal_flag) == priority_list[j]).all():
-                        pattern_count[j] += pattern_count[j] + 1
+                        pattern_count[j] = pattern_count[j] + 1
                         break
             fileList = os.listdir(vars_file_name)
             fileList.sort()
@@ -114,6 +114,7 @@ if __name__ == '__main__':
             for j in range (priority_list.shape[0]):
                 if pattern_count[j] == 0:
                     violation_pattern_to_search.append(priority_list[j])
+            # print(numpy.array(violation_pattern_to_search).shape[0])
 
             [sorted_pattern_distance, sorted_pop] = Distance_Ranking(violation_pattern_to_search,variables, evaluation)
             # sorted_pattern_relation = Relation_Violation_Pattern_Ranking (violation_pattern_to_search, goal_selection_flag)
@@ -193,8 +194,8 @@ if __name__ == '__main__':
 
         """==================================输出结果=============================="""
         # Save results to file
-        print_function_values_to_file(front, 'FUN.' + algorithm.label)
-        print_variables_to_file(front, 'VAR.'+ algorithm.label)
+        print_function_values_to_file(front, 'FUN.' + str(round_index) + algorithm.label)
+        print_variables_to_file(front, 'VAR.'+ str(round_index) + algorithm.label)
 
         print(f'Algorithm: ${algorithm.get_name()}')
         print(f'Problem: ${problem.get_name()}')

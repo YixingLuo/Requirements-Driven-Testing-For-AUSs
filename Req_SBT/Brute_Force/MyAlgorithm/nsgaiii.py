@@ -402,8 +402,8 @@ class NSGAIII(NSGAII):
     def get_name(self) -> str:
         return 'NSGAIII'
 
-    def restart(self):
-        self.solutions = self.evaluate(self.solutions)
+    # def restart(self):
+    #     self.solutions = self.evaluate(self.solutions)
 
     # def update_progress(self):
     #     if self.problem.the_problem_has_changed():
@@ -415,49 +415,49 @@ class NSGAIII(NSGAII):
     #
     #     self.evaluations += self.offspring_population_size
 
-    def stopping_condition_is_met(self):
-
-
-        if self.termination_criterion.is_met:
-            observable_data = self.get_observable_data()
-            observable_data['TERMINATION_CRITERIA_IS_MET'] = True
-            self.observable.notify_all(**observable_data)
-
-            # self.restart()
-            # self.init_progress()
-            #
-            # self.completed_iterations += 1
-        else:
-            front = self.get_result()
-
-            filename_var = self.file_pareto_front + "/VAR_" + str(self.generation)
-            filename_fun = self.file_pareto_front + "/FUNC_" + str(self.generation)
-            try:
-                os.makedirs(os.path.dirname(filename_var), exist_ok=True)
-            except FileNotFoundError:
-                pass
-
-            try:
-                os.makedirs(os.path.dirname(filename_fun), exist_ok=True)
-            except FileNotFoundError:
-                pass
-
-            if type(front) is not list:
-                solutions = [front]
-
-            with open(filename_var, 'w') as of:
-                for solution in front:
-                    for variables in solution.variables:
-                        of.write(str(variables) + " ")
-                    of.write("\n")
-
-            with open(filename_fun, 'w') as of:
-                for solution in front:
-                    for function_value in solution.objectives:
-                        of.write(str(function_value) + ' ')
-                    of.write('\n')
-
-            self.generation += 1
+    # def stopping_condition_is_met(self):
+    #
+    #
+    #     if self.termination_criterion.is_met:
+    #         observable_data = self.get_observable_data()
+    #         observable_data['TERMINATION_CRITERIA_IS_MET'] = True
+    #         self.observable.notify_all(**observable_data)
+    #
+    #         # self.restart()
+    #         # self.init_progress()
+    #         #
+    #         # self.completed_iterations += 1
+    #     else:
+    #         front = self.get_result()
+    #
+    #         filename_var = self.file_pareto_front + "/VAR_" + str(self.generation)
+    #         filename_fun = self.file_pareto_front + "/FUNC_" + str(self.generation)
+    #         try:
+    #             os.makedirs(os.path.dirname(filename_var), exist_ok=True)
+    #         except FileNotFoundError:
+    #             pass
+    #
+    #         try:
+    #             os.makedirs(os.path.dirname(filename_fun), exist_ok=True)
+    #         except FileNotFoundError:
+    #             pass
+    #
+    #         if type(front) is not list:
+    #             solutions = [front]
+    #
+    #         with open(filename_var, 'w') as of:
+    #             for solution in front:
+    #                 for variables in solution.variables:
+    #                     of.write(str(variables) + " ")
+    #                 of.write("\n")
+    #
+    #         with open(filename_fun, 'w') as of:
+    #             for solution in front:
+    #                 for function_value in solution.objectives:
+    #                     of.write(str(function_value) + ' ')
+    #                 of.write('\n')
+    #
+    #         self.generation += 1
 
 
             # for solution in front:

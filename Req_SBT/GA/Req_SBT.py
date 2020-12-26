@@ -2,13 +2,13 @@
 
 # from jmetal.algorithm.multiobjective.nsgaii import NSGAII
 # from jmetal.algorithm.multiobjective.random_search import RandomSearch
-# from jmetal.algorithm.multiobjective.nsgaiii import NSGAIII
+from jmetal.algorithm.multiobjective.nsgaiii import NSGAIII
 from jmetal.algorithm.multiobjective.nsgaiii import UniformReferenceDirectionFactory
 from jmetal.operator import SBXCrossover, PolynomialMutation
 from jmetal.util.solution import print_function_values_to_file, print_variables_to_file
 # from jmetal.util.termination_criterion import StoppingByEvaluations
 from jmetal.util.evaluator import MultiprocessEvaluator
-from MyAlgorithm.nsgaiii import NSGAIII
+# from MyAlgorithm.nsgaiii import NSGAIII
 from MyAlgorithm.nsgaii import NSGAII
 from MyAlgorithm.random_search import RandomSearch
 from MyAlgorithm.termination_criterion import StoppingByEvaluations
