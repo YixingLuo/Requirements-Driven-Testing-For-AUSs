@@ -46,7 +46,8 @@ if not os.path.exists(data_folder):
 
 if __name__ == '__main__':
 
-    goal_selection_index = random.sample(range(0,128),128)
+    # goal_selection_index = random.sample(range(0,128),128)
+    goal_selection_index = [idx for idx in range(128)]
     total_round = 8
     population = 50
     search_round = 50
@@ -182,6 +183,5 @@ if __name__ == '__main__':
         print(f'Algorithm: ${algorithm.get_name()}')
         print(f'Problem: ${problem.get_name()}')
         print(f'Computing time: ${algorithm.total_computing_time}')
-
 
 

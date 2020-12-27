@@ -95,7 +95,9 @@ def Relation_Ranking (violation_pattern_to_search, searched_violation_pattern, p
                 sorted_violation_pattern_list.append(violation_pattern_to_search[j])
                 break
 
-    return sorted_violation_pattern_list
+    weight_relation = 1
+
+    return weight_relation, sorted_violation_pattern_list
 
 if __name__ == '__main__':
 

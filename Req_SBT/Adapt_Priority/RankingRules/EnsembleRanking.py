@@ -2,11 +2,11 @@
 
 import numpy as np
 
-def Ensemble_Ranking(violation_pattern_distance, violation_pattern_relation, violation_pattern_to_search):
+def Ensemble_Ranking(violation_pattern_distance, violation_pattern_relation, violation_pattern_to_search, weights):
     violation_pattern_distance = np.array(violation_pattern_distance)
     violation_pattern_relation = np.array(violation_pattern_relation)
     violation_pattern_to_search = np.array(violation_pattern_to_search)
-    weights = [1, 1, 1]
+    # weights = [1, 1, 1]
     violation_pattern_list = []
     sorted_violation_pattern_list = []
     ranking_list = []

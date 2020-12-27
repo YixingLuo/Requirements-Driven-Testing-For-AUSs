@@ -49,7 +49,12 @@ def Distance_Ranking (violation_pattern_to_search, population, scores):
         for j in range (np.array(sorted_pop_index).shape[0]):
             sorted_pop[i][j] = population[sorted_pop_index[j]]
 
-    return sorted_violation_pattern_list, sorted_pop
+
+
+
+    weight_dist = 1
+
+    return weight_dist, sorted_violation_pattern_list, sorted_pop
 
 if __name__ == '__main__':
     # violation_pattern = np.array([[1,1,1],[2,2,2]])

@@ -1,8 +1,0 @@
-2020-12-27 04:02:40,187 [MainThread  ] [INFO ]  Output file (function values): FUN.0_Adapt_Priority.CarBehindAndInFront
-2020-12-27 04:02:40,188 [MainThread  ] [INFO ]  Output file (variables): VAR.0_Adapt_Priority.CarBehindAndInFront
-2020-12-27 07:27:20,243 [MainThread  ] [INFO ]  Output file (function values): FUN.1_Adapt_Priority.CarBehindAndInFront
-2020-12-27 07:27:20,245 [MainThread  ] [INFO ]  Output file (variables): VAR.1_Adapt_Priority.CarBehindAndInFront
-2020-12-27 10:47:10,298 [MainThread  ] [INFO ]  Output file (function values): FUN.2_Adapt_Priority.CarBehindAndInFront
-2020-12-27 10:47:10,300 [MainThread  ] [INFO ]  Output file (variables): VAR.2_Adapt_Priority.CarBehindAndInFront
-2020-12-27 14:11:46,312 [MainThread  ] [INFO ]  Output file (function values): FUN.3_Adapt_Priority.CarBehindAndInFront
-2020-12-27 14:11:46,314 [MainThread  ] [INFO ]  Output file (variables): VAR.3_Adapt_Priority.CarBehindAndInFront
