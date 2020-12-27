@@ -1,17 +1,17 @@
 # -*- coding: utf-8 -*-
 
-# from jmetal.algorithm.multiobjective.nsgaii import NSGAII
-# from jmetal.algorithm.multiobjective.random_search import RandomSearch
+from jmetal.algorithm.multiobjective.nsgaii import NSGAII
+from jmetal.algorithm.multiobjective.random_search import RandomSearch
 from jmetal.algorithm.multiobjective.nsgaiii import NSGAIII
 from jmetal.algorithm.multiobjective.nsgaiii import UniformReferenceDirectionFactory
 from jmetal.operator import SBXCrossover, PolynomialMutation
 from jmetal.util.solution import print_function_values_to_file, print_variables_to_file
-# from jmetal.util.termination_criterion import StoppingByEvaluations
+from jmetal.util.termination_criterion import StoppingByEvaluations
 from jmetal.util.evaluator import MultiprocessEvaluator
 # from MyAlgorithm.nsgaiii import NSGAIII
-from MyAlgorithm.nsgaii import NSGAII
-from MyAlgorithm.random_search import RandomSearch
-from MyAlgorithm.termination_criterion import StoppingByEvaluations
+# from MyAlgorithm.nsgaii import NSGAII
+# from MyAlgorithm.random_search import RandomSearch
+# from MyAlgorithm.termination_criterion import StoppingByEvaluations
 # from MyAlgorithm.evaluator import MultiprocessEvaluator
 from Settings.CarBehindAndInFrontConfigure import CarBehindAndInFrontConfigure
 import os
@@ -29,39 +29,18 @@ def text_create(Configuration):
     return full_path
 
 
-
-# global _global_dict
-# _global_dict = {}
-# _global_dict['Configure'] = Configuration
-# _global_dict['BestPop'] =  BestPopulation
-
-# gl._init()
-# gl.set_value('Configure', Configuration)
-# gl.set_value('Problem', problem)
-# gl.set_value('BestPop', BestPopulation)
-
-# config = Value('Configure', config)
-# bestpop = Value('BestPop', bestpop)
+data_folder = os.getcwd() + '/Datalog_' + str(time.strftime("%Y_%m_%d_%H"))
+if not os.path.exists(data_folder):
+    os.mkdir(data_folder)
 
 
 if __name__ == '__main__':
 
+    target_dir = data_folder
 
-
-
-    # freeze_support()
-
-    # global Configuration
     Configuration = CarBehindAndInFrontConfigure()
-    # global BestPopulation
-    # BestPopulation = BestPop(Configuration)
-    # config.createfolders()
     Goal_num = Configuration.goal_num
 
-    # file_name = text_create(Configuration )
-    # output = sys.stdout
-    # outputfile = codecs.open(file_name,  'w', 'utf-8')
-    # sys.stdout = outputfile
 
     """===============================实例化问题对象============================"""
     problem = CarBehindAndInFrontProblem(Goal_num, Configuration)
@@ -102,7 +81,6 @@ if __name__ == '__main__':
             termination_criterion=StoppingByEvaluations(max_evaluations=max_evaluations)
         )
 
-    # globalvar.set_value('Algorithm', algorithm)
 
     """==========================调用算法模板进行种群进化========================="""
     progress_bar = ProgressBarObserver(max=max_evaluations)
@@ -112,12 +90,11 @@ if __name__ == '__main__':
 
     """==================================输出结果=============================="""
     # Save results to file
-    print_function_values_to_file(front, 'FUN.' + algorithm.label)
-    print_variables_to_file(front, 'VAR.'+ algorithm.label)
+    print_function_values_to_file(front, os.path.join(target_dir, '/FUN.' + algorithm.label))
+    print_variables_to_file(front, os.path.join(target_dir, '/VAR.' + algorithm.label))
 
     print(f'Algorithm: ${algorithm.get_name()}')
     print(f'Problem: ${problem.get_name()}')
     print(f'Computing time: ${algorithm.total_computing_time}')
 
-    # outputfile.close()
 

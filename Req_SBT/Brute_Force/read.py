@@ -34,5 +34,5 @@ def random_int_list(start, stop, length):
         random_list.append(random.randint(start, stop))
     return random_list
 
-resultList=random.sample(range(1,5),4)
+resultList=random.sample(range(0,4),4)
 print(resultList)

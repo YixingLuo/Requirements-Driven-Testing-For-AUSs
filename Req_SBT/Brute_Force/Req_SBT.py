@@ -57,10 +57,10 @@ def text_create(Configuration):
 
 if __name__ == '__main__':
 
-    goal_selection_index = random.sample(range(1,129),50)
+    goal_selection_index = random.sample(range(0,128),20)
     total_round = len(goal_selection_index)
     population = 20
-    search_round = 20
+    search_round = 50
     numpy.savetxt('goal_selection_index.txt', goal_selection_index, fmt="%d")  # 保存为整数
 
     # round_idx = 0

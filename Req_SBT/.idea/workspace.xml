@@ -2,12 +2,25 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="5f6be2e7-f6e0-4dfc-ba56-9b914322d642" name="Default" comment="">
+      <change afterPath="$PROJECT_DIR$/Brute_Force/DataProcessing/goal_selection_index.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Brute_Force/DataProcessing/priority_list.csv" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Brute_Force/Req_SBT2.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Adapt_Priority/MyAlgorithm/nsgaiii.py" beforeDir="false" afterPath="$PROJECT_DIR$/Adapt_Priority/MyAlgorithm/nsgaiii.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Adapt_Priority/RankingRules/RelationRanking.py" beforeDir="false" afterPath="$PROJECT_DIR$/Adapt_Priority/RankingRules/RelationRanking.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Adapt_Priority/AdaptObj.py" beforeDir="false" afterPath="$PROJECT_DIR$/trash/AdaptObj.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Adapt_Priority/Configure.py" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/Adapt_Priority/Req_SBT.py" beforeDir="false" afterPath="$PROJECT_DIR$/Adapt_Priority/Req_SBT.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Adapt_Priority/Req_SBT2.py" beforeDir="false" afterPath="$PROJECT_DIR$/Adapt_Priority/Req_SBT2.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Adapt_Priority/Req_SBT3.py" beforeDir="false" afterPath="$PROJECT_DIR$/Adapt_Priority/Req_SBT3.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Adapt_Priority/Settings/CarBehindAndInFrontConfigure.py" beforeDir="false" afterPath="$PROJECT_DIR$/Adapt_Priority/Settings/CarBehindAndInFrontConfigure.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Adapt_Priority/bestpop.py" beforeDir="false" afterPath="$PROJECT_DIR$/trash/bestpop.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Brute_Force/DataProcessing/data_process.py" beforeDir="false" afterPath="$PROJECT_DIR$/Brute_Force/DataProcessing/data_process.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Brute_Force/Req_SBT.py" beforeDir="false" afterPath="$PROJECT_DIR$/Brute_Force/Req_SBT.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Brute_Force/Settings/CarBehindAndInFrontConfigure.py" beforeDir="false" afterPath="$PROJECT_DIR$/Brute_Force/Settings/CarBehindAndInFrontConfigure.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Brute_Force/goal_selection_index.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Brute_Force/jmetalpy.log" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Brute_Force/read.py" beforeDir="false" afterPath="$PROJECT_DIR$/Brute_Force/read.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/GA/Req_SBT.py" beforeDir="false" afterPath="$PROJECT_DIR$/GA/Req_SBT.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/GA/Settings/CarBehindAndInFrontConfigure.py" beforeDir="false" afterPath="$PROJECT_DIR$/GA/Settings/CarBehindAndInFrontConfigure.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Random/Settings/CarBehindAndInFrontConfigure.py" beforeDir="false" afterPath="$PROJECT_DIR$/Random/Settings/CarBehindAndInFrontConfigure.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Random/random_sce_generation.py" beforeDir="false" afterPath="$PROJECT_DIR$/Random/random_sce_generation.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -254,49 +267,28 @@
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/Adapt_Priority" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/Brute_Force" />
     <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
     <property name="nodejs_npm_path_reset_for_default_project" value="true" />
     <property name="settings.editor.selected.configurable" value="com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable" />
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\lenovo\Documents\GitHub\Requirements-Driven-Testing-For-AUSs\Req_SBT\Brute_Force" />
+      <recent name="C:\Users\lenovo\Documents\GitHub\Requirements-Driven-Testing-For-AUSs\Req_SBT\Brute_Force\DataProcessing" />
       <recent name="C:\Users\lenovo\Documents\GitHub\Requirements-Driven-Testing-For-AUSs\Req_SBT\Adapt_Priority" />
       <recent name="C:\Users\lenovo\Documents\GitHub\Requirements-Driven-Testing-For-AUSs\Req_SBT\Random\MyScenario" />
       <recent name="C:\Users\lenovo\Documents\GitHub\Requirements-Driven-Testing-For-AUSs\Req_SBT\Random\MyAlgorithm" />
-      <recent name="C:\Users\lenovo\Documents\GitHub\Requirements-Driven-Testing-For-AUSs\Req_SBT\GA\MyAlgorithm" />
-      <recent name="C:\Users\lenovo\Documents\GitHub\Requirements-Driven-Testing-For-AUSs\Req_SBT\Brute_Force\MyAlgorithm" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\lenovo\Documents\GitHub\Requirements-Driven-Testing-For-AUSs\Req_SBT\Brute_Force\DataProcessing" />
       <recent name="C:\Users\lenovo\Documents\GitHub\Requirements-Driven-Testing-For-AUSs\Req_SBT\Adapt_Priority" />
       <recent name="C:\Users\lenovo\Documents\GitHub\Requirements-Driven-Testing-For-AUSs\Req_SBT\Brute_Force" />
       <recent name="C:\Users\lenovo\Documents\GitHub\Requirements-Driven-Testing-For-AUSs\Req_SBT\GA" />
       <recent name="C:\Users\lenovo\Documents\GitHub\Requirements-Driven-Testing-For-AUSs\Req_SBT\trash" />
-      <recent name="C:\Users\lenovo\Documents\GitHub\Requirements-Driven-Testing-For-AUSs\Req_SBT\Random\MyScenario" />
     </key>
   </component>
-  <component name="RunManager" selected="Python.Req_SBT3">
-    <configuration name="RelationRanking" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
-      <module name="Req_SBT" />
-      <option name="INTERPRETER_OPTIONS" value="" />
-      <option name="PARENT_ENVS" value="true" />
-      <envs>
-        <env name="PYTHONUNBUFFERED" value="1" />
-      </envs>
-      <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/Adapt_Priority/RankingRules" />
-      <option name="IS_MODULE_SDK" value="true" />
-      <option name="ADD_CONTENT_ROOTS" value="true" />
-      <option name="ADD_SOURCE_ROOTS" value="true" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/Adapt_Priority/RankingRules/RelationRanking.py" />
-      <option name="PARAMETERS" value="" />
-      <option name="SHOW_COMMAND_LINE" value="false" />
-      <option name="EMULATE_TERMINAL" value="false" />
-      <option name="MODULE_MODE" value="false" />
-      <option name="REDIRECT_INPUT" value="false" />
-      <option name="INPUT_FILE" value="" />
-      <method v="2" />
-    </configuration>
+  <component name="RunManager" selected="Python.Req_SBT">
     <configuration name="Req_SBT" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="Req_SBT" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -310,6 +302,27 @@
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <option name="SCRIPT_NAME" value="$PROJECT_DIR$/Adapt_Priority/Req_SBT.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <configuration name="Req_SBT2" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+      <module name="Req_SBT" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/Brute_Force" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/Brute_Force/Req_SBT2.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
@@ -347,11 +360,11 @@
         <env name="PYTHONUNBUFFERED" value="1" />
       </envs>
       <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/Random/DataProcessing" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/Brute_Force/DataProcessing" />
       <option name="IS_MODULE_SDK" value="true" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/Random/DataProcessing/data_process.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/Brute_Force/DataProcessing/data_process.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
@@ -360,7 +373,7 @@
       <option name="INPUT_FILE" value="" />
       <method v="2" />
     </configuration>
-    <configuration name="read_log" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+    <configuration name="read" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="Req_SBT" />
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
@@ -368,11 +381,11 @@
         <env name="PYTHONUNBUFFERED" value="1" />
       </envs>
       <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/Random/MyScenario" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/Brute_Force" />
       <option name="IS_MODULE_SDK" value="true" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/Random/MyScenario/read_log.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/Brute_Force/read.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
@@ -382,19 +395,19 @@
       <method v="2" />
     </configuration>
     <list>
-      <item itemvalue="Python.Req_SBT" />
-      <item itemvalue="Python.data_process" />
-      <item itemvalue="Python.read_log" />
-      <item itemvalue="Python.RelationRanking" />
       <item itemvalue="Python.Req_SBT3" />
+      <item itemvalue="Python.read" />
+      <item itemvalue="Python.data_process" />
+      <item itemvalue="Python.Req_SBT2" />
+      <item itemvalue="Python.Req_SBT" />
     </list>
     <recent_temporary>
       <list>
-        <item itemvalue="Python.Req_SBT3" />
-        <item itemvalue="Python.RelationRanking" />
         <item itemvalue="Python.Req_SBT" />
-        <item itemvalue="Python.read_log" />
+        <item itemvalue="Python.Req_SBT2" />
         <item itemvalue="Python.data_process" />
+        <item itemvalue="Python.read" />
+        <item itemvalue="Python.Req_SBT3" />
       </list>
     </recent_temporary>
   </component>

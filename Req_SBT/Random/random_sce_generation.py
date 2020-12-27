@@ -2,7 +2,12 @@
 from multiprocessing import Pool
 from Settings.CarBehindAndInFrontConfigure import CarBehindAndInFrontConfigure
 from MyScenario.CarBehindAndInFront import create_run_scenario_overtake_random
+import os
+import time
 
+data_folder = os.getcwd() + '/Datalog_' + str(time.strftime("%Y_%m_%d_%H"))
+if not os.path.exists(data_folder):
+    os.mkdir(data_folder)
 
 if __name__ == "__main__":
 

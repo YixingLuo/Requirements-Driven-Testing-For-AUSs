@@ -7,7 +7,7 @@ from jmetal.algorithm.multiobjective.nsgaiii import UniformReferenceDirectionFac
 from jmetal.operator import SBXCrossover, PolynomialMutation
 from jmetal.util.solution import print_function_values_to_file, print_variables_to_file
 # from jmetal.util.termination_criterion import StoppingByEvaluations
-from jmetal.util.evaluator import SequentialEvaluator,MultiprocessEvaluator
+from jmetal.util.evaluator import SequentialEvaluator, MultiprocessEvaluator
 from MyAlgorithm.nsgaiii import NSGAIII
 from MyAlgorithm.nsgaii import NSGAII
 from MyAlgorithm.random_search import RandomSearch
@@ -23,6 +23,7 @@ import csv
 import numpy
 from RankingRules.DistanceRanking import Distance_Ranking
 from RankingRules.EnsembleRanking import Ensemble_Ranking, Ensemble_Ranking2
+from RankingRules.RelationRanking import Relation_Ranking
 
 
 def text_create(Configuration):
@@ -34,23 +35,14 @@ def text_create(Configuration):
 
 
 
-# global _global_dict
-# _global_dict = {}
-# _global_dict['Configure'] = Configuration
-# _global_dict['BestPop'] =  BestPopulation
-
-# gl._init()
-# gl.set_value('Configure', Configuration)
-# gl.set_value('Problem', problem)
-# gl.set_value('BestPop', BestPopulation)
-
-# config = Value('Configure', config)
-# bestpop = Value('BestPop', bestpop)
-
+data_folder = os.getcwd() + '/Datalog_' + str(time.strftime("%Y_%m_%d_%H"))
+if not os.path.exists(data_folder):
+    os.mkdir(data_folder)
 
 if __name__ == '__main__':
 
     target_value_threshold = [1, 0, 1, 1, 1, 0.95, 0.99]
+    target_dir = data_folder
 
     priority_list = []
     with open("priority_list.csv") as csvfile:
@@ -62,7 +54,10 @@ if __name__ == '__main__':
 
     violation_pattern_to_search = []
     pattern_count = numpy.zeros(priority_list.shape[0])
-
+    evaluation = []
+    searched_violation_pattern = []
+    variables = []
+    sorted_pop = []
 
     # total_search_round = 400
     interation_round = 8
@@ -71,15 +66,14 @@ if __name__ == '__main__':
         ## read_files
         population = 50
         search_round = 50
-        evaluation = []
-        variables = []
-        sorted_pop = []
+
         # vars_file_name = "2020_12_26_Adapt_Priority_variable_0"
         # results_file_name = "2020_12_26_Adapt_Priority_results_0"
 
         ## caculate goal_index
         if round_index == 0:
             goal_selection_flag = numpy.ones(7)
+            searched_violation_pattern.append(goal_selection_flag)
             Configuration = CarBehindAndInFrontConfigure(goal_selection_flag, population, search_round, round_index)
             vars_file_name = Configuration.file_dir_var
             results_file_name = Configuration.file_dir_eval
@@ -118,11 +112,11 @@ if __name__ == '__main__':
                     violation_pattern_to_search.append(priority_list[j])
             # print(numpy.array(violation_pattern_to_search).shape[0])
 
-            sorted_pattern_distance, sorted_pop = Distance_Ranking(violation_pattern_to_search,variables, evaluation)
-            # sorted_pattern_relation = Relation_Violation_Pattern_Ranking (violation_pattern_to_search, goal_selection_flag)
-            violation_pattern_ranking =  Ensemble_Ranking2(sorted_pattern_distance, violation_pattern_to_search)
+            sorted_pattern_distance, sorted_pop = Distance_Ranking(violation_pattern_to_search, variables, evaluation)
+            sorted_pattern_relation = Relation_Ranking (violation_pattern_to_search, searched_violation_pattern, priority_list)
 
-
+            violation_pattern_ranking = Ensemble_Ranking(sorted_pattern_distance, sorted_pattern_relation, violation_pattern_to_search)
+            # violation_pattern_ranking = Ensemble_Ranking2(sorted_pattern_distance, violation_pattern_to_search)
             # violation_pattern_ranking = sorted_pattern_distance
 
             if numpy.array(violation_pattern_ranking).shape[0] == 0:
@@ -130,14 +124,15 @@ if __name__ == '__main__':
             else:
                 goal_selection_flag = violation_pattern_ranking[0]
 
-
+            searched_violation_pattern.append(goal_selection_flag)
 
             Configuration = CarBehindAndInFrontConfigure(goal_selection_flag, population, search_round, round_index)
             vars_file_name = Configuration.file_dir_var
             results_file_name = Configuration.file_dir_eval
 
-        pattern_name = 'req_violation_pattern_' + str(round_index) + '.txt'
-        numpy.savetxt(pattern_name, goal_selection_flag, fmt="%d")  # 保存为整数
+
+        # pattern_name = os.path.join(target_dir, 'req_violation_pattern_' + str(round_index) + '.txt')
+        numpy.savetxt(os.path.join(target_dir, 'req_violation_pattern_' + str(round_index) + '.txt'), goal_selection_flag, fmt="%d")  # 保存为整数
         # print(sorted_pop)
         Goal_num = Configuration.goal_num
 
@@ -196,12 +191,13 @@ if __name__ == '__main__':
 
         """==================================输出结果=============================="""
         # Save results to file
-        print_function_values_to_file(front, 'FUN.' + str(round_index) + '_' + algorithm.label)
-        print_variables_to_file(front, 'VAR.'+ str(round_index) + '_' + algorithm.label)
+        print_function_values_to_file(front, os.path.join(target_dir, '/FUN.' + str(round_index) + '_' + algorithm.label))
+        print_variables_to_file(front, os.path.join(target_dir, '/VAR.'+ str(round_index) + '_' + algorithm.label))
 
         print(f'Algorithm: ${algorithm.get_name()}')
         print(f'Problem: ${problem.get_name()}')
         print(f'Computing time: ${algorithm.total_computing_time}')
 
-        # outputfile.close()
+        numpy.savetxt( os.path.join(target_dir, '/searched_violation_pattern.txt'), searched_violation_pattern, fmt="%d")  # 保存为整数
+        numpy.savetxt( os.path.join(target_dir, '/violation_pattern_to_search.txt'), violation_pattern_to_search, fmt="%d")  # 保存为整数
 

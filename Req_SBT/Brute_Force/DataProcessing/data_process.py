@@ -9,56 +9,47 @@ import seaborn as sns
 import matplotlib.pyplot as plt
 import pandas as pd
 from pandas.core.frame import DataFrame
+import csv
 
-file_folder_orgin = os.path.abspath(os.path.join(os.getcwd(), "..")) + "/2020_12_10_NSGA_III_results_10000"
-# file_folder_adapt = os.path.abspath(os.path.join(os.getcwd(), "..")) + "/2020_11_30_NSGAII_results_10000"
+target_value_threshold = [1, 0, 1, 1, 1, 0.95, 0.99]
 
-sum_list_orgin = []
+priority_list = []
+with open("priority_list.csv") as csvfile:
+    csv_file = csv.reader(csvfile)
+    for row in csv_file:
+        priority_list.append(row)
+    priority_list = [[float(x) for x in row] for row in priority_list]
+priority_list = np.array(priority_list)
+
 result_list = []
-fileList = os.listdir(file_folder_orgin)
-fileList.sort()
-for i in range(len(fileList)):
-    textname = file_folder_orgin + '/' + fileList[i]
-    # print(textname)
-    result = np.loadtxt(textname)
-    sum = 0
-    # flag = 0
-    # for j in range(len(result)):
-    # 	if not (result[j] >=0 and result[j] <= 1):
-    #         flag = 1
-    # 		break
-    # if not flag:
-    # result_new = [result[0],result[1],result[2],result[3],result[5]]
-    # if result[-3]<1:
-        # print (textname)
-    result_list.append(list(result))
-    # for j in range(len(result)):
-    if result[0] == -1:
-        sum += np.power(2, 0)
-    if result[1] < 1:
-        sum += np.power(2, 1)
-    if result[2] < 1:
-        sum += np.power(2, 2)
-    if result[3] < 1:
-        sum += np.power(2, 3)
-    if result[4] < 1:
-        sum += np.power(2, 4)
-    if result[5] < 0.95:
-        sum += np.power(2, 5)
-    if result[6] < 0.95:
-        sum += np.power(2, 6)
-    sum_list_orgin.append(sum)
+pattern_count = np.zeros(priority_list.shape[0])
+goal_selection_index = np.loadtxt("goal_selection_index.txt")
+for i in range (1):
+    # file_folder_orgin = os.path.abspath(os.path.join(os.getcwd(), "..")) + "/2020_12_27_Brute_Froce_results_" + str(int(goal_selection_index[i]))
+    file_folder_orgin = os.path.abspath(os.path.join(os.getcwd(), "..")) + "/2020_12_27_Brute_Froce_results_" + str(0)
+    fileList = os.listdir(file_folder_orgin)
+    fileList.sort()
+    for k in range(len(fileList)):
+        textname = file_folder_orgin + '/' + fileList[i]
+        result = np.loadtxt(textname)
+        result_list.append(list(result))
+        goal_flag = np.zeros((7), dtype=int)
+        for j in range(7):
+            if abs(result[j]) < target_value_threshold[j]:
+                goal_flag[j] = 1
+            else:
+                goal_flag[j] = 0
+        for j in range(priority_list.shape[0]):
+            if (np.array(goal_flag) == priority_list[j]).all():
+                pattern_count[j] = pattern_count[j] + 1
+                break
 
+print(pattern_count, sum(pattern_count))
+criticality = 0
+for i in range(priority_list.shape[0]):
+    criticality = criticality + (priority_list.shape[0]-1-i)/(priority_list.shape[0]-1) * pattern_count[i]
 
-##count the number
-
-count_list = np.zeros(np.power(2, 7))
-for i in range (np.power(2, 7)):
-    count = sum_list_orgin.count(i)
-    # print(i,count,count_list)
-    count_list[i] = count
-    print(count)
-
+print(criticality/sum(pattern_count))
 
 # print(count_list)
 

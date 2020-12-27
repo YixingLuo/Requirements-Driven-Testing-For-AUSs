@@ -46,16 +46,16 @@ class CarBehindAndInFrontConfigure:
         self.speed_limit = 16.67
         self.speed_max = 33.3
         self.duration = 90
-        self.population = 20
+        self.population = 50
         self.goal_num = 7
-        self.maxIterations = 20000
+        self.search_round = 50*8
         self.searchTimeout = 360000
-        self.interval = 50
         self.num_variables = 19
         self.PoolType = "Thread"
         # self.PoolType = "Process"
         # self.ProcessNum = psutil.cpu_count()
-        self.ProcessNum = 30
+        self.ProcessNum = 32
+        self.maxIterations = self.population * self.search_round
 
         ## ego
         self.ego_s0 = [10, 30]
@@ -95,22 +95,22 @@ class CarBehindAndInFrontConfigure:
         ## "NSGA_II": NSGA_II, "NSGA_III": NSGA_III ,"NSGA_III_Adapt": NSGA_II_Goal_Adapt
         self.algorithm = "Random"
 
-        self.file_dir_sce = os.getcwd() + '/' + str(time.strftime("%Y_%m_%d")) + '_' + str(self.algorithm) + '_scenarios_' + str(
+        self.file_dir_sce = os.getcwd() + '/Datalog_' + str(time.strftime("%Y_%m_%d_%H")) + '/' + str(time.strftime("%Y_%m_%d")) + '_' + str(self.algorithm) + '_scenarios_' + str(
             self.maxIterations)
         if not os.path.exists(self.file_dir_sce):
             os.mkdir(self.file_dir_sce)
 
-        self.file_dir_data = os.getcwd() + '/' + str(time.strftime("%Y_%m_%d")) + '_' + str(self.algorithm) + '_datalog_' + str(
+        self.file_dir_data = os.getcwd() + '/Datalog_' + str(time.strftime("%Y_%m_%d_%H")) + '/' + str(time.strftime("%Y_%m_%d")) + '_' + str(self.algorithm) + '_datalog_' + str(
             self.maxIterations)
         if not os.path.exists(self.file_dir_data):
             os.mkdir(self.file_dir_data)
 
-        self.file_dir_eval = os.getcwd() + '/' + str(time.strftime("%Y_%m_%d")) + '_' + str(self.algorithm) + '_results_' + str(
+        self.file_dir_eval = os.getcwd() + '/Datalog_' + str(time.strftime("%Y_%m_%d_%H")) + '/' + str(time.strftime("%Y_%m_%d")) + '_' + str(self.algorithm) + '_results_' + str(
             self.maxIterations)
         if not os.path.exists(self.file_dir_eval):
             os.mkdir(self.file_dir_eval)
 
-        self.file_dir_var = os.getcwd() + '/' + str(time.strftime("%Y_%m_%d")) + '_' + str(self.algorithm) + '_variable_' + str(
+        self.file_dir_var = os.getcwd() + '/Datalog_' + str(time.strftime("%Y_%m_%d_%H")) + '/' + str(time.strftime("%Y_%m_%d")) + '_' + str(self.algorithm) + '_variable_' + str(
             self.maxIterations)
         if not os.path.exists(self.file_dir_var):
             os.mkdir(self.file_dir_var)
