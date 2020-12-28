@@ -89,7 +89,7 @@ if __name__ == '__main__':
                 evaluation.append(result)
                 goal_flag = numpy.zeros((7), dtype=int)
                 for j in range(7):
-                    if abs(result[j]) < target_value_threshold[j]:
+                    if result[j] < target_value_threshold[j]:
                         goal_flag[j] = 1
                     else:
                         goal_flag[j] = 0
