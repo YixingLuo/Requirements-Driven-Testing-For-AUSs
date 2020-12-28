@@ -381,13 +381,15 @@ def evaluate_stability (ego_vehicle_state, config):
             cur = 0
         else:
             cur = theta/delta_l
-        if cur <= config.k_thr:
+            # cur = theta/math.pi*180/delta_l
+            # print(cur)
+        if cur <= 1/config.k_limit:
             satisfaction = 1
-        elif cur > config.k_limit:
+        elif cur > 1/config.k_limit:
             # print(cur, theta, delta_l, pre, next, ego_vehicle_state[i+1][2], ego_vehicle_state[i][2])
             satisfaction = 0
-        else:
-            satisfaction = 1 - (cur - config.k_thr)/(config.k_limit - config.k_thr)
+        # else:
+        #     satisfaction = 1 - (cur - config.k_thr)/(config.k_limit - config.k_thr)
         curvature_list.append(satisfaction)
 
     if len(curvature_list) == 0:

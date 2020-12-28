@@ -381,13 +381,15 @@ def evaluate_stability (ego_vehicle_state, config):
             cur = 0
         else:
             cur = theta/delta_l
-        if cur <= config.k_thr:
+            # cur = theta/math.pi*180/delta_l
+            # print(cur)
+        if cur <= 1/config.k_limit:
             satisfaction = 1
-        elif cur > config.k_limit:
+        elif cur > 1/config.k_limit:
             # print(cur, theta, delta_l, pre, next, ego_vehicle_state[i+1][2], ego_vehicle_state[i][2])
             satisfaction = 0
-        else:
-            satisfaction = 1 - (cur - config.k_thr)/(config.k_limit - config.k_thr)
+        # else:
+        #     satisfaction = 1 - (cur - config.k_thr)/(config.k_limit - config.k_thr)
         curvature_list.append(satisfaction)
 
     if len(curvature_list) == 0:
@@ -533,7 +535,7 @@ if __name__=='__main__':
     # min_dis, avg_dis_satisfaction, min_dis_satisfaction = evaluate_distance(ego_vehicle_state, dynamic_vehicle_state,
     #                                                                 dy_obsList, static_vehicle_state, st_obsList, config)
     min_dis, avg_dis_satisfaction, min_dis_satisfaction = evaluate_collision (ego_vehicle_state, dynamic_vehicle_state, dy_obsList, static_vehicle_state, st_obsList, config)
-    print(min_dis, avg_dis_satisfaction, min_dis_satisfaction)
+    # print(min_dis, avg_dis_satisfaction, min_dis_satisfaction)
     avg_stable, min_stable = evaluate_stability(ego_vehicle_state, config)
     traffic_light = evaluate_traffic_light(ego_vehicle_state, traffic_light)
     cross_lane = evaluate_cross_lane(ego_vehicle_state)
@@ -545,5 +547,5 @@ if __name__=='__main__':
     # result = [avg_stable, avg_dis_satisfaction, min_dis_satisfaction, avg_speed, min_speed, traffic_light,
     #       cross_lane, comfort1, comfort2]
 
-    result = [min_stable, min_dis, min_speed, traffic_light, cross_lane, comfort1, comfort2]
+    result = [min_stable, avg_stable, min_dis, min_speed, traffic_light, cross_lane, comfort1, comfort2]
     print(result)
