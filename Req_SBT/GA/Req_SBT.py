@@ -38,7 +38,7 @@ if __name__ == '__main__':
 
     target_dir = data_folder
 
-    Configuration = CarBehindAndInFrontConfigure()
+    Configuration = CarBehindAndInFrontConfigure(target_dir)
     Goal_num = Configuration.goal_num
 
 

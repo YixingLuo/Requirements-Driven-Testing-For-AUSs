@@ -56,25 +56,22 @@ if __name__ == '__main__':
     pattern_count = numpy.zeros(priority_list.shape[0])
     evaluation = []
     searched_violation_pattern = []
+    violation_pattern_ranking_removed = []
     variables = []
     sorted_pop = []
 
     # total_search_round = 400
     interation_round = 8
+    population = 50
+    search_round = 50
 
     for round_index in range (interation_round):
-        ## read_files
-        population = 50
-        search_round = 50
-
-        # vars_file_name = "2020_12_26_Adapt_Priority_variable_0"
-        # results_file_name = "2020_12_26_Adapt_Priority_results_0"
 
         ## caculate goal_index
         if round_index == 0:
             goal_selection_flag = numpy.ones(7)
             searched_violation_pattern.append(goal_selection_flag)
-            Configuration = CarBehindAndInFrontConfigure(goal_selection_flag, population, search_round, round_index)
+            Configuration = CarBehindAndInFrontConfigure(goal_selection_flag, population, search_round, round_index, target_dir)
             vars_file_name = Configuration.file_dir_var
             results_file_name = Configuration.file_dir_eval
             # print(round_index, vars_file_name, results_file_name)
@@ -119,20 +116,24 @@ if __name__ == '__main__':
             # violation_pattern_ranking = Ensemble_Ranking2(sorted_pattern_distance, violation_pattern_to_search)
             # violation_pattern_ranking = sorted_pattern_distance
 
-            violation_pattern_rankin_removed = violation_pattern_ranking
+            violation_pattern_ranking_removed = violation_pattern_ranking.copy()
             for j in range(numpy.array(violation_pattern_ranking).shape[0]):
                 for k in range(numpy.array(searched_violation_pattern).shape[0]):
                     if (numpy.array(violation_pattern_ranking[j]) == numpy.array(searched_violation_pattern[k])).all():
-                        violation_pattern_rankin_removed.remove(violation_pattern_ranking[j])
-
-            if numpy.array(violation_pattern_rankin_removed).shape[0] == 0:
+                        removed_item = violation_pattern_ranking[j]
+                        for ll in range(numpy.array(violation_pattern_ranking_removed).shape[0]):
+                            if (numpy.array(violation_pattern_ranking_removed[ll]) == numpy.array(removed_item)).all():
+                                del violation_pattern_ranking_removed[ll]
+                                break
+                        break
+            if numpy.array(violation_pattern_ranking_removed).shape[0] == 0:
                 goal_selection_flag = numpy.ones(7)
             else:
-                goal_selection_flag = violation_pattern_rankin_removed[0]
+                goal_selection_flag = violation_pattern_ranking_removed[0]
 
             searched_violation_pattern.append(goal_selection_flag)
 
-            Configuration = CarBehindAndInFrontConfigure(goal_selection_flag, population, search_round, round_index)
+            Configuration = CarBehindAndInFrontConfigure(goal_selection_flag, population, search_round, round_index, target_dir)
             vars_file_name = Configuration.file_dir_var
             results_file_name = Configuration.file_dir_eval
 

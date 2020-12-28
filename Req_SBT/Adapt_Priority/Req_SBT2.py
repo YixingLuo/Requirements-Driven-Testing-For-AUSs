@@ -56,19 +56,21 @@ if __name__ == '__main__':
     pattern_count = numpy.zeros(priority_list.shape[0])
     evaluation = []
     searched_violation_pattern = []
+    violation_pattern_ranking_removed = []
     variables = []
     sorted_pop = []
 
     total_search_round = 400
     # interation_round = 3
     round_index = 0
-
+    population = 50
+    search_round = 0
 
     while total_search_round > 0:
 
     # for round_index in range (interation_round):
         ## read_files
-        population = 10
+
         # search_round = 50
 
         # vars_file_name = "2020_12_26_Adapt_Priority_variable_0"
@@ -79,18 +81,18 @@ if __name__ == '__main__':
             goal_selection_flag = numpy.ones(7)
             searched_violation_pattern.append(goal_selection_flag)
 
-            search_round = 1 * sum(goal_selection_flag)
+            search_round = 10 * sum(goal_selection_flag)
             # search_round = 1
             if total_search_round < search_round:
                 search_round = total_search_round
             total_search_round = total_search_round - search_round
 
-            Configuration = CarBehindAndInFrontConfigure(goal_selection_flag, population, search_round, round_index)
+            Configuration = CarBehindAndInFrontConfigure(goal_selection_flag, population, search_round, round_index, target_dir)
             vars_file_name = Configuration.file_dir_var
             results_file_name = Configuration.file_dir_eval
 
         else:
-            print(round_index, sum(pattern_count))
+            # print(round_index, sum(pattern_count))
             fileList = os.listdir(results_file_name)
             fileList.sort()
 
@@ -129,38 +131,40 @@ if __name__ == '__main__':
             # violation_pattern_ranking = Ensemble_Ranking2(sorted_pattern_distance, violation_pattern_to_search)
             # violation_pattern_ranking = sorted_pattern_distance
 
-            violation_pattern_rankin_removed = violation_pattern_ranking
+            violation_pattern_ranking_removed = violation_pattern_ranking.copy()
             for j in range(numpy.array(violation_pattern_ranking).shape[0]):
                 for k in range(numpy.array(searched_violation_pattern).shape[0]):
                     if (numpy.array(violation_pattern_ranking[j]) == numpy.array(searched_violation_pattern[k])).all():
-                        violation_pattern_rankin_removed.remove(violation_pattern_ranking[j])
+                        removed_item = violation_pattern_ranking[j]
+                        for ll in range(numpy.array(violation_pattern_ranking_removed).shape[0]):
+                            if (numpy.array(violation_pattern_ranking_removed[ll]) == numpy.array(removed_item)).all():
+                                del violation_pattern_ranking_removed[ll]
+                                break
+                        break
 
-            if numpy.array(violation_pattern_rankin_removed).shape[0] == 0:
+            if numpy.array(violation_pattern_ranking_removed).shape[0] == 0:
                 goal_selection_flag = numpy.ones(7)
             else:
-                goal_selection_flag = violation_pattern_rankin_removed[0]
+                goal_selection_flag = violation_pattern_ranking_removed[0]
 
             searched_violation_pattern.append(goal_selection_flag)
-            search_round = 1 * sum(goal_selection_flag)
+            search_round = 10 * sum(goal_selection_flag)
             # search_round = 1
             if total_search_round < search_round:
                 search_round = total_search_round
             total_search_round = total_search_round - search_round
 
-            Configuration = CarBehindAndInFrontConfigure(goal_selection_flag, population, search_round, round_index)
+            Configuration = CarBehindAndInFrontConfigure(goal_selection_flag, population, search_round, round_index, target_dir)
             vars_file_name = Configuration.file_dir_var
             results_file_name = Configuration.file_dir_eval
 
-        print(search_round, round_index, total_search_round)
+        print("round: ", search_round, "idx: ", round_index, "left: ", total_search_round)
         pattern_name = target_dir + '/req_violation_pattern_' + str(round_index) + '.txt'
         numpy.savetxt(pattern_name, goal_selection_flag, fmt="%d")  # 保存为整数
         # print(sorted_pop)
         Goal_num = Configuration.goal_num
 
-        # file_name = text_create(Configuration )
-        # output = sys.stdout
-        # outputfile = codecs.open(file_name,  'w', 'utf-8')
-        # sys.stdout = outputfile
+
 
         """===============================实例化问题对象============================"""
         problem = CarBehindAndInFront(Goal_num, Configuration)
@@ -202,7 +206,7 @@ if __name__ == '__main__':
                 termination_criterion=StoppingByEvaluations(max_evaluations=max_evaluations)
             )
 
-        # globalvar.set_value('Algorithm', algorithm)
+
 
         """==========================调用算法模板进行种群进化========================="""
         # progress_bar = ProgressBarObserver(max=max_evaluations)
@@ -213,8 +217,8 @@ if __name__ == '__main__':
         """==================================输出结果=============================="""
         file_name = target_dir + '/searched_violation_pattern_' + str(round_index) + '.txt'
         numpy.savetxt(file_name, searched_violation_pattern, fmt="%d")  # 保存为整数
-        file_name = target_dir + '/violation_pattern_to_search_' + str(round_index) + '.txt'
-        numpy.savetxt(file_name, violation_pattern_to_search, fmt="%d")  # 保存为整数
+        file_name = target_dir + '/violation_pattern_ranking_removed_' + str(round_index) + '.txt'
+        numpy.savetxt(file_name, violation_pattern_ranking_removed, fmt="%d")  # 保存为整数
 
         # Save results to file
         fun_name = 'FUN.' + str(round_index) + '_' + algorithm.label

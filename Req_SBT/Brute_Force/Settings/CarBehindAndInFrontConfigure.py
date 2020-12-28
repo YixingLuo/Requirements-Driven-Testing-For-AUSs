@@ -9,7 +9,7 @@ import shutil
 # import psutil
 
 class CarBehindAndInFrontConfigure:
-    def __init__(self,goal_index,population,search_round):
+    def __init__(self, goal_index, population, search_round, target_dir):
         # self.auto_close_on_reach_the_objective= 1
         # self.auto_close_x_position = 10
         # self.auto_close_y_position = 0
@@ -98,22 +98,22 @@ class CarBehindAndInFrontConfigure:
         ## "NSGA_II": NSGA_II, "NSGA_III": NSGA_III ,"NSGA_III_Adapt": NSGA_II_Goal_Adapt
         self.algorithm = "Brute_Froce"
 
-        self.file_dir_sce = os.getcwd() + '/Datalog_' + str(time.strftime("%Y_%m_%d_%H")) + '/' + str(time.strftime("%Y_%m_%d")) + '_' + str(self.algorithm) + '_scenarios_' + str(
+        self.file_dir_sce = target_dir + '/' + str(time.strftime("%Y_%m_%d")) + '_' + str(self.algorithm) + '_scenarios_' + str(
             goal_index)
         if not os.path.exists(self.file_dir_sce):
             os.mkdir(self.file_dir_sce)
 
-        self.file_dir_data = os.getcwd() + '/Datalog_' + str(time.strftime("%Y_%m_%d_%H")) + '/' + str(time.strftime("%Y_%m_%d")) + '_' + str(self.algorithm) + '_datalog_' + str(
+        self.file_dir_data = target_dir + '/' + str(time.strftime("%Y_%m_%d")) + '_' + str(self.algorithm) + '_datalog_' + str(
             goal_index)
         if not os.path.exists(self.file_dir_data):
             os.mkdir(self.file_dir_data)
 
-        self.file_dir_eval = os.getcwd() + '/Datalog_' + str(time.strftime("%Y_%m_%d_%H")) + '/' + str(time.strftime("%Y_%m_%d")) + '_' + str(self.algorithm) + '_results_' + str(
+        self.file_dir_eval = target_dir + '/' + str(time.strftime("%Y_%m_%d")) + '_' + str(self.algorithm) + '_results_' + str(
             goal_index)
         if not os.path.exists(self.file_dir_eval):
             os.mkdir(self.file_dir_eval)
 
-        self.file_dir_var = os.getcwd() + '/Datalog_' + str(time.strftime("%Y_%m_%d_%H")) + '/' + str(time.strftime("%Y_%m_%d")) + '_' + str(self.algorithm) + '_variable_' + str(
+        self.file_dir_var = target_dir + '/' + str(time.strftime("%Y_%m_%d")) + '_' + str(self.algorithm) + '_variable_' + str(
             goal_index)
         if not os.path.exists(self.file_dir_var):
             os.mkdir(self.file_dir_var)

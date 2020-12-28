@@ -74,7 +74,7 @@ if __name__ == '__main__':
 
         if round_idx == 0:
             goal_index = 0
-            Configuration = CarBehindAndInFrontConfigure(goal_index,population,search_round)
+            Configuration = CarBehindAndInFrontConfigure(goal_index, population, search_round, target_dir)
             vars_file_name = Configuration.file_dir_var
             results_file_name = Configuration.file_dir_eval
             searched_violation_pattern.append(goal_index)
@@ -111,7 +111,7 @@ if __name__ == '__main__':
                     break
 
             searched_violation_pattern.append(goal_index)
-            Configuration = CarBehindAndInFrontConfigure(goal_index, population, search_round)
+            Configuration = CarBehindAndInFrontConfigure(goal_index, population, search_round, target_dir)
 
         # print(searched_violation_pattern)
         Goal_num = Configuration.goal_num

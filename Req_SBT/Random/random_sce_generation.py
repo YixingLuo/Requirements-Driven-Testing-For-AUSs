@@ -11,7 +11,8 @@ if not os.path.exists(data_folder):
 
 if __name__ == "__main__":
 
-    Configuration = CarBehindAndInFrontConfigure()
+    target_dir = data_folder
+    Configuration = CarBehindAndInFrontConfigure(target_dir)
 
     pool = Pool(processes = Configuration.ProcessNum)
     res_l=[]
