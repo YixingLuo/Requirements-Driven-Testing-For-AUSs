@@ -13,10 +13,10 @@ from jmetal.util.evaluator import MultiprocessEvaluator
 # from MyAlgorithm.random_search import RandomSearch
 # from MyAlgorithm.termination_criterion import StoppingByEvaluations
 # from MyAlgorithm.evaluator import MultiprocessEvaluator
-from GA.Settings.TurnRightConfigure import TurnRightConfigure
+from Settings.TurnRightConfigure import TurnRightConfigure
 import os
 import time
-from GA.MyProblem.TurnRightProblem import TurnRightProblem
+from TurnRightProblem import TurnRightProblem
 from jmetal.util.observer import ProgressBarObserver
 
 

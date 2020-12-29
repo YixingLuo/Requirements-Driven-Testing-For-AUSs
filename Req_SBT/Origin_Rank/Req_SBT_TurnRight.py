@@ -9,15 +9,14 @@ from jmetal.util.solution import print_function_values_to_file, print_variables_
 from jmetal.util.termination_criterion import StoppingByEvaluations
 from jmetal.util.evaluator import MultiprocessEvaluator
 # from MyAlgorithm.nsgaiii import NSGAIII
-from Origin_Rank.MyAlgorithm.nsgaii import NSGAII
-from Origin_Rank.MyAlgorithm.random_search import RandomSearch
+from MyAlgorithm.nsgaii import NSGAII
+from MyAlgorithm.random_search import RandomSearch
 # from MyAlgorithm.termination_criterion import StoppingByEvaluations
 # from MyAlgorithm.evaluator import MultiprocessEvaluator
-from Origin_Rank.Settings.TurnRightConfigure import TurnRightConfigure
+from Settings.TurnRightConfigure import TurnRightConfigure
 import os
 import time
-# from trash.initial_files.bestpop import BestPop
-from Origin_Rank.MyProblem.TurnRightProblem import TurnRightProblem
+from TurnRightProblem import TurnRightProblem
 from jmetal.util.observer import ProgressBarObserver
 import random
 import numpy

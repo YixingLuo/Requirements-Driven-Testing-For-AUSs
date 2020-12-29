@@ -17,7 +17,7 @@ from GA.Settings.CarBehindAndInFrontConfigure import CarBehindAndInFrontConfigur
 import os
 import time
 # from trash.initial_files.bestpop import BestPop
-from GA.MyProblem.CarBehindAndInFrontProblem import CarBehindAndInFrontProblem
+from GA.CarBehindAndInFrontProblem import CarBehindAndInFrontProblem
 from jmetal.util.observer import ProgressBarObserver
 
 
