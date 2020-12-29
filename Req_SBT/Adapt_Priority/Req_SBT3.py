@@ -17,7 +17,7 @@ from Settings.CarBehindAndInFrontConfigure import CarBehindAndInFrontConfigure
 import os
 import time
 # from trash.initial_files.bestpop import BestPop
-from CarBehindAndInFront import CarBehindAndInFront
+from CarBehindAndInFrontProblem import CarBehindAndInFrontProblem
 from jmetal.util.observer import ProgressBarObserver
 import csv
 import numpy
@@ -156,7 +156,7 @@ if __name__ == '__main__':
         Goal_num = Configuration.goal_num
 
         """===============================实例化问题对象============================"""
-        problem = CarBehindAndInFront(Goal_num, Configuration)
+        problem = CarBehindAndInFrontProblem(Goal_num, Configuration)
 
         """=================================算法参数设置============================"""
         max_evaluations = Configuration.maxIterations

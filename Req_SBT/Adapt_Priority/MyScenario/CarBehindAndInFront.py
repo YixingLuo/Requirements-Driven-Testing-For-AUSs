@@ -7,7 +7,7 @@ import uuid
 import random
 
 
-def get_time_stamp():
+def get_time_stamp()
     ct = time.time()
     local_time = time.localtime(ct)
     data_head = time.strftime("%Y%m%d%H%M%S", local_time)
@@ -182,7 +182,6 @@ def create_run_scenario_overtake (Vars, Configure):
     # print("Variables:", Vars)
 
     # print("Results:", len(result), result)
-
 
     # print("Weights:", bestlog.weights)
     # print("Round: %d" %(bestpop.round))
