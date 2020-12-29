@@ -6,7 +6,7 @@ import sys
 from jmetal.core.problem import FloatProblem
 from jmetal.core.solution import FloatSolution
 # from MyAlgorithm.solution import FloatSolution
-from Brute_Force.MyScenario.CarBehindAndInFront import create_run_scenario_overtake
+from MyScenario.CarBehindAndInFront import create_run_scenario_overtake
 
 
 # from scoop import futures

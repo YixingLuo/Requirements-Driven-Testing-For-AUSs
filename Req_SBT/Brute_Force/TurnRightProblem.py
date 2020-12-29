@@ -6,7 +6,7 @@ import sys
 from jmetal.core.problem import FloatProblem
 from jmetal.core.solution import FloatSolution
 # from MyAlgorithm.solution import FloatSolution
-from Brute_Force.MyScenario.TurnRight import create_run_scenario_turnright
+from MyScenario.TurnRight import create_run_scenario_turnright
 
 # from scoop import futures
 
