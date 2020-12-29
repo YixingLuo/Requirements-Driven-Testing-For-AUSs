@@ -17,7 +17,7 @@ from Settings.CarBehindAndInFrontConfigure import CarBehindAndInFrontConfigure
 import os
 import time
 # from trash.initial_files.bestpop import BestPop
-from CarBehindAndInFrontProblem import CarBehindAndInFrontProblem
+from Brute_Force.MyProblem.CarBehindAndInFront import CarBehindAndInFront
 from jmetal.util.observer import ProgressBarObserver
 import random
 import numpy
@@ -40,26 +40,25 @@ def text_create(Configuration):
     file = open(full_path,  'w')
     return full_path
 
-data_folder = os.getcwd() + '/Overtake_Datalog_' + str(time.strftime("%Y_%m_%d_%H"))
+data_folder = os.getcwd() + '/Datalog_' + str(time.strftime("%Y_%m_%d_%H"))
 if not os.path.exists(data_folder):
     os.mkdir(data_folder)
 
 if __name__ == '__main__':
 
     goal_selection_index = random.sample(range(0,128),128)
-    # goal_selection_index = [idx for idx in range(128)]
     total_round = 8
     population = 50
     search_round = 50
 
     target_dir = data_folder
-    file_name = os.path.join(target_dir, 'goal_selection_index.txt')
+    file_name = os.path.join(target_dir, '../goal_selection_index.txt')
     numpy.savetxt(file_name, goal_selection_index, fmt="%d")  # 保存为整数
 
     target_value_threshold = [1, 0, 1, 1, 1, 0.95, 0.99]
 
     priority_list = []
-    with open("priority_list.csv") as csvfile:
+    with open("../priority_list.csv") as csvfile:
         csv_file = csv.reader(csvfile)
         for row in csv_file:
             priority_list.append(row)
@@ -75,7 +74,7 @@ if __name__ == '__main__':
 
         if round_idx == 0:
             goal_index = 0
-            Configuration = CarBehindAndInFrontConfigure(goal_index,population,search_round,target_dir)
+            Configuration = CarBehindAndInFrontConfigure(goal_index, population, search_round, target_dir)
             vars_file_name = Configuration.file_dir_var
             results_file_name = Configuration.file_dir_eval
             searched_violation_pattern.append(goal_index)
@@ -119,7 +118,7 @@ if __name__ == '__main__':
 
 
         """===============================实例化问题对象============================"""
-        problem = CarBehindAndInFrontProblem(Goal_num, Configuration)
+        problem = CarBehindAndInFront(Goal_num, Configuration)
 
         """=================================算法参数设置============================"""
         max_evaluations = population * search_round
@@ -159,6 +158,7 @@ if __name__ == '__main__':
                 termination_criterion=StoppingByEvaluations(max_evaluations=max_evaluations)
             )
 
+        # globalvar.set_value('Algorithm', algorithm)
 
         """==========================调用算法模板进行种群进化========================="""
         progress_bar = ProgressBarObserver(max=max_evaluations)
@@ -182,5 +182,6 @@ if __name__ == '__main__':
         print(f'Algorithm: ${algorithm.get_name()}')
         print(f'Problem: ${problem.get_name()}')
         print(f'Computing time: ${algorithm.total_computing_time}')
+
 
 

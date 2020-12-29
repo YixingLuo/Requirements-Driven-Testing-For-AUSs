@@ -7,22 +7,21 @@
 from jmetal.operator import SBXCrossover, PolynomialMutation
 from jmetal.util.solution import print_function_values_to_file, print_variables_to_file
 from jmetal.util.termination_criterion import StoppingByEvaluations
-from jmetal.util.observer import ProgressBarObserver
 from jmetal.util.evaluator import MultiprocessEvaluator
-from Adapt_Priority.MyAlgorithm.nsgaiii import NSGAIII, UniformReferenceDirectionFactory
-from Adapt_Priority.MyAlgorithm.nsgaii import NSGAII
-from Adapt_Priority.MyAlgorithm.random_search import RandomSearch
+from MyAlgorithm.nsgaiii import NSGAIII, UniformReferenceDirectionFactory
+from MyAlgorithm.nsgaii import NSGAII
+from MyAlgorithm.random_search import RandomSearch
 # from Adapt_Priority.MyAlgorithm.termination_criterion import StoppingByEvaluations
 # from MyAlgorithm.evaluator import MultiprocessEvaluator
-from Adapt_Priority.Settings.TurnRightConfigure import TurnRightConfigure
+from Settings.TurnRightConfigure import TurnRightConfigure
 import os
 import time
-from Adapt_Priority.MyProblem.TurnRightProblem import TurnRightProblem
+from TurnRightProblem import TurnRightProblem
 import csv
 import numpy
-from Adapt_Priority.RankingRules.DistanceRanking import Distance_Ranking
-from Adapt_Priority.RankingRules.EnsembleRanking import Ensemble_Ranking
-from Adapt_Priority.RankingRules.RelationRanking import Relation_Ranking
+from RankingRules.DistanceRanking import Distance_Ranking
+from RankingRules.EnsembleRanking import Ensemble_Ranking
+from RankingRules.RelationRanking import Relation_Ranking
 
 
 def text_create(Configuration):

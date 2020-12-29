@@ -17,11 +17,10 @@ from Settings.CarBehindAndInFrontConfigure import CarBehindAndInFrontConfigure
 import os
 import time
 # from trash.initial_files.bestpop import BestPop
-from CarBehindAndInFrontProblem import CarBehindAndInFrontProblem
+from Brute_Force.MyProblem.CarBehindAndInFront import CarBehindAndInFront
 from jmetal.util.observer import ProgressBarObserver
 import random
 import numpy
-import csv
 
 
 def random_int_list(start, stop, length):
@@ -40,86 +39,41 @@ def text_create(Configuration):
     file = open(full_path,  'w')
     return full_path
 
-data_folder = os.getcwd() + '/Overtake_Datalog_' + str(time.strftime("%Y_%m_%d_%H"))
-if not os.path.exists(data_folder):
-    os.mkdir(data_folder)
+
+
+# global _global_dict
+# _global_dict = {}
+# _global_dict['Configure'] = Configuration
+# _global_dict['BestPop'] =  BestPopulation
+
+# gl._init()
+# gl.set_value('Configure', Configuration)
+# gl.set_value('Problem', problem)
+# gl.set_value('BestPop', BestPopulation)
+
+# config = Value('Configure', config)
+# bestpop = Value('BestPop', bestpop)
+
 
 if __name__ == '__main__':
 
-    goal_selection_index = random.sample(range(0,128),128)
-    # goal_selection_index = [idx for idx in range(128)]
-    total_round = 8
-    population = 50
+    goal_selection_index = random.sample(range(0,128),20)
+    total_round = len(goal_selection_index)
+    population = 20
     search_round = 50
+    numpy.savetxt('goal_selection_index.txt', goal_selection_index, fmt="%d")  # 保存为整数
 
-    target_dir = data_folder
-    file_name = os.path.join(target_dir, 'goal_selection_index.txt')
-    numpy.savetxt(file_name, goal_selection_index, fmt="%d")  # 保存为整数
-
-    target_value_threshold = [1, 0, 1, 1, 1, 0.95, 0.99]
-
-    priority_list = []
-    with open("priority_list.csv") as csvfile:
-        csv_file = csv.reader(csvfile)
-        for row in csv_file:
-            priority_list.append(row)
-        priority_list = [[float(x) for x in row] for row in priority_list]
-    priority_list = numpy.array(priority_list)
-
-    violation_pattern_to_search = []
-    pattern_count = numpy.zeros(priority_list.shape[0])
-    evaluation = []
-    searched_violation_pattern = []
-
+    # round_idx = 0
     for round_idx in range (total_round):
 
-        if round_idx == 0:
-            goal_index = 0
-            Configuration = CarBehindAndInFrontConfigure(goal_index,population,search_round,target_dir)
-            vars_file_name = Configuration.file_dir_var
-            results_file_name = Configuration.file_dir_eval
-            searched_violation_pattern.append(goal_index)
-        else:
-            fileList = os.listdir(results_file_name)
-            fileList.sort()
-            for i in range(population * search_round):
-                textname = results_file_name + '/' + fileList[i]
-                # print(textname)
-                result = numpy.loadtxt(textname)
-                evaluation.append(result)
-                goal_flag = numpy.zeros((7), dtype=int)
-                for j in range(7):
-                    if result[j] < target_value_threshold[j]:
-                        goal_flag[j] = 1
-                    else:
-                        goal_flag[j] = 0
-                for j in range (priority_list.shape[0]):
-                    if (numpy.array(goal_flag) == priority_list[j]).all():
-                        pattern_count[j] = pattern_count[j] + 1
-                        break
 
-            violation_pattern_to_search = []
-            for j in range (priority_list.shape[0]):
-                if pattern_count[j] == 0:
-                    violation_pattern_to_search.append(j)
-
-            goal_index = 0
-
-            for j in range (len(goal_selection_index)):
-                if violation_pattern_to_search.count(goal_selection_index[j]) == 1 and searched_violation_pattern.count(goal_selection_index[j]) == 0:
-                    # print(searched_violation_pattern, searched_violation_pattern.count(goal_selection_index[j]),goal_selection_index[j])
-                    goal_index = goal_selection_index[j]
-                    break
-
-            searched_violation_pattern.append(goal_index)
-            Configuration = CarBehindAndInFrontConfigure(goal_index, population, search_round, target_dir)
-
-        # print(searched_violation_pattern)
+        Configuration = CarBehindAndInFrontConfigure(goal_selection_index[round_idx],population,search_round)
         Goal_num = Configuration.goal_num
 
 
+
         """===============================实例化问题对象============================"""
-        problem = CarBehindAndInFrontProblem(Goal_num, Configuration)
+        problem = CarBehindAndInFront(Goal_num, Configuration)
 
         """=================================算法参数设置============================"""
         max_evaluations = population * search_round
@@ -160,6 +114,7 @@ if __name__ == '__main__':
             )
 
 
+
         """==========================调用算法模板进行种群进化========================="""
         progress_bar = ProgressBarObserver(max=max_evaluations)
         algorithm.observable.register(progress_bar)
@@ -168,16 +123,8 @@ if __name__ == '__main__':
 
         """==================================输出结果=============================="""
         # Save results to file
-        file_name = target_dir + '/searched_violation_pattern_' + str(round_idx) + '.txt'
-        numpy.savetxt(file_name, searched_violation_pattern, fmt="%d")  # 保存为整数
-        file_name = target_dir + '/violation_pattern_to_search_' + str(round_idx) + '.txt'
-        numpy.savetxt(file_name, violation_pattern_to_search, fmt="%d")  # 保存为整数
-
-        # Save results to file
-        fun_name = 'FUN.' + str(round_idx) + '_' + algorithm.label
-        print_function_values_to_file(front, os.path.join(target_dir,fun_name))
-        var_name = 'VAR.'+ str(round_idx) + '_' + algorithm.label
-        print_variables_to_file(front, os.path.join(target_dir, var_name))
+        print_function_values_to_file(front, 'FUN.' + str(goal_selection_index[round_idx]) + '_' + algorithm.label)
+        print_variables_to_file(front, 'VAR.' + str(goal_selection_index[round_idx]) + '_' + algorithm.label)
 
         print(f'Algorithm: ${algorithm.get_name()}')
         print(f'Problem: ${problem.get_name()}')
