@@ -174,29 +174,11 @@ def create_run_scenario_overtake (Vars, Configure):
     result = [min_stable, min_dis, min_speed, traffic_light, cross_lane, comfort1, comfort2]
     # result = [-min_dis, -min_stable, min_speed, traffic_light, -cross_lane, -comfort1, comfort2]
 
-    # global _global_dict
-    # _global_dict
-    # BestPopulation.round = 2
-    # print(BestPopulation.round)
-    # bestlog = globalvar.get_value('BestPop')
-    # print("Scenario:", BestPopulation.round)
-    # print("Variables:", Vars)
 
-    # print("Results:", len(result), result)
-
-    # print("Weights:", bestlog.weights)
-    # print("Round: %d" %(bestpop.round))
-
-    result_name = file_dir_eval + "/result_" + now_time  + "_"  + uuid_str + ".txt"
+    result_name = file_dir_eval + "/result_" + now_time + "_" + uuid_str + ".txt"
     # print(result_name)
     np.savetxt(result_name, result, fmt="%f", delimiter=" ")
 
-    # if Configure.algorithm == 'NSGA_III_Adapt':
-    #     weights = BestPop.weights
-    #     for i in range (config.goal_num):
-    #         result[i] = weights[i] *  result[i]
-
-        # print("Results after weight:", result)
 
     return result
 

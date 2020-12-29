@@ -66,18 +66,11 @@ if __name__ == '__main__':
     # round_idx = 0
     for round_idx in range (total_round):
 
-        # print(round_idx, goal_selection_index[round_idx])
-        # global Configuration
+
         Configuration = CarBehindAndInFrontConfigure(goal_selection_index[round_idx],population,search_round)
-        # global BestPopulation
-        # BestPopulation = BestPop(Configuration)
-        # config.createfolders()
         Goal_num = Configuration.goal_num
 
-        # file_name = text_create(Configuration )
-        # output = sys.stdout
-        # outputfile = codecs.open(file_name,  'w', 'utf-8')
-        # sys.stdout = outputfile
+
 
         """===============================实例化问题对象============================"""
         problem = CarBehindAndInFront(Goal_num, Configuration)
@@ -120,7 +113,7 @@ if __name__ == '__main__':
                 termination_criterion=StoppingByEvaluations(max_evaluations=max_evaluations)
             )
 
-        # globalvar.set_value('Algorithm', algorithm)
+
 
         """==========================调用算法模板进行种群进化========================="""
         progress_bar = ProgressBarObserver(max=max_evaluations)
@@ -137,5 +130,4 @@ if __name__ == '__main__':
         print(f'Problem: ${problem.get_name()}')
         print(f'Computing time: ${algorithm.total_computing_time}')
 
-    # outputfile.close()
 
