@@ -1,6 +1,8 @@
+# -*- coding: utf-8 -*-
 import json
 import numpy as np
 import os
+
 import time
 from MyScenario.read_log import evaluate_speed, evaluate_comfort, evaluate_stability, evaluate_traffic_light, evaluate_cross_lane,evaluate_collision
 import uuid
@@ -119,11 +121,11 @@ def create_run_scenario_turnright (Vars, Configure):
     dynamic_vehicle_state = [[] for i in range(num_dynamic_obs)]
     static_vehicle_state = [[] for i in range(num_static_obs)]
     with open(log_name, 'r') as f:
-        my_data = f.readlines()  # txt中所有字符串读入data，得到的是一个list
-        # 对list中的数据做分隔和类型转换
+        my_data = f.readlines()  # txt涓墍鏈夊瓧绗︿覆璇诲叆data锛屽緱鍒扮殑鏄竴涓猯ist
+        # 瀵筶ist涓殑鏁版嵁鍋氬垎闅斿拰绫诲瀷杞崲
         # for line in my_data:
         #     line_data = line.split()
-        #     numbers_float = map(float, line_data)  # 转化为浮点数
+        #     numbers_float = map(float, line_data)  # 杞寲涓烘诞鐐规暟
 
         for line in my_data:
             data = line.split()
@@ -262,10 +264,10 @@ def create_run_scenario_turnright_random (Configure):
 
 
     log_name = file_dir_data + "/datalog_" + now_time  + "_" + uuid_str + ".txt"
-    # cmd = "C:/Users/lenovo/Documents/GitHub/mazda-path-planner-sbt_changes/mazda-path-planner-sbt_changes/ERATO_planning/x64/Release/dynamic_cost.exe -c %d -v EGO_TESTER -i %s > %s" % (duration, scenario_name, log_name)
+    cmd = "C:/Users/lenovo/Documents/GitHub/mazda-path-planner-sbt_changes/mazda-path-planner-sbt_changes/ERATO_planning/x64/Release/dynamic_cost.exe -c %d -v EGO_TESTER -i %s > %s" % (duration, scenario_name, log_name)
 
     ## weiming
-    cmd = "wine /gpfs/share/home/1801111354/Release/dynamic_cost.exe -c %d -v EGO_TESTER -i %s > %s" % (duration, scenario_name, log_name)
+    # cmd = "wine /gpfs/share/home/1801111354/Release/dynamic_cost.exe -c %d -v EGO_TESTER -i %s > %s" % (duration, scenario_name, log_name)
 
     # print(cmd)
     start = time.clock()

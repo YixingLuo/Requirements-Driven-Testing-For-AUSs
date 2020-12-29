@@ -54,7 +54,7 @@ class TurnRightConfigure:
         self.PoolType = "Thread"
         # self.PoolType = "Process"
         # self.ProcessNum = psutil.cpu_count()
-        self.ProcessNum = 32
+        self.ProcessNum = 50
         self.maxIterations = self.population * self.search_round
 
         ## ego

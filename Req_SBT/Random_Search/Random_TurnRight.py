@@ -1,4 +1,4 @@
-#coding: utf-8
+# -*- coding: utf-8 -*-
 from multiprocessing import Pool
 from Settings.TurnRightConfigure import TurnRightConfigure
 from MyScenario.TurnRight import create_run_scenario_turnright_random
