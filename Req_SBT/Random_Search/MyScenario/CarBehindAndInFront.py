@@ -19,9 +19,8 @@ def get_time_stamp():
 def create_run_scenario_overtake (Vars, Configure):
 
     config = Configure
-    population = config.population
 
-    result = np.zeros((population, config.goal_num), float)
+    result = np.zeros((config.goal_num), float)
 
     file_dir_sce = config.file_dir_sce
     file_dir_data = config.file_dir_data
@@ -120,11 +119,11 @@ def create_run_scenario_overtake (Vars, Configure):
     dynamic_vehicle_state = [[] for i in range(num_dynamic_obs)]
     static_vehicle_state = [[] for i in range(num_static_obs)]
     with open(log_name, 'r') as f:
-        my_data = f.readlines()  # txtÖÐËùÓÐ×Ö·û´®¶ÁÈëdata£¬µÃµ½µÄÊÇÒ»¸ölist
-        # ¶ÔlistÖÐµÄÊý¾Ý×ö·Ö¸ôºÍÀàÐÍ×ª»»
+        my_data = f.readlines()  # txtï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ö·ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½dataï¿½ï¿½ï¿½Ãµï¿½ï¿½ï¿½ï¿½ï¿½Ò»ï¿½ï¿½list
+        # ï¿½ï¿½listï¿½Ðµï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ö¸ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½×ªï¿½ï¿½
         # for line in my_data:
         #     line_data = line.split()
-        #     numbers_float = map(float, line_data)  # ×ª»¯Îª¸¡µãÊý
+        #     numbers_float = map(float, line_data)  # ×ªï¿½ï¿½Îªï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 
         for line in my_data:
             data = line.split()

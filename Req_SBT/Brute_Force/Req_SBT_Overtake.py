@@ -7,17 +7,17 @@ from jmetal.algorithm.multiobjective.nsgaiii import UniformReferenceDirectionFac
 from jmetal.operator import SBXCrossover, PolynomialMutation
 from jmetal.util.solution import print_function_values_to_file, print_variables_to_file
 from jmetal.util.termination_criterion import StoppingByEvaluations
-from jmetal.util.evaluator import SequentialEvaluator,MultiprocessEvaluator
+from jmetal.util.evaluator import MultiprocessEvaluator
 # from MyAlgorithm.nsgaiii import NSGAIII
-from MyAlgorithm.nsgaii import NSGAII
-from MyAlgorithm.random_search import RandomSearch
+from Brute_Force.MyAlgorithm.nsgaii import NSGAII
+from Brute_Force.MyAlgorithm.random_search import RandomSearch
 # from MyAlgorithm.termination_criterion import StoppingByEvaluations
 # from MyAlgorithm.evaluator import MultiprocessEvaluator
-from Settings.CarBehindAndInFrontConfigure import CarBehindAndInFrontConfigure
+from Brute_Force.Settings.CarBehindAndInFrontConfigure import CarBehindAndInFrontConfigure
 import os
 import time
 # from trash.initial_files.bestpop import BestPop
-from CarBehindAndInFrontProblem import CarBehindAndInFrontProblem
+from Brute_Force.MyProblem.CarBehindAndInFrontProblem import CarBehindAndInFrontProblem
 from jmetal.util.observer import ProgressBarObserver
 import random
 import numpy

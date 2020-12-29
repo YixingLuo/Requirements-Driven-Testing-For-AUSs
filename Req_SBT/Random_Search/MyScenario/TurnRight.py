@@ -2,7 +2,6 @@
 import json
 import numpy as np
 import os
-
 import time
 from MyScenario.read_log import evaluate_speed, evaluate_comfort, evaluate_stability, evaluate_traffic_light, evaluate_cross_lane,evaluate_collision
 import uuid

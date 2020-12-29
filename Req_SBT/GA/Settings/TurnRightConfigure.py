@@ -47,7 +47,7 @@ class TurnRightConfigure:
         self.goal_num = 7
         self.search_round = 50*8
         self.searchTimeout = 360000
-        self.num_variables = 19
+        self.num_variables = 17
         self.PoolType = "Thread"
         # self.PoolType = "Process"
         # self.ProcessNum = psutil.cpu_count()

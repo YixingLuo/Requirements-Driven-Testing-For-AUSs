@@ -1,8 +1,8 @@
 import sys
-sys.path.append("../Adapt_Priority")
-sys.path.append("../Brute_Force")
-sys.path.append("../GA")
-sys.path.append("../Random")
+# sys.path.append("../Adapt_Priority")
+# sys.path.append("../Brute_Force")
+# sys.path.append("../GA")
+# sys.path.append("../Random")
 from jmetal.core.problem import FloatProblem
 from jmetal.core.solution import FloatSolution
 # from MyAlgorithm.solution import FloatSolution

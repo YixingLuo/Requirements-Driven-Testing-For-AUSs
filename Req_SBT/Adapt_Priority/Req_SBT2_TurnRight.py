@@ -3,27 +3,26 @@
 # from jmetal.algorithm.multiobjective.nsgaii import NSGAII
 # from jmetal.algorithm.multiobjective.random_search import RandomSearch
 # from jmetal.algorithm.multiobjective.nsgaiii import NSGAIII
-from jmetal.algorithm.multiobjective.nsgaiii import UniformReferenceDirectionFactory
+# from jmetal.algorithm.multiobjective.nsgaiii import UniformReferenceDirectionFactory
 from jmetal.operator import SBXCrossover, PolynomialMutation
 from jmetal.util.solution import print_function_values_to_file, print_variables_to_file
-# from jmetal.util.termination_criterion import StoppingByEvaluations
-from jmetal.util.evaluator import SequentialEvaluator, MultiprocessEvaluator
-from MyAlgorithm.nsgaiii import NSGAIII
-from MyAlgorithm.nsgaii import NSGAII
-from MyAlgorithm.random_search import RandomSearch
-from MyAlgorithm.termination_criterion import StoppingByEvaluations
+from jmetal.util.termination_criterion import StoppingByEvaluations
+from jmetal.util.observer import ProgressBarObserver
+from jmetal.util.evaluator import MultiprocessEvaluator
+from Adapt_Priority.MyAlgorithm.nsgaiii import NSGAIII, UniformReferenceDirectionFactory
+from Adapt_Priority.MyAlgorithm.nsgaii import NSGAII
+from Adapt_Priority.MyAlgorithm.random_search import RandomSearch
+# from Adapt_Priority.MyAlgorithm.termination_criterion import StoppingByEvaluations
 # from MyAlgorithm.evaluator import MultiprocessEvaluator
-from Settings.TurnRightConfigure import TurnRightConfigure
+from Adapt_Priority.Settings.TurnRightConfigure import TurnRightConfigure
 import os
 import time
-# from trash.initial_files.bestpop import BestPop
-from TurnRightProblem import TurnRightProblem
-from jmetal.util.observer import ProgressBarObserver
+from Adapt_Priority.MyProblem.TurnRightProblem import TurnRightProblem
 import csv
 import numpy
-from RankingRules.DistanceRanking import Distance_Ranking
-from RankingRules.EnsembleRanking import Ensemble_Ranking, Ensemble_Ranking2
-from RankingRules.RelationRanking import Relation_Ranking
+from Adapt_Priority.RankingRules.DistanceRanking import Distance_Ranking
+from Adapt_Priority.RankingRules.EnsembleRanking import Ensemble_Ranking
+from Adapt_Priority.RankingRules.RelationRanking import Relation_Ranking
 
 
 def text_create(Configuration):
@@ -35,7 +34,7 @@ def text_create(Configuration):
 
 
 
-data_folder = os.getcwd() + '/Overtake_Datalog_' + str(time.strftime("%Y_%m_%d_%H"))
+data_folder = os.getcwd() + '/TurnRight_Datalog_' + str(time.strftime("%Y_%m_%d_%H"))
 if not os.path.exists(data_folder):
     os.mkdir(data_folder)
 

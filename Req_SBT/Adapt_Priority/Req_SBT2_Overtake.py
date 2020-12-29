@@ -7,23 +7,23 @@ from jmetal.algorithm.multiobjective.nsgaiii import UniformReferenceDirectionFac
 from jmetal.operator import SBXCrossover, PolynomialMutation
 from jmetal.util.solution import print_function_values_to_file, print_variables_to_file
 # from jmetal.util.termination_criterion import StoppingByEvaluations
-from jmetal.util.evaluator import SequentialEvaluator, MultiprocessEvaluator
-from MyAlgorithm.nsgaiii import NSGAIII
-from MyAlgorithm.nsgaii import NSGAII
-from MyAlgorithm.random_search import RandomSearch
-from MyAlgorithm.termination_criterion import StoppingByEvaluations
+from jmetal.util.evaluator import MultiprocessEvaluator
+from jmetal.util.observer import ProgressBarObserver
+from Adapt_Priority.MyAlgorithm.nsgaiii import NSGAIII
+from Adapt_Priority.MyAlgorithm.nsgaii import NSGAII
+from Adapt_Priority.MyAlgorithm.random_search import RandomSearch
+from Adapt_Priority.MyAlgorithm.termination_criterion import StoppingByEvaluations
 # from MyAlgorithm.evaluator import MultiprocessEvaluator
-from Settings.CarBehindAndInFrontConfigure import CarBehindAndInFrontConfigure
+from Adapt_Priority.Settings.CarBehindAndInFrontConfigure import CarBehindAndInFrontConfigure
 import os
 import time
 # from trash.initial_files.bestpop import BestPop
-from CarBehindAndInFrontProblem import CarBehindAndInFrontProblem
-from jmetal.util.observer import ProgressBarObserver
+from Adapt_Priority.MyProblem.CarBehindAndInFrontProblem import CarBehindAndInFrontProblem
 import csv
 import numpy
-from RankingRules.DistanceRanking import Distance_Ranking
-from RankingRules.EnsembleRanking import Ensemble_Ranking, Ensemble_Ranking2
-from RankingRules.RelationRanking import Relation_Ranking
+from Adapt_Priority.RankingRules.DistanceRanking import Distance_Ranking
+from Adapt_Priority.RankingRules.EnsembleRanking import Ensemble_Ranking
+from Adapt_Priority.RankingRules.RelationRanking import Relation_Ranking
 
 
 def text_create(Configuration):

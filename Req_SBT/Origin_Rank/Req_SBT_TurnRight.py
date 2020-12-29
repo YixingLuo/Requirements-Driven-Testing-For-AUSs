@@ -7,17 +7,17 @@ from jmetal.algorithm.multiobjective.nsgaiii import UniformReferenceDirectionFac
 from jmetal.operator import SBXCrossover, PolynomialMutation
 from jmetal.util.solution import print_function_values_to_file, print_variables_to_file
 from jmetal.util.termination_criterion import StoppingByEvaluations
-from jmetal.util.evaluator import SequentialEvaluator,MultiprocessEvaluator
+from jmetal.util.evaluator import MultiprocessEvaluator
 # from MyAlgorithm.nsgaiii import NSGAIII
-from MyAlgorithm.nsgaii import NSGAII
-from MyAlgorithm.random_search import RandomSearch
+from Origin_Rank.MyAlgorithm.nsgaii import NSGAII
+from Origin_Rank.MyAlgorithm.random_search import RandomSearch
 # from MyAlgorithm.termination_criterion import StoppingByEvaluations
 # from MyAlgorithm.evaluator import MultiprocessEvaluator
-from Settings.TurnRightConfigure import TurnRightConfigure
+from Origin_Rank.Settings.TurnRightConfigure import TurnRightConfigure
 import os
 import time
 # from trash.initial_files.bestpop import BestPop
-from TurnRightProblem import TurnRightProblem
+from Origin_Rank.MyProblem.TurnRightProblem import TurnRightProblem
 from jmetal.util.observer import ProgressBarObserver
 import random
 import numpy
@@ -40,7 +40,7 @@ def text_create(Configuration):
     file = open(full_path,  'w')
     return full_path
 
-data_folder = os.getcwd() + '/Overtake_Datalog_' + str(time.strftime("%Y_%m_%d_%H"))
+data_folder = os.getcwd() + '/TurnRight_Datalog_' + str(time.strftime("%Y_%m_%d_%H"))
 if not os.path.exists(data_folder):
     os.mkdir(data_folder)
 

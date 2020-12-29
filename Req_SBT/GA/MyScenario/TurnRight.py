@@ -1,8 +1,9 @@
+# -*- coding: utf-8 -*-
 import json
 import numpy as np
 import os
 import time
-from MyScenario.read_log import evaluate_speed, evaluate_comfort, evaluate_stability, evaluate_traffic_light, evaluate_cross_lane,evaluate_collision
+from GA.MyScenario.read_log import evaluate_speed, evaluate_comfort, evaluate_stability, evaluate_traffic_light, evaluate_cross_lane,evaluate_collision
 import uuid
 import random
 
@@ -117,11 +118,11 @@ def create_run_scenario_turnright (Vars, Configure):
     dynamic_vehicle_state = [[] for i in range(num_dynamic_obs)]
     static_vehicle_state = [[] for i in range(num_static_obs)]
     with open(log_name, 'r') as f:
-        my_data = f.readlines()  # txtÖÐËùÓÐ×Ö·û´®¶ÁÈëdata£¬µÃµ½µÄÊÇÒ»¸ölist
-        # ¶ÔlistÖÐµÄÊý¾Ý×ö·Ö¸ôºÍÀàÐÍ×ª»»
+        my_data = f.readlines()  # txtï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ö·ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½dataï¿½ï¿½ï¿½Ãµï¿½ï¿½ï¿½ï¿½ï¿½Ò»ï¿½ï¿½list
+        # ï¿½ï¿½listï¿½Ðµï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ö¸ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½×ªï¿½ï¿½
         # for line in my_data:
         #     line_data = line.split()
-        #     numbers_float = map(float, line_data)  # ×ª»¯Îª¸¡µãÊý
+        #     numbers_float = map(float, line_data)  # ×ªï¿½ï¿½Îªï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 
         for line in my_data:
             data = line.split()

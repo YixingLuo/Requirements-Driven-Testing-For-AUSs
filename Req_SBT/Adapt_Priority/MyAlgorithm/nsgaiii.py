@@ -46,6 +46,7 @@ from jmetal.util.termination_criterion import TerminationCriterion
 from jmetal.core.solution import FloatSolution
 
 
+
 """
 .. module:: NSGA-III
    :platform: Unix, Windows
@@ -253,14 +254,6 @@ def compute_niche_count(n_niches: int, niche_of_individuals):
     niche_count[index] = count
 
     return niche_count
-
-# class RandomGenerator(Generator):
-#
-#     def new(self, problem: Problem):
-#         return problem.create_solution()
-#
-#     def existing (self, problem: Problem):
-#         return problem.create_solution()
 
 
 class NSGAIII(NSGAII):
@@ -474,8 +467,11 @@ class NSGAIII(NSGAII):
 
     def create_initial_solutions(self) -> List[S]:
         if self.problem.config.iteration_round == 0:
+            # print(self.problem.config.iteration_round, self.population_size)
             return [self.population_generator.new(self.problem)
-                for _ in range(self.population_size)]
+                    for _ in range(self.population_size)]
+
+            # return [self.problem.create_solution() for _ in range(self.population_size)]  ## random generator
         else:
             population = [self.population_generator.new(self.problem) for _ in range(int(0.5*self.population_size))]
             # existing_population = []

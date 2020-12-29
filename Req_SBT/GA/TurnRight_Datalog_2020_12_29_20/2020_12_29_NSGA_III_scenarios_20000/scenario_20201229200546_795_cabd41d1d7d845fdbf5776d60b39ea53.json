@@ -1,0 +1,88 @@
+{
+    "config": {
+        "map_no": "3",
+        "horizon": "80",
+        "speed_horizon_factor": "3.0",
+        "lon_interval": "10.0",
+        "lat_interval": "1.75",
+        "road_width": "3.5",
+        "infinity_cost": "100000000",
+        "sampling_step": "0.1",
+        "k_thr": "0.172",
+        "ego_width": "1.84",
+        "ego_length": "4.86",
+        "s0": 158.7804102197536,
+        "l0": "1.75",
+        "v0": 11.855564846239155,
+        "theta0": "1.5707963267",
+        "speed_limit": "16.6",
+        "k_limit": "5.0",
+        "a_max_soft": "0.98",
+        "a_min_soft": "-2.94",
+        "pena_max_latg": "5.0",
+        "pena_latg": "3000",
+        "pena_spd": "250",
+        "pena_a_max": "20",
+        "pena_a_min": "20",
+        "pena_curv_rate": "20",
+        "latg_max_soft": "2.94",
+        "curve_rate_limit": "1",
+        "time_step": "0.1",
+        "lane_cost_factor": "1.5",
+        "map_type": "1",
+        "dynamic_obstacle_lethal_cost": "100000000",
+        "dynamic_obstacle_high_cost": "10000",
+        "minimum_horizon": "30",
+        "total_time_weight": "1.0",
+        "total_dist_weight": "1.0",
+        "max_eval_trajs": "200000",
+        "pena_low_speed": "0",
+        "same_acc_bonus": "-10",
+        "auto_close_on_crash": "0",
+        "auto_close_on_reach_the_objective": "1",
+        "auto_close_x_position": "-10",
+        "auto_close_y_position": "212"
+    },
+    "static_obs": [],
+    "traffic_signal": [
+        {
+            "start_s": 190,
+            "end_s": 220,
+            "green_time": 18.728678558787482,
+            "yellow_time": 2.0907817077263626,
+            "red_time": 4.169941728159651
+        }
+    ],
+    "dynamic_obs": [
+        {
+            "pos_x": "1.75",
+            "pos_y": 214.6240585321414,
+            "dir": "-1.57",
+            "width": "1.8",
+            "length": "4.8",
+            "velo": 6.825512609849233,
+            "acc": 0.4830428754827576,
+            "start_time": 0.35152829061741103
+        },
+        {
+            "pos_x": 33.71612187236233,
+            "pos_y": "209.5",
+            "dir": "3.14",
+            "width": "1.8",
+            "length": "4.8",
+            "velo": 9.201993370570284,
+            "acc": 0.6489300525252927,
+            "start_time": 1.9219973864518338
+        },
+        {
+            "pos_x": -26.694859441113913,
+            "pos_y": "212.5",
+            "dir": "0",
+            "width": "1.8",
+            "length": "4.8",
+            "velo": 6.3944105124178865,
+            "acc": 0.7620782117150724,
+            "start_time": 1.7207696789063796
+        }
+    ]
+}

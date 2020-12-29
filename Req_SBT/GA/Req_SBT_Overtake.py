@@ -13,11 +13,11 @@ from jmetal.util.evaluator import MultiprocessEvaluator
 # from MyAlgorithm.random_search import RandomSearch
 # from MyAlgorithm.termination_criterion import StoppingByEvaluations
 # from MyAlgorithm.evaluator import MultiprocessEvaluator
-from Settings.CarBehindAndInFrontConfigure import CarBehindAndInFrontConfigure
+from GA.Settings.CarBehindAndInFrontConfigure import CarBehindAndInFrontConfigure
 import os
 import time
 # from trash.initial_files.bestpop import BestPop
-from CarBehindAndInFrontProblem import CarBehindAndInFrontProblem
+from GA.MyProblem.CarBehindAndInFrontProblem import CarBehindAndInFrontProblem
 from jmetal.util.observer import ProgressBarObserver
 
 

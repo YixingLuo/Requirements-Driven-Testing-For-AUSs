@@ -54,7 +54,7 @@ class TurnRightConfigure:
         self.maxIterations = self.population * self.round
         self.searchTimeout = 360000
         self.iteration_round = iteration_round
-        self.num_variables = 19
+        self.num_variables = 17
         self.PoolType = "Thread"
         # self.PoolType = "Process"
         # self.ProcessNum = psutil.cpu_count()
