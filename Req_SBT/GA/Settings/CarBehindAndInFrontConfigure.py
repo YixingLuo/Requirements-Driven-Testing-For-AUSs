@@ -43,7 +43,7 @@ class CarBehindAndInFrontConfigure:
         self.speed_limit = 16.67
         self.speed_max = 33.3
         self.duration = 90
-        self.population = 50
+        self.population = 100
         self.goal_num = 7
         self.search_round = 50*16
         self.searchTimeout = 360000
