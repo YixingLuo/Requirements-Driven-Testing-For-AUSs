@@ -122,11 +122,7 @@ def create_run_scenario_overtake (Vars, Configure):
     dynamic_vehicle_state = [[] for i in range(num_dynamic_obs)]
     static_vehicle_state = [[] for i in range(num_static_obs)]
     with open(log_name, 'r') as f:
-        my_data = f.readlines()  # txt�������ַ�������data���õ�����һ��list
-        # ��list�е��������ָ�������ת��
-        # for line in my_data:
-        #     line_data = line.split()
-        #     numbers_float = map(float, line_data)  # ת��Ϊ������
+        my_data = f.readlines()
 
         for line in my_data:
             data = line.split()
