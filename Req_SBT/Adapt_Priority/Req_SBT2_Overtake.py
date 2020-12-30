@@ -40,6 +40,7 @@ if not os.path.exists(data_folder):
 
 if __name__ == '__main__':
 
+    search_round_list = [1, 10, 10, 10, 10, 20, 110, 110]
     target_value_threshold = [1, 0, 1, 1, 1, 0.95, 0.99]
     target_dir = data_folder
 
@@ -59,15 +60,15 @@ if __name__ == '__main__':
     variables = []
     sorted_pop = []
 
-    total_search_round = 400
+    total_round = 400
     # interation_round = 3
-    round_index = 0
+    round_idx = 0
     population = 50
     search_round = 0
 
-    while total_search_round > 0:
+    while total_round > 0:
 
-    # for round_index in range (interation_round):
+    # for round_idx in range (interation_round):
         ## read_files
 
         # search_round = 50
@@ -76,22 +77,21 @@ if __name__ == '__main__':
         # results_file_name = "2020_12_26_Adapt_Priority_results_0"
 
         ## caculate goal_index
-        if round_index == 0:
+        if round_idx == 0:
             goal_selection_flag = numpy.ones(7)
             searched_violation_pattern.append(goal_selection_flag)
 
-            search_round = 10 * sum(goal_selection_flag)
-            # search_round = 1
-            if total_search_round < search_round:
-                search_round = total_search_round
-            total_search_round = total_search_round - search_round
+            search_round = search_round_list[int(sum(goal_selection_flag))]
+            if total_round < search_round:
+                search_round = total_round
+            total_round = total_round - search_round
 
-            Configuration = CarBehindAndInFrontConfigure(goal_selection_flag, population, search_round, round_index, target_dir)
+            Configuration = CarBehindAndInFrontConfigure(goal_selection_flag, population, search_round, round_idx, target_dir)
             vars_file_name = Configuration.file_dir_var
             results_file_name = Configuration.file_dir_eval
 
         else:
-            # print(round_index, sum(pattern_count))
+            # print(round_idx, sum(pattern_count))
             fileList = os.listdir(results_file_name)
             fileList.sort()
 
@@ -147,18 +147,17 @@ if __name__ == '__main__':
                 goal_selection_flag = violation_pattern_ranking_removed[0]
 
             searched_violation_pattern.append(goal_selection_flag)
-            search_round = 10 * sum(goal_selection_flag)
-            # search_round = 1
-            if total_search_round < search_round:
-                search_round = total_search_round
-            total_search_round = total_search_round - search_round
+            search_round = search_round_list[int(sum(goal_selection_flag))]
+            if total_round < search_round:
+                search_round = total_round
+            total_round = total_round - search_round
 
-            Configuration = CarBehindAndInFrontConfigure(goal_selection_flag, population, search_round, round_index, target_dir)
+            Configuration = CarBehindAndInFrontConfigure(goal_selection_flag, population, search_round, round_idx, target_dir)
             vars_file_name = Configuration.file_dir_var
             results_file_name = Configuration.file_dir_eval
 
-        print("round: ", search_round, "idx: ", round_index, "left: ", total_search_round)
-        pattern_name = target_dir + '/req_violation_pattern_' + str(round_index) + '.txt'
+        print("round: ", search_round, "idx: ", round_idx, "left: ", total_round)
+        pattern_name = target_dir + '/req_violation_pattern_' + str(round_idx) + '.txt'
         numpy.savetxt(pattern_name, goal_selection_flag, fmt="%d")  # 保存为整数
         # print(sorted_pop)
         Goal_num = Configuration.goal_num
@@ -214,15 +213,15 @@ if __name__ == '__main__':
         front = algorithm.get_result()
 
         """==================================输出结果=============================="""
-        file_name = target_dir + '/searched_violation_pattern_' + str(round_index) + '.txt'
+        file_name = target_dir + '/searched_violation_pattern_' + str(round_idx) + '.txt'
         numpy.savetxt(file_name, searched_violation_pattern, fmt="%d")  # 保存为整数
-        file_name = target_dir + '/violation_pattern_ranking_removed_' + str(round_index) + '.txt'
+        file_name = target_dir + '/violation_pattern_ranking_removed_' + str(round_idx) + '.txt'
         numpy.savetxt(file_name, violation_pattern_ranking_removed, fmt="%d")  # 保存为整数
 
         # Save results to file
-        fun_name = 'FUN.' + str(round_index) + '_' + algorithm.label
+        fun_name = 'FUN.' + str(round_idx) + '_' + algorithm.label
         print_function_values_to_file(front, os.path.join(target_dir,fun_name))
-        var_name = 'VAR.'+ str(round_index) + '_' + algorithm.label
+        var_name = 'VAR.'+ str(round_idx) + '_' + algorithm.label
         print_variables_to_file(front, os.path.join(target_dir, var_name))
 
         print(f'Algorithm: ${algorithm.get_name()}')
@@ -231,5 +230,5 @@ if __name__ == '__main__':
 
 
 
-        # print(search_round,round_index,total_search_round)
-        round_index = round_index + 1
+        # print(search_round,round_idx,total_search_round)
+        round_idx = round_idx + 1

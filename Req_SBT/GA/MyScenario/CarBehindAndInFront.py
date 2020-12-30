@@ -132,21 +132,21 @@ def create_run_scenario_overtake (Vars, Configure):
 
         for line in my_data:
             data = line.split()
-            if data[0] == "EGO_STATUS" and len(data) == 8:
+            if len(data) == 8 and data[0] == "EGO_STATUS":
                 log = []
                 for i in range(1, len(data)):
                     log.append(float(data[i]))
                 if len(log) == 7:
                     ego_vehicle_state.append(log)
 
-            if data[0] == "DYNAMIC_OBS_INFO" and len(data) == 10:
+            if len(data) == 10 and data[0] == "DYNAMIC_OBS_INFO":
                 log = []
                 for i in range(2, len(data)):
                     log.append(float(data[i]))
                     # print(log)
                 if len(log) == 8:
                     dynamic_vehicle_state[int(data[1])].append(log)
-            elif data[0] == "STATIC_OBS_INFO" and len(data) == 5:
+            elif len(data) == 5 and data[0] == "STATIC_OBS_INFO":
                 log = []
                 for i in range(2, len(data)):
                     log.append(float(data[i]))
@@ -295,21 +295,21 @@ def create_run_scenario_overtake_random (Configure):
 
         for line in my_data:
             data = line.split()
-            if data[0] == "EGO_STATUS" and len(data) == 8:
+            if len(data) == 8 and data[0] == "EGO_STATUS":
                 log = []
                 for i in range(1, len(data)):
                     log.append(float(data[i]))
                 if len(log) == 7:
                     ego_vehicle_state.append(log)
 
-            if data[0] == "DYNAMIC_OBS_INFO" and len(data) == 10:
+            if len(data) == 10 and data[0] == "DYNAMIC_OBS_INFO":
                 log = []
                 for i in range(2, len(data)):
                     log.append(float(data[i]))
                     # print(log)
                 if len(log) == 8:
                     dynamic_vehicle_state[int(data[1])].append(log)
-            elif data[0] == "STATIC_OBS_INFO" and len(data) == 5:
+            elif len(data) == 5 and data[0] == "STATIC_OBS_INFO":
                 log = []
                 for i in range(2, len(data)):
                     log.append(float(data[i]))
