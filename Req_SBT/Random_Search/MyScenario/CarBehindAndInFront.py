@@ -106,7 +106,10 @@ def create_run_scenario_overtake (Vars, Configure):
     # cmd = "wine /gpfs/share/home/1801111354/Release/dynamic_cost.exe -c %d -v EGO_TESTER -i %s > %s" % (duration, scenario_name, log_name)
 
     ## amazon
-    cmd = "wine /home/yixing/Release/dynamic_cost.exe -c %d -v EGO_TESTER -i %s > %s" % (duration, scenario_name, log_name)
+    # cmd = "wine /home/yixing/Release/dynamic_cost.exe -c %d -v EGO_TESTER -i %s > %s" % (duration, scenario_name, log_name)
+
+   ## mac
+    cmd = "wine /Users/luoyixing/Downloads/Release/dynamic_cost.exe -c %d -v EGO_TESTER -i %s > %s" % (duration, scenario_name, log_name)
 
     # print(cmd)
     start = time.clock()
@@ -271,7 +274,10 @@ def create_run_scenario_overtake_random (Configure):
     # cmd = "wine /gpfs/share/home/1801111354/Release/dynamic_cost.exe -c %d -v EGO_TESTER -i %s > %s" % (duration, scenario_name, log_name)
 
     ## amazon
-    cmd = "wine /home/yixing/Release/dynamic_cost.exe -c %d -v EGO_TESTER -i %s > %s" % (duration, scenario_name, log_name)
+    # cmd = "wine /home/yixing/Release/dynamic_cost.exe -c %d -v EGO_TESTER -i %s > %s" % (duration, scenario_name, log_name)
+
+    ## mac
+    cmd = "wine /Users/luoyixing/Downloads/Release/dynamic_cost.exe -c %d -v EGO_TESTER -i %s > %s" % (duration, scenario_name, log_name)
 
 
     # print(cmd)
