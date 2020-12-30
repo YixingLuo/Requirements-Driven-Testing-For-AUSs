@@ -7,7 +7,7 @@ import shutil
 # import psutil
 
 class CarBehindAndInFrontConfigure:
-    def __init__(self,target_dir):
+    def __init__(self, target_dir):
         # self.auto_close_on_reach_the_objective= 1
         # self.auto_close_x_position = 10
         # self.auto_close_y_position = 0
