@@ -2,21 +2,9 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="5f6be2e7-f6e0-4dfc-ba56-9b914322d642" name="Default" comment="">
-      <change afterPath="$PROJECT_DIR$/Brute_Force/Req_SBT2_Overtake.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Origin_Rank/Req_SBT2_Overtake.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Adapt_Priority/MyScenario/CarBehindAndInFront.py" beforeDir="false" afterPath="$PROJECT_DIR$/Adapt_Priority/MyScenario/CarBehindAndInFront.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Adapt_Priority/MyScenario/TurnRight.py" beforeDir="false" afterPath="$PROJECT_DIR$/Adapt_Priority/MyScenario/TurnRight.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Adapt_Priority/Req_SBT2_Overtake.py" beforeDir="false" afterPath="$PROJECT_DIR$/Adapt_Priority/Req_SBT2_Overtake.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Brute_Force/MyScenario/CarBehindAndInFront.py" beforeDir="false" afterPath="$PROJECT_DIR$/Brute_Force/MyScenario/CarBehindAndInFront.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Brute_Force/MyScenario/TurnRight.py" beforeDir="false" afterPath="$PROJECT_DIR$/Brute_Force/MyScenario/TurnRight.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Brute_Force/Req_SBT_Overtake.py" beforeDir="false" afterPath="$PROJECT_DIR$/Brute_Force/Req_SBT_Overtake.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/GA/MyScenario/CarBehindAndInFront.py" beforeDir="false" afterPath="$PROJECT_DIR$/GA/MyScenario/CarBehindAndInFront.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/GA/MyScenario/TurnRight.py" beforeDir="false" afterPath="$PROJECT_DIR$/GA/MyScenario/TurnRight.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Origin_Rank/MyScenario/CarBehindAndInFront.py" beforeDir="false" afterPath="$PROJECT_DIR$/Origin_Rank/MyScenario/CarBehindAndInFront.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Origin_Rank/MyScenario/TurnRight.py" beforeDir="false" afterPath="$PROJECT_DIR$/Origin_Rank/MyScenario/TurnRight.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Random_Search/MyScenario/CarBehindAndInFront.py" beforeDir="false" afterPath="$PROJECT_DIR$/Random_Search/MyScenario/CarBehindAndInFront.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Random_Search/MyScenario/TurnRight.py" beforeDir="false" afterPath="$PROJECT_DIR$/Random_Search/MyScenario/TurnRight.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/GA/Req_SBT_Overtake.py" beforeDir="false" afterPath="$PROJECT_DIR$/GA/Req_SBT_Overtake.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/GA/Settings/CarBehindAndInFrontConfigure.py" beforeDir="false" afterPath="$PROJECT_DIR$/GA/Settings/CarBehindAndInFrontConfigure.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />

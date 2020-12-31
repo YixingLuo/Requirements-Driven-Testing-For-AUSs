@@ -7,7 +7,7 @@ from jmetal.algorithm.multiobjective.nsgaiii import UniformReferenceDirectionFac
 from jmetal.operator import SBXCrossover, PolynomialMutation
 from jmetal.util.solution import print_function_values_to_file, print_variables_to_file
 from jmetal.util.termination_criterion import StoppingByEvaluations
-from jmetal.util.evaluator import MultiprocessEvaluator
+from jmetal.util.evaluator import MultiprocessEvaluator, SequentialEvaluator
 # from MyAlgorithm.nsgaiii import NSGAIII
 # from MyAlgorithm.nsgaii import NSGAII
 # from MyAlgorithm.random_search import RandomSearch
@@ -28,7 +28,7 @@ def text_create(Configuration):
     file = open(full_path,  'w')
     return full_path
 
-data_folder = os.getcwd() + '/Overtake_Datalog_100_800_' + str(time.strftime("%Y_%m_%d_%H"))
+data_folder = os.getcwd() + '/Overtake_Datalog_100_1000_' + str(time.strftime("%Y_%m_%d_%H"))
 if not os.path.exists(data_folder):
     os.mkdir(data_folder)
 
@@ -62,7 +62,8 @@ if __name__ == '__main__':
         )
     elif Configuration.algorithm == "NSGA_III" or Configuration.algorithm == "NSGA_III_Adapt":
         algorithm = NSGAIII(
-            population_evaluator=MultiprocessEvaluator(Configuration.ProcessNum),
+            # population_evaluator=MultiprocessEvaluator(Configuration.ProcessNum),
+            population_evaluator=SequentialEvaluator(),
             problem=problem,
             population_size = Configuration.population,
             reference_directions=UniformReferenceDirectionFactory(Configuration.goal_num, n_points= Configuration.population - 1),
