@@ -42,7 +42,7 @@ def text_create(Configuration):
 
 
 
-data_folder = os.getcwd() + '/Overtake_Datalog_16_100_' + str(time.strftime("%Y_%m_%d_%H"))
+data_folder = os.getcwd() + '/Overtake_Datalog_800_100_' + str(time.strftime("%Y_%m_%d_%H"))
 if not os.path.exists(data_folder):
     os.mkdir(data_folder)
 
@@ -50,9 +50,9 @@ if __name__ == '__main__':
 
     goal_selection_index = random.sample(range(0,128),128)
     # goal_selection_index = [idx for idx in range(128)]
-    total_round = 16
+    total_round = 10
     population = 100
-    search_round = 50
+    search_round = 100
 
     target_dir = data_folder
     file_name = os.path.join(target_dir, 'goal_selection_index.txt')
@@ -77,7 +77,7 @@ if __name__ == '__main__':
 
         if round_idx == 0:
             goal_index = 0
-            Configuration = CarBehindAndInFrontConfigure(goal_index,population,search_round,target_dir)
+            Configuration = CarBehindAndInFrontConfigure(goal_index,population,search_round,target_dir, round_idx)
             vars_file_name = Configuration.file_dir_var
             results_file_name = Configuration.file_dir_eval
             searched_violation_pattern.append(goal_index)
@@ -114,7 +114,7 @@ if __name__ == '__main__':
                     break
 
             searched_violation_pattern.append(goal_index)
-            Configuration = CarBehindAndInFrontConfigure(goal_index, population, search_round, target_dir)
+            Configuration = CarBehindAndInFrontConfigure(goal_index, population, search_round, target_dir, round_idx)
 
         # print(searched_violation_pattern)
         Goal_num = Configuration.goal_num

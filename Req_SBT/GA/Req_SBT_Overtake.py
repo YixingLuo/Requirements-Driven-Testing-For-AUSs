@@ -62,8 +62,8 @@ if __name__ == '__main__':
         )
     elif Configuration.algorithm == "NSGA_III" or Configuration.algorithm == "NSGA_III_Adapt":
         algorithm = NSGAIII(
-            # population_evaluator=MultiprocessEvaluator(Configuration.ProcessNum),
-            population_evaluator=SequentialEvaluator(),
+            population_evaluator=MultiprocessEvaluator(Configuration.ProcessNum),
+            # population_evaluator=SequentialEvaluator(),
             problem=problem,
             population_size = Configuration.population,
             reference_directions=UniformReferenceDirectionFactory(Configuration.goal_num, n_points= Configuration.population - 1),

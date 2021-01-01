@@ -36,7 +36,7 @@ def text_create(Configuration):
 
 
 
-data_folder = os.getcwd() + '/Overtake_Datalog_' + str(time.strftime("%Y_%m_%d_%H"))
+data_folder = os.getcwd() + '/Overtake_Datalog_Req1_' + str(time.strftime("%Y_%m_%d_%H"))
 if not os.path.exists(data_folder):
     os.mkdir(data_folder)
 
@@ -62,9 +62,9 @@ if __name__ == '__main__':
     sorted_pop = []
 
     # total_search_round = 400
-    interation_round = 8
-    population = 50
-    search_round = 50
+    interation_round = 10
+    population = 100
+    search_round = 100
 
     for round_index in range (interation_round):
 

@@ -19,11 +19,9 @@ if __name__ == "__main__":
     for i in range(Configuration.maxIterations):
         res=pool.apply_async(create_run_scenario_overtake_random, (Configuration, ))
         res_l.append(res)
-    # print("==============================>")
 
     pool.close()
     pool.join()
 
-    # print(res_l)
-    # for i in res_l:
-    #     print(i.get())
+    # for i in range(Configuration.maxIterations):
+    #     create_run_scenario_overtake_random (Configuration)

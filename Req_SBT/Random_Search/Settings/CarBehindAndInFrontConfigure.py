@@ -48,13 +48,13 @@ class CarBehindAndInFrontConfigure:
         self.duration = 90
         self.population = 100
         self.goal_num = 7
-        self.search_round = 50*16
+        self.search_round = 1000
         self.searchTimeout = 360000
         self.num_variables = 19
         self.PoolType = "Thread"
         # self.PoolType = "Process"
         # self.ProcessNum = psutil.cpu_count()
-        self.ProcessNum = 32
+        self.ProcessNum = 20
         self.maxIterations = self.population * self.search_round
 
         ## ego

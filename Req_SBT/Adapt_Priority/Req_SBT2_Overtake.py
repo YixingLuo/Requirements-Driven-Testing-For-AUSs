@@ -34,13 +34,14 @@ def text_create(Configuration):
 
 
 
-data_folder = os.getcwd() + '/Overtake_Datalog_' + str(time.strftime("%Y_%m_%d_%H"))
+data_folder = os.getcwd() + '/Overtake_Datalog_DynamicRound' + str(time.strftime("%Y_%m_%d_%H"))
 if not os.path.exists(data_folder):
     os.mkdir(data_folder)
 
 if __name__ == '__main__':
 
-    search_round_list = [1, 10, 10, 10, 10, 20, 110, 110]
+    # search_round_list = [1, 10, 10, 10, 10, 20, 110, 110]
+    search_round_list = [1, 10, 20, 30, 40, 50, 60, 70]
     target_value_threshold = [1, 0, 1, 1, 1, 0.95, 0.99]
     target_dir = data_folder
 
@@ -48,7 +49,7 @@ if __name__ == '__main__':
     with open("priority_list.csv") as csvfile:
         csv_file = csv.reader(csvfile)
         for row in csv_file:
-            priority_list.append(row)
+            priority_list.append(row[0:-1])
         priority_list = [[float(x) for x in row] for row in priority_list]
     priority_list = numpy.array(priority_list)
 
@@ -123,12 +124,14 @@ if __name__ == '__main__':
                     violation_pattern_to_search.append(priority_list[j])
             # print(numpy.array(violation_pattern_to_search).shape[0])
 
-            weight_dist, sorted_pattern_distance, sorted_pop = Distance_Ranking(violation_pattern_to_search, variables, evaluation)
-            weight_relation, sorted_pattern_relation = Relation_Ranking (violation_pattern_to_search, searched_violation_pattern, priority_list)
+            weight_dist, sorted_pattern_distance, sorted_pop, distance_ranking = Distance_Ranking(priority_list,
+                                                                                                  variables, evaluation)
+            weight_relation, sorted_pattern_relation, relation_ranking = Relation_Ranking(violation_pattern_to_search,
+                                                                                          searched_violation_pattern,
+                                                                                          priority_list)
             weights = [1, weight_dist, weight_relation]
-            violation_pattern_ranking = Ensemble_Ranking(sorted_pattern_distance, sorted_pattern_relation, violation_pattern_to_search, weights)
-            # violation_pattern_ranking = Ensemble_Ranking2(sorted_pattern_distance, violation_pattern_to_search)
-            # violation_pattern_ranking = sorted_pattern_distance
+            violation_pattern_ranking, overall_rank_list = Ensemble_Ranking(distance_ranking, relation_ranking,
+                                                                            violation_pattern_to_search)
 
             violation_pattern_ranking_removed = violation_pattern_ranking.copy()
             for j in range(numpy.array(violation_pattern_ranking).shape[0]):

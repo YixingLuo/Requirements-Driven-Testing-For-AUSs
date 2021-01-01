@@ -8,16 +8,62 @@ import csv
 target_value_threshold = [1, 0, 1, 1, 1, 0.95, 0.99]
 
 
-def Distance_Ranking (violation_pattern_to_search, population, scores):
+# def Distance_Ranking (violation_pattern_to_search, population, scores):
+#     sorted_violation_pattern_list = []
+#     sorted_pop = np.zeros((np.array(violation_pattern_to_search).shape[0], np.array(population).shape[0], np.array(population).shape[1]),dtype=float)
+#     distance = np.zeros((np.array(violation_pattern_to_search).shape[0], np.array(population).shape[0]),dtype=float)
+#
+#
+#     for i in range (np.array(violation_pattern_to_search).shape[0]):
+#
+#         for j in range (np.array(population).shape[0]):
+#             violation_pattern = violation_pattern_to_search[i]
+#             dist = np.zeros((np.array(violation_pattern).shape[0]),dtype=float)
+#             sum_dist = 0
+#
+#             for k in range (np.array(violation_pattern).shape[0]):
+#                 if violation_pattern[k] == 0: ## satisfied
+#                     if scores[j][k] >= target_value_threshold[k]:
+#                         dist[k] = 0
+#                     else:
+#                         dist[k] = max(target_value_threshold[k] - scores[j][k], 0)
+#                 else: ## violated
+#                     if scores[j][k] < target_value_threshold[k]:
+#                         dist[k] = 0
+#                     else:
+#                         dist[k] = max(scores[j][k] - target_value_threshold[k], 0)
+#
+#                 sum_dist += dist[k]*dist[k]
+#
+#             distance[i][j] = math.sqrt(sum_dist)
+#
+#     dist_mean = distance.mean(axis=1)
+#     sorted_dist_mean = np.argsort(dist_mean)
+#     for i in range (np.array(sorted_dist_mean).shape[0]):
+#         index = sorted_dist_mean[i]
+#         sorted_violation_pattern_list.append(violation_pattern_to_search[index])
+#
+#     # distance = distance.T
+#     for i in range (np.array(violation_pattern_to_search).shape[0]):
+#         sorted_pop_index = np.argsort(distance[i])
+#         for j in range (np.array(sorted_pop_index).shape[0]):
+#             sorted_pop[i][j] = population[sorted_pop_index[j]]
+#
+#     weight_dist = 1
+#
+#     return weight_dist, sorted_violation_pattern_list, sorted_pop
+
+
+def Distance_Ranking (priority_list, population, scores):
     sorted_violation_pattern_list = []
-    sorted_pop = np.zeros((np.array(violation_pattern_to_search).shape[0], np.array(population).shape[0], np.array(population).shape[1]),dtype=float)
-    distance = np.zeros((np.array(violation_pattern_to_search).shape[0], np.array(population).shape[0]),dtype=float)
+    sorted_pop = np.zeros((np.array(priority_list).shape[0], np.array(population).shape[0], np.array(population).shape[1]),dtype=float)
+    distance = np.zeros((np.array(priority_list).shape[0], np.array(population).shape[0]),dtype=float)
 
 
-    for i in range (np.array(violation_pattern_to_search).shape[0]):
+    for i in range (np.array(priority_list).shape[0]):
 
         for j in range (np.array(population).shape[0]):
-            violation_pattern = violation_pattern_to_search[i]
+            violation_pattern = priority_list[i]
             dist = np.zeros((np.array(violation_pattern).shape[0]),dtype=float)
             sum_dist = 0
 
@@ -38,23 +84,29 @@ def Distance_Ranking (violation_pattern_to_search, population, scores):
             distance[i][j] = math.sqrt(sum_dist)
 
     dist_mean = distance.mean(axis=1)
-    sorted_dist_mean = np.argsort(dist_mean)
-    for i in range (np.array(sorted_dist_mean).shape[0]):
-        index = sorted_dist_mean[i]
-        sorted_violation_pattern_list.append(violation_pattern_to_search[index])
 
-    # distance = distance.T
-    for i in range (np.array(violation_pattern_to_search).shape[0]):
+    ## 重复排序
+
+    sorted_dist_mean = np.sort(list(set(dist_mean)))
+    distance_ranking = np.zeros((np.array(priority_list).shape[0]), dtype= int)
+    count = 1
+    for i in range (len(sorted_dist_mean)):
+        same_number = 0
+        for j in range (len(dist_mean)):
+            if dist_mean[j] == sorted_dist_mean[i]:
+                sorted_violation_pattern_list.append(priority_list[j])
+                distance_ranking[j] = count
+                same_number = same_number + 1
+        count = count + same_number
+
+    for i in range (np.array(priority_list).shape[0]):
         sorted_pop_index = np.argsort(distance[i])
         for j in range (np.array(sorted_pop_index).shape[0]):
             sorted_pop[i][j] = population[sorted_pop_index[j]]
 
-
-
-
     weight_dist = 1
 
-    return weight_dist, sorted_violation_pattern_list, sorted_pop
+    return weight_dist, sorted_violation_pattern_list, sorted_pop, distance_ranking
 
 if __name__ == '__main__':
     # violation_pattern = np.array([[1,1,1],[2,2,2]])
@@ -65,7 +117,7 @@ if __name__ == '__main__':
     with open("../priority_list.csv") as csvfile:
         csv_file = csv.reader(csvfile)
         for row in csv_file:
-            priority_list.append(row)
+            priority_list.append(row[0:-1])
         priority_list = [[float(x) for x in row] for row in priority_list]
     priority_list = np.array(priority_list)
 

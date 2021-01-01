@@ -46,7 +46,7 @@ if __name__ == '__main__':
     with open("priority_list.csv") as csvfile:
         csv_file = csv.reader(csvfile)
         for row in csv_file:
-            priority_list.append(row)
+            priority_list.append(row[0:-1])
         priority_list = [[float(x) for x in row] for row in priority_list]
     priority_list = numpy.array(priority_list)
 

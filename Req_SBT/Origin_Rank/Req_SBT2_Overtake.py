@@ -16,6 +16,7 @@ from MyAlgorithm.random_search import RandomSearch
 from Settings.CarBehindAndInFrontConfigure import CarBehindAndInFrontConfigure
 import os
 import time
+# from trash.initial_files.bestpop import BestPop
 from CarBehindAndInFrontProblem import CarBehindAndInFrontProblem
 from jmetal.util.observer import ProgressBarObserver
 import random
@@ -39,19 +40,20 @@ def text_create(Configuration):
     file = open(full_path,  'w')
     return full_path
 
-data_folder = os.getcwd() + '/Overtake_Datalog_16_100' + str(time.strftime("%Y_%m_%d_%H"))
+data_folder = os.getcwd() + '/Overtake_Datalog_16_100_' + str(time.strftime("%Y_%m_%d_%H"))
 if not os.path.exists(data_folder):
     os.mkdir(data_folder)
 
 if __name__ == '__main__':
 
-    search_round_list = [1, 10, 10, 10, 10, 20, 110, 110]
+    # search_round_list = [1, 10, 10, 10, 10, 20, 110, 110]
+    search_round_list = [1, 10, 20, 30, 40, 50, 60, 70]
     # goal_selection_index = random.sample(range(0,128),128)
     goal_selection_index = [idx for idx in range(128)]
     total_round = 400
     population = 50
     # search_round = 50
-    round_idx = 0
+    round_idx = 0sal
 
     target_dir = data_folder
     file_name = os.path.join(target_dir, 'goal_selection_index.txt')
@@ -84,7 +86,7 @@ if __name__ == '__main__':
                 search_round = total_round
             total_round = total_round - search_round
 
-            Configuration = CarBehindAndInFrontConfigure(goal_index, population, search_round, target_dir)
+            Configuration = CarBehindAndInFrontConfigure(goal_index,population,search_round,target_dir, round_idx)
             vars_file_name = Configuration.file_dir_var
             results_file_name = Configuration.file_dir_eval
             searched_violation_pattern.append(goal_index)
@@ -127,7 +129,7 @@ if __name__ == '__main__':
             total_round = total_round - search_round
 
             searched_violation_pattern.append(goal_index)
-            Configuration = CarBehindAndInFrontConfigure(goal_index, population, search_round, target_dir)
+            Configuration = CarBehindAndInFrontConfigure(goal_index, population, search_round, target_dir, round_idx)
 
         # print(searched_violation_pattern)
         Goal_num = Configuration.goal_num
@@ -199,5 +201,3 @@ if __name__ == '__main__':
         print(f'Computing time: ${algorithm.total_computing_time}')
 
         round_idx = round_idx + 1
-
-

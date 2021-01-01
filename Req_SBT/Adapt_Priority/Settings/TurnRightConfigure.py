@@ -121,7 +121,7 @@ class TurnRightConfigure:
         with open("priority_list.csv") as csvfile:
             csv_file = csv.reader(csvfile)
             for row in csv_file:
-                self.priority_list.append(row)
+                self.priority_list.append(row[0:-1])
             priority_list = [[float(x) for x in row] for row in self.priority_list]
 
 
