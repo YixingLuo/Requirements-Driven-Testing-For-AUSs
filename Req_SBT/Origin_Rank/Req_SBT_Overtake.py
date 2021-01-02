@@ -42,7 +42,7 @@ def text_create(Configuration):
 
 
 
-data_folder = os.getcwd() + '/Overtake_Datalog_800_100_' + str(time.strftime("%Y_%m_%d_%H"))
+data_folder = os.getcwd() + '/Overtake_Datalog_Req1_' + str(time.strftime("%Y_%m_%d_%H"))
 if not os.path.exists(data_folder):
     os.mkdir(data_folder)
 
@@ -50,7 +50,7 @@ if __name__ == '__main__':
 
     # goal_selection_index = random.sample(range(0,128),128)
     goal_selection_index = [idx for idx in range(128)]
-    total_round = 8
+    total_round = 10
     population = 100
     search_round = 100
 

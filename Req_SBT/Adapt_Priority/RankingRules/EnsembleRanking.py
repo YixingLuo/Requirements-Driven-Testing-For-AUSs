@@ -28,7 +28,7 @@ import csv
 #
 #     return sorted_violation_pattern_list
 
-def Ensemble_Ranking(distance_rank, relation_rank, violation_pattern_to_search):
+def Ensemble_Ranking(distance_rank, relation_rank, violation_pattern_to_search, weights):
     priority_list = []
     rank_list = []
     with open("priority_list.csv") as csvfile:
@@ -38,7 +38,7 @@ def Ensemble_Ranking(distance_rank, relation_rank, violation_pattern_to_search):
             rank_list.append(int(row[-1]))
         priority_list = [[float(x) for x in row] for row in priority_list]
     priority_list = np.array(priority_list)
-    weights = [1, 1, 1]
+    # weights = [1, 1, 1]
 
     overall_rank = np.zeros(len(distance_rank), dtype=int)
     overall_rank_list = []

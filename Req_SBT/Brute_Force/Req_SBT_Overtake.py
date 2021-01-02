@@ -42,7 +42,7 @@ def text_create(Configuration):
 
 
 
-data_folder = os.getcwd() + '/Overtake_Datalog_800_100_' + str(time.strftime("%Y_%m_%d_%H"))
+data_folder = os.getcwd() + '/Overtake_Datalog_Req1_' + str(time.strftime("%Y_%m_%d_%H"))
 if not os.path.exists(data_folder):
     os.mkdir(data_folder)
 

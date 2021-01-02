@@ -34,7 +34,7 @@ def text_create(Configuration):
 
 
 
-data_folder = os.getcwd() + '/Overtake_Datalog_DynamicRound' + str(time.strftime("%Y_%m_%d_%H"))
+data_folder = os.getcwd() + '/Overtake_Datalog_Req2_' + str(time.strftime("%Y_%m_%d_%H"))
 if not os.path.exists(data_folder):
     os.mkdir(data_folder)
 
@@ -131,7 +131,7 @@ if __name__ == '__main__':
                                                                                           priority_list)
             weights = [1, weight_dist, weight_relation]
             violation_pattern_ranking, overall_rank_list = Ensemble_Ranking(distance_ranking, relation_ranking,
-                                                                            violation_pattern_to_search)
+                                                                            violation_pattern_to_search, weights)
 
             violation_pattern_ranking_removed = violation_pattern_ranking.copy()
             for j in range(numpy.array(violation_pattern_ranking).shape[0]):
