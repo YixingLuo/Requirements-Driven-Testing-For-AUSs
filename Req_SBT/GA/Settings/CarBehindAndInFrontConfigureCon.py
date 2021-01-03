@@ -1,15 +1,10 @@
-#!/usr/bin/python
-# -*- coding:utf-8 -*-
-
 import time
 import os
-import csv
-import numpy
 import shutil
 # import psutil
 
-class CarBehindAndInFrontConfigure:
-    def __init__(self,goal_index,population,search_round, target_dir, round_idx):
+class CarBehindAndInFrontConfigureCon:
+    def __init__(self, target_dir, population, search_round):
         # self.auto_close_on_reach_the_objective= 1
         # self.auto_close_x_position = 10
         # self.auto_close_y_position = 0
@@ -49,16 +44,15 @@ class CarBehindAndInFrontConfigure:
         self.speed_max = 33.3
         self.duration = 90
         self.population = population
-        self.round = search_round
         self.goal_num = 7
-        self.maxIterations = self.population * self.round
+        self.search_round = search_round
         self.searchTimeout = 360000
-        self.interval = 50
         self.num_variables = 19
         self.PoolType = "Thread"
         # self.PoolType = "Process"
         # self.ProcessNum = psutil.cpu_count()
-        self.ProcessNum = 20
+        self.ProcessNum = 32
+        self.maxIterations = self.population * self.search_round
 
         ## ego
         self.ego_s0 = [10, 30]
@@ -96,42 +90,27 @@ class CarBehindAndInFrontConfigure:
 
         ## algorithm
         ## "NSGA_II": NSGA_II, "NSGA_III": NSGA_III ,"NSGA_III_Adapt": NSGA_II_Goal_Adapt
-        self.algorithm = "Brute_Froce"
+        self.algorithm = "NSGA_III"
 
         self.file_dir_sce = target_dir + '/' + str(time.strftime("%Y_%m_%d")) + '_' + str(self.algorithm) + '_scenarios_' + str(
-            round_idx)
+            self.maxIterations)
         if not os.path.exists(self.file_dir_sce):
             os.mkdir(self.file_dir_sce)
 
         self.file_dir_data = target_dir + '/' + str(time.strftime("%Y_%m_%d")) + '_' + str(self.algorithm) + '_datalog_' + str(
-            round_idx)
+            self.maxIterations)
         if not os.path.exists(self.file_dir_data):
             os.mkdir(self.file_dir_data)
 
         self.file_dir_eval = target_dir + '/' + str(time.strftime("%Y_%m_%d")) + '_' + str(self.algorithm) + '_results_' + str(
-            round_idx)
+            self.maxIterations)
         if not os.path.exists(self.file_dir_eval):
             os.mkdir(self.file_dir_eval)
 
         self.file_dir_var = target_dir + '/' + str(time.strftime("%Y_%m_%d")) + '_' + str(self.algorithm) + '_variable_' + str(
-            round_idx)
+            self.maxIterations)
         if not os.path.exists(self.file_dir_var):
             os.mkdir(self.file_dir_var)
-
-        self.priority_list = []
-        with open("priority_list.csv") as csvfile:
-            csv_file = csv.reader(csvfile)
-            for row in csv_file:
-                self.priority_list.append(row)
-            priority_list = [[float(x) for x in row] for row in self.priority_list]
-
-
-        self.priority_list = numpy.array(priority_list)
-
-        self.goal_selection_flag = self.priority_list[goal_index]
-        self.goal_index = goal_index
-
-
 
 
 

@@ -8,7 +8,6 @@ from jmetal.operator import SBXCrossover, PolynomialMutation
 from jmetal.util.solution import print_function_values_to_file, print_variables_to_file
 # from jmetal.util.termination_criterion import StoppingByEvaluations
 from jmetal.util.evaluator import MultiprocessEvaluator
-from jmetal.util.observer import ProgressBarObserver
 from MyAlgorithm.nsgaiii import NSGAIII
 from MyAlgorithm.nsgaii import NSGAII
 from MyAlgorithm.random_search import RandomSearch
@@ -18,13 +17,12 @@ from Settings.CarBehindAndInFrontConfigure import CarBehindAndInFrontConfigure
 import os
 import time
 # from trash.initial_files.bestpop import BestPop
-from CarBehindAndInFrontProblem import CarBehindAndInFrontProblem
+from Adapt_Priority.MyProblem.CarBehindAndInFront import CarBehindAndInFront
 import csv
 import numpy
 from RankingRules.DistanceRanking import Distance_Ranking
 from RankingRules.EnsembleRanking import Ensemble_Ranking
 from RankingRules.RelationRanking import Relation_Ranking
-
 
 
 def text_create(Configuration):
@@ -36,7 +34,7 @@ def text_create(Configuration):
 
 
 
-data_folder = os.getcwd() + '/Overtake_Datalog_Dis_' + str(time.strftime("%Y_%m_%d_%H"))
+data_folder = os.getcwd() + '/Datalog_' + str(time.strftime("%Y_%m_%d_%H"))
 if not os.path.exists(data_folder):
     os.mkdir(data_folder)
 
@@ -46,10 +44,10 @@ if __name__ == '__main__':
     target_dir = data_folder
 
     priority_list = []
-    with open("priority_list.csv") as csvfile:
+    with open("../priority_list.csv") as csvfile:
         csv_file = csv.reader(csvfile)
         for row in csv_file:
-            priority_list.append(row[0:-1])
+            priority_list.append(row)
         priority_list = [[float(x) for x in row] for row in priority_list]
     priority_list = numpy.array(priority_list)
 
@@ -61,24 +59,39 @@ if __name__ == '__main__':
     variables = []
     sorted_pop = []
 
-    # total_search_round = 400
-    interation_round = 8
+    total_search_round = 400
+    # interation_round = 3
+    round_index = 0
     population = 50
-    search_round = 50
+    search_round = 0
 
-    for round_index in range (interation_round):
+    while total_search_round > 0:
+
+    # for round_index in range (interation_round):
+        ## read_files
+
+        # search_round = 50
+
+        # vars_file_name = "2020_12_26_Adapt_Priority_variable_0"
+        # results_file_name = "2020_12_26_Adapt_Priority_results_0"
 
         ## caculate goal_index
         if round_index == 0:
             goal_selection_flag = numpy.ones(7)
             searched_violation_pattern.append(goal_selection_flag)
+
+            search_round = 10 * sum(goal_selection_flag)
+            # search_round = 1
+            if total_search_round < search_round:
+                search_round = total_search_round
+            total_search_round = total_search_round - search_round
+
             Configuration = CarBehindAndInFrontConfigure(goal_selection_flag, population, search_round, round_index, target_dir)
             vars_file_name = Configuration.file_dir_var
             results_file_name = Configuration.file_dir_eval
-            # print(round_index, vars_file_name, results_file_name)
 
         else:
-            print(round_index, sum(pattern_count))
+            # print(round_index, sum(pattern_count))
             fileList = os.listdir(results_file_name)
             fileList.sort()
 
@@ -110,14 +123,12 @@ if __name__ == '__main__':
                     violation_pattern_to_search.append(priority_list[j])
             # print(numpy.array(violation_pattern_to_search).shape[0])
 
-            weight_dist, sorted_pattern_distance, sorted_pop, distance_ranking = Distance_Ranking(priority_list,
-                                                                                                  variables, evaluation)
-            weight_relation, sorted_pattern_relation, relation_ranking = Relation_Ranking(violation_pattern_to_search,
-                                                                                          searched_violation_pattern,
-                                                                                          priority_list)
-            weights = [1, 1, 0]
-            violation_pattern_ranking, overall_rank_list = Ensemble_Ranking(distance_ranking, relation_ranking,
-                                                                            violation_pattern_to_search, weights)
+            weight_dist, sorted_pattern_distance, sorted_pop = Distance_Ranking(violation_pattern_to_search, variables, evaluation)
+            weight_relation, sorted_pattern_relation = Relation_Ranking (violation_pattern_to_search, searched_violation_pattern, priority_list)
+            weights = [1, weight_dist, weight_relation]
+            violation_pattern_ranking = Ensemble_Ranking(sorted_pattern_distance, sorted_pattern_relation, violation_pattern_to_search, weights)
+            # violation_pattern_ranking = Ensemble_Ranking2(sorted_pattern_distance, violation_pattern_to_search)
+            # violation_pattern_ranking = sorted_pattern_distance
 
             violation_pattern_ranking_removed = violation_pattern_ranking.copy()
             for j in range(numpy.array(violation_pattern_ranking).shape[0]):
@@ -129,60 +140,96 @@ if __name__ == '__main__':
                                 del violation_pattern_ranking_removed[ll]
                                 break
                         break
+
             if numpy.array(violation_pattern_ranking_removed).shape[0] == 0:
                 goal_selection_flag = numpy.ones(7)
             else:
                 goal_selection_flag = violation_pattern_ranking_removed[0]
 
             searched_violation_pattern.append(goal_selection_flag)
+            search_round = 10 * sum(goal_selection_flag)
+            # search_round = 1
+            if total_search_round < search_round:
+                search_round = total_search_round
+            total_search_round = total_search_round - search_round
 
             Configuration = CarBehindAndInFrontConfigure(goal_selection_flag, population, search_round, round_index, target_dir)
             vars_file_name = Configuration.file_dir_var
             results_file_name = Configuration.file_dir_eval
 
-
+        print("round: ", search_round, "idx: ", round_index, "left: ", total_search_round)
         pattern_name = target_dir + '/req_violation_pattern_' + str(round_index) + '.txt'
         numpy.savetxt(pattern_name, goal_selection_flag, fmt="%d")  # 保存为整数
         # print(sorted_pop)
         Goal_num = Configuration.goal_num
 
+
+
         """===============================实例化问题对象============================"""
-        problem = CarBehindAndInFrontProblem(Goal_num, Configuration)
+        problem = CarBehindAndInFront(Goal_num, Configuration)
 
         """=================================算法参数设置============================"""
         max_evaluations = Configuration.maxIterations
 
-        algorithm = NSGAIII(initial_population = sorted_pop,
-            population_evaluator=MultiprocessEvaluator(Configuration.ProcessNum),
-            # population_evaluator=SequentialEvaluator(),
-            problem=problem,
-            population_size = Configuration.population,
-            reference_directions=UniformReferenceDirectionFactory(Configuration.goal_num, n_points= Configuration.population - 1),
-            # offspring_population_size = Configuration.population,
-            mutation=PolynomialMutation(probability=1.0 / problem.number_of_variables, distribution_index=20),
-            crossover=SBXCrossover(probability=1.0, distribution_index=20),
-            termination_criterion = StoppingByEvaluations(max_evaluations=max_evaluations)
-            # termination_criterion = StoppingByQualityIndicator(quality_indicator=HyperVolume, expected_value=1,
-            #                                                  degree=0.9)
-            # selection = BinaryTournamentSelection()
-        )
+        if Configuration.algorithm == "NSGA_II":
+            algorithm = NSGAII(
+                population_evaluator=MultiprocessEvaluator(Configuration.ProcessNum),
+                # population_evaluator=SequentialEvaluator(),
+                problem=problem,
+                population_size = Configuration.population,
+                offspring_population_size = Configuration.population,
+                mutation=PolynomialMutation(probability=1.0 / problem.number_of_variables, distribution_index=20),
+                crossover=SBXCrossover(probability=1.0, distribution_index=20),
+                termination_criterion = StoppingByEvaluations(max_evaluations=max_evaluations)
+                # termination_criterion = StoppingByQualityIndicator(quality_indicator=FitnessValue, expected_value=1, degree=0.9)
+                # selection = BinaryTournamentSelection()
+            )
+        elif Configuration.algorithm == "NSGA_III" or Configuration.algorithm == "Adapt_Priority":
+            algorithm = NSGAIII(initial_population = sorted_pop,
+                population_evaluator=MultiprocessEvaluator(Configuration.ProcessNum),
+                # population_evaluator=SequentialEvaluator(),
+                problem=problem,
+                population_size = Configuration.population,
+                reference_directions=UniformReferenceDirectionFactory(Configuration.goal_num, n_points= Configuration.population - 1),
+                # offspring_population_size = Configuration.population,
+                mutation=PolynomialMutation(probability=1.0 / problem.number_of_variables, distribution_index=20),
+                crossover=SBXCrossover(probability=1.0, distribution_index=20),
+                termination_criterion = StoppingByEvaluations(max_evaluations=max_evaluations)
+                # termination_criterion = StoppingByQualityIndicator(quality_indicator=HyperVolume, expected_value=1,
+                #                                                  degree=0.9)
+                # selection = BinaryTournamentSelection()
+            )
+        elif Configuration.algorithm == 'Random':
+            algorithm = RandomSearch(
+                problem=problem,
+                termination_criterion=StoppingByEvaluations(max_evaluations=max_evaluations)
+            )
+
+
 
         """==========================调用算法模板进行种群进化========================="""
-        progress_bar = ProgressBarObserver(max=max_evaluations)
-        algorithm.observable.register(progress_bar)
+        # progress_bar = ProgressBarObserver(max=max_evaluations)
+        # algorithm.observable.register(progress_bar)
         algorithm.run()
         front = algorithm.get_result()
 
         """==================================输出结果=============================="""
-        # Save results to file
         file_name = target_dir + '/searched_violation_pattern_' + str(round_index) + '.txt'
         numpy.savetxt(file_name, searched_violation_pattern, fmt="%d")  # 保存为整数
-        file_name = target_dir + '/violation_pattern_to_search_' + str(round_index) + '.txt'
-        numpy.savetxt(file_name, violation_pattern_to_search, fmt="%d")  # 保存为整数
+        file_name = target_dir + '/violation_pattern_ranking_removed_' + str(round_index) + '.txt'
+        numpy.savetxt(file_name, violation_pattern_ranking_removed, fmt="%d")  # 保存为整数
 
-
+        # Save results to file
         fun_name = 'FUN.' + str(round_index) + '_' + algorithm.label
         print_function_values_to_file(front, os.path.join(target_dir,fun_name))
         var_name = 'VAR.'+ str(round_index) + '_' + algorithm.label
         print_variables_to_file(front, os.path.join(target_dir, var_name))
 
+        print(f'Algorithm: ${algorithm.get_name()}')
+        print(f'Problem: ${problem.get_name()}')
+        print(f'Computing time: ${algorithm.total_computing_time}')
+
+
+
+        # print(search_round,round_index,total_search_round)
+        round_index = round_index + 1

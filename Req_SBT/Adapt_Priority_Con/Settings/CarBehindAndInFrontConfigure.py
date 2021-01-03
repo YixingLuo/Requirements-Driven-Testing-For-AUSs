@@ -9,7 +9,7 @@ import shutil
 # import psutil
 
 class CarBehindAndInFrontConfigure:
-    def __init__(self,goal_index,population,search_round, target_dir, round_idx):
+    def __init__(self, goal_selection_flag, population, search_round, iteration_round, target_dir):
         # self.auto_close_on_reach_the_objective= 1
         # self.auto_close_x_position = 10
         # self.auto_close_y_position = 0
@@ -53,12 +53,12 @@ class CarBehindAndInFrontConfigure:
         self.goal_num = 7
         self.maxIterations = self.population * self.round
         self.searchTimeout = 360000
-        self.interval = 50
+        self.iteration_round = iteration_round
         self.num_variables = 19
         self.PoolType = "Thread"
         # self.PoolType = "Process"
         # self.ProcessNum = psutil.cpu_count()
-        self.ProcessNum = 20
+        self.ProcessNum = 32
 
         ## ego
         self.ego_s0 = [10, 30]
@@ -96,25 +96,25 @@ class CarBehindAndInFrontConfigure:
 
         ## algorithm
         ## "NSGA_II": NSGA_II, "NSGA_III": NSGA_III ,"NSGA_III_Adapt": NSGA_II_Goal_Adapt
-        self.algorithm = "Brute_Froce"
+        self.algorithm = "Adapt_Priority"
 
         self.file_dir_sce = target_dir + '/' + str(time.strftime("%Y_%m_%d")) + '_' + str(self.algorithm) + '_scenarios_' + str(
-            round_idx)
+            self.iteration_round)
         if not os.path.exists(self.file_dir_sce):
             os.mkdir(self.file_dir_sce)
 
-        self.file_dir_data = target_dir + '/' + str(time.strftime("%Y_%m_%d")) + '_' + str(self.algorithm) + '_datalog_' + str(
-            round_idx)
+        self.file_dir_data = target_dir +  '/' + str(time.strftime("%Y_%m_%d")) + '_' + str(self.algorithm) + '_datalog_' + str(
+            self.iteration_round)
         if not os.path.exists(self.file_dir_data):
             os.mkdir(self.file_dir_data)
 
-        self.file_dir_eval = target_dir + '/' + str(time.strftime("%Y_%m_%d")) + '_' + str(self.algorithm) + '_results_' + str(
-            round_idx)
+        self.file_dir_eval = target_dir +  '/' + str(time.strftime("%Y_%m_%d")) + '_' + str(self.algorithm) + '_results_' + str(
+            self.iteration_round)
         if not os.path.exists(self.file_dir_eval):
             os.mkdir(self.file_dir_eval)
 
-        self.file_dir_var = target_dir + '/' + str(time.strftime("%Y_%m_%d")) + '_' + str(self.algorithm) + '_variable_' + str(
-            round_idx)
+        self.file_dir_var = target_dir +  '/' + str(time.strftime("%Y_%m_%d")) + '_' + str(self.algorithm) + '_variable_' + str(
+            self.iteration_round)
         if not os.path.exists(self.file_dir_var):
             os.mkdir(self.file_dir_var)
 
@@ -122,14 +122,18 @@ class CarBehindAndInFrontConfigure:
         with open("priority_list.csv") as csvfile:
             csv_file = csv.reader(csvfile)
             for row in csv_file:
-                self.priority_list.append(row)
+                self.priority_list.append(row[0:-1])
             priority_list = [[float(x) for x in row] for row in self.priority_list]
 
 
         self.priority_list = numpy.array(priority_list)
 
-        self.goal_selection_flag = self.priority_list[goal_index]
-        self.goal_index = goal_index
+        self.goal_selection_flag = goal_selection_flag
+
+        for j in range (self.priority_list.shape[0]):
+            if (numpy.array(self.priority_list[j]) == numpy.array(self.goal_selection_flag)).all():
+                self.goal_selection_index = j
+                break
 
 
 

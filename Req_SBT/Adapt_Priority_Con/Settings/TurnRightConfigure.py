@@ -8,8 +8,8 @@ import numpy
 import shutil
 # import psutil
 
-class CarBehindAndInFrontConfigure:
-    def __init__(self,goal_index,population,search_round, target_dir, round_idx):
+class TurnRightConfigure:
+    def __init__(self, goal_selection_flag, population, search_round, iteration_round, target_dir):
         # self.auto_close_on_reach_the_objective= 1
         # self.auto_close_x_position = 10
         # self.auto_close_y_position = 0
@@ -53,68 +53,67 @@ class CarBehindAndInFrontConfigure:
         self.goal_num = 7
         self.maxIterations = self.population * self.round
         self.searchTimeout = 360000
-        self.interval = 50
-        self.num_variables = 19
+        self.iteration_round = iteration_round
+        self.num_variables = 17
         self.PoolType = "Thread"
         # self.PoolType = "Process"
         # self.ProcessNum = psutil.cpu_count()
-        self.ProcessNum = 20
+        self.ProcessNum = 32
 
         ## ego
-        self.ego_s0 = [10, 30]
-        self.ego_v0 = [8, 16]
+        self.ego_s0 = [140, 190]
+        self.ego_v0 = [4, 16]
 
         ## traffic_signals
-        self.start_s = [70, 75]
-        self.end_s = [90, 95]
-        self.green_time = [5, 10]
-        self.yellow_time = [1, 2]
-        self.red_time = [2, 4]
+        self.start_s = 190
+        self.end_s = 220
+        self.green_time = [10, 20]
+        self.yellow_time = [1, 3]
+        self.red_time = [4, 6]
 
         ## static_obstacle
         # self.pos_s_1 = [60, 70]
         # self.pos_s_2 = [70, 80]
 
         ## dynamic_obstacle_1
-        self.pos_y_1 = [40, 60]
+        self.pos_y_1 = [210, 260]
         self.velo_1 = [4, 16]
         self.acc_1 = [0, 3]
-        self.start_time_1 = [0, 0]
-
+        self.start_time_1 = [0, 2]
 
         ## dynamic_obstacle_2
-        self.pos_y_2 = [5, 25]
+        self.pos_x_2 = [25, 75]
         self.velo_2 = [4, 16]
         self.acc_2 = [0, 3]
         self.start_time_2 = [0, 2]
 
         ## dynamic_obstacle_3
-        self.pos_y_3 = [30, 90]
+        self.pos_x_3 = [-75, -25]
         self.velo_3 = [4, 16]
         self.acc_3 = [0, 3]
         self.start_time_3 = [0, 2]
 
         ## algorithm
         ## "NSGA_II": NSGA_II, "NSGA_III": NSGA_III ,"NSGA_III_Adapt": NSGA_II_Goal_Adapt
-        self.algorithm = "Brute_Froce"
+        self.algorithm = "Adapt_Priority"
 
         self.file_dir_sce = target_dir + '/' + str(time.strftime("%Y_%m_%d")) + '_' + str(self.algorithm) + '_scenarios_' + str(
-            round_idx)
+            self.iteration_round)
         if not os.path.exists(self.file_dir_sce):
             os.mkdir(self.file_dir_sce)
 
-        self.file_dir_data = target_dir + '/' + str(time.strftime("%Y_%m_%d")) + '_' + str(self.algorithm) + '_datalog_' + str(
-            round_idx)
+        self.file_dir_data = target_dir +  '/' + str(time.strftime("%Y_%m_%d")) + '_' + str(self.algorithm) + '_datalog_' + str(
+            self.iteration_round)
         if not os.path.exists(self.file_dir_data):
             os.mkdir(self.file_dir_data)
 
-        self.file_dir_eval = target_dir + '/' + str(time.strftime("%Y_%m_%d")) + '_' + str(self.algorithm) + '_results_' + str(
-            round_idx)
+        self.file_dir_eval = target_dir +  '/' + str(time.strftime("%Y_%m_%d")) + '_' + str(self.algorithm) + '_results_' + str(
+            self.iteration_round)
         if not os.path.exists(self.file_dir_eval):
             os.mkdir(self.file_dir_eval)
 
-        self.file_dir_var = target_dir + '/' + str(time.strftime("%Y_%m_%d")) + '_' + str(self.algorithm) + '_variable_' + str(
-            round_idx)
+        self.file_dir_var = target_dir +  '/' + str(time.strftime("%Y_%m_%d")) + '_' + str(self.algorithm) + '_variable_' + str(
+            self.iteration_round)
         if not os.path.exists(self.file_dir_var):
             os.mkdir(self.file_dir_var)
 
@@ -122,14 +121,18 @@ class CarBehindAndInFrontConfigure:
         with open("priority_list.csv") as csvfile:
             csv_file = csv.reader(csvfile)
             for row in csv_file:
-                self.priority_list.append(row)
+                self.priority_list.append(row[0:-1])
             priority_list = [[float(x) for x in row] for row in self.priority_list]
 
 
         self.priority_list = numpy.array(priority_list)
 
-        self.goal_selection_flag = self.priority_list[goal_index]
-        self.goal_index = goal_index
+        self.goal_selection_flag = goal_selection_flag
+
+        for j in range (self.priority_list.shape[0]):
+            if (numpy.array(self.priority_list[j]) == numpy.array(self.goal_selection_flag)).all():
+                self.goal_selection_index = j
+                break
 
 
 

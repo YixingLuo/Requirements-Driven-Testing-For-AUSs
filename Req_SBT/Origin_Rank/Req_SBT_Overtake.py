@@ -46,6 +46,8 @@ data_folder = os.getcwd() + '/Overtake_Datalog_Req1_' + str(time.strftime("%Y_%m
 if not os.path.exists(data_folder):
     os.mkdir(data_folder)
 
+# data_folder = os.getcwd() + '/Overtake_Datalog_Req1_2021_01_03_14'
+
 if __name__ == '__main__':
 
     # goal_selection_index = random.sample(range(0,128),128)
@@ -69,11 +71,15 @@ if __name__ == '__main__':
     priority_list = numpy.array(priority_list)
 
     violation_pattern_to_search = []
-    pattern_count = numpy.zeros(priority_list.shape[0])
     evaluation = []
     searched_violation_pattern = []
+    start_round = 0
+    pattern_count = numpy.zeros(priority_list.shape[0])
+    # pattern_count = numpy.loadtxt("pattern_count_0.txt")
+    # searched_violation_pattern = numpy.loadtxt("searched_violation_pattern_0.txt")
 
-    for round_idx in range (total_round):
+    # for round_idx in range (total_round):
+    for round_idx in range(start_round, total_round):
 
         if round_idx == 0:
             goal_index = 0
@@ -127,40 +133,20 @@ if __name__ == '__main__':
         max_evaluations = population * search_round
         # print(max_evaluations)
 
-        if Configuration.algorithm == "NSGA_II":
-            algorithm = NSGAII(
-                population_evaluator=MultiprocessEvaluator(Configuration.ProcessNum),
-                # population_evaluator=SequentialEvaluator(),
-                problem=problem,
-                population_size = Configuration.population,
-                offspring_population_size = Configuration.population,
-                mutation=PolynomialMutation(probability=1.0 / problem.number_of_variables, distribution_index=20),
-                crossover=SBXCrossover(probability=1.0, distribution_index=20),
-                termination_criterion = StoppingByEvaluations(max_evaluations=max_evaluations)
-                # termination_criterion = StoppingByQualityIndicator(quality_indicator=FitnessValue, expected_value=1, degree=0.9)
-                # selection = BinaryTournamentSelection()
-            )
-        elif Configuration.algorithm == "NSGA_III" or Configuration.algorithm == "Brute_Froce":
-            algorithm = NSGAIII(
-                population_evaluator=MultiprocessEvaluator(Configuration.ProcessNum),
-                # population_evaluator=SequentialEvaluator(),
-                problem=problem,
-                population_size = Configuration.population,
-                reference_directions=UniformReferenceDirectionFactory(Configuration.goal_num, n_points= Configuration.population - 1),
-                # offspring_population_size = Configuration.population,
-                mutation=PolynomialMutation(probability=1.0 / problem.number_of_variables, distribution_index=20),
-                crossover=SBXCrossover(probability=1.0, distribution_index=20),
-                termination_criterion = StoppingByEvaluations(max_evaluations=max_evaluations)
-                # termination_criterion = StoppingByQualityIndicator(quality_indicator=HyperVolume, expected_value=1,
-                #                                                  degree=0.9)
-                # selection = BinaryTournamentSelection()
-            )
-        elif Configuration.algorithm == 'Random':
-            algorithm = RandomSearch(
-                problem=problem,
-                termination_criterion=StoppingByEvaluations(max_evaluations=max_evaluations)
-            )
-
+        algorithm = NSGAIII(
+            population_evaluator=MultiprocessEvaluator(Configuration.ProcessNum),
+            # population_evaluator=SequentialEvaluator(),
+            problem=problem,
+            population_size = Configuration.population,
+            reference_directions=UniformReferenceDirectionFactory(Configuration.goal_num, n_points= Configuration.population - 1),
+            # offspring_population_size = Configuration.population,
+            mutation=PolynomialMutation(probability=1.0 / problem.number_of_variables, distribution_index=20),
+            crossover=SBXCrossover(probability=1.0, distribution_index=20),
+            termination_criterion = StoppingByEvaluations(max_evaluations=max_evaluations)
+            # termination_criterion = StoppingByQualityIndicator(quality_indicator=HyperVolume, expected_value=1,
+            #                                                  degree=0.9)
+            # selection = BinaryTournamentSelection()
+        )
 
         """==========================调用算法模板进行种群进化========================="""
         progress_bar = ProgressBarObserver(max=max_evaluations)
@@ -174,6 +160,8 @@ if __name__ == '__main__':
         numpy.savetxt(file_name, searched_violation_pattern, fmt="%d")  # 保存为整数
         file_name = target_dir + '/violation_pattern_to_search_' + str(round_idx) + '.txt'
         numpy.savetxt(file_name, violation_pattern_to_search, fmt="%d")  # 保存为整数
+        file_name = target_dir + '/pattern_count_' + str(round_idx) + '.txt'
+        numpy.savetxt(file_name, pattern_count, fmt="%d")  # 保存为整数
 
         # Save results to file
         fun_name = 'FUN.' + str(round_idx) + '_' + algorithm.label

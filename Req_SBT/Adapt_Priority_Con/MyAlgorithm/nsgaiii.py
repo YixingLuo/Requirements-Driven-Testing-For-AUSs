@@ -264,7 +264,6 @@ class NSGAIII(NSGAII):
                  mutation: Mutation,
                  crossover: Crossover,
                  population_size: int = None,
-                 continue_flag: int = None,
                  selection: Selection = BinaryTournamentSelection(
                      MultiComparator([FastNonDominatedRanking.get_comparator(),
                                       CrowdingDistance.get_comparator()])),
@@ -273,10 +272,9 @@ class NSGAIII(NSGAII):
                  # population_generator: Generator = RandomGenerator(),
                  population_evaluator: Evaluator = store.default_evaluator,
                  dominance_comparator: Comparator = store.default_comparator,
-                 initial_population: List[float] = None):
+                 initial_population: List[float]= None):
         self.initial_population = initial_population
         self.reference_directions = reference_directions.compute()
-        self.continue_flag = continue_flag
 
         if not population_size:
             population_size = len(self.reference_directions)
@@ -399,20 +397,91 @@ class NSGAIII(NSGAII):
         return ranking.get_subfront(0)
 
     def get_name(self) -> str:
-        return 'GA'
+        return 'Adapt_Priority'
+
+    # def restart(self):
+    #     self.solutions = self.evaluate(self.solutions)
+
+    # def update_progress(self):
+    #     if self.problem.the_problem_has_changed():
+    #         self.restart()
+    #         self.problem.clear_changed()
+    #
+    #     observable_data = self.get_observable_data()
+    #     self.observable.notify_all(**observable_data)
+    #
+    #     self.evaluations += self.offspring_population_size
+
+    # def stopping_condition_is_met(self):
+    #
+    #
+    #     if self.termination_criterion.is_met:
+    #         observable_data = self.get_observable_data()
+    #         observable_data['TERMINATION_CRITERIA_IS_MET'] = True
+    #         self.observable.notify_all(**observable_data)
+    #
+    #         # self.restart()
+    #         # self.init_progress()
+    #         #
+    #         # self.completed_iterations += 1
+    #     else:
+    #         front = self.get_result()
+    #
+    #         filename_var = self.file_pareto_front + "/VAR_" + str(self.generation)
+    #         filename_fun = self.file_pareto_front + "/FUNC_" + str(self.generation)
+    #         try:
+    #             os.makedirs(os.path.dirname(filename_var), exist_ok=True)
+    #         except FileNotFoundError:
+    #             pass
+    #
+    #         try:
+    #             os.makedirs(os.path.dirname(filename_fun), exist_ok=True)
+    #         except FileNotFoundError:
+    #             pass
+    #
+    #         if type(front) is not list:
+    #             solutions = [front]
+    #
+    #         with open(filename_var, 'w') as of:
+    #             for solution in front:
+    #                 for variables in solution.variables:
+    #                     of.write(str(variables) + " ")
+    #                 of.write("\n")
+    #
+    #         with open(filename_fun, 'w') as of:
+    #             for solution in front:
+    #                 for function_value in solution.objectives:
+    #                     of.write(str(function_value) + ' ')
+    #                 of.write('\n')
+    #
+    #         self.generation += 1
+
+
+            # for solution in front:
+            #     print(solution.variables[0])
+            #
+            # for solution in front:
+            #     print(str(front.index(solution)) + ": ", sep='  ', end='', flush=True)
+            #     print(solution.objectives, sep='  ', end='', flush=True)
+            #     print()
 
     def create_initial_solutions(self) -> List[S]:
-        if self.continue_flag == 1:
-            population = []
-            for i in range(self.population_size):
+        if self.problem.config.iteration_round == 0:
+            # print(self.problem.config.iteration_round, self.population_size)
+            return [self.population_generator.new(self.problem)
+                    for _ in range(self.population_size)]
+
+            # return [self.problem.create_solution() for _ in range(self.population_size)]  ## random generator
+        else:
+            population = [self.population_generator.new(self.problem) for _ in range(int(0.5*self.population_size))]
+            # existing_population = []
+            for i in range (self.population_size - int(0.5*self.population_size)):
                 new_solution = FloatSolution(
                     self.problem.lower_bound,
                     self.problem.upper_bound,
                     self.problem.number_of_objectives,
                     self.problem.number_of_constraints)
-                new_solution.variables = self.initial_population[i]
+                new_solution.variables = self.initial_population[self.problem.config.goal_selection_index][i]
+                # print(i, self.initial_population[self.problem.config.goal_selection_index][i])
                 population.append(new_solution)
             return population
-        else:
-            return [self.population_generator.new(self.problem)
-                        for _ in range(self.population_size)]
