@@ -1,29 +1,22 @@
 # -*- coding: utf-8 -*-
 
-# from jmetal.algorithm.multiobjective.nsgaii import NSGAII
-# from jmetal.algorithm.multiobjective.random_search import RandomSearch
-# from jmetal.algorithm.multiobjective.nsgaiii import NSGAIII
 from jmetal.algorithm.multiobjective.nsgaiii import UniformReferenceDirectionFactory
 from jmetal.operator import SBXCrossover, PolynomialMutation
 from jmetal.util.solution import print_function_values_to_file, print_variables_to_file
-# from jmetal.util.termination_criterion import StoppingByEvaluations
+from jmetal.util.termination_criterion import StoppingByEvaluations
 from jmetal.util.evaluator import MultiprocessEvaluator
 from jmetal.util.observer import ProgressBarObserver
 from MyAlgorithm.nsgaiii import NSGAIII
-from MyAlgorithm.nsgaii import NSGAII
-from MyAlgorithm.random_search import RandomSearch
-from MyAlgorithm.termination_criterion import StoppingByEvaluations
-# from MyAlgorithm.evaluator import MultiprocessEvaluator
 from Settings.CarBehindAndInFrontConfigure import CarBehindAndInFrontConfigure
 import os
 import time
-# from trash.initial_files.bestpop import BestPop
 from CarBehindAndInFrontProblem import CarBehindAndInFrontProblem
 import csv
 import numpy
 from RankingRules.DistanceRanking import Distance_Ranking
 from RankingRules.EnsembleRanking import Ensemble_Ranking
 from RankingRules.RelationRanking import Relation_Ranking
+
 
 
 
@@ -53,12 +46,13 @@ if __name__ == '__main__':
         priority_list = [[float(x) for x in row] for row in priority_list]
     priority_list = numpy.array(priority_list)
 
-    violation_pattern_to_search = []
-    pattern_count = numpy.zeros(priority_list.shape[0])
-    evaluation = []
-    searched_violation_pattern = []
+    violation_pattern_to_search = numpy.loadtxt("violation_pattern_to_search_0.txt")
+    pattern_count = numpy.loadtxt("pattern_count_0.txt")
+    evaluation = numpy.loadtxt("evaluations_0.txt")
+    variables = numpy.loadtxt("variables_0.txt")
+    searched_violation_pattern = numpy.loadtxt("searched_violation_pattern_0.txt")
+
     violation_pattern_ranking_removed = []
-    variables = []
     sorted_pop = []
 
     # total_search_round = 400
@@ -70,12 +64,42 @@ if __name__ == '__main__':
 
         ## caculate goal_index
         if round_index == 0:
-            goal_selection_flag = numpy.ones(7)
+            violation_pattern_to_search = []
+            for j in range(priority_list.shape[0]):
+                if pattern_count[j] == 0:
+                    violation_pattern_to_search.append(priority_list[j])
+            # print(numpy.array(violation_pattern_to_search).shape[0])
+
+            weight_dist, sorted_pattern_distance, sorted_pop, distance_ranking = Distance_Ranking(priority_list,
+                                                                                                  variables, evaluation)
+            weight_relation, sorted_pattern_relation, relation_ranking = Relation_Ranking(violation_pattern_to_search,
+                                                                                          searched_violation_pattern,
+                                                                                          priority_list)
+            weights = [1, weight_dist, weight_relation]
+            violation_pattern_ranking, overall_rank_list = Ensemble_Ranking(distance_ranking, relation_ranking,
+                                                                            violation_pattern_to_search, weights)
+
+            violation_pattern_ranking_removed = violation_pattern_ranking.copy()
+            for j in range(numpy.array(violation_pattern_ranking).shape[0]):
+                for k in range(numpy.array(searched_violation_pattern).shape[0]):
+                    if (numpy.array(violation_pattern_ranking[j]) == numpy.array(searched_violation_pattern[k])).all():
+                        removed_item = violation_pattern_ranking[j]
+                        for ll in range(numpy.array(violation_pattern_ranking_removed).shape[0]):
+                            if (numpy.array(violation_pattern_ranking_removed[ll]) == numpy.array(removed_item)).all():
+                                del violation_pattern_ranking_removed[ll]
+                                break
+                        break
+            if numpy.array(violation_pattern_ranking_removed).shape[0] == 0:
+                goal_selection_flag = numpy.ones(7)
+            else:
+                goal_selection_flag = violation_pattern_ranking_removed[0]
+
             searched_violation_pattern.append(goal_selection_flag)
-            Configuration = CarBehindAndInFrontConfigure(goal_selection_flag, population, search_round, round_index, target_dir)
+
+            Configuration = CarBehindAndInFrontConfigure(goal_selection_flag, population, search_round, round_index,
+                                                         target_dir)
             vars_file_name = Configuration.file_dir_var
             results_file_name = Configuration.file_dir_eval
-            # print(round_index, vars_file_name, results_file_name)
 
         else:
             print(round_index, sum(pattern_count))
@@ -179,6 +203,12 @@ if __name__ == '__main__':
         numpy.savetxt(file_name, searched_violation_pattern, fmt="%d")  # 保存为整数
         file_name = target_dir + '/violation_pattern_to_search_' + str(round_index) + '.txt'
         numpy.savetxt(file_name, violation_pattern_to_search, fmt="%d")  # 保存为整数
+        file_name = target_dir + '/variables_' + str(round_index) + '.txt'
+        numpy.savetxt(file_name, variables, fmt="%d")  # 保存为整数
+        file_name = target_dir + '/evaluations_' + str(round_index) + '.txt'
+        numpy.savetxt(file_name, evaluation, fmt="%d")  # 保存为整数
+        file_name = target_dir + '/pattern_count_' + str(round_index) + '.txt'
+        numpy.savetxt(file_name, pattern_count, fmt="%d")  # 保存为整数
 
 
         fun_name = 'FUN.' + str(round_index) + '_' + algorithm.label
