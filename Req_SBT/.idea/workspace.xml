@@ -3,16 +3,7 @@
   <component name="ChangeListManager">
     <list default="true" id="5f6be2e7-f6e0-4dfc-ba56-9b914322d642" name="Default" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Adapt_Priority/RankingRules/EnsembleRanking.py" beforeDir="false" afterPath="$PROJECT_DIR$/Adapt_Priority/RankingRules/EnsembleRanking.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Adapt_Priority/Req_SBT2_Overtake.py" beforeDir="false" afterPath="$PROJECT_DIR$/Adapt_Priority/Req_SBT2_Overtake.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Adapt_Priority/Req_SBT3.py" beforeDir="false" afterPath="$PROJECT_DIR$/Adapt_Priority/Req_SBT3.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Adapt_Priority/Req_SBT_Overtake.py" beforeDir="false" afterPath="$PROJECT_DIR$/Adapt_Priority/Req_SBT_Overtake.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Adapt_Priority/Req_SBT_Overtake_Dis.py" beforeDir="false" afterPath="$PROJECT_DIR$/Adapt_Priority/Req_SBT_Overtake_Dis.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Adapt_Priority/Req_SBT_Overtake_Re.py" beforeDir="false" afterPath="$PROJECT_DIR$/Adapt_Priority/Req_SBT_Overtake_Re.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Brute_Force/Req_SBT2_Overtake.py" beforeDir="false" afterPath="$PROJECT_DIR$/Brute_Force/Req_SBT2_Overtake.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Brute_Force/Req_SBT_Overtake.py" beforeDir="false" afterPath="$PROJECT_DIR$/Brute_Force/Req_SBT_Overtake.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Origin_Rank/Req_SBT2_Overtake.py" beforeDir="false" afterPath="$PROJECT_DIR$/Origin_Rank/Req_SBT2_Overtake.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Origin_Rank/Req_SBT_Overtake.py" beforeDir="false" afterPath="$PROJECT_DIR$/Origin_Rank/Req_SBT_Overtake.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Random_Search/Random_Overtake.sh" beforeDir="false" afterPath="$PROJECT_DIR$/Random_Search/Random_Overtake.sh" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
