@@ -7,7 +7,7 @@ from jmetal.core.problem import FloatProblem
 from jmetal.core.solution import FloatSolution
 # from MyAlgorithm.solution import FloatSolution
 from MyScenario.CarBehindAndInFront import create_run_scenario_overtake
-
+import numpy as np
 
 # from scoop import futures
 
@@ -16,15 +16,16 @@ class CarBehindAndInFrontProblem(FloatProblem):
 
     .. note:: Version including a loop for increasing the computing time of the evaluation functions.
     """
-    def __init__(self,  M, configure):
+    def __init__(self,  M, configure, target_value_threshold):
         """ :param number_of_variables: Number of decision variables of the problem.
         """
         super(CarBehindAndInFrontProblem, self).__init__()
         self.number_of_variables = configure.num_variables
-        self.number_of_objectives =  configure.goal_num
+        self.number_of_objectives = configure.goal_num
         self.number_of_constraints = 0
         self.config = configure
-        # self.bestpop = bestpop
+        self.problem_solved = 0
+        self.target_value_threshold = target_value_threshold
 
         self.obj_directions = []
         for i in range (len(configure.goal_selection_flag)):
@@ -54,6 +55,16 @@ class CarBehindAndInFrontProblem(FloatProblem):
         result = create_run_scenario_overtake(Vars, self.config)
 
         solution.objectives = result
+
+        ## check if find such pattern
+        goal_flag = np.zeros((7), dtype=int)
+        for j in range(7):
+            if result[j] < self.target_value_threshold[j]:
+                goal_flag[j] = 1
+            else:
+                goal_flag[j] = 0
+        if (goal_flag == self.config.goal_selection_flag).all():
+            self.problem_solved = 1
 
         return solution
 

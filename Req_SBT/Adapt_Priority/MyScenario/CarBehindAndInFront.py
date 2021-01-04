@@ -127,11 +127,7 @@ def create_run_scenario_overtake (Vars, Configure):
     dynamic_vehicle_state = [[] for i in range(num_dynamic_obs)]
     static_vehicle_state = [[] for i in range(num_static_obs)]
     with open(log_name, 'r') as f:
-        my_data = f.readlines()  # txt�������ַ�������data���õ�����һ��list
-        # ��list�е��������ָ�������ת��
-        # for line in my_data:
-        #     line_data = line.split()
-        #     numbers_float = map(float, line_data)  # ת��Ϊ������
+        my_data = f.readlines()
 
         for line in my_data:
             data = line.split()
@@ -179,29 +175,9 @@ def create_run_scenario_overtake (Vars, Configure):
     result = [min_stable, min_dis, min_speed, traffic_light, cross_lane, comfort1, comfort2]
     # result = [-min_dis, -min_stable, min_speed, traffic_light, -cross_lane, -comfort1, comfort2]
 
-    # global _global_dict
-    # _global_dict
-    # BestPopulation.round = 2
-    # print(BestPopulation.round)
-    # bestlog = globalvar.get_value('BestPop')
-    # print("Scenario:", BestPopulation.round)
-    # print("Variables:", Vars)
+    result_name = file_dir_eval + "/result_" + now_time + "_" + uuid_str + ".txt"
 
-    # print("Results:", len(result), result)
-
-    # print("Weights:", bestlog.weights)
-    # print("Round: %d" %(bestpop.round))
-
-    result_name = file_dir_eval + "/result_" + now_time  + "_"  + uuid_str + ".txt"
-    # print(result_name)
     np.savetxt(result_name, result, fmt="%f", delimiter=" ")
-
-    # if Configure.algorithm == 'NSGA_III_Adapt':
-    #     weights = BestPop.weights
-    #     for i in range (config.goal_num):
-    #         result[i] = weights[i] *  result[i]
-
-        # print("Results after weight:", result)
 
     return result
 

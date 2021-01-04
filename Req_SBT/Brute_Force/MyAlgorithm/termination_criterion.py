@@ -5,6 +5,7 @@ from abc import ABC, abstractmethod
 
 from jmetal.core.observer import Observer
 from jmetal.core.quality_indicator import QualityIndicator
+from jmetal.core.problem import Problem, DynamicProblem
 
 """
 .. module:: termination_criterion
@@ -29,17 +30,46 @@ class TerminationCriterion(Observer, ABC):
 
 class StoppingByEvaluations(TerminationCriterion):
 
-    def __init__(self, max_evaluations: int):
+    def __init__(self, max_evaluations: int, problem: Problem):
         super(StoppingByEvaluations, self).__init__()
         self.max_evaluations = max_evaluations
         self.evaluations = 0
+        self.problem = problem
 
     def update(self, *args, **kwargs):
         self.evaluations = kwargs['EVALUATIONS']
+        self.problem = kwargs['PROBLEM']
 
     @property
     def is_met(self):
-        return self.evaluations >= self.max_evaluations
+        if self.problem.problem_solved:
+            return self.problem.problem_solved
+        else:
+            return self.evaluations >= self.max_evaluations
+
+class MyStoppingByEvaluations(TerminationCriterion):
+
+    evaluations = None
+
+    def __init__(self, max_evaluations: int, problem: Problem):
+        super(MyStoppingByEvaluations, self).__init__()
+        self.max_evaluations = max_evaluations
+        self.evaluations = 0
+        self.problem = problem
+
+    def update(self, *args, **kwargs):
+        self.evaluations = kwargs['EVALUATIONS']
+        self.problem = kwargs['PROBLEM']
+
+    @property
+    def is_met(self):
+        if self.problem.problem_solved:
+            print("find that pattern!!")
+            return self.problem.problem_solved
+        else:
+            print("reach the max evaluations!!")
+            return self.evaluations >= self.max_evaluations
+
 
 
 class StoppingByTime(TerminationCriterion):

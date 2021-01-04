@@ -2,7 +2,7 @@
 # -*- coding:utf-8 -*-
 import numpy as np
 import math
-from CarBehindAndInFrontConfigure import CarBehindAndInFrontConfigure
+# from CarBehindAndInFrontConfigure import CarBehindAndInFrontConfigure
 import os
 import time
 import json
