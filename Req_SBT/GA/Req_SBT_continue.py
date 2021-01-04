@@ -36,10 +36,10 @@ if not os.path.exists(data_folder):
 if __name__ == '__main__':
 
     target_dir = data_folder
-    search_round = 500
-    population = 100
+    search_round = 1000
+    population = 50
 
-    continue_flag = 1
+    continue_flag = 0
     variables = []
     Configuration = CarBehindAndInFrontConfigureCon(target_dir, population, search_round)
     Goal_num = Configuration.goal_num

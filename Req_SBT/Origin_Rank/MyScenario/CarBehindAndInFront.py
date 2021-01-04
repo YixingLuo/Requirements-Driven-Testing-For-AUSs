@@ -275,8 +275,9 @@ def create_run_scenario_overtake_random (Configure):
 
     var_name = file_dir_var + "/var_" + now_time + "_" + uuid_str + ".txt"
 
-    with open(var_name, 'w', encoding='utf-8') as f:
-        json.dump(Vars, f, ensure_ascii=False, indent=4)
+    # with open(var_name, 'w', encoding='utf-8') as f:
+    #     json.dump(Vars, f, ensure_ascii=False, indent=4)
+    np.savetxt(var_name, Vars, fmt="%f", delimiter=" ")
 
     ## run the scenario
     duration = config.duration

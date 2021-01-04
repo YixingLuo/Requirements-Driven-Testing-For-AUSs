@@ -7,7 +7,7 @@ from jmetal.algorithm.multiobjective.nsgaiii import UniformReferenceDirectionFac
 from jmetal.operator import SBXCrossover, PolynomialMutation
 from jmetal.util.solution import print_function_values_to_file, print_variables_to_file
 from jmetal.util.termination_criterion import StoppingByEvaluations
-from jmetal.util.evaluator import MultiprocessEvaluator
+from jmetal.util.evaluator import MultiprocessEvaluator, SequentialEvaluator
 # from MyAlgorithm.nsgaiii import NSGAIII
 from MyAlgorithm.nsgaii import NSGAII
 from MyAlgorithm.random_search import RandomSearch
@@ -36,29 +36,31 @@ def random_int_list(start, stop, length):
 def text_create(Configuration):
     desktop_path = os.getcwd() + '/'
     # 新创建的txt文件的存放路径
-    full_path = desktop_path + str(time.strftime("%Y_%m_%d_")) + str(Configuration.algorithm) + '_iteration.txt'  # 也可以创建一个.doc的word文档
-    file = open(full_path,  'w')
+    full_path = desktop_path + str(time.strftime("%Y_%m_%d_")) + str(
+        Configuration.algorithm) + '_iteration.txt'  # 也可以创建一个.doc的word文档
+    file = open(full_path, 'w')
     return full_path
 
-data_folder = os.getcwd() + '/Overtake_Datalog_Req1_' + str(time.strftime("%Y_%m_%d_%H"))
-if not os.path.exists(data_folder):
-    os.mkdir(data_folder)
 
-# data_folder = os.getcwd() + '/Overtake_Datalog_Req1_2021_01_03_14'
+# data_folder = os.getcwd() + '/Overtake_Datalog_Req1_' + str(time.strftime("%Y_%m_%d_%H"))
+# if not os.path.exists(data_folder):
+#     os.mkdir(data_folder)
+
+data_folder = os.getcwd() + '/Overtake_Datalog_Req1_2021_01_03_15'
 
 if __name__ == '__main__':
 
-    # search_round_list = [1, 10, 10, 10, 10, 20, 110, 110]
-    search_round_list = [1, 10, 20, 30, 40, 50, 60, 70]
     # goal_selection_index = random.sample(range(0,128),128)
-    goal_selection_index = [idx for idx in range(128)]
-    total_round = 1000
+    # goal_selection_index = [idx for idx in range(128)]
+    total_round = 10
     population = 100
-    round_idx = 0
+    search_round = 100
 
     target_dir = data_folder
     file_name = os.path.join(target_dir, 'goal_selection_index.txt')
-    numpy.savetxt(file_name, goal_selection_index, fmt="%d")  # 保存为整数
+    goal_selection_index = numpy.loadtxt(file_name)
+    # goal_selection_index = int(goal_selection_index)
+    # numpy.savetxt(file_name, goal_selection_index, fmt="%d")  # 保存为整数
 
     target_value_threshold = [1, 0, 1, 1, 1, 0.95, 0.99]
 
@@ -72,27 +74,54 @@ if __name__ == '__main__':
 
     violation_pattern_to_search = []
     evaluation = []
-    searched_violation_pattern = []
+    start_round = 2
     pattern_count = numpy.zeros(priority_list.shape[0])
-    # pattern_count = numpy.loadtxt("pattern_count_0.txt")
-    # searched_violation_pattern = numpy.loadtxt("searched_violation_pattern_0.txt")
-
-    while total_round > 0:
+    # pattern_count = numpy.loadtxt(os.path.join(target_dir, "pattern_count_1.txt"))
+    searched_violation_pattern = numpy.loadtxt(os.path.join(target_dir, "searched_violation_pattern_1.txt"))
+    searched_violation_pattern = list(searched_violation_pattern)
 
     # for round_idx in range (total_round):
+    for round_idx in range(start_round, total_round):
 
-        if round_idx == 0:
+        if round_idx == start_round:
+            results_file_name = [target_dir + '/2021_01_03_Brute_Froce_results_0', target_dir + '/2021_01_04_Brute_Froce_results_1']
+            for filefolder in results_file_name:
+                fileList = os.listdir(filefolder)
+                fileList.sort()
+                for i in range(population * search_round):
+                    textname = filefolder + '/' + fileList[i]
+                    # print(textname)
+                    result = numpy.loadtxt(textname)
+                    evaluation.append(result)
+                    goal_flag = numpy.zeros((7), dtype=int)
+                    for j in range(7):
+                        if result[j] < target_value_threshold[j]:
+                            goal_flag[j] = 1
+                        else:
+                            goal_flag[j] = 0
+                    for j in range(priority_list.shape[0]):
+                        if (numpy.array(goal_flag) == priority_list[j]).all():
+                            pattern_count[j] = pattern_count[j] + 1
+                            break
+
+            violation_pattern_to_search = []
+            for j in range(priority_list.shape[0]):
+                if pattern_count[j] == 0:
+                    violation_pattern_to_search.append(j)
+
             goal_index = 0
-            goal_selection_flag = priority_list[goal_index]
-            search_round = search_round_list[int(sum(goal_selection_flag))]
-            if total_round < search_round:
-                search_round = total_round
-            total_round = total_round - search_round
 
-            Configuration = CarBehindAndInFrontConfigure(goal_index,population,search_round,target_dir, round_idx)
-            vars_file_name = Configuration.file_dir_var
-            results_file_name = Configuration.file_dir_eval
+            for j in range(len(goal_selection_index)):
+                if violation_pattern_to_search.count(goal_selection_index[j]) == 1 and searched_violation_pattern.count(
+                        goal_selection_index[j]) == 0:
+                    # print(searched_violation_pattern, searched_violation_pattern.count(goal_selection_index[j]),goal_selection_index[j])
+                    goal_index = goal_selection_index[j]
+                    break
+
             searched_violation_pattern.append(goal_index)
+            print(searched_violation_pattern, pattern_count)
+            Configuration = CarBehindAndInFrontConfigure(int(goal_index), population, search_round, target_dir, round_idx)
+
         else:
             fileList = os.listdir(results_file_name)
             fileList.sort()
@@ -107,37 +136,32 @@ if __name__ == '__main__':
                         goal_flag[j] = 1
                     else:
                         goal_flag[j] = 0
-                for j in range (priority_list.shape[0]):
+                for j in range(priority_list.shape[0]):
                     if (numpy.array(goal_flag) == priority_list[j]).all():
                         pattern_count[j] = pattern_count[j] + 1
                         break
 
             violation_pattern_to_search = []
-            for j in range (priority_list.shape[0]):
+            for j in range(priority_list.shape[0]):
                 if pattern_count[j] == 0:
                     violation_pattern_to_search.append(j)
 
             goal_index = 0
 
-            for j in range (len(goal_selection_index)):
-                if violation_pattern_to_search.count(goal_selection_index[j]) == 1 and searched_violation_pattern.count(goal_selection_index[j]) == 0:
+            for j in range(len(goal_selection_index)):
+                if violation_pattern_to_search.count(goal_selection_index[j]) == 1 and searched_violation_pattern.count(
+                        goal_selection_index[j]) == 0:
                     # print(searched_violation_pattern, searched_violation_pattern.count(goal_selection_index[j]),goal_selection_index[j])
                     goal_index = goal_selection_index[j]
                     break
 
-            goal_selection_flag = priority_list[goal_index]
-            search_round = search_round_list[int(sum(goal_selection_flag))]
-            if total_round < search_round:
-                search_round = total_round
-            total_round = total_round - search_round
-
-            searched_violation_pattern.append(goal_index)
+            searched_violation_pattern.append(int(goal_index))
             Configuration = CarBehindAndInFrontConfigure(goal_index, population, search_round, target_dir, round_idx)
 
         # print(searched_violation_pattern)
         Goal_num = Configuration.goal_num
 
-        """==================================输出结果=============================="""
+        """===============================保存=================================="""
         # Save results to file
         file_name = target_dir + '/searched_violation_pattern_' + str(round_idx) + '.txt'
         numpy.savetxt(file_name, searched_violation_pattern, fmt="%d")  # 保存为整数
@@ -154,15 +178,16 @@ if __name__ == '__main__':
         # print(max_evaluations)
 
         algorithm = NSGAIII(
-            population_evaluator=MultiprocessEvaluator(Configuration.ProcessNum),
-            # population_evaluator=SequentialEvaluator(),
+            # population_evaluator=MultiprocessEvaluator(Configuration.ProcessNum),
+            population_evaluator=SequentialEvaluator(),
             problem=problem,
-            population_size = Configuration.population,
-            reference_directions=UniformReferenceDirectionFactory(Configuration.goal_num, n_points= Configuration.population - 1),
+            population_size=Configuration.population,
+            reference_directions=UniformReferenceDirectionFactory(Configuration.goal_num,
+                                                                  n_points=Configuration.population - 1),
             # offspring_population_size = Configuration.population,
             mutation=PolynomialMutation(probability=1.0 / problem.number_of_variables, distribution_index=20),
             crossover=SBXCrossover(probability=1.0, distribution_index=20),
-            termination_criterion = StoppingByEvaluations(max_evaluations=max_evaluations)
+            termination_criterion=StoppingByEvaluations(max_evaluations=max_evaluations)
             # termination_criterion = StoppingByQualityIndicator(quality_indicator=HyperVolume, expected_value=1,
             #                                                  degree=0.9)
             # selection = BinaryTournamentSelection()
@@ -174,16 +199,17 @@ if __name__ == '__main__':
         algorithm.run()
         front = algorithm.get_result()
 
+        """==================================输出结果=============================="""
 
 
         # Save results to file
         fun_name = 'FUN.' + str(round_idx) + '_' + algorithm.label
-        print_function_values_to_file(front, os.path.join(target_dir,fun_name))
-        var_name = 'VAR.'+ str(round_idx) + '_' + algorithm.label
+        print_function_values_to_file(front, os.path.join(target_dir, fun_name))
+        var_name = 'VAR.' + str(round_idx) + '_' + algorithm.label
         print_variables_to_file(front, os.path.join(target_dir, var_name))
 
         print(f'Algorithm: ${algorithm.get_name()}')
         print(f'Problem: ${problem.get_name()}')
         print(f'Computing time: ${algorithm.total_computing_time}')
 
-        round_idx = round_idx + 1
+

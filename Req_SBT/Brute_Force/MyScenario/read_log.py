@@ -2,7 +2,7 @@
 # -*- coding:utf-8 -*-
 import numpy as np
 import math
-# from Settings.CarBehindAndInFrontConfigure import CarBehindAndInFrontConfigure
+from CarBehindAndInFrontConfigure import CarBehindAndInFrontConfigure
 import os
 import time
 import json
@@ -477,8 +477,8 @@ if __name__=='__main__':
     # os.system(cmd)
     # print(log_name)
     #
-    scenario_name = 'SCENAR1.json'
-    log_name = 'datalog1.txt'
+    scenario_name = 'scenario_20210104102544_414_80ce2c9972004a43828d55acfb1f2b37.json'
+    log_name = 'datalog_20210104102544_414_80ce2c9972004a43828d55acfb1f2b37.txt'
     config = CarBehindAndInFrontConfigure()
 
     with open(scenario_name, 'r', encoding='utf-8') as f:
@@ -488,37 +488,32 @@ if __name__=='__main__':
     st_obsList = ret_dic["static_obs"]
     dy_obsList  = ret_dic["dynamic_obs"]
 
-    num_dynamic_obs = 6
-    num_static_obs = 1
+    num_dynamic_obs = 3
+    num_static_obs = 0
 
     ego_vehicle_state = []
     dynamic_vehicle_state = [[] for i in range(num_dynamic_obs)]
     static_vehicle_state = [[] for i in range(num_static_obs)]
     with open(log_name, 'r') as f:
-        my_data = f.readlines()  # txt中所有字符串读入data，得到的是一个list
-        # 对list中的数据做分隔和类型转换
-        # for line in my_data:
-        #     line_data = line.split()
-        #     numbers_float = map(float, line_data)  # 转化为浮点数
+        my_data = f.readlines()
 
         for line in my_data:
             data = line.split()
-            if data[0] == "EGO_STATUS" and len(data) == 8:
+            if len(data) == 8 and data[0] == "EGO_STATUS":
                 log = []
                 for i in range(1, len(data)):
                     log.append(float(data[i]))
                 if len(log) == 7:
                     ego_vehicle_state.append(log)
 
-            if data[0] == "DYNAMIC_OBS_INFO" and len(data) == 10:
+            if len(data) == 10 and data[0] == "DYNAMIC_OBS_INFO":
                 log = []
                 for i in range(2, len(data)):
                     log.append(float(data[i]))
                     # print(log)
                 if len(log) == 8:
-                    # print(log,int(data[1]))
                     dynamic_vehicle_state[int(data[1])].append(log)
-            elif data[0] == "STATIC_OBS_INFO" and len(data) == 5:
+            elif len(data) == 5 and data[0] == "STATIC_OBS_INFO":
                 log = []
                 for i in range(2, len(data)):
                     log.append(float(data[i]))
@@ -529,23 +524,16 @@ if __name__=='__main__':
 
 
 
-
     comfort1, comfort2 = evaluate_comfort(ego_vehicle_state, config)
     avg_speed, min_speed = evaluate_speed(ego_vehicle_state, config)
     # min_dis, avg_dis_satisfaction, min_dis_satisfaction = evaluate_distance(ego_vehicle_state, dynamic_vehicle_state,
     #                                                                 dy_obsList, static_vehicle_state, st_obsList, config)
     min_dis, avg_dis_satisfaction, min_dis_satisfaction = evaluate_collision (ego_vehicle_state, dynamic_vehicle_state, dy_obsList, static_vehicle_state, st_obsList, config)
-    print(min_dis, avg_dis_satisfaction, min_dis_satisfaction)
     avg_stable, min_stable = evaluate_stability(ego_vehicle_state, config)
     traffic_light = evaluate_traffic_light(ego_vehicle_state, traffic_light)
     cross_lane = evaluate_cross_lane(ego_vehicle_state)
 
-    # result = [avg_stable, min_stable, avg_dis_satisfaction, min_dis_satisfaction, avg_speed, min_speed, traffic_light, cross_lane, comfort1,
-    #           comfort2]
-    #
-    #
-    # result = [avg_stable, avg_dis_satisfaction, min_dis_satisfaction, avg_speed, min_speed, traffic_light,
-    #       cross_lane, comfort1, comfort2]
 
     result = [min_stable, min_dis, min_speed, traffic_light, cross_lane, comfort1, comfort2]
+
     print(result)

@@ -126,6 +126,16 @@ if __name__ == '__main__':
         # print(searched_violation_pattern)
         Goal_num = Configuration.goal_num
 
+        """==================================输出结果=============================="""
+        # Save results to file
+        file_name = target_dir + '/searched_violation_pattern_' + str(round_idx) + '.txt'
+        numpy.savetxt(file_name, searched_violation_pattern, fmt="%d")  # 保存为整数
+        file_name = target_dir + '/violation_pattern_to_search_' + str(round_idx) + '.txt'
+        numpy.savetxt(file_name, violation_pattern_to_search, fmt="%d")  # 保存为整数
+        file_name = target_dir + '/pattern_count_' + str(round_idx) + '.txt'
+        numpy.savetxt(file_name, pattern_count, fmt="%d")  # 保存为整数
+
+
         """===============================实例化问题对象============================"""
         problem = CarBehindAndInFrontProblem(Goal_num, Configuration)
 
@@ -155,14 +165,7 @@ if __name__ == '__main__':
         algorithm.run()
         front = algorithm.get_result()
 
-        """==================================输出结果=============================="""
-        # Save results to file
-        file_name = target_dir + '/searched_violation_pattern_' + str(round_idx) + '.txt'
-        numpy.savetxt(file_name, searched_violation_pattern, fmt="%d")  # 保存为整数
-        file_name = target_dir + '/violation_pattern_to_search_' + str(round_idx) + '.txt'
-        numpy.savetxt(file_name, violation_pattern_to_search, fmt="%d")  # 保存为整数
-        file_name = target_dir + '/pattern_count_' + str(round_idx) + '.txt'
-        numpy.savetxt(file_name, pattern_count, fmt="%d")  # 保存为整数
+
 
         # Save results to file
         fun_name = 'FUN.' + str(round_idx) + '_' + algorithm.label
