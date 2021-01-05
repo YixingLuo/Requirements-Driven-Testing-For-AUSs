@@ -61,7 +61,7 @@ class CarBehindAndInFrontConfigure:
         self.ProcessNum = 30
 
         ## ego
-        self.ego_s0 = [10, 30]
+        self.ego_s0 = [0, 20]
         self.ego_v0 = [8, 16]
 
         ## traffic_signals
@@ -76,10 +76,10 @@ class CarBehindAndInFrontConfigure:
         # self.pos_s_2 = [70, 80]
 
         ## dynamic_obstacle_1
-        self.pos_y_1 = [40, 60]
+        self.pos_y_1 = [45, 65]
         self.velo_1 = [4, 16]
         self.acc_1 = [0, 3]
-        self.start_time_1 = [0, 0]
+        self.start_time_1 = [0, 0.5]
 
 
         ## dynamic_obstacle_2
