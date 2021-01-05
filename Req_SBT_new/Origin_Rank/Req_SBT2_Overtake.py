@@ -52,8 +52,8 @@ if __name__ == '__main__':
     search_round_list = [1, 10, 20, 30, 40, 50, 60, 70]
     # goal_selection_index = random.sample(range(0,128),128)
     goal_selection_index = [idx for idx in range(128)]
-    total_round = 1000
-    population = 100
+    total_round = 400
+    population = 50
     round_idx = 0
 
     target_dir = data_folder

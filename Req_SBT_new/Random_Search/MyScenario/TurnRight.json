@@ -38,18 +38,18 @@
         "max_eval_trajs" : "200000",
         "pena_low_speed" : "0",
         "same_acc_bonus": "-10",
-        "auto_close_on_crash": "0",
+        "auto_close_on_crash": "1",
         "auto_close_on_reach_the_objective": "1",
-        "auto_close_x_position": "-10",
-        "auto_close_y_position": "212"
+        "auto_close_x_position": "40",
+        "auto_close_y_position": "212.5"
     },
     "static_obs": [
     ],
 
     "traffic_signal": [
         {
-            "start_s": "199",
-            "end_s": "220",
+            "start_s": "200",
+            "end_s": "200",
             "green_time": "18.0",
             "yellow_time": "2.0",
             "red_time": "5.0"

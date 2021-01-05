@@ -11,8 +11,8 @@
         "k_thr": "0.172",
         "ego_width": "1.84",
         "ego_length": "4.86",
-        "s0": "10",
-        "l0": "5.75",
+        "s0": "67",
+        "l0": "5.25",
         "theta0": "1.5707963267",
         "v0": "10.0",
         "speed_limit": "16.6",
@@ -38,17 +38,17 @@
         "max_eval_trajs" : "200000",
         "pena_low_speed" : "0",
         "same_acc_bonus": "-10",
-        "auto_close_on_crash": "0",
+        "auto_close_on_crash": "1",
         "auto_close_on_reach_the_objective": "1",
-        "auto_close_x_position": "-10",
-        "auto_close_y_position": "120",
+        "auto_close_x_position": "1.75",
+        "auto_close_y_position": "110",
         "straight_map_length": "100",
         "straight_map_roads": "2"
     },
   "static_obs" : [ ],
      "traffic_signal": [
         {
-            "start_s": "80",
+            "start_s": "70",
             "end_s": "90",
             "green_time": "6.0",
             "yellow_time": "1.0",
@@ -57,7 +57,7 @@
     ],
   "dynamic_obs": [
         {
-            "pos_x": "-5.75",
+            "pos_x": "-5.25",
             "pos_y": "30",
             "dir": "1.5707963267",
             "width": "1.8",

@@ -2,7 +2,7 @@
 # -*- coding:utf-8 -*-
 import numpy as np
 import math
-# from CarBehindAndInFrontConfigure import CarBehindAndInFrontConfigure
+# from Settings.CarBehindAndInFrontConfigure import CarBehindAndInFrontConfigure
 import os
 import time
 import json
@@ -436,10 +436,10 @@ def evaluate_traffic_light (ego_vehicle_state, traffic_light):
     if len(ego_vehicle_state) <= index:
         satisfaction = 1
     elif len(ego_vehicle_state) > index:
-        if ego_vehicle_state[index][1] > t_start: ## not start
+        if ego_vehicle_state[index][1] > t_start + 1: ## not start y >= 200.8
             satisfaction = 1
     elif len(ego_vehicle_state) > index_2:
-        if ego_vehicle_state[index_2][1] < t_start : ## red light previous 196
+        if ego_vehicle_state[index_2][1] <= t_start - 4 : ## t_start = 200 ego vehicle reach the destination before 196 y<=196
             # print(ego_vehicle_state[index], index)
             # print(2)
             satisfaction = 1
@@ -453,7 +453,7 @@ def evaluate_cross_lane (ego_vehicle_state):
     total_time = 0
     # print(ego_vehicle_state)
     for i in range (len(ego_vehicle_state)):
-        if ego_vehicle_state[i][0] > 0:
+        if ego_vehicle_state[i][0] >=10 and  ego_vehicle_state[i][1] <= 211.5:
             total_time += 1
     # print(total_time, len(ego_vehicle_state))
     if not total_time:
@@ -477,8 +477,8 @@ if __name__=='__main__':
     # os.system(cmd)
     # print(log_name)
     #
-    scenario_name = 'scenario_20201225181219_040_8c04e01fbf7b48c58fa80c42391aa511.json'
-    log_name = 'datalog.txt'
+    scenario_name = 'SCENAR1.json'
+    log_name = 'datalog1.txt'
     config = CarBehindAndInFrontConfigure()
 
     with open(scenario_name, 'r', encoding='utf-8') as f:
@@ -488,8 +488,8 @@ if __name__=='__main__':
     st_obsList = ret_dic["static_obs"]
     dy_obsList  = ret_dic["dynamic_obs"]
 
-    num_dynamic_obs = 3
-    num_static_obs = 0
+    num_dynamic_obs = 6
+    num_static_obs = 1
 
     ego_vehicle_state = []
     dynamic_vehicle_state = [[] for i in range(num_dynamic_obs)]
@@ -535,7 +535,7 @@ if __name__=='__main__':
     # min_dis, avg_dis_satisfaction, min_dis_satisfaction = evaluate_distance(ego_vehicle_state, dynamic_vehicle_state,
     #                                                                 dy_obsList, static_vehicle_state, st_obsList, config)
     min_dis, avg_dis_satisfaction, min_dis_satisfaction = evaluate_collision (ego_vehicle_state, dynamic_vehicle_state, dy_obsList, static_vehicle_state, st_obsList, config)
-    # print(min_dis, avg_dis_satisfaction, min_dis_satisfaction)
+    print(min_dis, avg_dis_satisfaction, min_dis_satisfaction)
     avg_stable, min_stable = evaluate_stability(ego_vehicle_state, config)
     traffic_light = evaluate_traffic_light(ego_vehicle_state, traffic_light)
     cross_lane = evaluate_cross_lane(ego_vehicle_state)
@@ -547,5 +547,5 @@ if __name__=='__main__':
     # result = [avg_stable, avg_dis_satisfaction, min_dis_satisfaction, avg_speed, min_speed, traffic_light,
     #       cross_lane, comfort1, comfort2]
 
-    result = [min_stable, avg_stable, min_dis, min_speed, traffic_light, cross_lane, comfort1, comfort2]
+    result = [min_stable, min_dis, min_speed, traffic_light, cross_lane, comfort1, comfort2]
     print(result)

@@ -65,9 +65,9 @@ class TurnRightConfigure:
         self.ego_v0 = [4, 16]
 
         ## traffic_signals
-        self.start_s = 190
-        self.end_s = 220
-        self.green_time = [10, 20]
+        self.start_s = 200
+        self.end_s = 200
+        self.green_time = [8, 18]
         self.yellow_time = [1, 3]
         self.red_time = [4, 6]
 
@@ -76,9 +76,13 @@ class TurnRightConfigure:
         # self.pos_s_2 = [70, 80]
 
         ## dynamic_obstacle_1
-        self.pos_y_1 = [210, 260]
-        self.velo_1 = [4, 16]
-        self.acc_1 = [0, 3]
+        # self.pos_y_1 = [210, 260]
+        # self.velo_1 = [4, 16]
+        # self.acc_1 = [0, 3]
+        # self.start_time_1 = [0, 2]
+        self.pos_y_1 = [210, 220]
+        self.velo_1 = [0, 0]
+        self.acc_1 = [0, 0]
         self.start_time_1 = [0, 2]
 
         ## dynamic_obstacle_2

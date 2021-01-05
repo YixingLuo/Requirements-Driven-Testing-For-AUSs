@@ -436,7 +436,7 @@ def evaluate_traffic_light (ego_vehicle_state, traffic_light):
     if len(ego_vehicle_state) <= index:
         satisfaction = 1
     elif len(ego_vehicle_state) > index:
-        if ego_vehicle_state[index][1] > t_start + 0.8: ## not start y >= 200.8
+        if ego_vehicle_state[index][1] > t_start + 1: ## not start y >= 200.8
             satisfaction = 1
     elif len(ego_vehicle_state) > index_2:
         if ego_vehicle_state[index_2][1] <= t_start - 4 : ## t_start = 200 ego vehicle reach the destination before 196 y<=196
@@ -453,7 +453,7 @@ def evaluate_cross_lane (ego_vehicle_state):
     total_time = 0
     # print(ego_vehicle_state)
     for i in range (len(ego_vehicle_state)):
-        if ego_vehicle_state[i][0] > 0:
+        if ego_vehicle_state[i][0] >=10 and  ego_vehicle_state[i][1] <= 211.5:
             total_time += 1
     # print(total_time, len(ego_vehicle_state))
     if not total_time:

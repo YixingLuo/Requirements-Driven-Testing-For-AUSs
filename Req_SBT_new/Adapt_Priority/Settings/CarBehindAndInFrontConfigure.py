@@ -54,7 +54,7 @@ class CarBehindAndInFrontConfigure:
         self.maxIterations = self.population * self.round
         self.searchTimeout = 360000
         self.iteration_round = iteration_round
-        self.num_variables = 14
+        self.num_variables = 19
         self.PoolType = "Thread"
         # self.PoolType = "Process"
         # self.ProcessNum = psutil.cpu_count()
@@ -65,11 +65,11 @@ class CarBehindAndInFrontConfigure:
         self.ego_v0 = [8, 16]
 
         ## traffic_signals
-        # self.start_s = [70, 75]
-        # self.end_s = [90, 95]
-        # self.green_time = [5, 10]
-        # self.yellow_time = [1, 2]
-        # self.red_time = [2, 4]
+        self.start_s = [70, 80]
+        self.end_s = [90, 90]
+        self.green_time = [5, 10]
+        self.yellow_time = [1, 2]
+        self.red_time = [2, 4]
 
         ## static_obstacle
         # self.pos_s_1 = [60, 70]
@@ -83,7 +83,7 @@ class CarBehindAndInFrontConfigure:
 
 
         ## dynamic_obstacle_2
-        self.pos_y_2 = [5, 25]
+        self.pos_y_2 = [0, 40]
         self.velo_2 = [4, 16]
         self.acc_2 = [0, 3]
         self.start_time_2 = [0, 2]

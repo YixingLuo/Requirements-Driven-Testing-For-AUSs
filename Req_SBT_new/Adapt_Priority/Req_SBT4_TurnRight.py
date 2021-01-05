@@ -8,12 +8,14 @@ from MyAlgorithm.termination_criterion import StoppingByEvaluations
 from jmetal.util.evaluator import MultiprocessEvaluator, SequentialEvaluator
 from jmetal.util.observer import ProgressBarObserver
 from MyAlgorithm.nsgaiii import NSGAIII
-from Settings.CarBehindAndInFrontConfigure import CarBehindAndInFrontConfigure
+from Settings.TurnRightConfigure import TurnRightConfigure
 import os
 import time
-from CarBehindAndInFrontProblem import CarBehindAndInFrontProblem
-import csv
+from TurnRightProblem import TurnRightProblem
+from jmetal.util.observer import ProgressBarObserver
+import random
 import numpy
+import csv
 from RankingRules.DistanceRanking import Distance_Ranking
 from RankingRules.EnsembleRanking import Ensemble_Ranking
 from RankingRules.RelationRanking import Relation_Ranking
@@ -75,7 +77,7 @@ if __name__ == '__main__':
                 search_round = total_round
             # total_round = total_round - search_round
 
-            Configuration = CarBehindAndInFrontConfigure(goal_selection_flag, population, search_round, round_index, target_dir)
+            Configuration = TurnRightConfigure(goal_selection_flag, population, search_round, round_index, target_dir)
             vars_file_name = Configuration.file_dir_var
             results_file_name = Configuration.file_dir_eval
 
@@ -144,7 +146,7 @@ if __name__ == '__main__':
                 search_round = total_round
             # total_round = total_round - search_round
 
-            Configuration = CarBehindAndInFrontConfigure(goal_selection_flag, population, search_round, round_index, target_dir)
+            Configuration = TurnRightConfigure(goal_selection_flag, population, search_round, round_index, target_dir)
             vars_file_name = Configuration.file_dir_var
             results_file_name = Configuration.file_dir_eval
 
@@ -169,7 +171,7 @@ if __name__ == '__main__':
 
 
         """===============================实例化问题对象============================"""
-        problem = CarBehindAndInFrontProblem(Goal_num, Configuration, target_value_threshold)
+        problem = TurnRightProblem(Goal_num, Configuration, target_value_threshold)
 
         """=================================算法参数设置============================"""
         max_evaluations = Configuration.maxIterations

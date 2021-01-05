@@ -11,10 +11,10 @@
         "k_thr": "0.172",
         "ego_width": "1.84",
         "ego_length": "4.86",
-        "s0": "20",
+        "s0": "67",
         "l0": "5.25",
         "theta0": "1.5707963267",
-        "v0": "16.0",
+        "v0": "10.0",
         "speed_limit": "16.6",
         "k_limit": "5.0",
         "a_max_soft": "0.98",
@@ -47,21 +47,28 @@
     },
   "static_obs" : [ ],
      "traffic_signal": [
+        {
+            "start_s": "70",
+            "end_s": "90",
+            "green_time": "6.0",
+            "yellow_time": "1.0",
+            "red_time": "3.0"
+        }
     ],
   "dynamic_obs": [
         {
             "pos_x": "-5.25",
-            "pos_y": "40",
+            "pos_y": "30",
             "dir": "1.5707963267",
             "width": "1.8",
             "length": "4.8",
             "velo": "5",
             "acc": "0",
-            "start_time": "0.5"
+            "start_time": "0"
         },
         {
             "pos_x": "-1.75",
-            "pos_y": "45",
+            "pos_y": "5",
             "dir": "1.5707963267",
             "width": "1.8",
             "length": "4.8",

@@ -3,7 +3,7 @@ import json
 import numpy as np
 import os
 import time
-from MyScenario.read_log import evaluate_speed, evaluate_comfort, evaluate_stability, evaluate_traffic_light, evaluate_cross_lane,evaluate_collision
+from MyScenario.read_log_TurnRight import evaluate_speed, evaluate_comfort, evaluate_stability, evaluate_traffic_light, evaluate_cross_lane,evaluate_collision
 import uuid
 import random
 
@@ -110,7 +110,6 @@ def create_run_scenario_turnright (Vars, Configure):
     ## mac
     # cmd = "wine /Users/luoyixing/Downloads/Release/dynamic_cost.exe -c %d -v EGO_TESTER -i %s > %s" % (duration, scenario_name, log_name)
 
-
     # print(cmd)
     start = time.clock()
 
@@ -125,11 +124,7 @@ def create_run_scenario_turnright (Vars, Configure):
     dynamic_vehicle_state = [[] for i in range(num_dynamic_obs)]
     static_vehicle_state = [[] for i in range(num_static_obs)]
     with open(log_name, 'r') as f:
-        my_data = f.readlines()  # txt�������ַ�������data���õ�����һ��list
-        # ��list�е��������ָ�������ת��
-        # for line in my_data:
-        #     line_data = line.split()
-        #     numbers_float = map(float, line_data)  # ת��Ϊ������
+        my_data = f.readlines()
 
         for line in my_data:
             data = line.split()
@@ -154,7 +149,6 @@ def create_run_scenario_turnright (Vars, Configure):
                     # print(log)
                 if len(log) == 3:
                     static_vehicle_state[int(data[1])].append(log)
-
 
 
 
@@ -185,7 +179,7 @@ def create_run_scenario_turnright (Vars, Configure):
 
     return result
 
-def create_run_scenario_overtake_random (Configure):
+def create_run_scenario_turnright_random (Configure):
 
     config = Configure
     population = config.population

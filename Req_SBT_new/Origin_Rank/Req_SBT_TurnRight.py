@@ -39,14 +39,14 @@ def text_create(Configuration):
     file = open(full_path,  'w')
     return full_path
 
-data_folder = os.getcwd() + '/TurnRight_Datalog_' + str(time.strftime("%Y_%m_%d_%H"))
+data_folder = os.getcwd() + '/TurnRight_Datalog_Req1_' + str(time.strftime("%Y_%m_%d_%H"))
 if not os.path.exists(data_folder):
     os.mkdir(data_folder)
 
 if __name__ == '__main__':
 
-    goal_selection_index = random.sample(range(0,128),128)
-    # goal_selection_index = [idx for idx in range(128)]
+    # goal_selection_index = random.sample(range(0,128),128)
+    goal_selection_index = [idx for idx in range(128)]
     total_round = 8
     population = 50
     search_round = 50
@@ -66,11 +66,12 @@ if __name__ == '__main__':
     priority_list = numpy.array(priority_list)
 
     violation_pattern_to_search = []
-    pattern_count = numpy.zeros(priority_list.shape[0])
     evaluation = []
     searched_violation_pattern = []
+    start_round = 0
+    pattern_count = numpy.zeros(priority_list.shape[0])
 
-    for round_idx in range (total_round):
+    for round_idx in range(start_round, total_round):
 
         if round_idx == 0:
             goal_index = 0
@@ -116,9 +117,18 @@ if __name__ == '__main__':
         # print(searched_violation_pattern)
         Goal_num = Configuration.goal_num
 
+        """==================================输出结果=============================="""
+        # Save results to file
+        file_name = target_dir + '/searched_violation_pattern_' + str(round_idx) + '.txt'
+        numpy.savetxt(file_name, searched_violation_pattern, fmt="%d")  # 保存为整数
+        file_name = target_dir + '/violation_pattern_to_search_' + str(round_idx) + '.txt'
+        numpy.savetxt(file_name, violation_pattern_to_search, fmt="%d")  # 保存为整数
+        file_name = target_dir + '/pattern_count_' + str(round_idx) + '.txt'
+        numpy.savetxt(file_name, pattern_count, fmt="%d")  # 保存为整数
+
 
         """===============================实例化问题对象============================"""
-        problem = TurnRightProblem(Goal_num, Configuration)
+        problem = TurnRightProblem(Goal_num, Configuration, target_value_threshold)
 
         """=================================算法参数设置============================"""
         max_evaluations = population * search_round

@@ -28,7 +28,7 @@ def text_create(Configuration):
     file = open(full_path,  'w')
     return full_path
 
-data_folder = os.getcwd() + '/Overtake_Datalog_50_1000_' + str(time.strftime("%Y_%m_%d_%H"))
+data_folder = os.getcwd() + '/Overtake_Datalog_' + str(time.strftime("%Y_%m_%d_%H"))
 if not os.path.exists(data_folder):
     os.mkdir(data_folder)
 

@@ -16,7 +16,6 @@ from MyAlgorithm.random_search import RandomSearch
 from Settings.CarBehindAndInFrontConfigure import CarBehindAndInFrontConfigure
 import os
 import time
-# from trash.initial_files.bestpop import BestPop
 from CarBehindAndInFrontProblem import CarBehindAndInFrontProblem
 from jmetal.util.observer import ProgressBarObserver
 import random

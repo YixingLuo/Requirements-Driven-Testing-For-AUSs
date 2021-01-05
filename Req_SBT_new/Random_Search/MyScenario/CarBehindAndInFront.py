@@ -1,8 +1,9 @@
+# -*- coding: utf-8 -*-
 import json
 import numpy as np
 import os
 import time
-from MyScenario.read_log import evaluate_speed, evaluate_comfort, evaluate_stability, evaluate_traffic_light, evaluate_cross_lane,evaluate_collision
+from MyScenario.read_log_Overtake import evaluate_speed, evaluate_comfort, evaluate_stability, evaluate_traffic_light, evaluate_cross_lane,evaluate_collision
 import uuid
 import random
 
@@ -19,8 +20,9 @@ def get_time_stamp():
 def create_run_scenario_overtake (Vars, Configure):
 
     config = Configure
+    population = config.population
 
-    result = np.zeros((config.goal_num), float)
+    result = np.zeros((population, config.goal_num), float)
 
     file_dir_sce = config.file_dir_sce
     file_dir_data = config.file_dir_data
@@ -73,11 +75,7 @@ def create_run_scenario_overtake (Vars, Configure):
     traffic_light = ret_dic["traffic_signal"]
     st_obsList = ret_dic["static_obs"]
     dy_obsList  = ret_dic["dynamic_obs"]
-    # print(traffic_light, st_obsList, dy_obsList)
 
-    # global bestpop
-    # bestlog = globalvar.get_value('BestPop')
-    # print("\033[1;32m scenario round: \033[0m", bestlog.round)
     now_time = get_time_stamp()
     uuid_str = uuid.uuid4().hex
     scenario_name = file_dir_sce + "/scenario_" + now_time + "_" + uuid_str + ".json"
@@ -125,11 +123,7 @@ def create_run_scenario_overtake (Vars, Configure):
     dynamic_vehicle_state = [[] for i in range(num_dynamic_obs)]
     static_vehicle_state = [[] for i in range(num_static_obs)]
     with open(log_name, 'r') as f:
-        my_data = f.readlines()  # txt�������ַ�������data���õ�����һ��list
-        # ��list�е��������ָ�������ת��
-        # for line in my_data:
-        #     line_data = line.split()
-        #     numbers_float = map(float, line_data)  # ת��Ϊ������
+        my_data = f.readlines()
 
         for line in my_data:
             data = line.split()
@@ -158,7 +152,6 @@ def create_run_scenario_overtake (Vars, Configure):
 
 
 
-
     comfort1, comfort2 = evaluate_comfort(ego_vehicle_state, config)
     avg_speed, min_speed = evaluate_speed(ego_vehicle_state, config)
     # min_dis, avg_dis_satisfaction, min_dis_satisfaction = evaluate_distance(ego_vehicle_state, dynamic_vehicle_state,
@@ -178,11 +171,9 @@ def create_run_scenario_overtake (Vars, Configure):
     result = [min_stable, min_dis, min_speed, traffic_light, cross_lane, comfort1, comfort2]
     # result = [-min_dis, -min_stable, min_speed, traffic_light, -cross_lane, -comfort1, comfort2]
 
+    result_name = file_dir_eval + "/result_" + now_time + "_" + uuid_str + ".txt"
 
-    result_name = file_dir_eval + "/result_" + now_time  + "_"  + uuid_str + ".txt"
-    # print(result_name)
     np.savetxt(result_name, result, fmt="%f", delimiter=" ")
-
 
     return result
 
@@ -259,9 +250,8 @@ def create_run_scenario_overtake_random (Configure):
 
     var_name = file_dir_var + "/var_" + now_time + "_" + uuid_str + ".txt"
 
-    # with open(var_name, 'w', encoding='utf-8') as f:
-    #     json.dump(Vars, f, ensure_ascii=False, indent=4)
-    np.savetxt(var_name, Vars, fmt="%f", delimiter=" ")
+    with open(var_name, 'w', encoding='utf-8') as f:
+        json.dump(Vars, f, ensure_ascii=False, indent=4)
 
     ## run the scenario
     duration = config.duration
@@ -278,7 +268,6 @@ def create_run_scenario_overtake_random (Configure):
 
     ## mac
     # cmd = "wine /Users/luoyixing/Downloads/Release/dynamic_cost.exe -c %d -v EGO_TESTER -i %s > %s" % (duration, scenario_name, log_name)
-
 
     # print(cmd)
     start = time.clock()
@@ -319,6 +308,7 @@ def create_run_scenario_overtake_random (Configure):
                     # print(log)
                 if len(log) == 3:
                     static_vehicle_state[int(data[1])].append(log)
+
 
 
     comfort1, comfort2 = evaluate_comfort(ego_vehicle_state, config)

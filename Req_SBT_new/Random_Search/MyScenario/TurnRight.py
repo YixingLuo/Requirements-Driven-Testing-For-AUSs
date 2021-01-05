@@ -3,7 +3,7 @@ import json
 import numpy as np
 import os
 import time
-from MyScenario.read_log import evaluate_speed, evaluate_comfort, evaluate_stability, evaluate_traffic_light, evaluate_cross_lane,evaluate_collision
+from MyScenario.read_log_TurnRight import evaluate_speed, evaluate_comfort, evaluate_stability, evaluate_traffic_light, evaluate_cross_lane,evaluate_collision
 import uuid
 import random
 
@@ -42,8 +42,8 @@ def create_run_scenario_turnright (Vars, Configure):
 
         elif key == "traffic_signal":
             ret_dic[key] = []
-            objDict = {"start_s": 199,
-                       "end_s": 220,
+            objDict = {"start_s": config.start_s,
+                       "end_s": config.end_s,
                        "green_time": Vars[2],
                        "yellow_time": Vars[3],
                        "red_time": Vars[4]}
@@ -77,9 +77,6 @@ def create_run_scenario_turnright (Vars, Configure):
     dy_obsList  = ret_dic["dynamic_obs"]
     # print(traffic_light, st_obsList, dy_obsList)
 
-    # global bestpop
-    # bestlog = globalvar.get_value('BestPop')
-    # print("\033[1;32m scenario round: \033[0m", bestlog.round)
     now_time = get_time_stamp()
     uuid_str = uuid.uuid4().hex
     scenario_name = file_dir_sce + "/scenario_" + now_time + "_" + uuid_str + ".json"
@@ -91,8 +88,9 @@ def create_run_scenario_turnright (Vars, Configure):
 
     var_name = file_dir_var + "/var_" + now_time + "_" + uuid_str + ".txt"
 
-    with open(var_name, 'w', encoding='utf-8') as f:
-        json.dump(Vars, f, ensure_ascii=False, indent=4)
+    # with open(var_name, 'w', encoding='utf-8') as f:
+    #     json.dump(Vars, f, ensure_ascii=False, indent=4)
+    np.savetxt(var_name, Vars, fmt="%f", delimiter=" ")
 
     ## run the scenario
     duration = config.duration
@@ -111,6 +109,7 @@ def create_run_scenario_turnright (Vars, Configure):
 
     ## mac
     # cmd = "wine /Users/luoyixing/Downloads/Release/dynamic_cost.exe -c %d -v EGO_TESTER -i %s > %s" % (duration, scenario_name, log_name)
+
     # print(cmd)
     start = time.clock()
 
@@ -125,11 +124,7 @@ def create_run_scenario_turnright (Vars, Configure):
     dynamic_vehicle_state = [[] for i in range(num_dynamic_obs)]
     static_vehicle_state = [[] for i in range(num_static_obs)]
     with open(log_name, 'r') as f:
-        my_data = f.readlines()  # txt中所有字符串读入data，得到的是一个list
-        # 对list中的数据做分隔和类型转换
-        # for line in my_data:
-        #     line_data = line.split()
-        #     numbers_float = map(float, line_data)  # 转化为浮点数
+        my_data = f.readlines()
 
         for line in my_data:
             data = line.split()
@@ -177,7 +172,7 @@ def create_run_scenario_turnright (Vars, Configure):
     result = [min_stable, min_dis, min_speed, traffic_light, cross_lane, comfort1, comfort2]
     # result = [-min_dis, -min_stable, min_speed, traffic_light, -cross_lane, -comfort1, comfort2]
 
-    result_name = file_dir_eval + "/result_" + now_time  + "_"  + uuid_str + ".txt"
+    result_name = file_dir_eval + "/result_" + now_time + "_" + uuid_str + ".txt"
     # print(result_name)
     np.savetxt(result_name, result, fmt="%f", delimiter=" ")
 
@@ -258,9 +253,8 @@ def create_run_scenario_turnright_random (Configure):
 
     var_name = file_dir_var + "/var_" + now_time + "_" + uuid_str + ".txt"
 
-    # with open(var_name, 'w', encoding='utf-8') as f:
-    #     json.dump(Vars, f, ensure_ascii=False, indent=4)
-    np.savetxt(var_name, Vars, fmt="%f", delimiter=" ")
+    with open(var_name, 'w', encoding='utf-8') as f:
+        json.dump(Vars, f, ensure_ascii=False, indent=4)
 
     ## run the scenario
     duration = config.duration
@@ -317,6 +311,7 @@ def create_run_scenario_turnright_random (Configure):
                     # print(log)
                 if len(log) == 3:
                     static_vehicle_state[int(data[1])].append(log)
+
 
 
     comfort1, comfort2 = evaluate_comfort(ego_vehicle_state, config)

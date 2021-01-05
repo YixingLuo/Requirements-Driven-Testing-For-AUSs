@@ -13,10 +13,10 @@ from MyAlgorithm.nsgaii import NSGAII
 from MyAlgorithm.random_search import RandomSearch
 from MyAlgorithm.termination_criterion import StoppingByEvaluations
 # from MyAlgorithm.evaluator import MultiprocessEvaluator
-from Settings.CarBehindAndInFrontConfigure import CarBehindAndInFrontConfigure
+from Settings.TurnRightConfigure import TurnRightConfigure
 import os
 import time
-from CarBehindAndInFrontProblem import CarBehindAndInFrontProblem
+from TurnRightProblem import TurnRightProblem
 from jmetal.util.observer import ProgressBarObserver
 import random
 import numpy
@@ -41,7 +41,7 @@ def text_create(Configuration):
     return full_path
 
 
-data_folder = os.getcwd() + '/Overtake_Datalog_Req4_' + str(time.strftime("%Y_%m_%d_%H"))
+data_folder = os.getcwd() + '/TurnRight_Datalog_Req4_' + str(time.strftime("%Y_%m_%d_%H"))
 if not os.path.exists(data_folder):
     os.mkdir(data_folder)
 
@@ -50,10 +50,10 @@ if not os.path.exists(data_folder):
 if __name__ == '__main__':
 
     # search_round_list = [1, 10, 10, 10, 10, 20, 110, 110]
-    # search_round_list = [1, 10, 20, 30, 40, 50, 60, 70]
-    search_round_list = [50, 50, 50, 50, 50, 50, 50, 50]
-    # goal_selection_index = random.sample(range(0,128),128)
-    goal_selection_index = [idx for idx in range(128)]
+    search_round_list = [1, 10, 20, 30, 40, 50, 60, 70]
+    # search_round_list = [50, 50, 50, 50, 50, 50, 50, 50]
+    goal_selection_index = random.sample(range(0,128),128)
+    # goal_selection_index = [idx for idx in range(128)]
     
     total_round = 400
     round_index = 0
@@ -94,7 +94,7 @@ if __name__ == '__main__':
 
             # total_round = total_round - search_round
 
-            Configuration = CarBehindAndInFrontConfigure(goal_index, population, search_round, target_dir, round_index)
+            Configuration = TurnRightConfigure(goal_index, population, search_round, target_dir, round_index)
             vars_file_name = Configuration.file_dir_var
             results_file_name = Configuration.file_dir_eval
             searched_violation_pattern.append(goal_index)
@@ -140,7 +140,7 @@ if __name__ == '__main__':
             # total_round = total_round - search_round
 
             searched_violation_pattern.append(goal_index)
-            Configuration = CarBehindAndInFrontConfigure(goal_index, population, search_round, target_dir, round_index)
+            Configuration = TurnRightConfigure(goal_index, population, search_round, target_dir, round_index)
 
         # print(searched_violation_pattern)
         Goal_num = Configuration.goal_num
@@ -156,7 +156,7 @@ if __name__ == '__main__':
 
 
         """===============================实例化问题对象============================"""
-        problem = CarBehindAndInFrontProblem(Goal_num, Configuration, target_value_threshold)
+        problem = TurnRightProblem(Goal_num, Configuration, target_value_threshold)
 
         """=================================算法参数设置============================"""
         max_evaluations = population * search_round

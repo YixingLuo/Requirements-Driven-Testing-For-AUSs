@@ -76,9 +76,13 @@ class TurnRightConfigure:
         # self.pos_s_2 = [70, 80]
 
         ## dynamic_obstacle_1
-        self.pos_y_1 = [210, 260]
-        self.velo_1 = [4, 16]
-        self.acc_1 = [0, 3]
+        # self.pos_y_1 = [210, 260]
+        # self.velo_1 = [4, 16]
+        # self.acc_1 = [0, 3]
+        # self.start_time_1 = [0, 2]
+        self.pos_y_1 = [210, 220]
+        self.velo_1 = [0, 0]
+        self.acc_1 = [0, 0]
         self.start_time_1 = [0, 2]
 
         ## dynamic_obstacle_2

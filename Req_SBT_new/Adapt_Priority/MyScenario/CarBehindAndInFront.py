@@ -3,7 +3,7 @@ import json
 import numpy as np
 import os
 import time
-from MyScenario.read_log import evaluate_speed, evaluate_comfort, evaluate_stability, evaluate_traffic_light, evaluate_cross_lane,evaluate_collision
+from MyScenario.read_log_Overtake import evaluate_speed, evaluate_comfort, evaluate_stability, evaluate_traffic_light, evaluate_cross_lane,evaluate_collision
 import uuid
 import random
 
@@ -75,11 +75,7 @@ def create_run_scenario_overtake (Vars, Configure):
     traffic_light = ret_dic["traffic_signal"]
     st_obsList = ret_dic["static_obs"]
     dy_obsList  = ret_dic["dynamic_obs"]
-    # print(traffic_light, st_obsList, dy_obsList)
 
-    # global bestpop
-    # bestlog = globalvar.get_value('BestPop')
-    # print("\033[1;32m scenario round: \033[0m", bestlog.round)
     now_time = get_time_stamp()
     uuid_str = uuid.uuid4().hex
     scenario_name = file_dir_sce + "/scenario_" + now_time + "_" + uuid_str + ".json"
