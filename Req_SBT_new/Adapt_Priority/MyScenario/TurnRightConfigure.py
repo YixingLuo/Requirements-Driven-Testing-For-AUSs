@@ -9,7 +9,7 @@ import shutil
 # import psutil
 
 class TurnRightConfigure:
-    def __init__(self, goal_selection_flag, population, search_round, iteration_round, target_dir):
+    def __init__(self,):
         # self.auto_close_on_reach_the_objective= 1
         # self.auto_close_x_position = 10
         # self.auto_close_y_position = 0
@@ -48,17 +48,13 @@ class TurnRightConfigure:
         self.speed_limit = 16.67
         self.speed_max = 33.3
         self.duration = 90
-        self.population = population
-        self.round = search_round
         self.goal_num = 7
-        self.maxIterations = self.population * self.round
         self.searchTimeout = 360000
-        self.iteration_round = iteration_round
         self.num_variables = 17
         self.PoolType = "Thread"
         # self.PoolType = "Process"
         # self.ProcessNum = psutil.cpu_count()
-        self.ProcessNum = 30
+        self.ProcessNum = 32
 
         ## ego
         self.ego_s0 = [140, 190]
@@ -80,7 +76,7 @@ class TurnRightConfigure:
         # self.velo_1 = [4, 16]
         # self.acc_1 = [0, 3]
         # self.start_time_1 = [0, 2]
-        self.pos_y_1 = [225, 235]
+        self.pos_y_1 = [210, 220]
         self.velo_1 = [0, 0]
         self.acc_1 = [0, 0]
         self.start_time_1 = [0, 2]
@@ -96,50 +92,6 @@ class TurnRightConfigure:
         self.velo_3 = [4, 16]
         self.acc_3 = [0, 3]
         self.start_time_3 = [0, 2]
-
-        ## algorithm
-        ## "NSGA_II": NSGA_II, "NSGA_III": NSGA_III ,"NSGA_III_Adapt": NSGA_II_Goal_Adapt
-        self.algorithm = "Adapt_Priority"
-
-        self.file_dir_sce = target_dir + '/' + str(time.strftime("%Y_%m_%d")) + '_' + str(self.algorithm) + '_scenarios_' + str(
-            self.iteration_round)
-        if not os.path.exists(self.file_dir_sce):
-            os.mkdir(self.file_dir_sce)
-
-        self.file_dir_data = target_dir +  '/' + str(time.strftime("%Y_%m_%d")) + '_' + str(self.algorithm) + '_datalog_' + str(
-            self.iteration_round)
-        if not os.path.exists(self.file_dir_data):
-            os.mkdir(self.file_dir_data)
-
-        self.file_dir_eval = target_dir +  '/' + str(time.strftime("%Y_%m_%d")) + '_' + str(self.algorithm) + '_results_' + str(
-            self.iteration_round)
-        if not os.path.exists(self.file_dir_eval):
-            os.mkdir(self.file_dir_eval)
-
-        self.file_dir_var = target_dir +  '/' + str(time.strftime("%Y_%m_%d")) + '_' + str(self.algorithm) + '_variable_' + str(
-            self.iteration_round)
-        if not os.path.exists(self.file_dir_var):
-            os.mkdir(self.file_dir_var)
-
-        self.priority_list = []
-        with open("priority_list.csv") as csvfile:
-            csv_file = csv.reader(csvfile)
-            for row in csv_file:
-                self.priority_list.append(row[0:-1])
-            priority_list = [[float(x) for x in row] for row in self.priority_list]
-
-
-        self.priority_list = numpy.array(priority_list)
-
-        self.goal_selection_flag = goal_selection_flag
-
-        for j in range (self.priority_list.shape[0]):
-            if (numpy.array(self.priority_list[j]) == numpy.array(self.goal_selection_flag)).all():
-                self.goal_selection_index = j
-                break
-
-
-
 
 
 

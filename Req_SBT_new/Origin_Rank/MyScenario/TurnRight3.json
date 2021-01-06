@@ -11,7 +11,7 @@
         "k_thr": "0.172",
         "ego_width": "1.84",
         "ego_length": "4.86",
-		"s0": "195",
+		"s0": "200.8",
 	    "l0": "1.75",
         "v0": "8.0",
 		"theta0": "1.5707963267",
@@ -38,9 +38,9 @@
         "max_eval_trajs" : "200000",
         "pena_low_speed" : "0",
         "same_acc_bonus": "-10",
-        "auto_close_on_crash": "1",
+        "auto_close_on_crash": "0",
         "auto_close_on_reach_the_objective": "1",
-        "auto_close_x_position": "10",
+        "auto_close_x_position": "40",
         "auto_close_y_position": "212.5"
     },
     "static_obs": [
@@ -48,23 +48,14 @@
 
     "traffic_signal": [
         {
-            "start_s": "199",
-            "end_s": "220",
-            "green_time": "18.0",
+            "start_s": "200",
+            "end_s": "200",
+            "green_time": "0.0",
             "yellow_time": "2.0",
             "red_time": "5.0"
         }
     ],
     "dynamic_obs": [
-        {
-            "pos_x": "1.75",
-            "pos_y": "220",
-            "dir": "-1.57",
-            "width": "1.8",
-            "length": "4.8",
-            "velo": "0",
-            "acc": "0"
-        },
         {
             "pos_x": "20",
             "pos_y": "209.5",
@@ -72,25 +63,27 @@
             "width": "1.8",
             "length": "4.8",
             "velo": "10",
-            "acc": "2.5"
+            "acc": "2.5",
+            "start_s": "4"
         },
         {
-            "pos_x": "10",
-            "pos_y": "211.5",
+            "pos_x": "-20",
+            "pos_y": "212.5",
             "dir": "0",
             "width": "1.8",
             "length": "4.8",
             "velo": "10",
             "acc": "2.5"
         },
-        {
+
+         {
             "pos_x": "-1.75",
-            "pos_y": "180",
+            "pos_y": "190",
             "dir": "1.57",
             "width": "1.8",
             "length": "4.8",
-            "velo": "10",
-            "acc": "2.5"
+            "velo": "6",
+            "acc": "0"
         }
     ]
 }

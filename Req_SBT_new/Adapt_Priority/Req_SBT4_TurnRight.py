@@ -31,7 +31,7 @@ def text_create(Configuration):
 
 
 
-data_folder = os.getcwd() + '/Overtake_Datalog_Req4_' + str(time.strftime("%Y_%m_%d_%H"))
+data_folder = os.getcwd() + '/TurnRight_Datalog_Req4_' + str(time.strftime("%Y_%m_%d_%H"))
 if not os.path.exists(data_folder):
     os.mkdir(data_folder)
 
@@ -39,7 +39,7 @@ if __name__ == '__main__':
 
     # search_round_list = [1, 10, 10, 10, 10, 20, 110, 110]
     search_round_list = [1, 10, 20, 30, 40, 50, 60, 70]
-    target_value_threshold = [1, 0, 1, 1, 1, 0.95, 0.99]
+    target_value_threshold = [1, 0, 1, 1, 1, 0.6, 0.95]
     target_dir = data_folder
 
     priority_list = []

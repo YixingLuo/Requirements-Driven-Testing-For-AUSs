@@ -77,7 +77,7 @@ class TurnRightConfigure:
         # self.velo_1 = [4, 16]
         # self.acc_1 = [0, 3]
         # self.start_time_1 = [0, 2]
-        self.pos_y_1 = [210, 220]
+        self.pos_y_1 = [225, 235]
         self.velo_1 = [0, 0]
         self.acc_1 = [0, 0]
         self.start_time_1 = [0, 2]

@@ -127,6 +127,8 @@ def create_run_scenario_overtake (Vars, Configure):
 
         for line in my_data:
             data = line.split()
+            if data[0] == "FAIL":
+                break
             if len(data) == 8 and data[0] == "EGO_STATUS":
                 log = []
                 for i in range(1, len(data)):
@@ -134,7 +136,7 @@ def create_run_scenario_overtake (Vars, Configure):
                 if len(log) == 7:
                     ego_vehicle_state.append(log)
 
-            if len(data) == 10 and data[0] == "DYNAMIC_OBS_INFO":
+            elif len(data) == 10 and data[0] == "DYNAMIC_OBS_INFO":
                 log = []
                 for i in range(2, len(data)):
                     log.append(float(data[i]))
@@ -287,6 +289,8 @@ def create_run_scenario_overtake_random (Configure):
 
         for line in my_data:
             data = line.split()
+            if data[0] == "FAIL":
+                break
             if len(data) == 8 and data[0] == "EGO_STATUS":
                 log = []
                 for i in range(1, len(data)):
@@ -294,7 +298,7 @@ def create_run_scenario_overtake_random (Configure):
                 if len(log) == 7:
                     ego_vehicle_state.append(log)
 
-            if len(data) == 10 and data[0] == "DYNAMIC_OBS_INFO":
+            elif len(data) == 10 and data[0] == "DYNAMIC_OBS_INFO":
                 log = []
                 for i in range(2, len(data)):
                     log.append(float(data[i]))
@@ -325,7 +329,7 @@ def create_run_scenario_overtake_random (Configure):
 
 
 
-    # print("Results:", len(result), result)
+    print("Results:", len(result), result)
 
     result_name = file_dir_eval + "/result_" + now_time  + "_"  + uuid_str + ".txt"
     # print(result_name)
