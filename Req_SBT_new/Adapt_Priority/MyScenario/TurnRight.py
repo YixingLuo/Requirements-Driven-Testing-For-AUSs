@@ -128,7 +128,7 @@ def create_run_scenario_turnright (Vars, Configure):
 
         for line in my_data:
             data = line.split()
-            if data[0] == "FAIL":
+            if data[0] == "FAIL" or data[0] == "Register":
                 break
             if len(data) == 8 and data[0] == "EGO_STATUS":
                 log = []
@@ -139,11 +139,13 @@ def create_run_scenario_turnright (Vars, Configure):
 
             elif len(data) == 10 and data[0] == "DYNAMIC_OBS_INFO":
                 log = []
-                for i in range(2, len(data)):
-                    log.append(float(data[i]))
-                    # print(log)
-                if len(log) == 8:
-                    dynamic_vehicle_state[int(data[1])].append(log)
+                # print(data)
+                if data[1] == '0' or data[1] == '1' or data[1] == '2':
+                    for i in range(2, len(data)):
+                        log.append(float(data[i]))
+                        # print(log)
+                    if len(log) == 8:
+                        dynamic_vehicle_state[int(data[1])].append(log)
             elif len(data) == 5 and data[0] == "STATIC_OBS_INFO":
                 log = []
                 for i in range(2, len(data)):
@@ -292,7 +294,7 @@ def create_run_scenario_turnright_random (Configure):
 
         for line in my_data:
             data = line.split()
-            if data[0] == "FAIL":
+            if data[0] == "FAIL" or data[0] == "Register":
                 break
             if len(data) == 8 and data[0] == "EGO_STATUS":
                 log = []
@@ -303,11 +305,13 @@ def create_run_scenario_turnright_random (Configure):
 
             elif len(data) == 10 and data[0] == "DYNAMIC_OBS_INFO":
                 log = []
-                for i in range(2, len(data)):
-                    log.append(float(data[i]))
-                    # print(log)
-                if len(log) == 8:
-                    dynamic_vehicle_state[int(data[1])].append(log)
+                # print(data)
+                if data[1] == '0' or data[1] == '1' or data[1] == '2':
+                    for i in range(2, len(data)):
+                        log.append(float(data[i]))
+                        # print(log)
+                    if len(log) == 8:
+                        dynamic_vehicle_state[int(data[1])].append(log)
             elif len(data) == 5 and data[0] == "STATIC_OBS_INFO":
                 log = []
                 for i in range(2, len(data)):
