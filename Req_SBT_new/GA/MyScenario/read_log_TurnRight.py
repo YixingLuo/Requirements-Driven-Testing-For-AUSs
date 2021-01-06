@@ -465,8 +465,8 @@ def evaluate_cross_lane (ego_vehicle_state):
 
 if __name__=='__main__':
 
-    file_dir_sce = os.getcwd() + '/2021_01_06_Brute_Froce_scenarios_0'
-    file_dir_data = os.getcwd() + '/2021_01_06_Brute_Froce_datalog_0'
+    file_dir_sce = os.getcwd() + '/2021_01_06_NSGA_III_scenarios_20000'
+    file_dir_data = os.getcwd() + '/2021_01_06_NSGA_III_datalog_20000'
 
     fileList = os.listdir(file_dir_sce)
     fileList.sort()
@@ -484,8 +484,8 @@ if __name__=='__main__':
 
     #
     # file_path = os.path.abspath(os.path.join(os.getcwd(), ".."))
-    # scenario_name = file_dir_sce + "\scenario_" + str(0) + ".json"
-    # log_name = file_dir_data + "\datalog_" + str(0) + ".txt"
+    # scenario_name = "scenario_20210106175644_298_c0d0582faba1426e8dd6b1390c802882.json"
+    # log_name = "datalog_20210106175644_298_c0d0582faba1426e8dd6b1390c802882.txt"
     #
     # cmd = file_path+"\dynamic_cost -c %d -v EGO_TESTER -a -i %s > %s" % (100, scenario_name, log_name)
     #
@@ -494,6 +494,7 @@ if __name__=='__main__':
     #
     # scenario_name = 'SCENAR1.json'
     # log_name = 'datalog1.txt'
+
         config = TurnRightConfigure()
 
         with open(scenario_name, 'r', encoding='utf-8') as f:
@@ -514,7 +515,7 @@ if __name__=='__main__':
 
             for line in my_data:
                 data = line.split()
-                if data[0] == "FAIL":
+                if data[0] == "FAIL" or data[0] == "Register":
                     break
                 if len(data) == 8 and data[0] == "EGO_STATUS":
                     log = []
@@ -525,11 +526,15 @@ if __name__=='__main__':
 
                 elif len(data) == 10 and data[0] == "DYNAMIC_OBS_INFO":
                     log = []
-                    for i in range(2, len(data)):
-                        log.append(float(data[i]))
-                        # print(log)
-                    if len(log) == 8:
-                        dynamic_vehicle_state[int(data[1])].append(log)
+                    # print(data)
+                    if data[1] == '0' or data[1] == '1' or data[1] == '2':
+                        for i in range(2, len(data)):
+                            log.append(float(data[i]))
+                            # print(log)
+                        if len(log) == 8:
+                            dynamic_vehicle_state[int(data[1])].append(log)
+                    else:
+                        break
                 elif len(data) == 5 and data[0] == "STATIC_OBS_INFO":
                     log = []
                     for i in range(2, len(data)):
@@ -537,7 +542,6 @@ if __name__=='__main__':
                         # print(log)
                     if len(log) == 3:
                         static_vehicle_state[int(data[1])].append(log)
-
 
 
 

@@ -146,6 +146,8 @@ def create_run_scenario_turnright (Vars, Configure):
                         # print(log)
                     if len(log) == 8:
                         dynamic_vehicle_state[int(data[1])].append(log)
+                else:
+                    break
             elif len(data) == 5 and data[0] == "STATIC_OBS_INFO":
                 log = []
                 for i in range(2, len(data)):
@@ -312,6 +314,8 @@ def create_run_scenario_turnright_random (Configure):
                         # print(log)
                     if len(log) == 8:
                         dynamic_vehicle_state[int(data[1])].append(log)
+                else:
+                    break
             elif len(data) == 5 and data[0] == "STATIC_OBS_INFO":
                 log = []
                 for i in range(2, len(data)):
