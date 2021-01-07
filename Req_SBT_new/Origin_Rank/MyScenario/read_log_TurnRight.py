@@ -60,12 +60,14 @@ def evaluate_collision (ego_vehicle_state, dynamic_vehicle_state,dy_obsList, sta
         x = ego_vehicle_state[i][0]
         y = ego_vehicle_state[i][1]
         ego_vehicle_center = Point(x, y)
-        point1 = Point(x - config.ego_width / 2, y - config.ego_length / 2)
-        point2 = Point(x + config.ego_width / 2, y - config.ego_length / 2)
-        point3 = Point(x + config.ego_width / 2, y + config.ego_length / 2)
-        point4 = Point(x - config.ego_width / 2, y + config.ego_length / 2)
+        point1 = Point(x - config.ego_length / 2, y - config.ego_width / 2)
+        point2 = Point(x + config.ego_length / 2, y - config.ego_width / 2)
+        point3 = Point(x + config.ego_length / 2, y + config.ego_width / 2)
+        point4 = Point(x - config.ego_length / 2, y + config.ego_width / 2)
         ego_rect = Polygon([point1, point2, point3, point4])
         angle = ego_direction * (180.0 / math.pi)
+
+
         rect_ego = affinity.rotate(ego_rect, angle)
 
 
@@ -76,20 +78,30 @@ def evaluate_collision (ego_vehicle_state, dynamic_vehicle_state,dy_obsList, sta
             veh_x = dynamic_vehicle_state[num][i][4]
             veh_y = dynamic_vehicle_state[num][i][5]
             other_vehicle_center = Point(veh_x, veh_y)
-            point1 = Point(veh_x - vehicle_width / 2, veh_y - vehicle_length / 2)
-            point2 = Point(veh_x + vehicle_width / 2, veh_y - vehicle_length / 2)
-            point3 = Point(veh_x + vehicle_width / 2, veh_y + vehicle_length / 2)
-            point4 = Point(veh_x - vehicle_width / 2, veh_y + vehicle_length / 2)
+            point1 = Point(veh_x - vehicle_length / 2, veh_y - vehicle_width / 2)
+            point2 = Point(veh_x + vehicle_length / 2, veh_y - vehicle_width / 2)
+            point3 = Point(veh_x + vehicle_length / 2, veh_y + vehicle_width / 2)
+            point4 = Point(veh_x - vehicle_length / 2, veh_y + vehicle_width / 2)
             other_rect = Polygon([point1, point2, point3, point4])
+            angle = dynamic_vehicle_state[num][i][2] * (180.0 / math.pi)
+            rect_other = affinity.rotate(other_rect, angle)
 
-            intersection = rect_ego.intersection(other_rect)
+            intersection = rect_ego.intersection(rect_other)
             if not intersection.is_empty:
+                # print("rect_ego", rect_ego)
+                # print("ego_state", ego_vehicle_state[i][0], ego_vehicle_state[i][1])
+                # print("other rect:", other_rect)
+                # print("other vehicle state:", dynamic_vehicle_state[num][i][4], dynamic_vehicle_state[num][i][5])
                 flag = -1
                 min_dist = -1
                 break
             else:
                 dist = ego_vehicle_center.distance(other_vehicle_center)
                 if dist < min_dist:
+                    # print("rect_ego", rect_ego)
+                    # print("ego_state", ego_vehicle_state[i][0], ego_vehicle_state[i][1])
+                    # print("other rect:", rect_other)
+                    # print("other vehicle state:", dynamic_vehicle_state[num][i][4], dynamic_vehicle_state[num][i][5])
                     min_dist = dist
 
 
@@ -327,20 +339,21 @@ def evaluate_speed (ego_vehicle_state, config):
 
     ## type 2
     satisfaction_list = []
-    for i in range(len(speed_list)):
-        if speed_list[i] <= config.speed_limit:
-            ds = 1
-        elif  speed_list[i] > config.speed_max:
-            ds = 0
-        else:
-            ds = (config.speed_max - speed_list[i])/(config.speed_max - config.speed_limit)
-        satisfaction_list.append(ds)
+    if len(speed_list):
+        for i in range(len(speed_list)):
+            if speed_list[i] <= config.speed_limit:
+                ds = 1
+            elif  speed_list[i] > config.speed_max:
+                ds = 0
+            else:
+                ds = (config.speed_max - speed_list[i])/(config.speed_max - config.speed_limit)
+            satisfaction_list.append(ds)
+    else:
+        satisfaction_list.append(0)
     # print(satisfaction_list)
     # satisfaction  = 1/(len(satisfaction_list))*sum(satisfaction_list)
 
-    ## 20201202
-    # return np.mean(satisfaction_list)
-    return  np.mean(satisfaction_list), min(satisfaction_list)
+    return np.mean(satisfaction_list), min(satisfaction_list)
 
 def evaluate_comfort (ego_vehicle_state, config):
     comfort_list_1 = []
@@ -465,8 +478,8 @@ def evaluate_cross_lane (ego_vehicle_state):
 
 if __name__=='__main__':
 
-    file_dir_sce = os.getcwd() + '/2021_01_07_Adapt_Priority_scenarios_4'
-    file_dir_data = os.getcwd() + '/2021_01_07_Adapt_Priority_datalog_4'
+    file_dir_sce = os.getcwd() + '/2021_01_07_Brute_Froce_scenarios_2'
+    file_dir_data = os.getcwd() + '/2021_01_07_Brute_Froce_datalog_2'
 
     fileList = os.listdir(file_dir_sce)
     fileList.sort()
@@ -476,24 +489,17 @@ if __name__=='__main__':
         uuixcode = fileList[i].split('.', 1)[0]
         # print(uuixcode)
         code = uuixcode.split("_",1)[1]
-        # if code == "20210106063606_903_15a953cc4071442ca86761ec5fa9ab6b":
-        #     continue
         log_name = file_dir_data + '/' + 'datalog_' + code + '.txt'
+        # if code == "20210107171223_353_0d446fad65e94945bfe94cc342e6a0cf":
+        #     continue
+
 
         print(log_name)
 
-    #
-    # file_path = os.path.abspath(os.path.join(os.getcwd(), ".."))
-    # scenario_name = file_dir_sce + "\scenario_" + str(0) + ".json"
-    # log_name = file_dir_data + "\datalog_" + str(0) + ".txt"
-    #
-    # cmd = file_path+"\dynamic_cost -c %d -v EGO_TESTER -a -i %s > %s" % (100, scenario_name, log_name)
-    #
-    # os.system(cmd)
-    # print(log_name)
-    #
-    # scenario_name = 'SCENAR1.json'
-    # log_name = 'datalog1.txt'
+
+    # scenario_name = 'scenario_20210107171223_353_0d446fad65e94945bfe94cc342e6a0cf.json'
+    # log_name = 'datalog_20210107171223_353_0d446fad65e94945bfe94cc342e6a0cf.txt'
+
         config = TurnRightConfigure()
 
         with open(scenario_name, 'r', encoding='utf-8') as f:
