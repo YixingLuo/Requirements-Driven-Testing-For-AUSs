@@ -17,8 +17,8 @@ class CarBehindAndInFrontConfigure:
         # self.infinity_cost = 100000000
         # self.sampling_step = 0.1
         self.k_thr = 0.172
-        self.ego_width = 1.8
-        self.ego_length = 4.8
+        self.ego_width = 1.84
+        self.ego_length = 4.86
         self.k_limit = 5.0
         # self.latg_max_soft = 2.94
         # self.curve_rate_limit = 1
@@ -51,11 +51,11 @@ class CarBehindAndInFrontConfigure:
         self.PoolType = "Thread"
         # self.PoolType = "Process"
         # self.ProcessNum = psutil.cpu_count()
-        self.ProcessNum = 30
+        self.ProcessNum = 32
         self.maxIterations = self.population * self.search_round
 
         ## ego
-        self.ego_s0 = [0, 20]
+        self.ego_s0 = [5, 25]
         self.ego_v0 = [8, 16]
 
         ## traffic_signals
@@ -73,17 +73,16 @@ class CarBehindAndInFrontConfigure:
         self.pos_y_1 = [45, 65]
         self.velo_1 = [4, 16]
         self.acc_1 = [0, 3]
-        self.start_time_1 = [0, 0.5]
-
+        self.start_time_1 = [0, 0.2]
 
         ## dynamic_obstacle_2
-        self.pos_y_2 = [0, 40]
+        self.pos_y_2 = [0, 20]
         self.velo_2 = [4, 16]
         self.acc_2 = [0, 3]
         self.start_time_2 = [0, 2]
 
         ## dynamic_obstacle_3
-        self.pos_y_3 = [30, 90]
+        self.pos_y_3 = [40, 90]
         self.velo_3 = [4, 16]
         self.acc_3 = [0, 3]
         self.start_time_3 = [0, 2]

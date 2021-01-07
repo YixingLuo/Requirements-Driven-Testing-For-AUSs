@@ -60,10 +60,10 @@ def evaluate_collision (ego_vehicle_state, dynamic_vehicle_state,dy_obsList, sta
         x = ego_vehicle_state[i][0]
         y = ego_vehicle_state[i][1]
         ego_vehicle_center = Point(x, y)
-        point1 = Point(x - config.ego_length/2, y - config.ego_width/2)
-        point2 = Point(x + config.ego_length/2, y - config.ego_width/2)
-        point3 = Point(x + config.ego_length/2, y + config.ego_width/2)
-        point4 = Point(x - config.ego_length/2, y + config.ego_width/2)
+        point1 = Point(x - config.ego_width / 2, y - config.ego_length / 2)
+        point2 = Point(x + config.ego_width / 2, y - config.ego_length / 2)
+        point3 = Point(x + config.ego_width / 2, y + config.ego_length / 2)
+        point4 = Point(x - config.ego_width / 2, y + config.ego_length / 2)
         ego_rect = Polygon([point1, point2, point3, point4])
         angle = ego_direction * (180.0 / math.pi)
         rect_ego = affinity.rotate(ego_rect, angle)
@@ -76,10 +76,10 @@ def evaluate_collision (ego_vehicle_state, dynamic_vehicle_state,dy_obsList, sta
             veh_x = dynamic_vehicle_state[num][i][4]
             veh_y = dynamic_vehicle_state[num][i][5]
             other_vehicle_center = Point(veh_x, veh_y)
-            point1 = Point(veh_x - vehicle_length / 2, veh_y - vehicle_width / 2)
-            point2 = Point(veh_x + vehicle_length / 2, veh_y - vehicle_width / 2)
-            point3 = Point(veh_x + vehicle_length / 2, veh_y + vehicle_width / 2)
-            point4 = Point(veh_x - vehicle_length / 2, veh_y + vehicle_width / 2)
+            point1 = Point(veh_x - vehicle_width / 2, veh_y - vehicle_length / 2)
+            point2 = Point(veh_x + vehicle_width / 2, veh_y - vehicle_length / 2)
+            point3 = Point(veh_x + vehicle_width / 2, veh_y + vehicle_length / 2)
+            point4 = Point(veh_x - vehicle_width / 2, veh_y + vehicle_length / 2)
             other_rect = Polygon([point1, point2, point3, point4])
 
             intersection = rect_ego.intersection(other_rect)
@@ -100,10 +100,10 @@ def evaluate_collision (ego_vehicle_state, dynamic_vehicle_state,dy_obsList, sta
             veh_x = dynamic_vehicle_state[num][i][4]
             veh_y = dynamic_vehicle_state[num][i][5]
             other_vehicle_center = Point(veh_x, veh_y)
-            point1 = Point(veh_x - vehicle_length / 2, veh_y - vehicle_width / 2)
-            point2 = Point(veh_x + vehicle_length / 2, veh_y - vehicle_width / 2)
-            point3 = Point(veh_x + vehicle_length / 2, veh_y + vehicle_width / 2)
-            point4 = Point(veh_x - vehicle_length / 2, veh_y + vehicle_width / 2)
+            point1 = Point(veh_x - vehicle_width / 2, veh_y - vehicle_length / 2)
+            point2 = Point(veh_x + vehicle_width / 2, veh_y - vehicle_length / 2)
+            point3 = Point(veh_x + vehicle_width / 2, veh_y + vehicle_length / 2)
+            point4 = Point(veh_x - vehicle_width / 2, veh_y + vehicle_length / 2)
             other_rect = Polygon([point1, point2, point3, point4])
 
             intersection = rect_ego.intersection(other_rect)
@@ -465,8 +465,8 @@ def evaluate_cross_lane (ego_vehicle_state):
 
 if __name__=='__main__':
 
-    file_dir_sce = os.getcwd() + '/2021_01_06_NSGA_III_scenarios_20000'
-    file_dir_data = os.getcwd() + '/2021_01_06_NSGA_III_datalog_20000'
+    file_dir_sce = os.getcwd() + '/2021_01_07_Adapt_Priority_scenarios_4'
+    file_dir_data = os.getcwd() + '/2021_01_07_Adapt_Priority_datalog_4'
 
     fileList = os.listdir(file_dir_sce)
     fileList.sort()
@@ -484,8 +484,8 @@ if __name__=='__main__':
 
     #
     # file_path = os.path.abspath(os.path.join(os.getcwd(), ".."))
-    # scenario_name = "scenario_20210106175644_298_c0d0582faba1426e8dd6b1390c802882.json"
-    # log_name = "datalog_20210106175644_298_c0d0582faba1426e8dd6b1390c802882.txt"
+    # scenario_name = file_dir_sce + "\scenario_" + str(0) + ".json"
+    # log_name = file_dir_data + "\datalog_" + str(0) + ".txt"
     #
     # cmd = file_path+"\dynamic_cost -c %d -v EGO_TESTER -a -i %s > %s" % (100, scenario_name, log_name)
     #
@@ -494,7 +494,6 @@ if __name__=='__main__':
     #
     # scenario_name = 'SCENAR1.json'
     # log_name = 'datalog1.txt'
-
         config = TurnRightConfigure()
 
         with open(scenario_name, 'r', encoding='utf-8') as f:
@@ -515,7 +514,7 @@ if __name__=='__main__':
 
             for line in my_data:
                 data = line.split()
-                if data[0] == "FAIL" or data[0] == "Register":
+                if data[0] == "CRASH" or data[0] == "Register" or data[0] == "TIMEOUT":
                     break
                 if len(data) == 8 and data[0] == "EGO_STATUS":
                     log = []
@@ -542,6 +541,7 @@ if __name__=='__main__':
                         # print(log)
                     if len(log) == 3:
                         static_vehicle_state[int(data[1])].append(log)
+
 
 
 

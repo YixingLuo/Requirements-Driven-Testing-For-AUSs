@@ -54,7 +54,7 @@ if __name__ == '__main__':
     # search_round_list = [50, 50, 50, 50, 50, 50, 50, 50]
     goal_selection_index = random.sample(range(0,128),128)
     # goal_selection_index = [idx for idx in range(128)]
-    
+
     total_round = 400
     round_index = 0
     population = 50

@@ -123,12 +123,13 @@ def create_run_scenario_turnright (Vars, Configure):
     ego_vehicle_state = []
     dynamic_vehicle_state = [[] for i in range(num_dynamic_obs)]
     static_vehicle_state = [[] for i in range(num_static_obs)]
-    with open(log_name, 'r') as f:
+
+    with open(log_name, 'r', encoding='gb18030', errors='ignore') as f:
         my_data = f.readlines()
 
         for line in my_data:
             data = line.split()
-            if data[0] == "FAIL" or data[0] == "Register":
+            if data[0] == "CRASH" or data[0] == "Register" or data[0] == "TIMEOUT":
                 break
             if len(data) == 8 and data[0] == "EGO_STATUS":
                 log = []
@@ -291,12 +292,13 @@ def create_run_scenario_turnright_random (Configure):
     ego_vehicle_state = []
     dynamic_vehicle_state = [[] for i in range(num_dynamic_obs)]
     static_vehicle_state = [[] for i in range(num_static_obs)]
-    with open(log_name, 'r') as f:
+
+    with open(log_name, 'r', encoding='gb18030', errors='ignore') as f:
         my_data = f.readlines()
 
         for line in my_data:
             data = line.split()
-            if data[0] == "FAIL" or data[0] == "Register":
+            if data[0] == "CRASH" or data[0] == "Register" or data[0] == "TIMEOUT":
                 break
             if len(data) == 8 and data[0] == "EGO_STATUS":
                 log = []

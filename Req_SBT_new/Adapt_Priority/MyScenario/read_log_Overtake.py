@@ -60,10 +60,10 @@ def evaluate_collision (ego_vehicle_state, dynamic_vehicle_state,dy_obsList, sta
         x = ego_vehicle_state[i][0]
         y = ego_vehicle_state[i][1]
         ego_vehicle_center = Point(x, y)
-        point1 = Point(x - config.ego_length/2, y - config.ego_width/2)
-        point2 = Point(x + config.ego_length/2, y - config.ego_width/2)
-        point3 = Point(x + config.ego_length/2, y + config.ego_width/2)
-        point4 = Point(x - config.ego_length/2, y + config.ego_width/2)
+        point1 = Point(x - config.ego_width / 2, y - config.ego_length / 2)
+        point2 = Point(x + config.ego_width / 2, y - config.ego_length / 2)
+        point3 = Point(x + config.ego_width / 2, y + config.ego_length / 2)
+        point4 = Point(x - config.ego_width / 2, y + config.ego_length / 2)
         ego_rect = Polygon([point1, point2, point3, point4])
         angle = ego_direction * (180.0 / math.pi)
         rect_ego = affinity.rotate(ego_rect, angle)
@@ -76,10 +76,10 @@ def evaluate_collision (ego_vehicle_state, dynamic_vehicle_state,dy_obsList, sta
             veh_x = dynamic_vehicle_state[num][i][4]
             veh_y = dynamic_vehicle_state[num][i][5]
             other_vehicle_center = Point(veh_x, veh_y)
-            point1 = Point(veh_x - vehicle_length / 2, veh_y - vehicle_width / 2)
-            point2 = Point(veh_x + vehicle_length / 2, veh_y - vehicle_width / 2)
-            point3 = Point(veh_x + vehicle_length / 2, veh_y + vehicle_width / 2)
-            point4 = Point(veh_x - vehicle_length / 2, veh_y + vehicle_width / 2)
+            point1 = Point(veh_x - vehicle_width / 2, veh_y - vehicle_length / 2)
+            point2 = Point(veh_x + vehicle_width / 2, veh_y - vehicle_length / 2)
+            point3 = Point(veh_x + vehicle_width / 2, veh_y + vehicle_length / 2)
+            point4 = Point(veh_x - vehicle_width / 2, veh_y + vehicle_length / 2)
             other_rect = Polygon([point1, point2, point3, point4])
 
             intersection = rect_ego.intersection(other_rect)
@@ -100,10 +100,10 @@ def evaluate_collision (ego_vehicle_state, dynamic_vehicle_state,dy_obsList, sta
             veh_x = dynamic_vehicle_state[num][i][4]
             veh_y = dynamic_vehicle_state[num][i][5]
             other_vehicle_center = Point(veh_x, veh_y)
-            point1 = Point(veh_x - vehicle_length / 2, veh_y - vehicle_width / 2)
-            point2 = Point(veh_x + vehicle_length / 2, veh_y - vehicle_width / 2)
-            point3 = Point(veh_x + vehicle_length / 2, veh_y + vehicle_width / 2)
-            point4 = Point(veh_x - vehicle_length / 2, veh_y + vehicle_width / 2)
+            point1 = Point(veh_x - vehicle_width / 2, veh_y - vehicle_length / 2)
+            point2 = Point(veh_x + vehicle_width / 2, veh_y - vehicle_length / 2)
+            point3 = Point(veh_x + vehicle_width / 2, veh_y + vehicle_length / 2)
+            point4 = Point(veh_x - vehicle_width / 2, veh_y + vehicle_length / 2)
             other_rect = Polygon([point1, point2, point3, point4])
 
             intersection = rect_ego.intersection(other_rect)

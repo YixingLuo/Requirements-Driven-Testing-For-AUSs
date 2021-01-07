@@ -22,8 +22,8 @@ class TurnRightConfigure:
         # self.infinity_cost = 100000000
         # self.sampling_step = 0.1
         self.k_thr = 0.172
-        self.ego_width = 1.8
-        self.ego_length = 4.8
+        self.ego_width = 1.84
+        self.ego_length = 4.86
         self.k_limit = 5.0
         # self.latg_max_soft = 2.94
         # self.curve_rate_limit = 1
