@@ -116,7 +116,7 @@ if __name__ == '__main__':
             # print(numpy.array(violation_pattern_to_search).shape[0])
 
             weight_dist, sorted_pattern_distance, sorted_pop, distance_ranking = Distance_Ranking(priority_list,
-                                                                                                  variables, evaluation)
+                                                                                                  variables, evaluation, target_value_threshold)
             weight_relation, sorted_pattern_relation, relation_ranking = Relation_Ranking(violation_pattern_to_search,
                                                                                           searched_violation_pattern,
                                                                                           priority_list)
@@ -160,9 +160,11 @@ if __name__ == '__main__':
         file_name = target_dir + '/violation_pattern_to_search_' + str(round_index) + '.txt'
         numpy.savetxt(file_name, violation_pattern_to_search, fmt="%d")  # 保存为整数
         file_name = target_dir + '/variables_' + str(round_index) + '.txt'
-        numpy.savetxt(file_name, variables, fmt="%d")  # 保存为整数
+        numpy.savetxt(file_name, variables, fmt="%f")  # 保存为整数
         file_name = target_dir + '/evaluations_' + str(round_index) + '.txt'
-        numpy.savetxt(file_name, evaluation, fmt="%d")  # 保存为整数
+        numpy.savetxt(file_name, evaluation, fmt="%f")  # 保存为整数
+        # file_name = target_dir + '/sorted_pop_' + str(round_index) + '.txt'
+        # numpy.savetxt(file_name, sorted_pop, fmt="%f")  # 保存为整数
         file_name = target_dir + '/pattern_count_' + str(round_index) + '.txt'
         numpy.savetxt(file_name, pattern_count, fmt="%d")  # 保存为整数
 

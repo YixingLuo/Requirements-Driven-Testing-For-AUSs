@@ -45,25 +45,27 @@ def text_create(Configuration):
 # if not os.path.exists(data_folder):
 #     os.mkdir(data_folder)
 
-data_folder = os.getcwd() + '/Overtake_Datalog_Req4_2021_01_07_21'
+data_folder = os.getcwd() + '/Overtake_Datalog_Req3_2021_01_07_21'
 
 if __name__ == '__main__':
 
     # search_round_list = [1, 10, 10, 10, 10, 20, 110, 110]
-    search_round_list = [1, 10, 20, 30, 40, 50, 60, 70]
-    # search_round_list = [50, 50, 50, 50, 50, 50, 50, 50]
-    goal_selection_index = random.sample(range(0,128),128)
+    # search_round_list = [1, 10, 20, 30, 40, 50, 60, 70]
+    search_round_list = [50, 50, 50, 50, 50, 50, 50, 50]
+    # goal_selection_index = random.sample(range(0,128),128)
     # goal_selection_index = [idx for idx in range(128)]
-    # goal_selection_index = numpy.loadtxt(os.path.join(data_folder, 'goal_selection_index.txt'))
 
-    total_round = 400
-    round_index = 0
+
+    total_round = 400 - 5*50
+    round_index = 6
     population = 50
     search_round = 0
 
     target_dir = data_folder
-    file_name = os.path.join(target_dir, 'goal_selection_index.txt')
-    numpy.savetxt(file_name, goal_selection_index, fmt="%d")  # 保存为整数
+    # file_name = os.path.join(target_dir, 'goal_selection_index.txt')
+    # numpy.savetxt(file_name, goal_selection_index, fmt="%d")  # 保存为整数
+    goal_selection_index = numpy.loadtxt(os.path.join(data_folder, 'goal_selection_index.txt'))
+    goal_selection_index = [int(x) for x in goal_selection_index]
 
     target_value_threshold = [1, 0, 1, 1, 1, 0.95, 0.99]
 
@@ -77,11 +79,11 @@ if __name__ == '__main__':
 
     violation_pattern_to_search = []
     evaluation = []
-    searched_violation_pattern = []
-    pattern_count = numpy.zeros(priority_list.shape[0])
-    # pattern_count = numpy.loadtxt(os.path.join(data_folder, "pattern_count_3.txt"))
-    # searched_violation_pattern = numpy.loadtxt(os.path.join(data_folder, "searched_violation_pattern_3.txt"))
-    # results_file_name = "/gpfs/share/home/1801111354/Req_SBT_new/Brute_Force/Overtake_Datalog_Req4_2021_01_07_21/2021_01_08_Brute_Froce_results_3"
+    # searched_violation_pattern = []
+    # pattern_count = numpy.zeros(priority_list.shape[0])
+    pattern_count = numpy.loadtxt(os.path.join(data_folder, "pattern_count_5.txt"))
+    searched_violation_pattern = list(numpy.loadtxt(os.path.join(data_folder, "searched_violation_pattern_5.txt")))
+    results_file_name = "/gpfs/share/home/1801111354/Req_SBT_new/Brute_Force/Overtake_Datalog_Req3_2021_01_07_21/2021_01_08_Brute_Froce_results_5"
 
     while total_round > 0:
 

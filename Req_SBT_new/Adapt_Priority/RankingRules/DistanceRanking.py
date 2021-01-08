@@ -5,7 +5,7 @@ import math
 import os
 import csv
 
-target_value_threshold = [1, 0, 1, 1, 1, 0.95, 0.99]
+# target_value_threshold = [1, 0, 1, 1, 1, 0.95, 0.99]
 
 
 # def Distance_Ranking (violation_pattern_to_search, population, scores):
@@ -54,8 +54,10 @@ target_value_threshold = [1, 0, 1, 1, 1, 0.95, 0.99]
 #     return weight_dist, sorted_violation_pattern_list, sorted_pop
 
 
-def Distance_Ranking (priority_list, population, scores):
+def Distance_Ranking (priority_list, population, scores, target_value_threshold):
     sorted_violation_pattern_list = []
+    print(np.array(population).shape[0], np.array(population).shape[1])
+    print(np.array(scores).shape[0], np.array(scores).shape[1])
     sorted_pop = np.zeros((np.array(priority_list).shape[0], np.array(population).shape[0], np.array(population).shape[1]),dtype=float)
     distance = np.zeros((np.array(priority_list).shape[0], np.array(population).shape[0]),dtype=float)
 
@@ -164,5 +166,5 @@ if __name__ == '__main__':
     # print(violation_pattern_to_search,pattern_count)
 
     [sorted_violation_pattern_list, sorted_pop] = Distance_Ranking(violation_pattern_to_search,
-                                                                                          variables, evaluation)
+                                                                                          variables, evaluation, target_value_threshold)
     print(np.array(sorted_violation_pattern_list).shape, sorted_pop.shape)

@@ -8,14 +8,12 @@ from MyAlgorithm.termination_criterion import StoppingByEvaluations
 from jmetal.util.evaluator import MultiprocessEvaluator, SequentialEvaluator
 from jmetal.util.observer import ProgressBarObserver
 from MyAlgorithm.nsgaiii import NSGAIII
-from Settings.TurnRightConfigure import TurnRightConfigure
+from Settings.CarBehindAndInFrontConfigure import CarBehindAndInFrontConfigure
 import os
 import time
-from TurnRightProblem import TurnRightProblem
-from jmetal.util.observer import ProgressBarObserver
-import random
-import numpy
+from CarBehindAndInFrontProblem import CarBehindAndInFrontProblem
 import csv
+import numpy
 from RankingRules.DistanceRanking import Distance_Ranking
 from RankingRules.EnsembleRanking import Ensemble_Ranking
 from RankingRules.RelationRanking import Relation_Ranking
@@ -31,15 +29,17 @@ def text_create(Configuration):
 
 
 
-data_folder = os.getcwd() + '/TurnRight_Datalog_Req4_' + str(time.strftime("%Y_%m_%d_%H"))
-if not os.path.exists(data_folder):
-    os.mkdir(data_folder)
+# data_folder = os.getcwd() + '/Overtake_Datalog_Req4_' + str(time.strftime("%Y_%m_%d_%H"))
+# if not os.path.exists(data_folder):
+#     os.mkdir(data_folder)
+
+data_folder = os.getcwd() + "/Overtake_Datalog_Req4_2021_01_07_21"
 
 if __name__ == '__main__':
 
     # search_round_list = [1, 10, 10, 10, 10, 20, 110, 110]
     search_round_list = [1, 10, 20, 30, 40, 50, 60, 70]
-    target_value_threshold = [1, 0, 1, 1, 1, 0.6, 0.95]
+    target_value_threshold = [1, 0, 1, 1, 1, 0.95, 0.99]
     target_dir = data_folder
 
     priority_list = []
@@ -51,25 +51,28 @@ if __name__ == '__main__':
     priority_list = numpy.array(priority_list)
 
     violation_pattern_to_search = []
-    pattern_count = numpy.zeros(priority_list.shape[0])
-    evaluation = []
-    searched_violation_pattern = []
+    pattern_count = numpy.loadtxt(os.path.join(data_folder, "pattern_count_8.txt"))
+    evaluation = numpy.loadtxt(os.path.join(data_folder, "evaluations_8.txt"))
+    searched_violation_pattern = numpy.loadtxt(os.path.join(data_folder, "searched_violation_pattern_8.txt"))
     violation_pattern_ranking_removed = []
-    variables = []
+    variables = numpy.loadtxt(os.path.join(data_folder, "variables_8.txt"))
     sorted_pop = []
 
-    total_round = 400
+    total_round = 400 - 350
     # interation_round = 3
-    round_index = 0
+    round_index = 8
     population = 50
     search_round = 0
 
     while total_round > 0:
 
         ## caculate goal_index
-        if round_index == 0:
-            goal_selection_flag = numpy.ones(7)
-            searched_violation_pattern.append(goal_selection_flag)
+        if round_index == 8:
+
+            goal_selection_flag = numpy.loadtxt(os.path.join(data_folder, "req_violation_pattern_8.txt"))
+            # print(variables, evaluation, goal_selection_flag, searched_violation_pattern, pattern_count)
+            weight_dist, sorted_pattern_distance, sorted_pop, distance_ranking = Distance_Ranking(priority_list, variables, evaluation, target_value_threshold)
+            # searched_violation_pattern.append(goal_selection_flag)
 
             search_round = search_round_list[int(sum(goal_selection_flag))]
             # search_round = 50
@@ -77,7 +80,7 @@ if __name__ == '__main__':
                 search_round = total_round
             # total_round = total_round - search_round
 
-            Configuration = TurnRightConfigure(goal_selection_flag, population, search_round, round_index, target_dir)
+            Configuration = CarBehindAndInFrontConfigure(goal_selection_flag, population, search_round, round_index, target_dir)
             vars_file_name = Configuration.file_dir_var
             results_file_name = Configuration.file_dir_eval
 
@@ -146,7 +149,7 @@ if __name__ == '__main__':
                 search_round = total_round
             # total_round = total_round - search_round
 
-            Configuration = TurnRightConfigure(goal_selection_flag, population, search_round, round_index, target_dir)
+            Configuration = CarBehindAndInFrontConfigure(goal_selection_flag, population, search_round, round_index, target_dir)
             vars_file_name = Configuration.file_dir_var
             results_file_name = Configuration.file_dir_eval
 
@@ -173,7 +176,7 @@ if __name__ == '__main__':
 
 
         """===============================实例化问题对象============================"""
-        problem = TurnRightProblem(Goal_num, Configuration, target_value_threshold)
+        problem = CarBehindAndInFrontProblem(Goal_num, Configuration, target_value_threshold)
 
         """=================================算法参数设置============================"""
         max_evaluations = Configuration.maxIterations
