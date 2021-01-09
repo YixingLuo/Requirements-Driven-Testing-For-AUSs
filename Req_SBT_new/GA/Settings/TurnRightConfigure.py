@@ -51,7 +51,7 @@ class TurnRightConfigure:
         self.PoolType = "Thread"
         # self.PoolType = "Process"
         # self.ProcessNum = psutil.cpu_count()
-        self.ProcessNum = 32
+        self.ProcessNum = 30
         self.maxIterations = self.population * self.search_round
 
         ## ego
@@ -61,9 +61,9 @@ class TurnRightConfigure:
         ## traffic_signals
         self.start_s = 200
         self.end_s = 200
-        self.green_time = [8, 18]
-        self.yellow_time = [1, 3]
-        self.red_time = [4, 6]
+        self.green_time = [6, 12]
+        self.yellow_time = [1, 2]
+        self.red_time = [2, 4]
 
         ## static_obstacle
         # self.pos_s_1 = [60, 70]

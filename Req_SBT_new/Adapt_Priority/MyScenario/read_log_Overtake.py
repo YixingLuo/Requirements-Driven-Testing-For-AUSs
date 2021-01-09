@@ -478,8 +478,8 @@ def evaluate_cross_lane (ego_vehicle_state):
 
 if __name__=='__main__':
 
-    file_dir_sce = os.getcwd() + '/2021_01_06_Brute_Froce_scenarios_2'
-    file_dir_data = os.getcwd() + '/2021_01_06_Brute_Froce_datalog_2'
+    file_dir_sce = os.getcwd() + '/2021_01_08_Adapt_Priority_scenarios_2'
+    file_dir_data = os.getcwd() + '/2021_01_08_Adapt_Priority_datalog_2'
 
     fileList = os.listdir(file_dir_sce)
     fileList.sort()
@@ -488,8 +488,8 @@ if __name__=='__main__':
         scenario_name = file_dir_sce  + '/' + fileList[i]
         uuixcode = fileList[i].split('.', 1)[0]
         code = uuixcode.split("_",1)[1]
-        if code == "20210106063606_903_15a953cc4071442ca86761ec5fa9ab6b":
-            continue
+        # if code == "20210106063606_903_15a953cc4071442ca86761ec5fa9ab6b":
+        #     continue
         log_name = file_dir_data + '/' + 'datalog_' + code + '.txt'
 
         print(log_name)

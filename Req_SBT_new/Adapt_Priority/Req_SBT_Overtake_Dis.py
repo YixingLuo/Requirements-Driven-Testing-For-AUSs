@@ -1,10 +1,12 @@
 # -*- coding: utf-8 -*-
 
+
 from jmetal.algorithm.multiobjective.nsgaiii import UniformReferenceDirectionFactory
 from jmetal.operator import SBXCrossover, PolynomialMutation
 from jmetal.util.solution import print_function_values_to_file, print_variables_to_file
-from jmetal.util.termination_criterion import StoppingByEvaluations
-from jmetal.util.evaluator import MultiprocessEvaluator
+# from jmetal.util.termination_criterion import StoppingByEvaluations
+from MyAlgorithm.termination_criterion import StoppingByEvaluations
+from jmetal.util.evaluator import MultiprocessEvaluator, SequentialEvaluator
 from jmetal.util.observer import ProgressBarObserver
 from MyAlgorithm.nsgaiii import NSGAIII
 from Settings.CarBehindAndInFrontConfigure import CarBehindAndInFrontConfigure
@@ -16,6 +18,7 @@ import numpy
 from RankingRules.DistanceRanking import Distance_Ranking
 from RankingRules.EnsembleRanking import Ensemble_Ranking
 from RankingRules.RelationRanking import Relation_Ranking
+
 
 
 
@@ -35,7 +38,9 @@ if not os.path.exists(data_folder):
 
 if __name__ == '__main__':
 
-    target_value_threshold = [1, 0, 1, 1, 1, 0.95, 0.99]
+    # search_round_list = [1, 10, 10, 10, 10, 20, 110, 110]
+    search_round_list = [1, 10, 20, 30, 40, 50, 60, 70]
+    target_value_threshold = [1, 0, 1, 1, 1, 0.9, 0.98]
     target_dir = data_folder
 
     priority_list = []
@@ -54,24 +59,31 @@ if __name__ == '__main__':
     variables = []
     sorted_pop = []
 
-    # total_search_round = 400
-    interation_round = 8
+    total_round = 400
+    # interation_round = 3
+    round_index = 0
     population = 50
-    search_round = 50
+    search_round = 0
 
-    for round_index in range (interation_round):
+    while total_round > 0:
 
         ## caculate goal_index
         if round_index == 0:
             goal_selection_flag = numpy.ones(7)
             searched_violation_pattern.append(goal_selection_flag)
+
+            search_round = search_round_list[int(sum(goal_selection_flag))]
+            # search_round = 50
+            if total_round < search_round:
+                search_round = total_round
+            # total_round = total_round - search_round
+
             Configuration = CarBehindAndInFrontConfigure(goal_selection_flag, population, search_round, round_index, target_dir)
             vars_file_name = Configuration.file_dir_var
             results_file_name = Configuration.file_dir_eval
-            # print(round_index, vars_file_name, results_file_name)
 
         else:
-            print(round_index, sum(pattern_count))
+            # print(round_index, sum(pattern_count))
             fileList = os.listdir(results_file_name)
             fileList.sort()
 
@@ -104,7 +116,7 @@ if __name__ == '__main__':
             # print(numpy.array(violation_pattern_to_search).shape[0])
 
             weight_dist, sorted_pattern_distance, sorted_pop, distance_ranking = Distance_Ranking(priority_list,
-                                                                                                  variables, evaluation)
+                                                                                                  variables, evaluation, target_value_threshold)
             weight_relation, sorted_pattern_relation, relation_ranking = Relation_Ranking(violation_pattern_to_search,
                                                                                           searched_violation_pattern,
                                                                                           priority_list)
@@ -122,18 +134,24 @@ if __name__ == '__main__':
                                 del violation_pattern_ranking_removed[ll]
                                 break
                         break
+
             if numpy.array(violation_pattern_ranking_removed).shape[0] == 0:
                 goal_selection_flag = numpy.ones(7)
             else:
                 goal_selection_flag = violation_pattern_ranking_removed[0]
 
             searched_violation_pattern.append(goal_selection_flag)
+            search_round = search_round_list[int(sum(goal_selection_flag))]
+            # search_round = 50
+            if total_round < search_round:
+                search_round = total_round
+            # total_round = total_round - search_round
 
             Configuration = CarBehindAndInFrontConfigure(goal_selection_flag, population, search_round, round_index, target_dir)
             vars_file_name = Configuration.file_dir_var
             results_file_name = Configuration.file_dir_eval
 
-
+        print("round: ", search_round, "idx: ", round_index, "left: ", total_round)
         pattern_name = target_dir + '/req_violation_pattern_' + str(round_index) + '.txt'
         numpy.savetxt(pattern_name, goal_selection_flag, fmt="%d")  # 保存为整数
         # Save results to file
@@ -142,20 +160,25 @@ if __name__ == '__main__':
         file_name = target_dir + '/violation_pattern_to_search_' + str(round_index) + '.txt'
         numpy.savetxt(file_name, violation_pattern_to_search, fmt="%d")  # 保存为整数
         file_name = target_dir + '/variables_' + str(round_index) + '.txt'
-        numpy.savetxt(file_name, variables, fmt="%d")  # 保存为整数
+        numpy.savetxt(file_name, variables, fmt="%f")
         file_name = target_dir + '/evaluations_' + str(round_index) + '.txt'
-        numpy.savetxt(file_name, evaluation, fmt="%d")  # 保存为整数
+        numpy.savetxt(file_name, evaluation, fmt="%f")
+        # file_name = target_dir + '/sorted_pop_' + str(round_index) + '.txt'
+        # numpy.savetxt(file_name, sorted_pop, fmt="%f")  # 保存为整数
         file_name = target_dir + '/pattern_count_' + str(round_index) + '.txt'
         numpy.savetxt(file_name, pattern_count, fmt="%d")  # 保存为整数
 
 
         Goal_num = Configuration.goal_num
 
+
+
         """===============================实例化问题对象============================"""
         problem = CarBehindAndInFrontProblem(Goal_num, Configuration, target_value_threshold)
 
         """=================================算法参数设置============================"""
         max_evaluations = Configuration.maxIterations
+        StoppingEvaluator = StoppingByEvaluations(max_evaluations=max_evaluations, problem=problem)
 
         algorithm = NSGAIII(initial_population = sorted_pop,
             population_evaluator=MultiprocessEvaluator(Configuration.ProcessNum),
@@ -166,22 +189,38 @@ if __name__ == '__main__':
             # offspring_population_size = Configuration.population,
             mutation=PolynomialMutation(probability=1.0 / problem.number_of_variables, distribution_index=20),
             crossover=SBXCrossover(probability=1.0, distribution_index=20),
-            termination_criterion = StoppingByEvaluations(max_evaluations=max_evaluations)
+            termination_criterion = StoppingEvaluator
             # termination_criterion = StoppingByQualityIndicator(quality_indicator=HyperVolume, expected_value=1,
             #                                                  degree=0.9)
             # selection = BinaryTournamentSelection()
         )
 
+
         """==========================调用算法模板进行种群进化========================="""
-        progress_bar = ProgressBarObserver(max=max_evaluations)
-        algorithm.observable.register(progress_bar)
+        # progress_bar = ProgressBarObserver(max=max_evaluations)
+        # algorithm.observable.register(progress_bar)
         algorithm.run()
         front = algorithm.get_result()
 
         """==================================输出结果=============================="""
 
+
+
+        # Save results to file
         fun_name = 'FUN.' + str(round_index) + '_' + algorithm.label
         print_function_values_to_file(front, os.path.join(target_dir,fun_name))
         var_name = 'VAR.'+ str(round_index) + '_' + algorithm.label
         print_variables_to_file(front, os.path.join(target_dir, var_name))
+
+        print(f'Algorithm: ${algorithm.get_name()}')
+        print(f'Problem: ${problem.get_name()}')
+        print(f'Computing time: ${algorithm.total_computing_time}')
+
+
+
+        # print(search_round,round_index,total_search_round)
+        search_round = int(StoppingEvaluator.evaluations / population)
+        total_round = total_round - search_round
+        print("real round: ", search_round, "idx: ", round_index, "left: ", total_round)
+        round_index = round_index + 1
 

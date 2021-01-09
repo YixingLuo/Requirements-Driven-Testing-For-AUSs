@@ -7,7 +7,8 @@ from jmetal.util.solution import print_function_values_to_file, print_variables_
 from MyAlgorithm.termination_criterion import StoppingByEvaluations
 from jmetal.util.evaluator import MultiprocessEvaluator, SequentialEvaluator
 from jmetal.util.observer import ProgressBarObserver
-from MyAlgorithm.nsgaiii import NSGAIII
+# from MyAlgorithm.nsgaiii import NSGAIII
+from jmetal.algorithm.multiobjective.nsgaiii import NSGAIII
 from Settings.CarBehindAndInFrontConfigure import CarBehindAndInFrontConfigure
 import os
 import time
@@ -19,7 +20,6 @@ from RankingRules.EnsembleRanking import Ensemble_Ranking
 from RankingRules.RelationRanking import Relation_Ranking
 
 
-
 def text_create(Configuration):
     desktop_path = os.getcwd() + '/'
     # 新创建的txt文件的存放路径
@@ -29,7 +29,7 @@ def text_create(Configuration):
 
 
 
-data_folder = os.getcwd() + '/Overtake_Datalog_Req4_' + str(time.strftime("%Y_%m_%d_%H"))
+data_folder = os.getcwd() + '/Overtake_Datalog_Dis_Re_noPop_' + str(time.strftime("%Y_%m_%d_%H"))
 if not os.path.exists(data_folder):
     os.mkdir(data_folder)
 
@@ -177,7 +177,7 @@ if __name__ == '__main__':
         max_evaluations = Configuration.maxIterations
         StoppingEvaluator = StoppingByEvaluations(max_evaluations=max_evaluations, problem=problem)
 
-        algorithm = NSGAIII(initial_population = sorted_pop,
+        algorithm = NSGAIII(
             population_evaluator=MultiprocessEvaluator(Configuration.ProcessNum),
             # population_evaluator=SequentialEvaluator(),
             problem=problem,
@@ -220,4 +220,5 @@ if __name__ == '__main__':
         total_round = total_round - search_round
         print("real round: ", search_round, "idx: ", round_index, "left: ", total_round)
         round_index = round_index + 1
+
 
