@@ -128,6 +128,8 @@ def create_run_scenario_overtake (Vars, Configure):
 
         for line in my_data:
             data = line.split()
+            if line.strip() == "":
+                continue
             if data[0] == "CRASH" or data[0] == "Register" or data[0] == "TIMEOUT":
                 break
             if len(data) == 8 and data[0] == "EGO_STATUS":
@@ -295,6 +297,8 @@ def create_run_scenario_overtake_random (Configure):
 
         for line in my_data:
             data = line.split()
+            if line.strip() == "":
+                continue
             if data[0] == "CRASH" or data[0] == "Register" or data[0] == "TIMEOUT":
                 break
             if len(data) == 8 and data[0] == "EGO_STATUS":

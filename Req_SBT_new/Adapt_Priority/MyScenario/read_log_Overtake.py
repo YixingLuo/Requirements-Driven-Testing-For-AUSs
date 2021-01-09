@@ -478,8 +478,8 @@ def evaluate_cross_lane (ego_vehicle_state):
 
 if __name__=='__main__':
 
-    file_dir_sce = os.getcwd() + '/2021_01_08_Adapt_Priority_scenarios_2'
-    file_dir_data = os.getcwd() + '/2021_01_08_Adapt_Priority_datalog_2'
+    file_dir_sce = os.getcwd() + '/2021_01_09_Adapt_Priority_scenarios_0'
+    file_dir_data = os.getcwd() + '/2021_01_09_Adapt_Priority_datalog_0'
 
     fileList = os.listdir(file_dir_sce)
     fileList.sort()
@@ -526,6 +526,9 @@ if __name__=='__main__':
 
             for line in my_data:
                 data = line.split()
+                if line.strip() == "":
+                    # doing something
+                    continue
                 if data[0] == "EGO_STATUS" and len(data) == 8:
                     log = []
                     for i in range(1, len(data)):
