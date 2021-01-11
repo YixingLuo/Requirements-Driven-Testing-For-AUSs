@@ -70,8 +70,13 @@ if __name__ == '__main__':
 
     """==================================输出结果=============================="""
     # Save results to file
-    print_function_values_to_file(front, os.path.join(target_dir, '/FUN.' + algorithm.label))
-    print_variables_to_file(front, os.path.join(target_dir, '/VAR.' + algorithm.label))
+    # print_function_values_to_file(front, os.path.join(target_dir, '/FUN.' + algorithm.label))
+    # print_variables_to_file(front, os.path.join(target_dir, '/VAR.' + algorithm.label))
+
+    fun_name = 'FUN.' + algorithm.label
+    print_function_values_to_file(front, os.path.join(target_dir, fun_name))
+    var_name = 'VAR.' + algorithm.label
+    print_variables_to_file(front, os.path.join(target_dir, var_name))
 
     print(f'Algorithm: ${algorithm.get_name()}')
     print(f'Problem: ${problem.get_name()}')
