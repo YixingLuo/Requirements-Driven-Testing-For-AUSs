@@ -1,6 +1,5 @@
 # -*- coding: utf-8 -*-
 
-
 from jmetal.algorithm.multiobjective.nsgaiii import UniformReferenceDirectionFactory
 from jmetal.operator import SBXCrossover, PolynomialMutation
 from jmetal.util.solution import print_function_values_to_file, print_variables_to_file
@@ -17,9 +16,7 @@ import csv
 import numpy
 from RankingRules.DistanceRanking import Distance_Ranking
 from RankingRules.EnsembleRanking import Ensemble_Ranking
-from RankingRules.RelationRanking import Relation_Ranking
-
-
+from RankingRules.RelationRanking2 import Relation_Ranking
 
 
 
@@ -32,7 +29,7 @@ def text_create(Configuration):
 
 
 
-data_folder = os.getcwd() + '/Overtake_Datalog_Dis_' + str(time.strftime("%Y_%m_%d_%H"))
+data_folder = os.getcwd() + '/Overtake_Datalog_Req9_' + str(time.strftime("%Y_%m_%d_%H"))
 if not os.path.exists(data_folder):
     os.mkdir(data_folder)
 
@@ -40,6 +37,7 @@ if __name__ == '__main__':
 
     # search_round_list = [1, 10, 10, 10, 10, 20, 110, 110]
     search_round_list = [1, 10, 20, 30, 40, 50, 60, 70]
+    # search_round_list = [1, 5, 10, 15, 20, 25, 30, 35]
     target_value_threshold = [1, 0, 1, 1, 1, 0.9, 0.98]
     target_dir = data_folder
 
@@ -120,7 +118,7 @@ if __name__ == '__main__':
             weight_relation, sorted_pattern_relation, relation_ranking = Relation_Ranking(violation_pattern_to_search,
                                                                                           searched_violation_pattern,
                                                                                           priority_list)
-            weights = [1, 1, 0]
+            weights = [0.5, 1, 1]
             violation_pattern_ranking, overall_rank_list = Ensemble_Ranking(distance_ranking, relation_ranking,
                                                                             violation_pattern_to_search, weights)
 

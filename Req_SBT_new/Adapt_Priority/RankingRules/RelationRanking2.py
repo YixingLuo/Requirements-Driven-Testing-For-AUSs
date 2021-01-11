@@ -107,11 +107,11 @@ def Relation_Ranking (violation_pattern_to_search, searched_violation_pattern, p
     pattern_num = np.array(priority_list).shape[0]
     goal_num = np.array(priority_list).shape[1]
 
-    reward = np.zeros((pattern_num), dtype=float)
+    reward = np.ones((pattern_num), dtype=float)
     count_violation = np.sum(priority_list, axis=1)
 
 
-    for i in range (pattern_num):
+    for i in range (np.array(violation_pattern_to_search).shape[0]):
         ancessor_list = []
         father_index = []
         for j in range (pattern_num):
@@ -120,34 +120,40 @@ def Relation_Ranking (violation_pattern_to_search, searched_violation_pattern, p
                 ancessor_list.append(priority_list[j])
 
         if len(father_index) > 0:
-            existing_pattern = 0
+            not_found_pattern = 0
             for j in range (len(father_index)):
                 for k in range (np.array(violation_pattern_to_search).shape[0]):
                     if (np.array(ancessor_list[j]) == np.array(violation_pattern_to_search[k])).all():
-                        existing_pattern = existing_pattern + 1
+                        not_found_pattern = not_found_pattern + 1
                         break
-            reward[i] = (len(father_index) - existing_pattern)/len(father_index)
+            reward[i] = (len(father_index) - not_found_pattern)/len(father_index)
 
 
     for i in range (np.array(searched_violation_pattern).shape[0]):
-        reward_0 = 1 ## have been searched patterns
+        reward_0 = 1 ## searched and found
         for j in range (np.array(violation_pattern_to_search).shape[0]):
             if (np.array(searched_violation_pattern[i]) == np.array(violation_pattern_to_search[j])).all():
-                reward_0 = -1
+                reward_0 = -1  ## searched and not found
                 break
 
         for j in range (pattern_num):
             if (np.array(searched_violation_pattern[i]) == np.array(priority_list[j])).all():
                 goal_selection_flag_index = j
-                reward[goal_selection_flag_index] = reward[goal_selection_flag_index] + reward_0
+                # reward[goal_selection_flag_index] = reward[goal_selection_flag_index] + reward_0
+                reward[goal_selection_flag_index] = reward_0
                 break
 
         if reward_0 == -1:
-            # print(searched_violation_pattern[i])
             initial_class = sum(searched_violation_pattern[i])
             for j in range (pattern_num):
                 if count_violation[j] < initial_class:
                     reward[j] = reward[j] + reward_0 * np.power(gamma, (initial_class - count_violation[j]))
+
+
+        # initial_class = sum(searched_violation_pattern[i])
+        # for j in range (pattern_num):
+        #     if count_violation[j] < initial_class:
+        #         reward[j] = reward[j] + reward_0 * np.power(gamma, (initial_class - count_violation[j]))
 
     # sorted_reward = np.sort(list(set(reward)))
     reward_list = list(set(reward))
