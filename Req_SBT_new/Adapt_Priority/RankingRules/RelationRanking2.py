@@ -147,7 +147,10 @@ def Relation_Ranking (violation_pattern_to_search, searched_violation_pattern, p
             initial_class = sum(searched_violation_pattern[i])
             for j in range (pattern_num):
                 if count_violation[j] < initial_class:
-                    reward[j] = reward[j] + reward_0 * np.power(gamma, (initial_class - count_violation[j]))
+                    for k in range(np.array(violation_pattern_to_search).shape[0]):
+                        if (np.array(violation_pattern_to_search[k]) == np.array(priority_list[j])).all():
+                            reward[j] = reward[j] + reward_0 * np.power(gamma, (initial_class - count_violation[j]))
+                            break
 
 
         # initial_class = sum(searched_violation_pattern[i])
