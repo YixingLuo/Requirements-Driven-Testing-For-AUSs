@@ -7,8 +7,7 @@ from jmetal.util.solution import print_function_values_to_file, print_variables_
 from MyAlgorithm.termination_criterion import StoppingByEvaluations
 from jmetal.util.evaluator import MultiprocessEvaluator, SequentialEvaluator
 from jmetal.util.observer import ProgressBarObserver
-# from MyAlgorithm.nsgaiii import NSGAIII
-from jmetal.algorithm.multiobjective.nsgaiii import NSGAIII
+from MyAlgorithm.nsgaiii import NSGAIII
 from Settings.CarBehindAndInFrontConfigure import CarBehindAndInFrontConfigure
 import os
 import time
@@ -17,7 +16,7 @@ import csv
 import numpy
 from RankingRules.DistanceRanking import Distance_Ranking
 from RankingRules.EnsembleRanking import Ensemble_Ranking
-from RankingRules.RelationRanking import Relation_Ranking
+from RankingRules.RelationRanking2 import Relation_Ranking
 
 
 
@@ -30,7 +29,7 @@ def text_create(Configuration):
 
 
 
-data_folder = os.getcwd() + '/Overtake_Datalog_Re_noPop_' + str(time.strftime("%Y_%m_%d_%H"))
+data_folder = os.getcwd() + '/Overtake_Datalog_Req4_DS_RS_IS_' + str(time.strftime("%Y_%m_%d_%H"))
 if not os.path.exists(data_folder):
     os.mkdir(data_folder)
 
@@ -38,7 +37,8 @@ if __name__ == '__main__':
 
     # search_round_list = [1, 10, 10, 10, 10, 20, 110, 110]
     search_round_list = [1, 10, 20, 30, 40, 50, 60, 70]
-    target_value_threshold = [1, 0, 1, 1, 1, 0.9, 0.98]
+    # search_round_list = [50, 50, 50, 50, 50, 50, 50, 50]
+    target_value_threshold = [1, 0, 1, 1, 1, 0.95, 0.99]
     target_dir = data_folder
 
     priority_list = []
@@ -67,7 +67,8 @@ if __name__ == '__main__':
 
         ## caculate goal_index
         if round_index == 0:
-            goal_selection_flag = numpy.ones(7)
+            # goal_selection_flag = numpy.ones(7)
+            goal_selection_flag = [0, 0, 0, 0, 0, 1, 0]
             searched_violation_pattern.append(goal_selection_flag)
 
             search_round = search_round_list[int(sum(goal_selection_flag))]
@@ -118,7 +119,7 @@ if __name__ == '__main__':
             weight_relation, sorted_pattern_relation, relation_ranking = Relation_Ranking(violation_pattern_to_search,
                                                                                           searched_violation_pattern,
                                                                                           priority_list)
-            weights = [1, 0, 1]
+            weights = [1, 1, 1]
             violation_pattern_ranking, overall_rank_list = Ensemble_Ranking(distance_ranking, relation_ranking,
                                                                             violation_pattern_to_search, weights)
 
@@ -158,9 +159,9 @@ if __name__ == '__main__':
         file_name = target_dir + '/violation_pattern_to_search_' + str(round_index) + '.txt'
         numpy.savetxt(file_name, violation_pattern_to_search, fmt="%d")  # 保存为整数
         file_name = target_dir + '/variables_' + str(round_index) + '.txt'
-        numpy.savetxt(file_name, variables, fmt="%f")
+        numpy.savetxt(file_name, variables, fmt="%f")  # 保存为整数
         file_name = target_dir + '/evaluations_' + str(round_index) + '.txt'
-        numpy.savetxt(file_name, evaluation, fmt="%f")
+        numpy.savetxt(file_name, evaluation, fmt="%f")  # 保存为整数
         # file_name = target_dir + '/sorted_pop_' + str(round_index) + '.txt'
         # numpy.savetxt(file_name, sorted_pop, fmt="%f")  # 保存为整数
         file_name = target_dir + '/pattern_count_' + str(round_index) + '.txt'
@@ -178,7 +179,7 @@ if __name__ == '__main__':
         max_evaluations = Configuration.maxIterations
         StoppingEvaluator = StoppingByEvaluations(max_evaluations=max_evaluations, problem=problem)
 
-        algorithm = NSGAIII(
+        algorithm = NSGAIII(initial_population = sorted_pop,
             population_evaluator=MultiprocessEvaluator(Configuration.ProcessNum),
             # population_evaluator=SequentialEvaluator(),
             problem=problem,
@@ -221,5 +222,4 @@ if __name__ == '__main__':
         total_round = total_round - search_round
         print("real round: ", search_round, "idx: ", round_index, "left: ", total_round)
         round_index = round_index + 1
-
 
