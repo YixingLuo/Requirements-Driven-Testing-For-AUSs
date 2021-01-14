@@ -119,7 +119,7 @@ if __name__ == '__main__':
             weight_relation, sorted_pattern_relation, relation_ranking = Relation_Ranking(violation_pattern_to_search,
                                                                                           searched_violation_pattern,
                                                                                           priority_list)
-            weights = [1, 0, 0]
+            weights = [1, 1, 1]
             violation_pattern_ranking, overall_rank_list = Ensemble_Ranking(distance_ranking, relation_ranking,
                                                                             violation_pattern_to_search, weights)
 
