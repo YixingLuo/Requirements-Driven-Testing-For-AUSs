@@ -407,11 +407,12 @@ def evaluate_stability (ego_vehicle_state, config):
 
     if len(curvature_list) == 0:
         satisfaction_curvature = 0
+        least_satisfaction_curvature = 0
     else:
         satisfaction_curvature = 1/(len(curvature_list))*sum(curvature_list)
-        # satisfaction_curvature = min (satisfaction)
+        least_satisfaction_curvature = min(curvature_list)
     # print(curvature_list)
-    return satisfaction_curvature, min(curvature_list)
+    return satisfaction_curvature, least_satisfaction_curvature
 
 def evaluate_traffic_light (ego_vehicle_state, traffic_light):
     t_green = float(traffic_light[0]["green_time"])
@@ -478,8 +479,8 @@ def evaluate_cross_lane (ego_vehicle_state):
 
 if __name__=='__main__':
 
-    file_dir_sce = os.getcwd() + '/2021_01_06_Brute_Froce_scenarios_2'
-    file_dir_data = os.getcwd() + '/2021_01_06_Brute_Froce_datalog_2'
+    file_dir_sce = os.getcwd() + '/2021_01_09_Adapt_Priority_scenarios_0'
+    file_dir_data = os.getcwd() + '/2021_01_09_Adapt_Priority_datalog_0'
 
     fileList = os.listdir(file_dir_sce)
     fileList.sort()
@@ -488,8 +489,8 @@ if __name__=='__main__':
         scenario_name = file_dir_sce  + '/' + fileList[i]
         uuixcode = fileList[i].split('.', 1)[0]
         code = uuixcode.split("_",1)[1]
-        if code == "20210106063606_903_15a953cc4071442ca86761ec5fa9ab6b":
-            continue
+        # if code == "20210106063606_903_15a953cc4071442ca86761ec5fa9ab6b":
+        #     continue
         log_name = file_dir_data + '/' + 'datalog_' + code + '.txt'
 
         print(log_name)
@@ -526,6 +527,9 @@ if __name__=='__main__':
 
             for line in my_data:
                 data = line.split()
+                if line.strip() == "":
+                    # doing something
+                    continue
                 if data[0] == "EGO_STATUS" and len(data) == 8:
                     log = []
                     for i in range(1, len(data)):
