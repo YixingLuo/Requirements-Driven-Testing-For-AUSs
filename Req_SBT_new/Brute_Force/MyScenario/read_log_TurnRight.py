@@ -377,8 +377,11 @@ def evaluate_comfort (ego_vehicle_state, config):
         satisfaction_comfort_1 = 1
         satisfaction_comfort_2 = 1
     else:
-        satisfaction_comfort_1 = 1 / (len(comfort_list_1)) * sum(comfort_list_1)
-        satisfaction_comfort_2 = 1 / (len(comfort_list_2)) * sum(comfort_list_2)
+        # satisfaction_comfort_1 = 1 / (len(comfort_list_1)) * sum(comfort_list_1)
+        # satisfaction_comfort_2 = 1 / (len(comfort_list_2)) * sum(comfort_list_2)
+
+        satisfaction_comfort_1 = 1 - sum(comfort_list_1) / 1000
+        satisfaction_comfort_2 = 1 - sum(comfort_list_2) / 1000
 
     return satisfaction_comfort_1,satisfaction_comfort_2
 
@@ -407,11 +410,12 @@ def evaluate_stability (ego_vehicle_state, config):
 
     if len(curvature_list) == 0:
         satisfaction_curvature = 0
+        least_satisfaction_curvature = 0
     else:
         satisfaction_curvature = 1/(len(curvature_list))*sum(curvature_list)
-        # satisfaction_curvature = min (satisfaction)
+        least_satisfaction_curvature = min(curvature_list)
     # print(curvature_list)
-    return satisfaction_curvature, min(curvature_list)
+    return satisfaction_curvature, least_satisfaction_curvature
 
 def evaluate_traffic_light (ego_vehicle_state, traffic_light):
     t_green = float(traffic_light[0]["green_time"])

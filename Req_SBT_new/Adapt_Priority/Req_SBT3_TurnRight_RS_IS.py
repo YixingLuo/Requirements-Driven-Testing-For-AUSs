@@ -5,7 +5,8 @@ from jmetal.operator import SBXCrossover, PolynomialMutation
 from jmetal.util.solution import print_function_values_to_file, print_variables_to_file
 # from jmetal.util.termination_criterion import StoppingByEvaluations
 from MyAlgorithm.termination_criterion import StoppingByEvaluations
-from jmetal.util.evaluator import MultiprocessEvaluator, SequentialEvaluator
+# from jmetal.util.evaluator import MultiprocessEvaluator, SequentialEvaluator
+from MyAlgorithm.evaluator import MultiprocessEvaluator
 from jmetal.util.observer import ProgressBarObserver
 # from MyAlgorithm.nsgaiii import NSGAIII
 from jmetal.algorithm.multiobjective.nsgaiii import NSGAIII
@@ -32,7 +33,7 @@ def text_create(Configuration):
 
 
 
-data_folder = os.getcwd() + '/TurnRight_Datalog_Req3_DS_IS' + str(time.strftime("%Y_%m_%d_%H"))
+data_folder = os.getcwd() + '/TurnRight_Datalog_Req3_RS_IS_' + str(time.strftime("%Y_%m_%d_%H"))
 if not os.path.exists(data_folder):
     os.mkdir(data_folder)
 

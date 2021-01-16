@@ -7,12 +7,12 @@ from jmetal.algorithm.multiobjective.nsgaiii import UniformReferenceDirectionFac
 from jmetal.operator import SBXCrossover, PolynomialMutation
 from jmetal.util.solution import print_function_values_to_file, print_variables_to_file
 from jmetal.util.termination_criterion import StoppingByEvaluations
-from jmetal.util.evaluator import MultiprocessEvaluator, SequentialEvaluator
+# from jmetal.util.evaluator import MultiprocessEvaluator, SequentialEvaluator
+from MyAlgorithm.evaluator import MultiprocessEvaluator
 # from MyAlgorithm.nsgaiii import NSGAIII
 from MyAlgorithm.nsgaii import NSGAII
 from MyAlgorithm.random_search import RandomSearch
 # from MyAlgorithm.termination_criterion import StoppingByEvaluations
-# from MyAlgorithm.evaluator import MultiprocessEvaluator
 from Settings.CarBehindAndInFrontConfigure import CarBehindAndInFrontConfigure
 import os
 import time
@@ -178,8 +178,8 @@ if __name__ == '__main__':
         # print(max_evaluations)
 
         algorithm = NSGAIII(
-            # population_evaluator=MultiprocessEvaluator(Configuration.ProcessNum),
-            population_evaluator=SequentialEvaluator(),
+            population_evaluator=MultiprocessEvaluator(Configuration.ProcessNum),
+            # population_evaluator=SequentialEvaluator(),
             problem=problem,
             population_size=Configuration.population,
             reference_directions=UniformReferenceDirectionFactory(Configuration.goal_num,

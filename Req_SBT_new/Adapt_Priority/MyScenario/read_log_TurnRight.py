@@ -377,8 +377,11 @@ def evaluate_comfort (ego_vehicle_state, config):
         satisfaction_comfort_1 = 1
         satisfaction_comfort_2 = 1
     else:
-        satisfaction_comfort_1 = 1 / (len(comfort_list_1)) * sum(comfort_list_1)
-        satisfaction_comfort_2 = 1 / (len(comfort_list_2)) * sum(comfort_list_2)
+        # satisfaction_comfort_1 = 1 / (len(comfort_list_1)) * sum(comfort_list_1)
+        # satisfaction_comfort_2 = 1 / (len(comfort_list_2)) * sum(comfort_list_2)
+
+        satisfaction_comfort_1 = 1 - sum(comfort_list_1) / 1000
+        satisfaction_comfort_2 = 1 - sum(comfort_list_2) / 1000
 
     return satisfaction_comfort_1,satisfaction_comfort_2
 

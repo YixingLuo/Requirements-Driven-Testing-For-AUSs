@@ -6,7 +6,8 @@ from jmetal.util.solution import print_function_values_to_file, print_variables_
 # from jmetal.util.termination_criterion import StoppingByEvaluations
 from MyAlgorithm.termination_criterion import StoppingByEvaluations
 from jmetal.util.evaluator import MultiprocessEvaluator, SequentialEvaluator
-from jmetal.util.observer import ProgressBarObserver
+from MyAlgorithm.evaluator import MultiprocessEvaluator
+# from jmetal.util.observer import ProgressBarObserver
 from MyAlgorithm.nsgaiii import NSGAIII
 from Settings.TurnRightConfigure import TurnRightConfigure
 import os

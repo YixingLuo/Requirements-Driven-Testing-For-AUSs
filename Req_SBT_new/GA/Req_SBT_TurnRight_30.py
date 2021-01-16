@@ -28,7 +28,7 @@ def text_create(Configuration):
     file = open(full_path,  'w')
     return full_path
 
-data_folder = os.getcwd() + '/TurnRight_Datalog_' + str(time.strftime("%Y_%m_%d_%H"))
+data_folder = os.getcwd() + '/TurnRight_Datalog_30_' + str(time.strftime("%Y_%m_%d_%H"))
 if not os.path.exists(data_folder):
     os.mkdir(data_folder)
 
@@ -52,7 +52,7 @@ if __name__ == '__main__':
         population_evaluator=MultiprocessEvaluator(Configuration.ProcessNum),
         # population_evaluator=SequentialEvaluator(),
         problem=problem,
-        population_size = Configuration.population,
+        population_size = 30,
         reference_directions=UniformReferenceDirectionFactory(Configuration.goal_num, n_points= Configuration.population - 1),
         # offspring_population_size = Configuration.population,
         mutation=PolynomialMutation(probability=1.0 / problem.number_of_variables, distribution_index=20),

@@ -47,14 +47,14 @@ class TurnRightConfigure:
         self.a_min_soft = -2.94
         self.speed_limit = 16.67
         self.speed_max = 33.3
-        self.duration = 90
+        self.duration = 100
         self.goal_num = 7
         self.searchTimeout = 360000
         self.num_variables = 17
         self.PoolType = "Thread"
         # self.PoolType = "Process"
         # self.ProcessNum = psutil.cpu_count()
-        self.ProcessNum = 32
+        self.ProcessNum = 30
 
         ## ego
         self.ego_s0 = [140, 190]
