@@ -39,7 +39,7 @@ if __name__ == '__main__':
     # search_round_list = [1, 10, 10, 10, 10, 20, 110, 110]
     # search_round_list = [1, 10, 20, 30, 40, 50, 60, 70]
     search_round_list = [75, 75, 75, 75, 75, 75, 75, 75]
-    target_value_threshold = [1, 0, 1, 1, 1, 0.9, 0.98]
+    target_value_threshold = [1, 0, 0.9, 0.9, 1, 0.98, 0.99]
     target_dir = data_folder
 
     priority_list = []
