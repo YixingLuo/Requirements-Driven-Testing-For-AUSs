@@ -43,6 +43,8 @@ from jmetal.util.ranking import FastNonDominatedRanking
 from jmetal.util.replacement import RankingAndDensityEstimatorReplacement, RemovalPolicyType
 from jmetal.util.comparator import DominanceComparator, Comparator, MultiComparator
 from jmetal.util.termination_criterion import TerminationCriterion
+from jmetal.core.solution import FloatSolution
+
 
 
 """
@@ -267,8 +269,16 @@ class NSGAIII(NSGAII):
                                       CrowdingDistance.get_comparator()])),
                  termination_criterion: TerminationCriterion = store.default_termination_criteria,
                  population_generator: Generator = store.default_generator,
+                 # population_generator: Generator = RandomGenerator(),
                  population_evaluator: Evaluator = store.default_evaluator,
-                 dominance_comparator: Comparator = store.default_comparator):
+                 dominance_comparator: Comparator = store.default_comparator,
+                 initial_population: List[float]= None,
+                 target_value_threshold: List[float] = None,
+                 target_pattern: List[int] = None):
+        self.initial_population = initial_population
+        self.target_pattern = target_pattern
+        self.problem_solved = False
+        self.target_value_threshold = target_value_threshold
         self.reference_directions = reference_directions.compute()
 
         if not population_size:
@@ -292,10 +302,13 @@ class NSGAIII(NSGAII):
         self.extreme_points = None
         self.ideal_point = np.full(self.problem.number_of_objectives, np.inf)
         self.worst_point = np.full(self.problem.number_of_objectives, -np.inf)
-        self.generation = 0
-        self.file_pareto_front = os.getcwd() + '/' + str(time.strftime("%Y_%m_%d")) + '_PARETO'
-        if not os.path.exists(self.file_pareto_front):
-            os.mkdir(self.file_pareto_front)
+
+        ## my code
+        # self.generation = 0
+        # self.file_pareto_front = os.getcwd() + '/' + str(time.strftime("%Y_%m_%d")) + '_' + str(problem.config.algorithm) + '_pareto_' + str(
+        #     problem.config.iteration_round)
+        # if not os.path.exists(self.file_pareto_front):
+        #     os.mkdir(self.file_pareto_front)
 
     def replacement(self, population: List[S], offspring_population: List[S]) -> List[S]:
 
@@ -377,92 +390,58 @@ class NSGAIII(NSGAII):
             survivors_idx = np.concatenate((until_last_front, last_front[S_idx].tolist()))
             pop = pop[survivors_idx]
 
-        # front = self.get_result()
-        # if type(front) is not list:
-        #     solutions = [front]
-        #
-        # for solution in front:
-        #     print(solution.variables[0])
-        #
-        # for solution in front:
-        #     print(str(front.index(solution)) + ": ", sep='  ', end='', flush=True)
-        #     print(solution.objectives, sep='  ', end='', flush=True)
-        #     print()
-
         return list(pop)
 
     def get_result(self):
         """ Return only non dominated solutions."""
         ranking = FastNonDominatedRanking(self.dominance_comparator)
         ranking.compute_ranking(self.solutions, k=self.population_size)
+        for solution in self.solutions:
+            # print(solution.objectives, self.target_pattern)
+            goal_flag = np.zeros((7), dtype=int)
+            for j in range(7):
+                if solution.objectives[j] < self.target_value_threshold[j]:
+                    goal_flag[j] = 1
+                else:
+                    goal_flag[j] = 0
+            if (goal_flag == np.array(self.target_pattern)).all():
+                # print(goal_flag, self.target_pattern)
+                self.problem_solved = True
 
         return ranking.get_subfront(0)
 
     def get_name(self) -> str:
-        return 'NSGAIII'
+        return 'Adapt_Priority'
 
-    def restart(self):
-        self.solutions = self.evaluate(self.solutions)
+    # def restart(self):
+    #     self.solutions = self.evaluate(self.solutions)
 
-    # def update_progress(self):
-    #     if self.problem.the_problem_has_changed():
-    #         self.restart()
-    #         self.problem.clear_changed()
-    #
-    #     observable_data = self.get_observable_data()
-    #     self.observable.notify_all(**observable_data)
-    #
-    #     self.evaluations += self.offspring_population_size
+    def stopping_condition_is_met(self) -> bool:
 
-    def stopping_condition_is_met(self):
-
-
-        if self.termination_criterion.is_met:
-            observable_data = self.get_observable_data()
-            observable_data['TERMINATION_CRITERIA_IS_MET'] = True
-            self.observable.notify_all(**observable_data)
-
-            # self.restart()
-            # self.init_progress()
-            #
-            # self.completed_iterations += 1
+        if self.problem_solved:
+            print("reach the destination")
+            return self.problem_solved
         else:
-            front = self.get_result()
-
-            filename_var = self.file_pareto_front + "/VAR_" + str(self.generation)
-            filename_fun = self.file_pareto_front + "/FUNC_" + str(self.generation)
-            try:
-                os.makedirs(os.path.dirname(filename_var), exist_ok=True)
-            except FileNotFoundError:
-                pass
-
-            try:
-                os.makedirs(os.path.dirname(filename_fun), exist_ok=True)
-            except FileNotFoundError:
-                pass
-
-            if type(front) is not list:
-                solutions = [front]
-
-            with open(filename_var, 'w') as of:
-                for solution in front:
-                    for variables in solution.variables:
-                        of.write(str(variables) + " ")
-                    of.write("\n")
-
-            with open(filename_fun, 'w') as of:
-                for solution in front:
-                    for function_value in solution.objectives:
-                        of.write(str(function_value) + ' ')
-                    of.write('\n')
-
-            self.generation += 1
+            return self.termination_criterion.is_met
 
 
-            # for solution in front:
-            #     print(solution.variables[0])
-            #
-            # for solution in front:
-            #     print(str(front.index(solution)) + ": ", sep='  ', end='', flush=True)
-            #     print(solution.objectives, sep='  ', end='', flush=True)
-            #     print()
+    def create_initial_solutions(self) -> List[S]:
+        if self.problem.config.iteration_round == 0:
+            # print(self.problem.config.iteration_round, self.population_size)
+            return [self.population_generator.new(self.problem)
+                    for _ in range(self.population_size)]
+
+            # return [self.problem.create_solution() for _ in range(self.population_size)]  ## random generator
+        else:
+            population = [self.population_generator.new(self.problem) for _ in range(int(0.5*self.population_size))]
+            # existing_population = []
+            for i in range (self.population_size - int(0.5*self.population_size)):
+                new_solution = FloatSolution(
+                    self.problem.lower_bound,
+                    self.problem.upper_bound,
+                    self.problem.number_of_objectives,
+                    self.problem.number_of_constraints)
+                new_solution.variables = self.initial_population[self.problem.config.goal_selection_index][i]
+                # print(i, self.initial_population[self.problem.config.goal_selection_index][i])
+                population.append(new_solution)
+            return population

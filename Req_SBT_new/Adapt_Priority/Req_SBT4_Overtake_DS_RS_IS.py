@@ -3,8 +3,8 @@
 from jmetal.algorithm.multiobjective.nsgaiii import UniformReferenceDirectionFactory
 from jmetal.operator import SBXCrossover, PolynomialMutation
 from jmetal.util.solution import print_function_values_to_file, print_variables_to_file
-# from jmetal.util.termination_criterion import StoppingByEvaluations
-from MyAlgorithm.termination_criterion import StoppingByEvaluations
+from jmetal.util.termination_criterion import StoppingByEvaluations
+# from MyAlgorithm.termination_criterion import StoppingByEvaluations
 # from jmetal.util.evaluator import MultiprocessEvaluator, SequentialEvaluator
 from MyAlgorithm.evaluator import MultiprocessEvaluator
 from jmetal.util.observer import ProgressBarObserver
@@ -18,6 +18,7 @@ import numpy
 from RankingRules.DistanceRanking import Distance_Ranking
 from RankingRules.EnsembleRanking import Ensemble_Ranking
 from RankingRules.RelationRanking2 import Relation_Ranking
+
 
 
 
@@ -68,8 +69,8 @@ if __name__ == '__main__':
 
         ## caculate goal_index
         if round_index == 0:
-            # goal_selection_flag = numpy.ones(7)
-            goal_selection_flag = [0, 0, 0, 0, 0, 1, 0]
+            goal_selection_flag = numpy.ones(7)
+            # goal_selection_flag = [0, 0, 0, 0, 0, 1, 0]
             searched_violation_pattern.append(goal_selection_flag)
 
             search_round = search_round_list[int(sum(goal_selection_flag))]
@@ -174,26 +175,31 @@ if __name__ == '__main__':
 
 
         """===============================实例化问题对象============================"""
-        problem = CarBehindAndInFrontProblem(Goal_num, Configuration, target_value_threshold)
+        problem = CarBehindAndInFrontProblem(Goal_num, Configuration)
 
         """=================================算法参数设置============================"""
         max_evaluations = Configuration.maxIterations
-        StoppingEvaluator = StoppingByEvaluations(max_evaluations=max_evaluations, problem=problem)
+        # StoppingEvaluator = StoppingByEvaluations(max_evaluations=max_evaluations, problem=problem)
+        StoppingEvaluator = StoppingByEvaluations(max_evaluations=max_evaluations)
 
-        algorithm = NSGAIII(initial_population = sorted_pop,
-            population_evaluator=MultiprocessEvaluator(Configuration.ProcessNum),
-            # population_evaluator=SequentialEvaluator(),
-            problem=problem,
-            population_size = Configuration.population,
-            reference_directions=UniformReferenceDirectionFactory(Configuration.goal_num, n_points= Configuration.population - 1),
-            # offspring_population_size = Configuration.population,
-            mutation=PolynomialMutation(probability=1.0 / problem.number_of_variables, distribution_index=20),
-            crossover=SBXCrossover(probability=1.0, distribution_index=20),
-            termination_criterion = StoppingEvaluator
-            # termination_criterion = StoppingByQualityIndicator(quality_indicator=HyperVolume, expected_value=1,
-            #                                                  degree=0.9)
-            # selection = BinaryTournamentSelection()
-        )
+        algorithm = NSGAIII(initial_population=sorted_pop,
+                            target_pattern=goal_selection_flag,
+                            target_value_threshold=target_value_threshold,
+                            population_evaluator=MultiprocessEvaluator(Configuration.ProcessNum),
+                            # population_evaluator=SequentialEvaluator(),
+                            problem=problem,
+                            population_size=Configuration.population,
+                            reference_directions=UniformReferenceDirectionFactory(Configuration.goal_num,
+                                                                                  n_points=Configuration.population - 1),
+                            # offspring_population_size = Configuration.population,
+                            mutation=PolynomialMutation(probability=1.0 / problem.number_of_variables,
+                                                        distribution_index=20),
+                            crossover=SBXCrossover(probability=1.0, distribution_index=20),
+                            termination_criterion=StoppingEvaluator
+                            # termination_criterion = StoppingByQualityIndicator(quality_indicator=HyperVolume, expected_value=1,
+                            #                                                  degree=0.9)
+                            # selection = BinaryTournamentSelection()
+                            )
 
 
         """==========================调用算法模板进行种群进化========================="""

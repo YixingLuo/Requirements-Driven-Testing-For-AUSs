@@ -38,13 +38,15 @@ class StoppingByEvaluations(TerminationCriterion):
 
     def update(self, *args, **kwargs):
         self.evaluations = kwargs['EVALUATIONS']
-        self.problem = kwargs['PROBLEM']
+        # self.problem = kwargs['PROBLEM']
 
     @property
     def is_met(self):
         if self.problem.problem_solved:
+            print("problem.solved", self.problem.problem_solved)
             return self.problem.problem_solved
         else:
+            print("problem.solved", self.problem.problem_solved, self.evaluations)
             return self.evaluations >= self.max_evaluations
 
 class MyStoppingByEvaluations(TerminationCriterion):

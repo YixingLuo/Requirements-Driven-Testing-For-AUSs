@@ -12,7 +12,7 @@ class TurnRightProblem(FloatProblem):
 
     .. note:: Version including a loop for increasing the computing time of the evaluation functions.
     """
-    def __init__(self,  M, configure, target_value_threshold):
+    def __init__(self,  M, configure):
         """ :param number_of_variables: Number of decision variables of the problem.
         """
         super(TurnRightProblem, self).__init__()
@@ -20,8 +20,8 @@ class TurnRightProblem(FloatProblem):
         self.number_of_objectives = configure.goal_num
         self.number_of_constraints = 0
         self.config = configure
-        self.problem_solved = 0
-        self.target_value_threshold = target_value_threshold
+        # self.problem_solved = 0
+        # self.target_value_threshold = target_value_threshold
 
         self.obj_directions = []
         for i in range (len(configure.goal_selection_flag)):
@@ -53,14 +53,14 @@ class TurnRightProblem(FloatProblem):
         solution.objectives = result
 
         ## check if find such pattern
-        goal_flag = np.zeros((7), dtype=int)
-        for j in range(7):
-            if result[j] < self.target_value_threshold[j]:
-                goal_flag[j] = 1
-            else:
-                goal_flag[j] = 0
-        if (goal_flag == self.config.goal_selection_flag).all():
-            self.problem_solved = 1
+        # goal_flag = np.zeros((7), dtype=int)
+        # for j in range(7):
+        #     if result[j] < self.target_value_threshold[j]:
+        #         goal_flag[j] = 1
+        #     else:
+        #         goal_flag[j] = 0
+        # if (goal_flag == self.config.goal_selection_flag).all():
+        #     self.problem_solved = 1
 
         return solution
 

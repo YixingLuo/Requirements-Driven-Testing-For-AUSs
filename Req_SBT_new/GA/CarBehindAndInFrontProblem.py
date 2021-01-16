@@ -1,8 +1,4 @@
 import sys
-# sys.path.append("../Adapt_Priority")
-# sys.path.append("../Brute_Force")
-sys.path.append("")
-# sys.path.append("../Random")
 from jmetal.core.problem import FloatProblem
 from jmetal.core.solution import FloatSolution
 # from MyAlgorithm.solution import FloatSolution
@@ -21,7 +17,7 @@ class CarBehindAndInFrontProblem(FloatProblem):
         """
         super(CarBehindAndInFrontProblem, self).__init__()
         self.number_of_variables = configure.num_variables
-        self.number_of_objectives =  configure.goal_num
+        self.number_of_objectives = configure.goal_num
         self.number_of_constraints = 0
         self.config = configure
         # self.bestpop = bestpop

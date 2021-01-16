@@ -264,7 +264,6 @@ class NSGAIII(NSGAII):
                  mutation: Mutation,
                  crossover: Crossover,
                  population_size: int = None,
-                 continue_flag: int = None,
                  selection: Selection = BinaryTournamentSelection(
                      MultiComparator([FastNonDominatedRanking.get_comparator(),
                                       CrowdingDistance.get_comparator()])),
@@ -273,10 +272,14 @@ class NSGAIII(NSGAII):
                  # population_generator: Generator = RandomGenerator(),
                  population_evaluator: Evaluator = store.default_evaluator,
                  dominance_comparator: Comparator = store.default_comparator,
-                 initial_population: List[float] = None):
+                 initial_population: List[float]= None,
+                 target_value_threshold: List[float] = None,
+                 target_pattern: List[int] = None):
         self.initial_population = initial_population
+        self.target_pattern = target_pattern
+        self.problem_solved = False
+        self.target_value_threshold = target_value_threshold
         self.reference_directions = reference_directions.compute()
-        self.continue_flag = continue_flag
 
         if not population_size:
             population_size = len(self.reference_directions)
@@ -306,8 +309,6 @@ class NSGAIII(NSGAII):
         #     problem.config.iteration_round)
         # if not os.path.exists(self.file_pareto_front):
         #     os.mkdir(self.file_pareto_front)
-
-        # self.initial_population = InitialPop
 
     def replacement(self, population: List[S], offspring_population: List[S]) -> List[S]:
 
@@ -395,25 +396,52 @@ class NSGAIII(NSGAII):
         """ Return only non dominated solutions."""
         ranking = FastNonDominatedRanking(self.dominance_comparator)
         ranking.compute_ranking(self.solutions, k=self.population_size)
+        for solution in self.solutions:
+            # print(solution.objectives, self.target_pattern)
+            goal_flag = np.zeros((7), dtype=int)
+            for j in range(7):
+                if solution.objectives[j] < self.target_value_threshold[j]:
+                    goal_flag[j] = 1
+                else:
+                    goal_flag[j] = 0
+            if (goal_flag == np.array(self.target_pattern)).all():
+                # print(goal_flag, self.target_pattern)
+                self.problem_solved = True
 
         return ranking.get_subfront(0)
 
     def get_name(self) -> str:
-        return 'Brute_Froce'
+        return 'Adapt_Priority'
+
+    # def restart(self):
+    #     self.solutions = self.evaluate(self.solutions)
+
+    def stopping_condition_is_met(self) -> bool:
+
+        if self.problem_solved:
+            print("reach the destination")
+            return self.problem_solved
+        else:
+            return self.termination_criterion.is_met
+
 
     def create_initial_solutions(self) -> List[S]:
-        if self.continue_flag == 1:
-            population = []
-            for i in range(self.population_size):
+        if self.problem.config.iteration_round == 0:
+            # print(self.problem.config.iteration_round, self.population_size)
+            return [self.population_generator.new(self.problem)
+                    for _ in range(self.population_size)]
+
+            # return [self.problem.create_solution() for _ in range(self.population_size)]  ## random generator
+        else:
+            population = [self.population_generator.new(self.problem) for _ in range(int(0.5*self.population_size))]
+            # existing_population = []
+            for i in range (self.population_size - int(0.5*self.population_size)):
                 new_solution = FloatSolution(
                     self.problem.lower_bound,
                     self.problem.upper_bound,
                     self.problem.number_of_objectives,
                     self.problem.number_of_constraints)
-                new_solution.variables = self.initial_population[i]
+                new_solution.variables = self.initial_population[self.problem.config.goal_selection_index][i]
+                # print(i, self.initial_population[self.problem.config.goal_selection_index][i])
                 population.append(new_solution)
             return population
-        else:
-            return [self.population_generator.new(self.problem)
-                        for _ in range(self.population_size)]
-
