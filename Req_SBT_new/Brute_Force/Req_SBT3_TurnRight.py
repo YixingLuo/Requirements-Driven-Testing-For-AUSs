@@ -1,24 +1,18 @@
 # -*- coding: utf-8 -*-
 
-# from jmetal.algorithm.multiobjective.nsgaii import NSGAII
-# from jmetal.algorithm.multiobjective.random_search import RandomSearch
-from jmetal.algorithm.multiobjective.nsgaiii import NSGAIII
 from jmetal.algorithm.multiobjective.nsgaiii import UniformReferenceDirectionFactory
 from jmetal.operator import SBXCrossover, PolynomialMutation
 from jmetal.util.solution import print_function_values_to_file, print_variables_to_file
-# from jmetal.util.termination_criterion import StoppingByEvaluations
+from jmetal.util.termination_criterion import StoppingByEvaluations
+from jmetal.util.observer import ProgressBarObserver
+# from MyAlgorithm.termination_criterion import StoppingByEvaluations
 # from jmetal.util.evaluator import MultiprocessEvaluator, SequentialEvaluator
 from MyAlgorithm.evaluator import MultiprocessEvaluator
-# from MyAlgorithm.nsgaiii import NSGAIII
-from MyAlgorithm.nsgaii import NSGAII
-from MyAlgorithm.random_search import RandomSearch
-from MyAlgorithm.termination_criterion import StoppingByEvaluations
-# from MyAlgorithm.evaluator import MultiprocessEvaluator
+from MyAlgorithm.nsgaiii_2 import NSGAIII
 from Settings.TurnRightConfigure import TurnRightConfigure
 import os
 import time
 from TurnRightProblem import TurnRightProblem
-from jmetal.util.observer import ProgressBarObserver
 import random
 import numpy
 import csv
@@ -155,15 +149,17 @@ if __name__ == '__main__':
         file_name = target_dir + '/pattern_count_' + str(round_index) + '.txt'
         numpy.savetxt(file_name, pattern_count, fmt="%d")  # 保存为整数
 
-
         """===============================实例化问题对象============================"""
-        problem = TurnRightProblem(Goal_num, Configuration, target_value_threshold)
+        problem = TurnRightProblem(Goal_num, Configuration)
 
         """=================================算法参数设置============================"""
-        max_evaluations = population * search_round
-        StoppingEvaluator = StoppingByEvaluations(max_evaluations=max_evaluations, problem=problem)
+        max_evaluations = Configuration.maxIterations
+        # StoppingEvaluator = StoppingByEvaluations(max_evaluations=max_evaluations, problem=problem)
+        StoppingEvaluator = StoppingByEvaluations(max_evaluations=max_evaluations)
 
         algorithm = NSGAIII(
+            target_pattern=goal_selection_flag,
+            target_value_threshold=target_value_threshold,
             population_evaluator=MultiprocessEvaluator(Configuration.ProcessNum),
             # population_evaluator=SequentialEvaluator(),
             problem=problem,
@@ -171,7 +167,8 @@ if __name__ == '__main__':
             reference_directions=UniformReferenceDirectionFactory(Configuration.goal_num,
                                                                   n_points=Configuration.population - 1),
             # offspring_population_size = Configuration.population,
-            mutation=PolynomialMutation(probability=1.0 / problem.number_of_variables, distribution_index=20),
+            mutation=PolynomialMutation(probability=1.0 / problem.number_of_variables,
+                                        distribution_index=20),
             crossover=SBXCrossover(probability=1.0, distribution_index=20),
             termination_criterion=StoppingEvaluator
             # termination_criterion = StoppingByQualityIndicator(quality_indicator=HyperVolume, expected_value=1,
