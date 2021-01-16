@@ -272,10 +272,8 @@ class NSGAIII(NSGAII):
                  # population_generator: Generator = RandomGenerator(),
                  population_evaluator: Evaluator = store.default_evaluator,
                  dominance_comparator: Comparator = store.default_comparator,
-                 initial_population: List[float]= None,
                  target_value_threshold: List[float] = None,
                  target_pattern: List[int] = None):
-        self.initial_population = initial_population
         self.target_pattern = target_pattern
         self.problem_solved = False
         self.target_value_threshold = target_value_threshold
@@ -396,9 +394,8 @@ class NSGAIII(NSGAII):
         """ Return only non dominated solutions."""
         ranking = FastNonDominatedRanking(self.dominance_comparator)
         ranking.compute_ranking(self.solutions, k=self.population_size)
-        # count = 1
         for solution in self.solutions:
-            print(solution.objectives, self.target_pattern)
+            # print(solution.objectives, self.target_pattern)
             goal_flag = np.zeros((7), dtype=int)
             for j in range(7):
                 if solution.objectives[j] < self.target_value_threshold[j]:
@@ -427,22 +424,6 @@ class NSGAIII(NSGAII):
 
 
     def create_initial_solutions(self) -> List[S]:
-        if self.problem.config.iteration_round == 0:
-            # print(self.problem.config.iteration_round, self.population_size)
-            return [self.population_generator.new(self.problem)
-                    for _ in range(self.population_size)]
 
-            # return [self.problem.create_solution() for _ in range(self.population_size)]  ## random generator
-        else:
-            population = [self.population_generator.new(self.problem) for _ in range(int(0.5*self.population_size))]
-            # print("we have new population")
-            for i in range (self.population_size - int(0.5*self.population_size)):
-                new_solution = FloatSolution(
-                    self.problem.lower_bound,
-                    self.problem.upper_bound,
-                    self.problem.number_of_objectives,
-                    self.problem.number_of_constraints)
-                new_solution.variables = self.initial_population[self.problem.config.goal_selection_index][i]
-                # print(i, self.initial_population[self.problem.config.goal_selection_index][i])
-                population.append(new_solution)
-            return population
+        return [self.population_generator.new(self.problem)
+                for _ in range(self.population_size)]

@@ -396,8 +396,9 @@ class NSGAIII(NSGAII):
         """ Return only non dominated solutions."""
         ranking = FastNonDominatedRanking(self.dominance_comparator)
         ranking.compute_ranking(self.solutions, k=self.population_size)
+        # count = 1
         for solution in self.solutions:
-            # print(solution.objectives, self.target_pattern)
+            print(solution.objectives, self.target_pattern)
             goal_flag = np.zeros((7), dtype=int)
             for j in range(7):
                 if solution.objectives[j] < self.target_value_threshold[j]:
@@ -419,7 +420,7 @@ class NSGAIII(NSGAII):
     def stopping_condition_is_met(self) -> bool:
 
         if self.problem_solved:
-            print("reach the destination")
+            # print("reach the destination")
             return self.problem_solved
         else:
             return self.termination_criterion.is_met
@@ -434,7 +435,7 @@ class NSGAIII(NSGAII):
             # return [self.problem.create_solution() for _ in range(self.population_size)]  ## random generator
         else:
             population = [self.population_generator.new(self.problem) for _ in range(int(0.5*self.population_size))]
-            # existing_population = []
+            # print("we have new population")
             for i in range (self.population_size - int(0.5*self.population_size)):
                 new_solution = FloatSolution(
                     self.problem.lower_bound,
