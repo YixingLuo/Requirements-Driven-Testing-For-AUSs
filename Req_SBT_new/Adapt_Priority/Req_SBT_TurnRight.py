@@ -1,31 +1,25 @@
 # -*- coding: utf-8 -*-
 
-# from jmetal.algorithm.multiobjective.nsgaii import NSGAII
-# from jmetal.algorithm.multiobjective.random_search import RandomSearch
-# from jmetal.algorithm.multiobjective.nsgaiii import NSGAIII
 from jmetal.algorithm.multiobjective.nsgaiii import UniformReferenceDirectionFactory
 from jmetal.operator import SBXCrossover, PolynomialMutation
 from jmetal.util.solution import print_function_values_to_file, print_variables_to_file
-# from jmetal.util.termination_criterion import StoppingByEvaluations
+from jmetal.util.termination_criterion import StoppingByEvaluations
+# from MyAlgorithm.termination_criterion import StoppingByEvaluations
 # from jmetal.util.evaluator import MultiprocessEvaluator, SequentialEvaluator
 from MyAlgorithm.evaluator import MultiprocessEvaluator
 from jmetal.util.observer import ProgressBarObserver
 from MyAlgorithm.nsgaiii import NSGAIII
-from MyAlgorithm.nsgaii import NSGAII
-from MyAlgorithm.random_search import RandomSearch
-from MyAlgorithm.termination_criterion import StoppingByEvaluations
-# from MyAlgorithm.evaluator import MultiprocessEvaluator
 from Settings.TurnRightConfigure import TurnRightConfigure
 import os
 import time
-# from trash.initial_files.bestpop import BestPop
 from TurnRightProblem import TurnRightProblem
-import csv
+from jmetal.util.observer import ProgressBarObserver
+import random
 import numpy
+import csv
 from RankingRules.DistanceRanking import Distance_Ranking
 from RankingRules.EnsembleRanking import Ensemble_Ranking
-from RankingRules.RelationRanking import Relation_Ranking
-
+from RankingRules.RelationRanking2 import Relation_Ranking
 
 def text_create(Configuration):
     desktop_path = os.getcwd() + '/'

@@ -3,8 +3,8 @@
 from jmetal.algorithm.multiobjective.nsgaiii import UniformReferenceDirectionFactory
 from jmetal.operator import SBXCrossover, PolynomialMutation
 from jmetal.util.solution import print_function_values_to_file, print_variables_to_file
-# from jmetal.util.termination_criterion import StoppingByEvaluations
-from MyAlgorithm.termination_criterion import StoppingByEvaluations
+from jmetal.util.termination_criterion import StoppingByEvaluations
+# from MyAlgorithm.termination_criterion import StoppingByEvaluations
 # from jmetal.util.evaluator import MultiprocessEvaluator, SequentialEvaluator
 from MyAlgorithm.evaluator import MultiprocessEvaluator
 from jmetal.util.observer import ProgressBarObserver
@@ -19,8 +19,7 @@ import numpy
 import csv
 from RankingRules.DistanceRanking import Distance_Ranking
 from RankingRules.EnsembleRanking import Ensemble_Ranking
-from RankingRules.RelationRanking import Relation_Ranking
-
+from RankingRules.RelationRanking2 import Relation_Ranking
 
 
 def text_create(Configuration):
