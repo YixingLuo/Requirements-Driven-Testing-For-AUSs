@@ -16,6 +16,18 @@ def get_time_stamp():
     time_stamp = "%s_%03d" % (data_head, data_secs)
     return time_stamp
 
+def isNum2(value):
+    try:
+        x = float(value) #此处更改想判断的类型
+    except TypeError:
+        return False
+    except ValueError:
+        return False
+    except Exception as e:
+        return False
+    else:
+        return True
+
 
 def create_run_scenario_overtake (Vars, Configure):
 
@@ -125,38 +137,60 @@ def create_run_scenario_overtake (Vars, Configure):
 
     with open(log_name, 'r', encoding='gb18030', errors='ignore') as f:
         my_data = f.readlines()
-
+        return_flag = False
         for line in my_data:
-            data = line.split()
-            if line.strip() == "":
-                continue
-            if data[0] == "CRASH" or data[0] == "Register" or data[0] == "TIMEOUT":
-                break
-            if len(data) == 8 and data[0] == "EGO_STATUS":
-                log = []
-                for i in range(1, len(data)):
-                    log.append(float(data[i]))
-                if len(log) == 7:
-                    ego_vehicle_state.append(log)
-
-            elif len(data) == 10 and data[0] == "DYNAMIC_OBS_INFO":
-                log = []
+            if not return_flag:
+                data = line.split()
                 # print(data)
-                if data[1] == '0' or data[1] == '1' or data[1] == '2':
-                    for i in range(2, len(data)):
-                        log.append(float(data[i]))
-                        # print(log)
-                    if len(log) == 8:
-                        dynamic_vehicle_state[int(data[1])].append(log)
-                else:
+                if line.strip() == "":
+                    continue
+                if data[0] == "CRASH" or data[0] == "Register" or data[0] == "TIMEOUT":
                     break
-            elif len(data) == 5 and data[0] == "STATIC_OBS_INFO":
-                log = []
-                for i in range(2, len(data)):
-                    log.append(float(data[i]))
-                    # print(log)
-                if len(log) == 3:
-                    static_vehicle_state[int(data[1])].append(log)
+                if len(data) == 8 and data[0] == "EGO_STATUS":
+                    log = []
+                    for i in range(1, len(data)):
+                        if isNum2(data[i]):
+                            log.append(float(data[i]))
+                        else:
+                            return_flag = False
+                            break
+                    if len(log) == 7:
+                        ego_vehicle_state.append(log)
+                    else:
+                        return_flag = False
+                        break
+
+                elif len(data) == 10 and data[0] == "DYNAMIC_OBS_INFO":
+                    log = []
+                    # print(data)
+                    if data[1] == '0' or data[1] == '1' or data[1] == '2':
+                        for i in range(2, len(data)):
+                            if isNum2(data[i]):
+                                log.append(float(data[i]))
+                            else:
+                                return_flag = False
+                                break
+                        if len(log) == 8:
+                            dynamic_vehicle_state[int(data[1])].append(log)
+                        else:
+                            return_flag = False
+                            break
+                    else:
+                        return_flag = True
+                        break
+                elif len(data) == 5 and data[0] == "STATIC_OBS_INFO":
+                    log = []
+                    for i in range(2, len(data)):
+                        if isNum2(data[i]):
+                            log.append(float(data[i]))
+                        else:
+                            return_flag = False
+                            break
+                    if len(log) == 3:
+                        static_vehicle_state[int(data[1])].append(log)
+                    else:
+                        return_flag = False
+                        break
 
 
 
@@ -294,39 +328,60 @@ def create_run_scenario_overtake_random (Configure):
 
     with open(log_name, 'r', encoding='gb18030', errors='ignore') as f:
         my_data = f.readlines()
-
+        return_flag = False
         for line in my_data:
-            data = line.split()
-            if line.strip() == "":
-                continue
-            if data[0] == "CRASH" or data[0] == "Register" or data[0] == "TIMEOUT":
-                break
-            if len(data) == 8 and data[0] == "EGO_STATUS":
-                log = []
-                for i in range(1, len(data)):
-                    log.append(float(data[i]))
-                if len(log) == 7:
-                    ego_vehicle_state.append(log)
-
-            elif len(data) == 10 and data[0] == "DYNAMIC_OBS_INFO":
-                log = []
+            if not return_flag:
+                data = line.split()
                 # print(data)
-                if data[1] == '0' or data[1] == '1' or data[1] == '2':
-                    for i in range(2, len(data)):
-                        log.append(float(data[i]))
-                        # print(log)
-                    if len(log) == 8:
-                        dynamic_vehicle_state[int(data[1])].append(log)
-                else:
+                if line.strip() == "":
+                    continue
+                if data[0] == "CRASH" or data[0] == "Register" or data[0] == "TIMEOUT":
                     break
-            elif len(data) == 5 and data[0] == "STATIC_OBS_INFO":
-                log = []
-                for i in range(2, len(data)):
-                    log.append(float(data[i]))
-                    # print(log)
-                if len(log) == 3:
-                    static_vehicle_state[int(data[1])].append(log)
+                if len(data) == 8 and data[0] == "EGO_STATUS":
+                    log = []
+                    for i in range(1, len(data)):
+                        if isNum2(data[i]):
+                            log.append(float(data[i]))
+                        else:
+                            return_flag = False
+                            break
+                    if len(log) == 7:
+                        ego_vehicle_state.append(log)
+                    else:
+                        return_flag = False
+                        break
 
+                elif len(data) == 10 and data[0] == "DYNAMIC_OBS_INFO":
+                    log = []
+                    # print(data)
+                    if data[1] == '0' or data[1] == '1' or data[1] == '2':
+                        for i in range(2, len(data)):
+                            if isNum2(data[i]):
+                                log.append(float(data[i]))
+                            else:
+                                return_flag = False
+                                break
+                        if len(log) == 8:
+                            dynamic_vehicle_state[int(data[1])].append(log)
+                        else:
+                            return_flag = False
+                            break
+                    else:
+                        return_flag = True
+                        break
+                elif len(data) == 5 and data[0] == "STATIC_OBS_INFO":
+                    log = []
+                    for i in range(2, len(data)):
+                        if isNum2(data[i]):
+                            log.append(float(data[i]))
+                        else:
+                            return_flag = False
+                            break
+                    if len(log) == 3:
+                        static_vehicle_state[int(data[1])].append(log)
+                    else:
+                        return_flag = False
+                        break
 
 
     comfort1, comfort2 = evaluate_comfort(ego_vehicle_state, config)
