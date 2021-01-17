@@ -58,7 +58,7 @@ class CarBehindAndInFrontConfigure:
         self.PoolType = "Thread"
         # self.PoolType = "Process"
         # self.ProcessNum = psutil.cpu_count()
-        self.ProcessNum = 4
+        self.ProcessNum = 30
 
         ## ego
         self.ego_s0 = [5, 25]

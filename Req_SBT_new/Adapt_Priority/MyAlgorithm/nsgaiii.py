@@ -398,7 +398,7 @@ class NSGAIII(NSGAII):
         ranking.compute_ranking(self.solutions, k=self.population_size)
         # count = 1
         for solution in self.solutions:
-            print(solution.objectives, self.target_pattern)
+            # print(solution.objectives, self.target_pattern)
             goal_flag = np.zeros((7), dtype=int)
             for j in range(7):
                 if solution.objectives[j] < self.target_value_threshold[j]:

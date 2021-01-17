@@ -30,7 +30,7 @@ def text_create(Configuration):
 
 
 
-data_folder = os.getcwd() + '/Overtake_Datalog_Req3_DS_RS_IS_25_' + str(time.strftime("%Y_%m_%d_%H"))
+data_folder = os.getcwd() + '/Overtake_Datalog_Req3_DS_RS_IS_30_' + str(time.strftime("%Y_%m_%d_%H"))
 if not os.path.exists(data_folder):
     os.mkdir(data_folder)
 
@@ -38,7 +38,7 @@ if __name__ == '__main__':
 
     # search_round_list = [1, 10, 10, 10, 10, 20, 110, 110]
     # search_round_list = [1, 10, 20, 30, 40, 50, 60, 70]
-    search_round_list = [25, 25, 25, 25, 25, 25, 25, 25]
+    search_round_list = [30, 30, 30, 30, 30, 30, 30, 30]
     target_value_threshold = [1, 0, 0.9, 0.9, 1, 0.98, 0.99]
     target_dir = data_folder
 
@@ -61,7 +61,7 @@ if __name__ == '__main__':
     total_round = 400
     # interation_round = 3
     round_index = 0
-    population = 10
+    population = 50
     search_round = 0
 
     while total_round > 0:
