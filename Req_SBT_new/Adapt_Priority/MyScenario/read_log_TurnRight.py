@@ -330,7 +330,7 @@ def evaluate_speed(ego_vehicle_state):
     for i in range(len(ego_vehicle_state)):
         speed_list.append(ego_vehicle_state[i][4])
 
-    if len(speed_list):
+    if len(speed_list) == 0:
         max_speed = 0
     else:
         max_speed = max(speed_list)

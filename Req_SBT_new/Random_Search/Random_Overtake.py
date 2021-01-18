@@ -14,7 +14,7 @@ if __name__ == "__main__":
     target_dir = data_folder
     Configuration = CarBehindAndInFrontConfigure(target_dir)
 
-    pool = Pool(processes = Configuration.ProcessNum)
+    pool = Pool(processes=Configuration.ProcessNum)
     res_l=[]
     for i in range(Configuration.maxIterations):
         res=pool.apply_async(create_run_scenario_overtake_random, (Configuration, ))

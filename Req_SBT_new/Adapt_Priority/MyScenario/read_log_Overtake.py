@@ -347,11 +347,12 @@ def evaluate_distance (ego_vehicle_state, dynamic_vehicle_state,dy_obsList, stat
 
 
 def evaluate_speed(ego_vehicle_state):
+    # print(len(ego_vehicle_state))
     speed_list = []
     for i in range(len(ego_vehicle_state)):
         speed_list.append(ego_vehicle_state[i][4])
-
-    if len(speed_list):
+    # print(len(speed_list), max(speed_list))
+    if len(speed_list) == 0:
         max_speed = 0
     else:
         max_speed = max(speed_list)
