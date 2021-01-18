@@ -3,7 +3,7 @@ import json
 import numpy as np
 import os
 import time
-from MyScenario.read_log_TurnRight import evaluate_speed, evaluate_comfort, evaluate_stability, evaluate_traffic_light, evaluate_cross_lane,evaluate_collision
+from read_log_TurnRight import evaluate_speed, evaluate_comfort, evaluate_stability, evaluate_traffic_light, evaluate_cross_lane,evaluate_collision
 import uuid
 import random
 
@@ -197,26 +197,14 @@ def create_run_scenario_turnright (Vars, Configure):
 
 
     comfort1, comfort2 = evaluate_comfort(ego_vehicle_state, config)
-    avg_speed, min_speed = evaluate_speed(ego_vehicle_state, config)
-    # min_dis, avg_dis_satisfaction, min_dis_satisfaction = evaluate_distance(ego_vehicle_state, dynamic_vehicle_state,
-    #                                                                 dy_obsList, static_vehicle_state, st_obsList, config)
-    min_dis, avg_dis_satisfaction, min_dis_satisfaction = evaluate_collision (ego_vehicle_state, dynamic_vehicle_state, dy_obsList, static_vehicle_state, st_obsList, config)
-    avg_stable, min_stable = evaluate_stability(ego_vehicle_state, config)
+    min_speed = evaluate_speed(ego_vehicle_state)
+    min_dis = evaluate_collision(ego_vehicle_state, dynamic_vehicle_state, dy_obsList, static_vehicle_state, st_obsList, config)
+    min_stable = evaluate_stability(ego_vehicle_state)
     traffic_light = evaluate_traffic_light(ego_vehicle_state, traffic_light)
     cross_lane = evaluate_cross_lane(ego_vehicle_state)
 
-    # result = [avg_stable, min_stable, avg_dis_satisfaction, min_dis_satisfaction, avg_speed, min_speed, traffic_light, cross_lane, comfort1,
-    #           comfort2]
-    #
-    #
-    # result = [avg_stable, avg_dis_satisfaction, min_dis_satisfaction, avg_speed, min_speed, traffic_light,
-    #       cross_lane, comfort1, comfort2]
-
     result = [min_stable, min_dis, min_speed, traffic_light, cross_lane, comfort1, comfort2]
-    # result = [-min_dis, -min_stable, min_speed, traffic_light, -cross_lane, -comfort1, comfort2]
-
     result_name = file_dir_eval + "/result_" + now_time + "_" + uuid_str + ".txt"
-    # print(result_name)
     np.savetxt(result_name, result, fmt="%f", delimiter=" ")
 
 

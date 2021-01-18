@@ -17,7 +17,7 @@ from jmetal.util.observer import ProgressBarObserver
 import random
 import numpy
 import csv
-from RankingRules.DistanceRanking import Distance_Ranking
+from RankingRules.DistanceRanking2 import Distance_Ranking
 from RankingRules.EnsembleRanking import Ensemble_Ranking
 from RankingRules.RelationRanking2 import Relation_Ranking
 
@@ -40,7 +40,7 @@ if __name__ == '__main__':
     # search_round_list = [1, 10, 10, 10, 10, 20, 110, 110]
     search_round_list = [1, 10, 20, 30, 40, 50, 60, 70]
     # search_round_list = [50, 50, 50, 50, 50, 50, 50, 50]
-    target_value_threshold = [1, 0, 1, 1, 1, 0.98, 0.99]
+    target_value_threshold = [-5.0, 0, -16.67, 1, 0, -0.02, -0.01]
     target_dir = data_folder
 
 

@@ -13,7 +13,7 @@ class CarBehindAndInFrontConfigure:
         # self.auto_close_on_reach_the_objective= 1
         # self.auto_close_x_position = 10
         # self.auto_close_y_position = 0
-        # self.mapt_no = 2
+        # self.map_no = 2
         # self.horizon = 80
         # self.speed_horizon_factor = 3.0
         # self.lon_interval = 10.0

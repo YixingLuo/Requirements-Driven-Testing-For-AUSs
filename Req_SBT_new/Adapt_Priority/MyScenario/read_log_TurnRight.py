@@ -152,7 +152,7 @@ def evaluate_collision (ego_vehicle_state, dynamic_vehicle_state,dy_obsList, sta
         min_satisfaction = -1
         avg_satisfaction = -1
 
-    return min_dis, avg_satisfaction, min_satisfaction
+    return min_dis
 
 
 def evaluate_distance (ego_vehicle_state, dynamic_vehicle_state,dy_obsList, static_vehicle_state,st_obsList, config):
@@ -325,37 +325,19 @@ def evaluate_distance (ego_vehicle_state, dynamic_vehicle_state,dy_obsList, stat
     return min_dis, avg_satisfaction, min_satisfaction
 
 
-def evaluate_speed (ego_vehicle_state, config):
+def evaluate_speed(ego_vehicle_state):
     speed_list = []
     for i in range(len(ego_vehicle_state)):
         speed_list.append(ego_vehicle_state[i][4])
 
-    ## type 1
-    # maxspeed = max(speed_list)
-    # if  maxspeed > config.speed_limit:
-    #     satisfaction = 0
-    # else:
-    #     satisfaction  = 1
-
-    ## type 2
-    satisfaction_list = []
     if len(speed_list):
-        for i in range(len(speed_list)):
-            if speed_list[i] <= config.speed_limit:
-                ds = 1
-            elif  speed_list[i] > config.speed_max:
-                ds = 0
-            else:
-                ds = (config.speed_max - speed_list[i])/(config.speed_max - config.speed_limit)
-            satisfaction_list.append(ds)
+        max_speed = 0
     else:
-        satisfaction_list.append(0)
-    # print(satisfaction_list)
-    # satisfaction  = 1/(len(satisfaction_list))*sum(satisfaction_list)
+        max_speed = max(speed_list)
 
-    return np.mean(satisfaction_list), min(satisfaction_list)
+    return -max_speed
 
-def evaluate_comfort (ego_vehicle_state, config):
+def evaluate_comfort2 (ego_vehicle_state, config):
     comfort_list_1 = []
     comfort_list_2 = []
 
@@ -388,37 +370,83 @@ def evaluate_comfort (ego_vehicle_state, config):
 
     return satisfaction_comfort_1,satisfaction_comfort_2
 
-def evaluate_stability (ego_vehicle_state, config):
+def evaluate_comfort (ego_vehicle_state, config):
+    comfort_list_1 = []
+    comfort_list_2 = []
+
+    for i in range(len(ego_vehicle_state)-1):
+        a_pre = [ego_vehicle_state[i][6]*math.cos(ego_vehicle_state[i][3]), ego_vehicle_state[i][6]*math.sin(ego_vehicle_state[i][3])]
+        a_next = [ego_vehicle_state[i+1][6]*math.cos(ego_vehicle_state[i+1][3]), ego_vehicle_state[i+1][6]*math.sin(ego_vehicle_state[i+1][3])]
+        v_pre = [ego_vehicle_state[i][4]*math.cos(ego_vehicle_state[i][3]), ego_vehicle_state[i][4]*math.sin(ego_vehicle_state[i][3])]
+        v_next = [ego_vehicle_state[i+1][4]*math.cos(ego_vehicle_state[i+1][3]), ego_vehicle_state[i+1][4]*math.sin(ego_vehicle_state[i+1][3])]
+        delta_a = np.sqrt(np.sum(np.square(np.array(a_pre)-np.array(a_next))))/ np.sqrt(np.sum(np.square(config.a_max_soft-config.a_min_soft)))
+        delta_v = np.sqrt(np.sum(np.square(np.array(v_pre)-np.array(v_next))))/ config.speed_max
+
+        comfort_list_1.append (delta_v)
+        comfort_list_2.append (delta_a)
+        # print(a_pre, a_next, np.sqrt(np.sum(np.square(np.array(a_pre)-np.array(a_next)))), comfort_now)
+
+    if len(comfort_list_1) == 0:
+        comfort_1 = 0
+        comfort_2 = 0
+    else:
+        comfort_1 = sum(comfort_list_1) / 1000
+        comfort_2 = sum(comfort_list_2) / 1000
+
+    return -comfort_1, -comfort_2
+
+# def evaluate_stability (ego_vehicle_state, config):
+#     curvature_list = []
+#
+#     for i in range(len(ego_vehicle_state) - 1):
+#         pre = [ego_vehicle_state[i][0], ego_vehicle_state[i][1]]
+#         next = [ego_vehicle_state[i+1][0], ego_vehicle_state[i+1][1]]
+#         theta = abs(ego_vehicle_state[i+1][3] - ego_vehicle_state[i][3])
+#         delta_l = np.sqrt(np.sum(np.square(np.array(pre) - np.array(next))))
+#         if delta_l == 0:
+#             cur = 0
+#         else:
+#             cur = theta/delta_l
+#             # cur = theta/math.pi*180/delta_l
+#             # print(cur)
+#         if cur <= 1/config.k_limit:
+#             satisfaction = 1
+#         elif cur > 1/config.k_limit:
+#             # print(cur, theta, delta_l, pre, next, ego_vehicle_state[i+1][2], ego_vehicle_state[i][2])
+#             satisfaction = 0
+#         # else:
+#         #     satisfaction = 1 - (cur - config.k_thr)/(config.k_limit - config.k_thr)
+#         curvature_list.append(satisfaction)
+#
+#     if len(curvature_list) == 0:
+#         satisfaction_curvature = 0
+#         least_satisfaction_curvature = 0
+#     else:
+#         satisfaction_curvature = 1/(len(curvature_list))*sum(curvature_list)
+#         least_satisfaction_curvature = min(curvature_list)
+#     # print(curvature_list)
+#     return satisfaction_curvature, least_satisfaction_curvature
+
+
+def evaluate_stability (ego_vehicle_state):
     curvature_list = []
 
     for i in range(len(ego_vehicle_state) - 1):
         pre = [ego_vehicle_state[i][0], ego_vehicle_state[i][1]]
         next = [ego_vehicle_state[i+1][0], ego_vehicle_state[i+1][1]]
-        theta = abs (ego_vehicle_state[i+1][3] -ego_vehicle_state[i][3])
+        theta = abs(ego_vehicle_state[i+1][3] - ego_vehicle_state[i][3])
         delta_l = np.sqrt(np.sum(np.square(np.array(pre) - np.array(next))))
         if delta_l == 0:
             cur = 0
         else:
             cur = theta/delta_l
-            # cur = theta/math.pi*180/delta_l
-            # print(cur)
-        if cur <= 1/config.k_limit:
-            satisfaction = 1
-        elif cur > 1/config.k_limit:
-            # print(cur, theta, delta_l, pre, next, ego_vehicle_state[i+1][2], ego_vehicle_state[i][2])
-            satisfaction = 0
-        # else:
-        #     satisfaction = 1 - (cur - config.k_thr)/(config.k_limit - config.k_thr)
-        curvature_list.append(satisfaction)
+        curvature_list.append(cur)
 
     if len(curvature_list) == 0:
-        satisfaction_curvature = 0
-        least_satisfaction_curvature = 0
+        max_curvature = 0
     else:
-        satisfaction_curvature = 1/(len(curvature_list))*sum(curvature_list)
-        least_satisfaction_curvature = min(curvature_list)
-    # print(curvature_list)
-    return satisfaction_curvature, least_satisfaction_curvature
+        max_curvature = max(curvature_list)
+    return - max_curvature
 
 def evaluate_traffic_light (ego_vehicle_state, traffic_light):
     t_green = float(traffic_light[0]["green_time"])
@@ -473,14 +501,14 @@ def evaluate_cross_lane (ego_vehicle_state):
     total_time = 0
     # print(ego_vehicle_state)
     for i in range (len(ego_vehicle_state)):
-        if ego_vehicle_state[i][0] >=10 and  ego_vehicle_state[i][1] <= 211.5:
+        if ego_vehicle_state[i][0] >= 10 and ego_vehicle_state[i][1] <= 211.5:
             total_time += 1
     # print(total_time, len(ego_vehicle_state))
     if not total_time:
-        return satisfaction
+        return 0
     else:
         # return 1 - total_time/len(ego_vehicle_state)
-        return 1 - total_time/1000
+        return -total_time/1000
 
 
 
