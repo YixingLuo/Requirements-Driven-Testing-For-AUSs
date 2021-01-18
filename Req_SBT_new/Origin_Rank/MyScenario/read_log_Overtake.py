@@ -21,19 +21,6 @@ static_vehicle_state: x,y, euclidean_distance
 # config = configure()
 
 
-def isNum2(value):
-    try:
-        x = float(value) #此处更改想判断的类型
-    except TypeError:
-        return False
-    except ValueError:
-        return False
-    except Exception as e:
-        return False
-    else:
-        return True
-
-
 def evaluate_collision (ego_vehicle_state, dynamic_vehicle_state,dy_obsList, static_vehicle_state,st_obsList, config):
     dis_list = []
     dis_satisfaction = []
@@ -492,27 +479,28 @@ def evaluate_cross_lane (ego_vehicle_state):
     if not total_time:
         return satisfaction
     else:
-        return 1 - total_time/len(ego_vehicle_state)
+        # return 1 - total_time/len(ego_vehicle_state)
+        return 1 - total_time/1000
 
 
 
 if __name__=='__main__':
 
-    file_dir_sce = os.getcwd() + '/2021_01_17_Brute_Froce_scenarios_5'
-    file_dir_data = os.getcwd() + '/2021_01_17_Brute_Froce_datalog_5'
+    file_dir_sce = os.getcwd() + '/2021_01_09_Adapt_Priority_scenarios_0'
+    file_dir_data = os.getcwd() + '/2021_01_09_Adapt_Priority_datalog_0'
 
     fileList = os.listdir(file_dir_sce)
     fileList.sort()
 
-    # for i in range(len(fileList)):
-    #     scenario_name = file_dir_sce  + '/' + fileList[i]
-    #     uuixcode = fileList[i].split('.', 1)[0]
-    #     code = uuixcode.split("_",1)[1]
-    #
-    #     log_name = file_dir_data + '/' + 'datalog_' + code + '.txt'
-    #     # if code == "20210117152950_475_819cf11de09c4f1d8a02be6992af3693":
-    #     #     continue
-    #     # print(log_name)
+    for i in range(len(fileList)):
+        scenario_name = file_dir_sce  + '/' + fileList[i]
+        uuixcode = fileList[i].split('.', 1)[0]
+        code = uuixcode.split("_",1)[1]
+        # if code == "20210106063606_903_15a953cc4071442ca86761ec5fa9ab6b":
+        #     continue
+        log_name = file_dir_data + '/' + 'datalog_' + code + '.txt'
+
+        print(log_name)
 
     #
     # file_path = os.path.abspath(os.path.join(os.getcwd(), ".."))
@@ -524,81 +512,54 @@ if __name__=='__main__':
     # os.system(cmd)
     # print(log_name)
     #
-    scenario_name = 'scenario_20210117152950_475_819cf11de09c4f1d8a02be6992af3693.json'
-    log_name = 'datalog_20210117152950_475_819cf11de09c4f1d8a02be6992af3693.txt'
+    # scenario_name = 'SCENAR1.json'
+    # log_name = 'datalog1.txt'
+        config = CarBehindAndInFrontConfigure()
 
-    config = CarBehindAndInFrontConfigure()
+        with open(scenario_name, 'r', encoding='utf-8') as f:
+            ret_dic = json.load(f)
 
-    with open(scenario_name, 'r', encoding='utf-8') as f:
-        ret_dic = json.load(f)
+        traffic_light = ret_dic["traffic_signal"]
+        st_obsList = ret_dic["static_obs"]
+        dy_obsList  = ret_dic["dynamic_obs"]
 
-    traffic_light = ret_dic["traffic_signal"]
-    st_obsList = ret_dic["static_obs"]
-    dy_obsList  = ret_dic["dynamic_obs"]
+        num_dynamic_obs = 3
+        num_static_obs = 0
 
-    num_dynamic_obs = 3
-    num_static_obs = 0
+        ego_vehicle_state = []
+        dynamic_vehicle_state = [[] for i in range(num_dynamic_obs)]
+        static_vehicle_state = [[] for i in range(num_static_obs)]
+        with open(log_name, 'r') as f:
+            my_data = f.readlines()
 
-    ego_vehicle_state = []
-    dynamic_vehicle_state = [[] for i in range(num_dynamic_obs)]
-    static_vehicle_state = [[] for i in range(num_static_obs)]
-
-    with open(log_name, 'r', encoding='gb18030', errors='ignore') as f:
-        my_data = f.readlines()
-        return_flag = False
-        for line in my_data:
-            if not return_flag:
+            for line in my_data:
                 data = line.split()
-                # print(data)
                 if line.strip() == "":
+                    # doing something
                     continue
-                if data[0] == "CRASH" or data[0] == "Register" or data[0] == "TIMEOUT":
-                    break
-                if len(data) == 8 and data[0] == "EGO_STATUS":
+                if data[0] == "EGO_STATUS" and len(data) == 8:
                     log = []
                     for i in range(1, len(data)):
-                        if isNum2(data[i]):
-                            log.append(float(data[i]))
-                        else:
-                            return_flag = False
-                            break
+                        log.append(float(data[i]))
                     if len(log) == 7:
                         ego_vehicle_state.append(log)
-                    else:
-                        return_flag = False
-                        break
 
-                elif len(data) == 10 and data[0] == "DYNAMIC_OBS_INFO":
-                    log = []
-                    # print(data)
-                    if data[1] == '0' or data[1] == '1' or data[1] == '2':
-                        for i in range(2, len(data)):
-                            if isNum2(data[i]):
-                                log.append(float(data[i]))
-                            else:
-                                return_flag = False
-                                break
-                        if len(log) == 8:
-                            dynamic_vehicle_state[int(data[1])].append(log)
-                        else:
-                            return_flag = False
-                            break
-                    else:
-                        return_flag = True
-                        break
-                elif len(data) == 5 and data[0] == "STATIC_OBS_INFO":
+                if data[0] == "DYNAMIC_OBS_INFO" and len(data) == 10:
                     log = []
                     for i in range(2, len(data)):
-                        if isNum2(data[i]):
-                            log.append(float(data[i]))
-                        else:
-                            return_flag = False
-                            break
+                        log.append(float(data[i]))
+                        # print(log)
+                    if len(log) == 8:
+                        # print(log,int(data[1]))
+                        dynamic_vehicle_state[int(data[1])].append(log)
+                elif data[0] == "STATIC_OBS_INFO" and len(data) == 5:
+                    log = []
+                    for i in range(2, len(data)):
+                        log.append(float(data[i]))
+                        # print(log)
                     if len(log) == 3:
                         static_vehicle_state[int(data[1])].append(log)
-                    else:
-                        return_flag = False
-                        break
+
 
 
 

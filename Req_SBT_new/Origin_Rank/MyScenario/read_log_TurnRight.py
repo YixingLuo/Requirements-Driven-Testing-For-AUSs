@@ -479,7 +479,8 @@ def evaluate_cross_lane (ego_vehicle_state):
     if not total_time:
         return satisfaction
     else:
-        return 1 - total_time/len(ego_vehicle_state)
+        # return 1 - total_time/len(ego_vehicle_state)
+        return 1 - total_time/1000
 
 
 
