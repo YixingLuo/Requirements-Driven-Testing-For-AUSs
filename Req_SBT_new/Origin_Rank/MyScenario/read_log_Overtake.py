@@ -354,8 +354,10 @@ def evaluate_speed(ego_vehicle_state):
     # print(len(speed_list), max(speed_list))
     if len(speed_list) == 0:
         max_speed = 0
+        return max_speed
     else:
         max_speed = max(speed_list)
+        return -max_speed
 
     # satisfaction_list = []
     # if len(speed_list):
@@ -370,7 +372,7 @@ def evaluate_speed(ego_vehicle_state):
     # else:
     #     satisfaction_list.append(0)
 
-    return -max_speed
+    # return -max_speed
 
 def evaluate_comfort2 (ego_vehicle_state, config):
     comfort_list_1 = []
@@ -419,11 +421,13 @@ def evaluate_comfort (ego_vehicle_state, config):
     if len(comfort_list_1) == 0:
         comfort_1 = 0
         comfort_2 = 0
+        return comfort_1, comfort_2
     else:
-        comfort_1 = sum(comfort_list_1) / 1000
-        comfort_2 = sum(comfort_list_2) / 1000
+        comfort_1 = - sum(comfort_list_1) / 1000
+        comfort_2 = - sum(comfort_list_2) / 1000
+        return comfort_1, comfort_2
 
-    return -comfort_1, -comfort_2
+    # return -comfort_1, -comfort_2
 
 # def evaluate_stability (ego_vehicle_state, config):
 #     curvature_list = []
@@ -474,9 +478,10 @@ def evaluate_stability (ego_vehicle_state):
 
     if len(curvature_list) == 0:
         max_curvature = 0
+        return max_curvature
     else:
         max_curvature = max(curvature_list)
-    return - max_curvature
+        return - max_curvature
 
 def evaluate_traffic_light (ego_vehicle_state, traffic_light):
     t_green = float(traffic_light[0]["green_time"])

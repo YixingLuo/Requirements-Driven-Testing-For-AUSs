@@ -42,6 +42,10 @@ if __name__ == '__main__':
     target_value_threshold = [-5.0, 0, -16.67, 1, 0, -0.001, -0.01]
     target_dir = data_folder
 
+
+
+
+
     priority_list = []
     with open("priority_list.csv") as csvfile:
         csv_file = csv.reader(csvfile)
