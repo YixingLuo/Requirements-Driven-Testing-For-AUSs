@@ -57,7 +57,7 @@ class MultiprocessEvaluator(Evaluator[S]):
     def evaluate(self, solution_list: List[S], problem: Problem) -> List[S]:
         # return self.pool.map(functools.partial(evaluate_solution, problem=problem), solution_list)
         result = self.pool.map_async(functools.partial(evaluate_solution, problem=problem), solution_list)
-        return result.get(timeout=2000)
+        return result.get()
 
 
 class SparkEvaluator(Evaluator[S]):
