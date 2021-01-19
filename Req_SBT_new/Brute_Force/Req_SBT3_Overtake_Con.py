@@ -61,7 +61,7 @@ if __name__ == '__main__':
     goal_selection_index = numpy.loadtxt(os.path.join(data_folder, 'goal_selection_index.txt'))
     goal_selection_index = [int(x) for x in goal_selection_index]
 
-    target_value_threshold = [-5.0, 0, -16.67, 1, 0, -0.001, -0.01]
+    target_value_threshold = [-1/5.0, 0, -16.67, 1, 0, -0.001, -0.01]
 
     priority_list = []
     with open("priority_list.csv") as csvfile:

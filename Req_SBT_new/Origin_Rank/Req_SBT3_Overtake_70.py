@@ -46,7 +46,7 @@ if __name__ == '__main__':
 
     # search_round_list = [1, 10, 10, 10, 10, 20, 110, 110]
     # search_round_list = [1, 10, 20, 30, 40, 50, 60, 70]
-    search_round_list = [75, 75, 75, 75, 75, 75, 75, 75]
+    search_round_list = [70, 70, 70, 70, 70, 70, 70, 70]
     # goal_selection_index = random.sample(range(0,128),128)
     goal_selection_index = [idx for idx in range(128)]
 
@@ -59,7 +59,7 @@ if __name__ == '__main__':
     file_name = os.path.join(target_dir, 'goal_selection_index.txt')
     numpy.savetxt(file_name, goal_selection_index, fmt="%d")  # 保存为整数
 
-    target_value_threshold = [-5.0, 0, -16.67, 1, 0, -0.001, -0.01]
+    target_value_threshold = [-1/5.0, 0, -16.67, 1, 0, -0.001, -0.01]
 
     priority_list = []
     with open("priority_list.csv") as csvfile:
