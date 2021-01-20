@@ -56,8 +56,8 @@ import csv
 
 def Distance_Ranking (priority_list, population, scores, target_value_threshold):
     sorted_violation_pattern_list = []
-    print(np.array(population).shape[0], np.array(population).shape[1])
-    print(np.array(scores).shape[0], np.array(scores).shape[1])
+    # print(np.array(population).shape[0], np.array(population).shape[1])
+    # print(np.array(scores).shape[0], np.array(scores).shape[1])
     sorted_pop = np.zeros((np.array(priority_list).shape[0], np.array(population).shape[0], np.array(population).shape[1]),dtype=float)
     distance = np.zeros((np.array(priority_list).shape[0], np.array(population).shape[0]),dtype=float)
 
