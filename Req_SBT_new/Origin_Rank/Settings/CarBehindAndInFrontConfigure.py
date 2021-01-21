@@ -53,7 +53,7 @@ class CarBehindAndInFrontConfigure:
         self.maxIterations = self.population * 50
         self.searchTimeout = 3*60*60
         self.interval = 50
-        self.num_variables = 19
+        self.num_variables = 18
         self.PoolType = "Thread"
         # self.PoolType = "Process"
         # self.ProcessNum = psutil.cpu_count()
@@ -65,7 +65,7 @@ class CarBehindAndInFrontConfigure:
 
         ## traffic_signals
         self.start_s = [70, 80]
-        self.end_s = [90, 90]
+        self.end_s = 90
         self.green_time = [5, 10]
         self.yellow_time = [1, 2]
         self.red_time = [2, 4]

@@ -47,7 +47,7 @@ class CarBehindAndInFrontConfigure:
         self.goal_num = 7
         self.search_round = 400
         self.searchTimeout = 360000
-        self.num_variables = 19
+        self.num_variables = 18
         self.PoolType = "Thread"
         # self.PoolType = "Process"
         # self.ProcessNum = psutil.cpu_count()
@@ -60,7 +60,7 @@ class CarBehindAndInFrontConfigure:
 
         ## traffic_signals
         self.start_s = [70, 80]
-        self.end_s = [90, 90]
+        self.end_s = 90
         self.green_time = [5, 10]
         self.yellow_time = [1, 2]
         self.red_time = [2, 4]

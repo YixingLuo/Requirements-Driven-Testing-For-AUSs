@@ -50,7 +50,7 @@ class TurnRightConfigure:
         self.goal_num = 7
         self.search_round = 400*10
         self.searchTimeout = 360000
-        self.num_variables = 17
+        self.num_variables = 15
         self.PoolType = "Thread"
         # self.PoolType = "Process"
         # self.ProcessNum = psutil.cpu_count()
@@ -78,8 +78,8 @@ class TurnRightConfigure:
         # self.acc_1 = [0, 3]
         # self.start_time_1 = [0, 2]
         self.pos_y_1 = [225, 235]
-        self.velo_1 = [0, 0]
-        self.acc_1 = [0, 0]
+        self.velo_1 = 0
+        self.acc_1 = 0
         self.start_time_1 = [0, 2]
 
         ## dynamic_obstacle_2

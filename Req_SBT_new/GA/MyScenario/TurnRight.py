@@ -70,19 +70,21 @@ def create_run_scenario_turnright (Vars, Configure):
         elif key == "dynamic_obs":
             obsList = ret_dic[key]
             obsList[0]["pos_y"] = Vars[5]
-            obsList[0]["velo"] = Vars[6]
-            obsList[0]["acc"] = Vars[7]
-            obsList[0]["start_time"] = Vars[8]
+            obsList[0]["velo"] = config.velo_1
+            obsList[0]["acc"] = config.acc_1
+            # obsList[0]["velo"] = Vars[6]
+            # obsList[0]["acc"] = Vars[7]
+            obsList[0]["start_time"] = Vars[6]
 
-            obsList[1]["pos_x"] = Vars[9]
-            obsList[1]["velo"] = Vars[10]
-            obsList[1]["acc"] = Vars[11]
-            obsList[1]["start_time"] = Vars[12]
+            obsList[1]["pos_x"] = Vars[7]
+            obsList[1]["velo"] = Vars[8]
+            obsList[1]["acc"] = Vars[9]
+            obsList[1]["start_time"] = Vars[10]
 
-            obsList[2]["pos_x"] = Vars[13]
-            obsList[2]["velo"] = Vars[14]
-            obsList[2]["acc"] = Vars[15]
-            obsList[2]["start_time"] = Vars[16]
+            obsList[2]["pos_x"] = Vars[11]
+            obsList[2]["velo"] = Vars[12]
+            obsList[2]["acc"] = Vars[13]
+            obsList[2]["start_time"] = Vars[14]
 
     traffic_light = ret_dic["traffic_signal"]
     st_obsList = ret_dic["static_obs"]
@@ -251,8 +253,10 @@ def create_run_scenario_turnright_random (Configure):
         elif key == "dynamic_obs":
             obsList = ret_dic[key]
             obsList[0]["pos_y"] = random.uniform(config.pos_y_1[0], config.pos_y_1[1])
-            obsList[0]["velo"] = random.uniform(config.velo_1[0], config.velo_1[1])
-            obsList[0]["acc"] = random.uniform(config.acc_1[0], config.acc_1[1])
+            obsList[0]["velo"] = config.velo_1
+            obsList[0]["acc"] = config.acc_1[0]
+            # obsList[0]["velo"] = random.uniform(config.velo_1[0], config.velo_1[1])
+            # obsList[0]["acc"] = random.uniform(config.acc_1[0], config.acc_1[1])
             obsList[0]["start_time"] = random.uniform(config.start_time_1[0], config.start_time_1[1])
 
             obsList[1]["pos_x"] = random.uniform(config.pos_x_2[0], config.pos_x_2[1])

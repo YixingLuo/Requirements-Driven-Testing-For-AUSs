@@ -30,18 +30,18 @@ class TurnRightProblem(FloatProblem):
             else:
                 self.obj_directions.append(self.MAXIMIZE)
         # self.obj_directions = [self.MINIMIZE] * M
-        self.obj_labels = ['stable', 'acda', 'mini', 'speed', 'traffic_light', 'comfort']
+        self.obj_labels = ['stable', 'safe', 'speed', 'traffic_light', 'lane', 'comfort1', 'comfort2']
 
         self.lower_bound = [self.config.ego_s0[0], self.config.ego_v0[0],
                             self.config.green_time[0], self.config.yellow_time[0], self.config.red_time[0],
-                            self.config.pos_y_1[0], self.config.velo_1[0], self.config.acc_1[0], self.config.start_time_1[0],
+                            self.config.pos_y_1[0], self.config.start_time_1[0],
                             self.config.pos_x_2[0], self.config.velo_2[0], self.config.acc_2[0], self.config.start_time_2[0],
-                            self.config.pos_x_3[0], self.config.velo_3[0], self.config.acc_3[0], self.config.start_time_3[0]]  # 决策变量下界
+                            self.config.pos_x_3[0], self.config.velo_3[0], self.config.acc_3[0], self.config.start_time_3[0]]
         self.upper_bound = [self.config.ego_s0[1], self.config.ego_v0[1],
                             self.config.green_time[1], self.config.yellow_time[1], self.config.red_time[1],
-                            self.config.pos_y_1[1], self.config.velo_1[1], self.config.acc_1[1], self.config.start_time_1[1],
+                            self.config.pos_y_1[1], self.config.start_time_1[1],
                             self.config.pos_x_2[1], self.config.velo_2[1], self.config.acc_2[1], self.config.start_time_2[1],
-                            self.config.pos_x_3[1], self.config.velo_3[1], self.config.acc_3[1], self.config.start_time_3[1]]  # 决策变量上界
+                            self.config.pos_x_3[1], self.config.velo_3[1], self.config.acc_3[1], self.config.start_time_3[1]]
 
 
 
