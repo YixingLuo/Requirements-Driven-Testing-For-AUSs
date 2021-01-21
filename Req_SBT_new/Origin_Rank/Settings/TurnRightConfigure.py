@@ -9,7 +9,7 @@ import shutil
 # import psutil
 
 class TurnRightConfigure:
-    def __init__(self,goal_index,population,search_round, target_dir, round_idx):
+    def __init__(self,goal_index,population, target_dir, round_idx):
         # self.auto_close_on_reach_the_objective= 1
         # self.auto_close_x_position = 10
         # self.auto_close_y_position = 0
@@ -49,10 +49,9 @@ class TurnRightConfigure:
         self.speed_max = 33.3
         self.duration = 100
         self.population = population
-        self.round = search_round
         self.goal_num = 7
-        self.maxIterations = self.population * self.round
-        self.searchTimeout = 360000
+        self.maxIterations = self.population * 50
+        self.searchTimeout = 3*60*60
         self.interval = 50
         self.num_variables = 17
         self.PoolType = "Thread"

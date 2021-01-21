@@ -52,7 +52,7 @@ class TurnRightConfigure:
         self.round = search_round
         self.goal_num = 7
         self.maxIterations = self.population * self.round
-        self.searchTimeout = 360000
+        self.searchTimeout = 3*60*60
         self.iteration_round = iteration_round
         self.num_variables = 17
         self.PoolType = "Thread"

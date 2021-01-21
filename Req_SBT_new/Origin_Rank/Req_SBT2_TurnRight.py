@@ -3,7 +3,7 @@
 from jmetal.algorithm.multiobjective.nsgaiii import UniformReferenceDirectionFactory
 from jmetal.operator import SBXCrossover, PolynomialMutation
 from jmetal.util.solution import print_function_values_to_file, print_variables_to_file
-from jmetal.util.termination_criterion import StoppingByEvaluations
+from jmetal.util.termination_criterion import StoppingByEvaluations, StoppingByTime
 from jmetal.util.observer import ProgressBarObserver
 # from MyAlgorithm.termination_criterion import StoppingByEvaluations
 # from jmetal.util.evaluator import MultiprocessEvaluator, SequentialEvaluator
@@ -42,7 +42,7 @@ if __name__ == '__main__':
 
     for iteration in range(10):
 
-        data_folder = os.getcwd() + '/TurnRight_Datalog_Req3_' + str(time.strftime("%Y_%m_%d_%H"))
+        data_folder = os.getcwd() + '/TurnRight_Datalog_Req2_' + str(time.strftime("%Y_%m_%d_%H"))
         if not os.path.exists(data_folder):
             os.mkdir(data_folder)
 
@@ -52,10 +52,11 @@ if __name__ == '__main__':
         # goal_selection_index = random.sample(range(0,128),128)
         goal_selection_index = [idx for idx in range(128)]
 
-        total_round = 400
+        total_second = 24 * 60 * 60
+        # interation_round = 3
         round_index = 0
         population = 50
-        search_round = 0
+        search_second = 3 * 60 * 60
 
         target_dir = data_folder
         file_name = os.path.join(target_dir, 'goal_selection_index.txt')
@@ -78,16 +79,16 @@ if __name__ == '__main__':
         # pattern_count = numpy.loadtxt("pattern_count_0.txt")
         # searched_violation_pattern = numpy.loadtxt("searched_violation_pattern_0.txt")
 
-        while total_round > 0:
+        while total_second > 0:
 
             # for round_index in range (total_round):
 
             if round_index == 0:
                 goal_index = 0
                 goal_selection_flag = priority_list[goal_index]
-                search_round = search_round_list[int(sum(goal_selection_flag))]
-                if total_round < search_round:
-                    search_round = total_round
+                if total_second < search_second:
+                    search_round = total_second
+                # total_round = total_round - search_round
 
                 # total_round = total_round - search_round
 
@@ -130,9 +131,12 @@ if __name__ == '__main__':
                         break
 
                 goal_selection_flag = priority_list[goal_index]
-                search_round = search_round_list[int(sum(goal_selection_flag))]
-                if total_round < search_round:
-                    search_round = total_round
+                # search_round = search_round_list[int(sum(goal_selection_flag))]
+                # search_round = 50
+                if total_second < search_second:
+                    search_round = total_second
+                # total_round = total_round - search_round
+                # total_round = total_round - search_round
 
                 # total_round = total_round - search_round
 
@@ -156,9 +160,11 @@ if __name__ == '__main__':
             problem = TurnRightProblem(Goal_num, Configuration)
 
             """=================================算法参数设置============================"""
-            max_evaluations = Configuration.maxIterations
+            # max_evaluations = Configuration.maxIterations
             # StoppingEvaluator = StoppingByEvaluations(max_evaluations=max_evaluations, problem=problem)
-            StoppingEvaluator = StoppingByEvaluations(max_evaluations=max_evaluations)
+            # StoppingEvaluator = StoppingByEvaluations(max_evaluations=max_evaluations)
+            searchTimeout = Configuration.searchTimeout
+            StoppingEvaluator = StoppingByTime(max_seconds=searchTimeout)
 
             algorithm = NSGAIII(
                                 target_pattern=goal_selection_flag,
@@ -181,7 +187,7 @@ if __name__ == '__main__':
 
 
             """==========================调用算法模板进行种群进化========================="""
-            progress_bar = ProgressBarObserver(max=max_evaluations)
+            progress_bar = ProgressBarObserver(max=searchTimeout)
             algorithm.observable.register(progress_bar)
             algorithm.run()
             front = algorithm.get_result()
@@ -198,7 +204,7 @@ if __name__ == '__main__':
             print(f'Problem: ${problem.get_name()}')
             print(f'Computing time: ${algorithm.total_computing_time}')
 
-            search_round = int(StoppingEvaluator.evaluations / population)
-            total_round = total_round - search_round
-            print("real round: ", search_round, "idx: ", round_index, "left: ", total_round)
+            search_second = StoppingEvaluator.seconds
+            total_second = total_second - search_second
+            print("real time: ", search_second, "idx: ", round_index, "left: ", total_second)
             round_index = round_index + 1
