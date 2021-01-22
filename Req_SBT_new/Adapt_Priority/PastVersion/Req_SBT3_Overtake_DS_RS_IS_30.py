@@ -5,8 +5,8 @@ from jmetal.operator import SBXCrossover, PolynomialMutation
 from jmetal.util.solution import print_function_values_to_file, print_variables_to_file
 from jmetal.util.termination_criterion import StoppingByEvaluations
 # from MyAlgorithm.termination_criterion import StoppingByEvaluations
-# from jmetal.util.evaluator import MultiprocessEvaluator, SequentialEvaluator
-from MyAlgorithm.evaluator import MultiprocessEvaluator
+from jmetal.util.evaluator import MultiprocessEvaluator, SequentialEvaluator
+# from MyAlgorithm.evaluator import MultiprocessEvaluator
 from jmetal.util.observer import ProgressBarObserver
 from MyAlgorithm.nsgaiii import NSGAIII
 from Settings.CarBehindAndInFrontConfigure import CarBehindAndInFrontConfigure
@@ -35,13 +35,13 @@ def text_create(Configuration):
 if __name__ == '__main__':
 
     for iteration in range(10):
-        data_folder = os.getcwd() + '/Overtake_Datalog_Req4_DS_' + str(time.strftime("%Y_%m_%d_%H"))
+        data_folder = os.getcwd() + '/Overtake_Datalog_Req3_DS_RS_IS_30_' + str(time.strftime("%Y_%m_%d_%H"))
         if not os.path.exists(data_folder):
             os.mkdir(data_folder)
 
         # search_round_list = [1, 10, 10, 10, 10, 20, 110, 110]
         # search_round_list = [1, 10, 20, 30, 40, 50, 60, 70]
-        search_round_list = [50, 50, 50, 50, 50, 50, 50, 50]
+        search_round_list = [30, 30, 30, 30, 30, 30, 30, 30]
         target_value_threshold = [-1/5.0, 0, -16.67, 1, 0, -0.001, -0.01]
         target_dir = data_folder
 
@@ -71,8 +71,8 @@ if __name__ == '__main__':
 
             ## caculate goal_index
             if round_index == 0:
-                goal_selection_flag = numpy.ones(7)
-                # goal_selection_flag = [0, 0, 0, 0, 0, 1, 0]
+                # goal_selection_flag = numpy.ones(7)
+                goal_selection_flag = [0, 0, 0, 1, 0, 1, 1]
                 searched_violation_pattern.append(goal_selection_flag)
 
                 search_round = search_round_list[int(sum(goal_selection_flag))]
@@ -123,9 +123,7 @@ if __name__ == '__main__':
                 weight_relation, sorted_pattern_relation, relation_ranking = Relation_Ranking(violation_pattern_to_search,
                                                                                               searched_violation_pattern,
                                                                                               priority_list)
-                # weights = [1, weight_dist, weight_relation]
-                ratio = numpy.array(evaluation).shape[0]/(population*total_round)
-                weights = [ratio, 0, 0]
+                weights = [1, 1, 1]
                 violation_pattern_ranking, overall_rank_list = Ensemble_Ranking(distance_ranking, relation_ranking,
                                                                                 violation_pattern_to_search, weights)
 
@@ -156,7 +154,7 @@ if __name__ == '__main__':
                 vars_file_name = Configuration.file_dir_var
                 results_file_name = Configuration.file_dir_eval
 
-                    # Save results to file
+                # Save results to file
                 print("round: ", search_round, "idx: ", round_index, "left: ", total_round)
                 pattern_name = target_dir + '/req_violation_pattern_' + str(round_index) + '.txt'
                 numpy.savetxt(pattern_name, goal_selection_flag, fmt="%d")  # 保存为整数
@@ -206,6 +204,7 @@ if __name__ == '__main__':
                 #                                                  degree=0.9)
                 # selection = BinaryTournamentSelection()
             )
+
 
             """==========================调用算法模板进行种群进化========================="""
             # progress_bar = ProgressBarObserver(max=max_evaluations)

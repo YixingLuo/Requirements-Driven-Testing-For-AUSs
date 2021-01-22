@@ -9,17 +9,16 @@ from jmetal.util.termination_criterion import StoppingByEvaluations
 from MyAlgorithm.evaluator import MultiprocessEvaluator
 from jmetal.util.observer import ProgressBarObserver
 from MyAlgorithm.nsgaiii import NSGAIII
-from Settings.TurnRightConfigure import TurnRightConfigure
+from Settings.CarBehindAndInFrontConfigure import CarBehindAndInFrontConfigure
 import os
 import time
-from TurnRightProblem import TurnRightProblem
-from jmetal.util.observer import ProgressBarObserver
-import random
-import numpy
+from CarBehindAndInFrontProblem import CarBehindAndInFrontProblem
 import csv
+import numpy
 from RankingRules.DistanceRanking2 import Distance_Ranking
 from RankingRules.EnsembleRanking import Ensemble_Ranking
 from RankingRules.RelationRanking2 import Relation_Ranking
+
 
 
 
@@ -32,7 +31,7 @@ def text_create(Configuration):
 
 
 
-data_folder = os.getcwd() + '/TurnRight_Datalog_Req3_DS_RS_IS_' + str(time.strftime("%Y_%m_%d_%H"))
+data_folder = os.getcwd() + '/Overtake_Datalog_Req4_DS_RS_IS_' + str(time.strftime("%Y_%m_%d_%H"))
 if not os.path.exists(data_folder):
     os.mkdir(data_folder)
 
@@ -43,7 +42,6 @@ if __name__ == '__main__':
     search_round_list = [50, 50, 50, 50, 50, 50, 50, 50]
     target_value_threshold = [-1/5.0, 0, -16.67, 1, 0, -0.001, -0.01]
     target_dir = data_folder
-
 
     priority_list = []
     with open("priority_list.csv") as csvfile:
@@ -72,6 +70,7 @@ if __name__ == '__main__':
         ## caculate goal_index
         if round_index == 0:
             goal_selection_flag = numpy.ones(7)
+            # goal_selection_flag = [0, 0, 0, 0, 0, 1, 0]
             searched_violation_pattern.append(goal_selection_flag)
 
             search_round = search_round_list[int(sum(goal_selection_flag))]
@@ -80,7 +79,7 @@ if __name__ == '__main__':
                 search_round = total_round
             # total_round = total_round - search_round
 
-            Configuration = TurnRightConfigure(goal_selection_flag, population, search_round, round_index, target_dir)
+            Configuration = CarBehindAndInFrontConfigure(goal_selection_flag, population, search_round, round_index, target_dir)
             vars_file_name = Configuration.file_dir_var
             results_file_name = Configuration.file_dir_eval
 
@@ -122,7 +121,8 @@ if __name__ == '__main__':
             weight_relation, sorted_pattern_relation, relation_ranking = Relation_Ranking(violation_pattern_to_search,
                                                                                           searched_violation_pattern,
                                                                                           priority_list)
-            weights = [1, 1, 1]
+            ratio = numpy.array(evaluation).shape[0]/(population*total_round)
+            weights = [1-ratio, ratio, ratio]
             violation_pattern_ranking, overall_rank_list = Ensemble_Ranking(distance_ranking, relation_ranking,
                                                                             violation_pattern_to_search, weights)
 
@@ -149,7 +149,7 @@ if __name__ == '__main__':
                 search_round = total_round
             # total_round = total_round - search_round
 
-            Configuration = TurnRightConfigure(goal_selection_flag, population, search_round, round_index, target_dir)
+            Configuration = CarBehindAndInFrontConfigure(goal_selection_flag, population, search_round, round_index, target_dir)
             vars_file_name = Configuration.file_dir_var
             results_file_name = Configuration.file_dir_eval
 
@@ -167,7 +167,7 @@ if __name__ == '__main__':
             numpy.savetxt(file_name, evaluation, fmt="%f")  # 保存为整数
             file_name = target_dir + '/pattern_count_' + str(round_index) + '.txt'
             numpy.savetxt(file_name, pattern_count, fmt="%d")  # 保存为整数
-            file_name = target_dir + '/overall_rank_list_' + str(round_index) + '.txt'
+            file_name = target_dir +'/overall_rank_list_' + str(round_index) + '.txt'
             numpy.savetxt(file_name, overall_rank_list, fmt="%d")  # 保存为整数
             file_name = target_dir + '/violation_pattern_ranking_' + str(round_index) + '.txt'
             numpy.savetxt(file_name, violation_pattern_ranking, fmt="%d")  # 保存为整数
@@ -177,8 +177,10 @@ if __name__ == '__main__':
 
         Goal_num = Configuration.goal_num
 
+
+
         """===============================实例化问题对象============================"""
-        problem = TurnRightProblem(Goal_num, Configuration)
+        problem = CarBehindAndInFrontProblem(Goal_num, Configuration)
 
         """=================================算法参数设置============================"""
         max_evaluations = Configuration.maxIterations
@@ -203,6 +205,7 @@ if __name__ == '__main__':
                             #                                                  degree=0.9)
                             # selection = BinaryTournamentSelection()
                             )
+
 
         """==========================调用算法模板进行种群进化========================="""
         # progress_bar = ProgressBarObserver(max=max_evaluations)
@@ -231,3 +234,4 @@ if __name__ == '__main__':
         total_round = total_round - search_round
         print("real round: ", search_round, "idx: ", round_index, "left: ", total_round)
         round_index = round_index + 1
+

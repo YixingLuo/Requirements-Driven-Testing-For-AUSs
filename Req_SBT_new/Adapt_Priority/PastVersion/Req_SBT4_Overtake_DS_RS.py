@@ -9,17 +9,17 @@ from jmetal.util.termination_criterion import StoppingByEvaluations
 from MyAlgorithm.evaluator import MultiprocessEvaluator
 from jmetal.util.observer import ProgressBarObserver
 from MyAlgorithm.nsgaiii import NSGAIII
-from Settings.TurnRightConfigure import TurnRightConfigure
+from Settings.CarBehindAndInFrontConfigure import CarBehindAndInFrontConfigure
 import os
 import time
-from TurnRightProblem import TurnRightProblem
-from jmetal.util.observer import ProgressBarObserver
-import random
-import numpy
+from CarBehindAndInFrontProblem import CarBehindAndInFrontProblem
 import csv
+import numpy
 from RankingRules.DistanceRanking2 import Distance_Ranking
 from RankingRules.EnsembleRanking import Ensemble_Ranking
 from RankingRules.RelationRanking2 import Relation_Ranking
+
+
 
 
 def text_create(Configuration):
@@ -31,15 +31,15 @@ def text_create(Configuration):
 
 
 
-data_folder = os.getcwd() + '/TurnRight_Datalog_Req3_DS_RS_' + str(time.strftime("%Y_%m_%d_%H"))
+data_folder = os.getcwd() + '/Overtake_Datalog_Req4_DS_RS_' + str(time.strftime("%Y_%m_%d_%H"))
 if not os.path.exists(data_folder):
     os.mkdir(data_folder)
 
 if __name__ == '__main__':
 
     # search_round_list = [1, 10, 10, 10, 10, 20, 110, 110]
-    # search_round_list = [1, 10, 20, 30, 40, 50, 60, 70]
-    search_round_list = [50, 50, 50, 50, 50, 50, 50, 50]
+    search_round_list = [1, 10, 20, 30, 40, 50, 60, 70]
+    # search_round_list = [50, 50, 50, 50, 50, 50, 50, 50]
     target_value_threshold = [-1/5.0, 0, -16.67, 1, 0, -0.001, -0.01]
     target_dir = data_folder
 
@@ -70,6 +70,7 @@ if __name__ == '__main__':
         ## caculate goal_index
         if round_index == 0:
             goal_selection_flag = numpy.ones(7)
+            # goal_selection_flag = [0, 0, 0, 0, 0, 1, 0]
             searched_violation_pattern.append(goal_selection_flag)
 
             search_round = search_round_list[int(sum(goal_selection_flag))]
@@ -78,7 +79,7 @@ if __name__ == '__main__':
                 search_round = total_round
             # total_round = total_round - search_round
 
-            Configuration = TurnRightConfigure(goal_selection_flag, population, search_round, round_index, target_dir)
+            Configuration = CarBehindAndInFrontConfigure(goal_selection_flag, population, search_round, round_index, target_dir)
             vars_file_name = Configuration.file_dir_var
             results_file_name = Configuration.file_dir_eval
 
@@ -147,7 +148,7 @@ if __name__ == '__main__':
                 search_round = total_round
             # total_round = total_round - search_round
 
-            Configuration = TurnRightConfigure(goal_selection_flag, population, search_round, round_index, target_dir)
+            Configuration = CarBehindAndInFrontConfigure(goal_selection_flag, population, search_round, round_index, target_dir)
             vars_file_name = Configuration.file_dir_var
             results_file_name = Configuration.file_dir_eval
 
@@ -175,10 +176,8 @@ if __name__ == '__main__':
 
         Goal_num = Configuration.goal_num
 
-
-
         """===============================实例化问题对象============================"""
-        problem = TurnRightProblem(Goal_num, Configuration)
+        problem = CarBehindAndInFrontProblem(Goal_num, Configuration)
 
         """=================================算法参数设置============================"""
         max_evaluations = Configuration.maxIterations
@@ -203,7 +202,6 @@ if __name__ == '__main__':
                             #                                                  degree=0.9)
                             # selection = BinaryTournamentSelection()
                             )
-
 
 
         """==========================调用算法模板进行种群进化========================="""

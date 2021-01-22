@@ -30,15 +30,15 @@ def text_create(Configuration):
 
 
 
-data_folder = os.getcwd() + '/Overtake_Datalog_Req3_DS_RS_' + str(time.strftime("%Y_%m_%d_%H"))
+data_folder = os.getcwd() + '/Overtake_Datalog_Req4_DS_' + str(time.strftime("%Y_%m_%d_%H"))
 if not os.path.exists(data_folder):
     os.mkdir(data_folder)
 
 if __name__ == '__main__':
 
     # search_round_list = [1, 10, 10, 10, 10, 20, 110, 110]
-    # search_round_list = [1, 10, 20, 30, 40, 50, 60, 70]
-    search_round_list = [50, 50, 50, 50, 50, 50, 50, 50]
+    search_round_list = [1, 10, 20, 30, 40, 50, 60, 70]
+    # search_round_list = [50, 50, 50, 50, 50, 50, 50, 50]
     target_value_threshold = [-1/5.0, 0, -16.67, 1, 0, -0.001, -0.01]
     target_dir = data_folder
 
@@ -120,7 +120,7 @@ if __name__ == '__main__':
             weight_relation, sorted_pattern_relation, relation_ranking = Relation_Ranking(violation_pattern_to_search,
                                                                                           searched_violation_pattern,
                                                                                           priority_list)
-            weights = [1, 1, 0]
+            weights = [1, weight_dist, weight_relation]
             violation_pattern_ranking, overall_rank_list = Ensemble_Ranking(distance_ranking, relation_ranking,
                                                                             violation_pattern_to_search, weights)
 
@@ -201,7 +201,6 @@ if __name__ == '__main__':
                             #                                                  degree=0.9)
                             # selection = BinaryTournamentSelection()
                             )
-
 
         """==========================调用算法模板进行种群进化========================="""
         # progress_bar = ProgressBarObserver(max=max_evaluations)

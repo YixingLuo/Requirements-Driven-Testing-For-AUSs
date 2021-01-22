@@ -13,7 +13,7 @@ class CarBehindAndInFrontConfigure:
         # self.auto_close_on_reach_the_objective= 1
         # self.auto_close_x_position = 10
         # self.auto_close_y_position = 0
-        # self.mapt_no = 2
+        # self.map_no = 2
         # self.horizon = 80
         # self.speed_horizon_factor = 3.0
         # self.lon_interval = 10.0
@@ -50,7 +50,7 @@ class CarBehindAndInFrontConfigure:
         self.duration = 90
         self.goal_num = 7
         self.searchTimeout = 360000
-        self.num_variables = 19
+        self.num_variables = 18
         self.PoolType = "Thread"
         # self.PoolType = "Process"
         # self.ProcessNum = psutil.cpu_count()
@@ -62,7 +62,7 @@ class CarBehindAndInFrontConfigure:
 
         ## traffic_signals
         self.start_s = [70, 80]
-        self.end_s = [90, 90]
+        self.end_s = 90
         self.green_time = [5, 10]
         self.yellow_time = [1, 2]
         self.red_time = [2, 4]
@@ -89,7 +89,6 @@ class CarBehindAndInFrontConfigure:
         self.velo_3 = [4, 16]
         self.acc_3 = [0, 3]
         self.start_time_3 = [0, 2]
-
 
 
 
