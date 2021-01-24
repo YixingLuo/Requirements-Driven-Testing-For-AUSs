@@ -423,8 +423,8 @@ def evaluate_comfort (ego_vehicle_state, config):
         comfort_2 = 0
         return comfort_1, comfort_2
     else:
-        comfort_1 = - sum(comfort_list_1) / 1000
-        comfort_2 = - sum(comfort_list_2) / 1000
+        comfort_1 = - sum(comfort_list_1) / len(comfort_list_1)
+        comfort_2 = - sum(comfort_list_2) / len(comfort_list_2)
         return comfort_1, comfort_2
 
     # return -comfort_1, -comfort_2
@@ -547,9 +547,8 @@ def evaluate_cross_lane (ego_vehicle_state):
 
 if __name__=='__main__':
 
-    file_dir_sce = os.getcwd() + '/2021_01_22_Adapt_Priority_scenarios_6'
-    file_dir_data = os.getcwd() + '/2021_01_22_Adapt_Priority_datalog_6'
-    file_dir_result = os.getcwd() + '/2021_01_22_Adapt_Priority_results_6'
+    file_dir_sce = os.getcwd() + '/2021_01_09_Adapt_Priority_scenarios_0'
+    file_dir_data = os.getcwd() + '/2021_01_09_Adapt_Priority_datalog_0'
 
     fileList = os.listdir(file_dir_sce)
     fileList.sort()
@@ -563,11 +562,6 @@ if __name__=='__main__':
         log_name = file_dir_data + '/' + 'datalog_' + code + '.txt'
 
         print(log_name)
-
-        # result_name = file_dir_result + '/result_' + code + '.txt'
-        #
-        # result = np.loadtxt(result_name)
-        # print(result)
 
     #
     # file_path = os.path.abspath(os.path.join(os.getcwd(), ".."))
@@ -588,7 +582,7 @@ if __name__=='__main__':
 
         traffic_light = ret_dic["traffic_signal"]
         st_obsList = ret_dic["static_obs"]
-        dy_obsList = ret_dic["dynamic_obs"]
+        dy_obsList  = ret_dic["dynamic_obs"]
 
         num_dynamic_obs = 3
         num_static_obs = 0
@@ -627,14 +621,26 @@ if __name__=='__main__':
                     if len(log) == 3:
                         static_vehicle_state[int(data[1])].append(log)
 
+
+
+
+
         comfort1, comfort2 = evaluate_comfort(ego_vehicle_state, config)
-        min_speed = evaluate_speed(ego_vehicle_state)
-        min_dis = evaluate_collision(ego_vehicle_state, dynamic_vehicle_state, dy_obsList, static_vehicle_state,
-                                     st_obsList, config)
-        min_stable = evaluate_stability(ego_vehicle_state)
+        avg_speed, min_speed = evaluate_speed(ego_vehicle_state, config)
+        # min_dis, avg_dis_satisfaction, min_dis_satisfaction = evaluate_distance(ego_vehicle_state, dynamic_vehicle_state,
+        #                                                                 dy_obsList, static_vehicle_state, st_obsList, config)
+        min_dis, avg_dis_satisfaction, min_dis_satisfaction = evaluate_collision (ego_vehicle_state, dynamic_vehicle_state, dy_obsList, static_vehicle_state, st_obsList, config)
+        print(min_dis, avg_dis_satisfaction, min_dis_satisfaction)
+        avg_stable, min_stable = evaluate_stability(ego_vehicle_state, config)
         traffic_light = evaluate_traffic_light(ego_vehicle_state, traffic_light)
         cross_lane = evaluate_cross_lane(ego_vehicle_state)
 
-        result = [min_stable, min_dis, min_speed, traffic_light, cross_lane, comfort1, comfort2]
+        # result = [avg_stable, min_stable, avg_dis_satisfaction, min_dis_satisfaction, avg_speed, min_speed, traffic_light, cross_lane, comfort1,
+        #           comfort2]
+        #
+        #
+        # result = [avg_stable, avg_dis_satisfaction, min_dis_satisfaction, avg_speed, min_speed, traffic_light,
+        #       cross_lane, comfort1, comfort2]
 
+        result = [min_stable, min_dis, min_speed, traffic_light, cross_lane, comfort1, comfort2]
         print(result)

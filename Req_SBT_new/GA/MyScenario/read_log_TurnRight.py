@@ -392,8 +392,8 @@ def evaluate_comfort (ego_vehicle_state, config):
         comfort_2 = 0
         return comfort_1, comfort_2
     else:
-        comfort_1 = - sum(comfort_list_1) / 1000
-        comfort_2 = - sum(comfort_list_2) / 1000
+        comfort_1 = - sum(comfort_list_1) / len(comfort_list_1)
+        comfort_2 = - sum(comfort_list_2) / len(comfort_list_2)
         return comfort_1, comfort_2
 
 
