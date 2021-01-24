@@ -47,7 +47,7 @@ class CarBehindAndInFrontConfigure:
         self.a_min_soft = -2.94
         self.speed_limit = 16.67
         self.speed_max = 33.3
-        self.duration = 1000
+        self.duration = 500
         self.population = population
         self.round = search_round
         self.goal_num = 7
@@ -58,7 +58,7 @@ class CarBehindAndInFrontConfigure:
         self.PoolType = "Thread"
         # self.PoolType = "Process"
         # self.ProcessNum = psutil.cpu_count()
-        self.ProcessNum = 4
+        self.ProcessNum = 30
 
         ## ego
         self.ego_s0 = [5, 25]
