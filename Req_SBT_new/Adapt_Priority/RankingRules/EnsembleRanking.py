@@ -35,13 +35,13 @@ def Ensemble_Ranking(distance_rank, relation_rank, violation_pattern_to_search, 
         csv_file = csv.reader(csvfile)
         for row in csv_file:
             priority_list.append(row[0:-1])
-            rank_list.append(int(row[-1]))
+            rank_list.append(float(row[-1]))
         priority_list = [[float(x) for x in row] for row in priority_list]
     priority_list = np.array(priority_list)
     # weights = [1, 1, 1]
 
-    overall_rank = np.zeros(len(distance_rank), dtype=int)
-    overall_rank_list = []
+    overall_rank = np.zeros(len(distance_rank), dtype=float)
+    overall_rank_list_new = []
 
     for i in range (len(distance_rank)):
         overall_rank[i] = distance_rank[i] * weights[0] + relation_rank[i] * weights[1] + rank_list[i] * weights[2]
@@ -56,9 +56,9 @@ def Ensemble_Ranking(distance_rank, relation_rank, violation_pattern_to_search, 
                 for k in range(len(violation_pattern_to_search)):
                     if (np.array(priority_list[j]) == violation_pattern_to_search[k]).all():
                         sorted_violation_pattern_list.append(violation_pattern_to_search[k])
-                        overall_rank_list.append([distance_rank[j], relation_rank[j], rank_list[j], sorted_overall_rank[i]])
+                        overall_rank_list_new.append([distance_rank[j], relation_rank[j], rank_list[j], overall_rank[j]])
 
-    return sorted_violation_pattern_list, overall_rank_list
+    return sorted_violation_pattern_list, overall_rank_list_new
 
 
 def Ensemble_Ranking2(violation_pattern_distance, violation_pattern_to_search):

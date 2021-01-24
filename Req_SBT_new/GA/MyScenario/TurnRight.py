@@ -48,17 +48,17 @@ def create_run_scenario_turnright (Vars, Configure):
         if key == "config":
             configList = ret_dic[key]
 
-            configList["s0"] = Vars[0]
-            configList["v0"] = Vars[1]
+            configList["s0"] = str(Vars[0])
+            configList["v0"] = str(Vars[1])
             ret_dic[key] = configList
 
         elif key == "traffic_signal":
             ret_dic[key] = []
-            objDict = {"start_s": config.start_s,
-                       "end_s": config.end_s,
-                       "green_time": Vars[2],
-                       "yellow_time": Vars[3],
-                       "red_time": Vars[4]}
+            objDict = {"start_s": str(config.start_s),
+                       "end_s": str(config.end_s),
+                       "green_time": str(Vars[2]),
+                       "yellow_time": str(Vars[3]),
+                       "red_time": str(Vars[4])}
             ret_dic[key].append(objDict)
 
 
@@ -69,22 +69,22 @@ def create_run_scenario_turnright (Vars, Configure):
 
         elif key == "dynamic_obs":
             obsList = ret_dic[key]
-            obsList[0]["pos_y"] = Vars[5]
-            obsList[0]["velo"] = config.velo_1
-            obsList[0]["acc"] = config.acc_1
+            obsList[0]["pos_y"] = str(Vars[5])
+            obsList[0]["velo"] = str(config.velo_1)
+            obsList[0]["acc"] = str(config.acc_1)
             # obsList[0]["velo"] = Vars[6]
             # obsList[0]["acc"] = Vars[7]
-            obsList[0]["start_time"] = Vars[6]
+            obsList[0]["start_time"] = str(Vars[6])
 
-            obsList[1]["pos_x"] = Vars[7]
-            obsList[1]["velo"] = Vars[8]
-            obsList[1]["acc"] = Vars[9]
-            obsList[1]["start_time"] = Vars[10]
+            obsList[1]["pos_x"] = str(Vars[7])
+            obsList[1]["velo"] = str(Vars[8])
+            obsList[1]["acc"] = str(Vars[9])
+            obsList[1]["start_time"] = str(Vars[10])
 
-            obsList[2]["pos_x"] = Vars[11]
-            obsList[2]["velo"] = Vars[12]
-            obsList[2]["acc"] = Vars[13]
-            obsList[2]["start_time"] = Vars[14]
+            obsList[2]["pos_x"] = str(Vars[11])
+            obsList[2]["velo"] = str(Vars[12])
+            obsList[2]["acc"] = str(Vars[13])
+            obsList[2]["start_time"] = str(Vars[14])
 
     traffic_light = ret_dic["traffic_signal"]
     st_obsList = ret_dic["static_obs"]
@@ -232,19 +232,19 @@ def create_run_scenario_turnright_random (Configure):
         if key == "config":
             configList = ret_dic[key]
 
-            configList["s0"] = random.uniform(config.ego_s0[0], config.ego_s0[1])
-            configList["v0"] = random.uniform(config.ego_v0[0], config.ego_v0[1])
+            configList["s0"] = str(random.uniform(config.ego_s0[0], config.ego_s0[1]))
+            configList["v0"] = str(random.uniform(config.ego_v0[0], config.ego_v0[1]))
             ret_dic[key] = configList
 
             Vars.extend([configList["s0"],configList["v0"]])
 
         elif key == "traffic_signal":
             ret_dic[key] = []
-            objDict = {"start_s": config.start_s,
-                       "end_s": config.end_s,
-                       "green_time": random.uniform(config.green_time[0], config.green_time[1]),
-                       "yellow_time": random.uniform(config.yellow_time[0], config.yellow_time[1]),
-                       "red_time": random.uniform(config.red_time[0], config.red_time[1])}
+            objDict = {"start_s": str(config.start_s),
+                       "end_s": str(config.end_s),
+                       "green_time": str(random.uniform(config.green_time[0], config.green_time[1])),
+                       "yellow_time": str(random.uniform(config.yellow_time[0], config.yellow_time[1])),
+                       "red_time": str(random.uniform(config.red_time[0], config.red_time[1]))}
             ret_dic[key].append(objDict)
             Vars.extend([objDict["start_s"],objDict["end_s"],objDict["green_time"],objDict["yellow_time"],objDict["red_time"]])
 
@@ -252,22 +252,22 @@ def create_run_scenario_turnright_random (Configure):
 
         elif key == "dynamic_obs":
             obsList = ret_dic[key]
-            obsList[0]["pos_y"] = random.uniform(config.pos_y_1[0], config.pos_y_1[1])
-            obsList[0]["velo"] = config.velo_1
-            obsList[0]["acc"] = config.acc_1[0]
+            obsList[0]["pos_y"] = str(random.uniform(config.pos_y_1[0], config.pos_y_1[1]))
+            obsList[0]["velo"] = str(config.velo_1)
+            obsList[0]["acc"] = str(config.acc_1)
             # obsList[0]["velo"] = random.uniform(config.velo_1[0], config.velo_1[1])
             # obsList[0]["acc"] = random.uniform(config.acc_1[0], config.acc_1[1])
-            obsList[0]["start_time"] = random.uniform(config.start_time_1[0], config.start_time_1[1])
+            obsList[0]["start_time"] = str(random.uniform(config.start_time_1[0], config.start_time_1[1]))
 
-            obsList[1]["pos_x"] = random.uniform(config.pos_x_2[0], config.pos_x_2[1])
-            obsList[1]["velo"] = random.uniform(config.velo_2[0], config.velo_2[1])
-            obsList[1]["acc"] = random.uniform(config.acc_2[0], config.acc_2[1])
-            obsList[1]["start_time"] = random.uniform(config.start_time_2[0], config.start_time_2[1])
+            obsList[1]["pos_x"] = str(random.uniform(config.pos_x_2[0], config.pos_x_2[1]))
+            obsList[1]["velo"] = str(random.uniform(config.velo_2[0], config.velo_2[1]))
+            obsList[1]["acc"] = str(random.uniform(config.acc_2[0], config.acc_2[1]))
+            obsList[1]["start_time"] = str(random.uniform(config.start_time_2[0], config.start_time_2[1]))
 
-            obsList[2]["pos_x"] = random.uniform(config.pos_x_3[0], config.pos_x_3[1])
-            obsList[2]["velo"] = random.uniform(config.velo_3[0], config.velo_3[1])
-            obsList[2]["acc"] = random.uniform(config.acc_3[0], config.acc_3[1])
-            obsList[2]["start_time"] = random.uniform(config.start_time_3[0], config.start_time_3[1])
+            obsList[2]["pos_x"] = str(random.uniform(config.pos_x_3[0], config.pos_x_3[1]))
+            obsList[2]["velo"] = str(random.uniform(config.velo_3[0], config.velo_3[1]))
+            obsList[2]["acc"] = str(random.uniform(config.acc_3[0], config.acc_3[1]))
+            obsList[2]["start_time"] = str(random.uniform(config.start_time_3[0], config.start_time_3[1]))
 
             Vars.extend([obsList[0]["pos_y"], obsList[0]["velo"], obsList[0]["acc"], obsList[0]["start_time"]])
             for j in range(1, 3):

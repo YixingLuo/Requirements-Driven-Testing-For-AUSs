@@ -1,0 +1,90 @@
+{
+    "config": {
+        "map_no": "3",
+        "horizon": "80",
+        "speed_horizon_factor": "3.0",
+        "lon_interval": "10.0",
+        "lat_interval": "1.75",
+        "road_width": "3.5",
+        "infinity_cost": "100000000",
+        "sampling_step": "0.1",
+        "k_thr": "0.172",
+        "ego_width": "1.84",
+        "ego_length": "4.86",
+        "s0": 24.572123232468407,
+        "l0": "5.25",
+        "theta0": "1.5707963267",
+        "v0": 14.717900566278114,
+        "speed_limit": "16.67",
+        "k_limit": "5.0",
+        "a_max_soft": "0.98",
+        "a_min_soft": "-2.94",
+        "pena_max_latg": "5.0",
+        "pena_latg": "3000",
+        "pena_spd": "250",
+        "pena_a_max": "20",
+        "pena_a_min": "20",
+        "pena_curv_rate": "20",
+        "latg_max_soft": "2.94",
+        "curve_rate_limit": "1",
+        "time_step": "0.1",
+        "lane_cost_factor": "1.5",
+        "map_type": "1",
+        "dynamic_obstacle_lethal_cost": "100000000",
+        "dynamic_obstacle_high_cost": "10000",
+        "minimum_horizon": "30",
+        "total_time_weight": "1.0",
+        "total_dist_weight": "1.0",
+        "max_eval_trajs": "200000",
+        "pena_low_speed": "0",
+        "same_acc_bonus": "-10",
+        "auto_close_on_crash": "1",
+        "auto_close_on_reach_the_objective": "1",
+        "auto_close_x_position": "1.75",
+        "auto_close_y_position": "100",
+        "straight_map_length": "100",
+        "straight_map_roads": "2"
+    },
+    "static_obs": [],
+    "traffic_signal": [
+        {
+            "start_s": 79.1249846891288,
+            "end_s": 90,
+            "green_time": 7.148120552536245,
+            "yellow_time": 1.8704565995498843,
+            "red_time": 3.1540999513880146
+        }
+    ],
+    "dynamic_obs": [
+        {
+            "pos_x": "-5.25",
+            "pos_y": 45.56395170770939,
+            "dir": "1.5707963267",
+            "width": "1.8",
+            "length": "4.8",
+            "velo": 9.059401266751792,
+            "acc": 2.1476126591875375,
+            "start_time": 0.03273512646293236
+        },
+        {
+            "pos_x": "-1.75",
+            "pos_y": 1.1154854630136377,
+            "dir": "1.5707963267",
+            "width": "1.8",
+            "length": "4.8",
+            "velo": 7.024899765181807,
+            "acc": 2.465360335665263,
+            "start_time": 0.8039683328590881
+        },
+        {
+            "pos_x": "1.75",
+            "pos_y": 69.3088768988772,
+            "dir": "-1.5707963267",
+            "width": "1.8",
+            "length": "4.8",
+            "velo": 9.322001462854708,
+            "acc": 1.7931920644062807,
+            "start_time": 0.29726255302739557
+        }
+    ]
+}

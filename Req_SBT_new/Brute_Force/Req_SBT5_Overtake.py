@@ -85,7 +85,10 @@ if __name__ == '__main__':
         if round_index == 0:
             goal_index = 0
             goal_selection_flag = priority_list[goal_index]
-            search_round = search_round_list[int(sum(goal_selection_flag))]
+            # search_round = search_round_list[int(sum(goal_selection_flag))]
+            goal_selection_flag = numpy.array([0, 0, 1, 0, 1, 0, 0])
+            search_round = 100
+
             if total_round < search_round:
                 search_round = total_round
 

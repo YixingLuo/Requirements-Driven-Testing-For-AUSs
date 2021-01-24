@@ -49,8 +49,8 @@
     "traffic_signal": [
         {
             "start_s": "200",
-            "end_s": "200",
-            "green_time": "18.0",
+            "end_s": "220",
+            "green_time": "1.0",
             "yellow_time": "2.0",
             "red_time": "5.0"
         }

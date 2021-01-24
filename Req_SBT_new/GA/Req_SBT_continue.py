@@ -8,15 +8,15 @@ from jmetal.operator import SBXCrossover, PolynomialMutation
 from jmetal.util.solution import print_function_values_to_file, print_variables_to_file
 from jmetal.util.termination_criterion import StoppingByEvaluations
 from jmetal.util.evaluator import MultiprocessEvaluator, SequentialEvaluator
-from MyAlgorithm.nsgaiii import NSGAIII
+from MyAlgorithm.nsgaiii_con import NSGAIII
 # from MyAlgorithm.nsgaii import NSGAII
 # from MyAlgorithm.random_search import RandomSearch
 # from MyAlgorithm.termination_criterion import StoppingByEvaluations
 # from MyAlgorithm.evaluator import MultiprocessEvaluator
-from Settings.CarBehindAndInFrontConfigureCon import CarBehindAndInFrontConfigureCon
+from Settings.TurnRightConfigure import TurnRightConfigure
 import os
 import time
-from CarBehindAndInFrontProblem import CarBehindAndInFrontProblem
+from TurnRightProblem import TurnRightProblem
 from jmetal.util.observer import ProgressBarObserver
 import numpy as np
 
@@ -28,40 +28,44 @@ def text_create(Configuration):
     file = open(full_path,  'w')
     return full_path
 
-data_folder = os.getcwd() + '/Overtake_Datalog_continue_' + str(time.strftime("%Y_%m_%d_%H"))
-if not os.path.exists(data_folder):
-    os.mkdir(data_folder)
+# data_folder = os.getcwd() + '/Overtake_Datalog_continue_' + str(time.strftime("%Y_%m_%d_%H"))
+# if not os.path.exists(data_folder):
+#     os.mkdir(data_folder)
 
 
 if __name__ == '__main__':
 
-    target_dir = data_folder
-    search_round = 1000
+    # search_round = 1000
     population = 50
 
-    continue_flag = 0
+    continue_flag = 1
     variables = []
-    Configuration = CarBehindAndInFrontConfigureCon(target_dir, population, search_round)
-    Goal_num = Configuration.goal_num
+    # Configuration = CarBehindAndInFrontConfigureCon(target_dir, population, search_round)
+    # Goal_num = Configuration.goal_num
+
+    target_dir = "/gpfs/share/home/1801111354/Req_SBT_new/GA/TurnRight_Datalog_2021_01_22_23"
 
     if continue_flag == 1:
-        vars_file_name = 'Overtake_Datalog_'
+        vars_file_name = '/gpfs/share/home/1801111354/Req_SBT_new/GA/TurnRight_Datalog_2021_01_22_23/2021_01_22_NSGA_III_variable_20000'
         fileList = os.listdir(vars_file_name)
         fileList.sort()
         total_length = len(fileList)
         for i in range(total_length-population, total_length):
             textname = vars_file_name + '/' + fileList[i]
+
             pop = np.loadtxt(textname)
             variables.append(pop)
 
+    Configuration = TurnRightConfigure(target_dir)
+    Goal_num = Configuration.goal_num
+
     """===============================实例化问题对象============================"""
-    problem = CarBehindAndInFrontProblem(Goal_num, Configuration)
+    problem = TurnRightProblem(Goal_num, Configuration)
 
     """=================================算法参数设置============================"""
-    max_evaluations = Configuration.maxIterations
+    max_evaluations = 20000 - 16950
 
     algorithm = NSGAIII(initial_population=variables,
-                        continue_flag=continue_flag,
                         population_evaluator=MultiprocessEvaluator(Configuration.ProcessNum),
                         # population_evaluator=SequentialEvaluator(),
                         problem=problem,

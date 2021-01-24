@@ -48,17 +48,17 @@ def create_run_scenario_overtake (Vars, Configure):
         if key == "config":
             configList = ret_dic[key]
 
-            configList["s0"] = Vars[0]
-            configList["v0"] = Vars[1]
+            configList["s0"] = str(Vars[0])
+            configList["v0"] = str(Vars[1])
             ret_dic[key] = configList
 
         elif key == "traffic_signal":
             ret_dic[key] = []
-            objDict = {"start_s": Vars[2],
-                       "end_s": config.end_s,
-                       "green_time": Vars[3],
-                       "yellow_time": Vars[4],
-                       "red_time": Vars[5]}
+            objDict = {"start_s": str(Vars[2]),
+                       "end_s": str(config.end_s),
+                       "green_time": str(Vars[3]),
+                       "yellow_time": str(Vars[4]),
+                       "red_time": str(Vars[5])}
             ret_dic[key].append(objDict)
 
 
@@ -69,20 +69,20 @@ def create_run_scenario_overtake (Vars, Configure):
 
         elif key == "dynamic_obs":
             obsList = ret_dic[key]
-            obsList[0]["pos_y"] = Vars[6]
-            obsList[0]["velo"] = Vars[7]
-            obsList[0]["acc"] = Vars[8]
-            obsList[0]["start_time"] = Vars[9]
+            obsList[0]["pos_y"] = str(Vars[6])
+            obsList[0]["velo"] = str(Vars[7])
+            obsList[0]["acc"] = str(Vars[8])
+            obsList[0]["start_time"] = str(Vars[9])
 
-            obsList[1]["pos_y"] = Vars[10]
-            obsList[1]["velo"] = Vars[11]
-            obsList[1]["acc"] = Vars[12]
-            obsList[1]["start_time"] = Vars[13]
+            obsList[1]["pos_y"] = str(Vars[10])
+            obsList[1]["velo"] = str(Vars[11])
+            obsList[1]["acc"] = str(Vars[12])
+            obsList[1]["start_time"] = str(Vars[13])
 
-            obsList[2]["pos_y"] = Vars[14]
-            obsList[2]["velo"] = Vars[15]
-            obsList[2]["acc"] = Vars[16]
-            obsList[2]["start_time"] = Vars[17]
+            obsList[2]["pos_y"] = str(Vars[14])
+            obsList[2]["velo"] = str(Vars[15])
+            obsList[2]["acc"] = str(Vars[16])
+            obsList[2]["start_time"] = str(Vars[17])
 
     traffic_light = ret_dic["traffic_signal"]
     st_obsList = ret_dic["static_obs"]
@@ -230,20 +230,20 @@ def create_run_scenario_overtake_random (Configure):
         if key == "config":
             configList = ret_dic[key]
 
-            configList["s0"] = random.uniform(config.ego_s0[0], config.ego_s0[1])
-            configList["v0"] = random.uniform(config.ego_v0[0], config.ego_v0[1])
+            configList["s0"] = str(random.uniform(config.ego_s0[0], config.ego_s0[1]))
+            configList["v0"] = str(random.uniform(config.ego_v0[0], config.ego_v0[1]))
             ret_dic[key] = configList
 
             Vars.extend([configList["s0"],configList["v0"]])
 
         elif key == "traffic_signal":
             ret_dic[key] = []
-            objDict = {"start_s": random.uniform(config.start_s[0], config.start_s[1]),
+            objDict = {"start_s": str(random.uniform(config.start_s[0], config.start_s[1])),
                        # "end_s": random.uniform(config.end_s[0], config.end_s[1]),
-                       "end_s": config.end_s,
-                       "green_time": random.uniform(config.green_time[0], config.green_time[1]),
-                       "yellow_time": random.uniform(config.yellow_time[0], config.yellow_time[1]),
-                       "red_time": random.uniform(config.red_time[0], config.red_time[1])}
+                       "end_s": str(config.end_s),
+                       "green_time": str(random.uniform(config.green_time[0], config.green_time[1])),
+                       "yellow_time": str(random.uniform(config.yellow_time[0], config.yellow_time[1])),
+                       "red_time": str(random.uniform(config.red_time[0], config.red_time[1]))}
             ret_dic[key].append(objDict)
             Vars.extend([objDict["start_s"],objDict["end_s"],objDict["green_time"],objDict["yellow_time"],objDict["red_time"]])
 

@@ -47,7 +47,7 @@ class TurnRightConfigure:
         self.a_min_soft = -2.94
         self.speed_limit = 16.67
         self.speed_max = 33.3
-        self.duration = 100
+        self.duration = 1000
         self.population = population
         self.round = search_round
         self.goal_num = 7
@@ -66,7 +66,7 @@ class TurnRightConfigure:
 
         ## traffic_signals
         self.start_s = 200
-        self.end_s = 200
+        self.end_s = 210
         self.green_time = [6, 12]
         self.yellow_time = [1, 2]
         self.red_time = [2, 4]
