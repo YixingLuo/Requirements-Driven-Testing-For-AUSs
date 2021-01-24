@@ -47,7 +47,7 @@ class TurnRightConfigure:
         self.a_min_soft = -2.94
         self.speed_limit = 16.67
         self.speed_max = 33.3
-        self.duration = 500
+        self.duration = 200
         self.population = population
         self.round = search_round
         self.goal_num = 7
