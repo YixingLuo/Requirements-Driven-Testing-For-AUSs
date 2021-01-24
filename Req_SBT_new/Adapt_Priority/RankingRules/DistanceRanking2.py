@@ -110,7 +110,7 @@ def Distance_Ranking (priority_list, population, scores, target_value_threshold)
 
     weight_dist = 1
 
-    return weight_dist, sorted_violation_pattern_list, sorted_pop, distance_ranking
+    return weight_dist, sorted_violation_pattern_list, sorted_pop, distance_ranking, dist_mean
 
 if __name__ == '__main__':
     # violation_pattern = np.array([[1,1,1],[2,2,2]])

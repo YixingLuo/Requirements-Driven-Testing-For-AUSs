@@ -178,7 +178,7 @@ def Relation_Ranking (violation_pattern_to_search, searched_violation_pattern, p
 
     weight_relation = 1
 
-    return weight_relation, sorted_violation_pattern_list, relation_ranking
+    return weight_relation, sorted_violation_pattern_list, relation_ranking, reward
 
 if __name__ == '__main__':
 
