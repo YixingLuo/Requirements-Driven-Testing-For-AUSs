@@ -118,9 +118,9 @@ if __name__ == '__main__':
                         violation_pattern_to_search.append(priority_list[j])
                 # print(numpy.array(violation_pattern_to_search).shape[0])
 
-                weight_dist, sorted_pattern_distance, sorted_pop, distance_ranking = Distance_Ranking(priority_list,
+                weight_dist, sorted_pattern_distance, sorted_pop, distance_ranking, dist_mean = Distance_Ranking(priority_list,
                                                                                                       variables, evaluation, target_value_threshold)
-                weight_relation, sorted_pattern_relation, relation_ranking = Relation_Ranking(violation_pattern_to_search,
+                weight_relation, sorted_pattern_relation, relation_ranking, reward = Relation_Ranking(violation_pattern_to_search,
                                                                                               searched_violation_pattern,
                                                                                               priority_list)
                 # weights = [1, 1, 0]
