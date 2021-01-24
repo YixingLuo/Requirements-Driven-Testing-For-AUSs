@@ -176,6 +176,10 @@ if __name__ == '__main__':
                 numpy.savetxt(file_name, violation_pattern_ranking, fmt="%d")  # 保存为整数
                 file_name = target_dir + '/violation_pattern_ranking_removed_' + str(round_index) + '.txt'
                 numpy.savetxt(file_name, violation_pattern_ranking_removed, fmt="%d")  # 保存为整数
+                file_name = target_dir + '/dist_mean' + str(round_index) + '.txt'
+                numpy.savetxt(file_name, dist_mean, fmt="%d")  # 保存为整数
+                file_name = target_dir + '/reward' + str(round_index) + '.txt'
+                numpy.savetxt(file_name, reward, fmt="%d")  # 保存为整数
 
             Goal_num = Configuration.goal_num
 
