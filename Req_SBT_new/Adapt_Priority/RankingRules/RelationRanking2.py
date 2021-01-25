@@ -110,12 +110,17 @@ def Relation_Ranking (violation_pattern_to_search, searched_violation_pattern, p
     reward = np.ones((pattern_num), dtype=float)
     count_violation = np.sum(priority_list, axis=1)
 
-
     for i in range (np.array(violation_pattern_to_search).shape[0]):
+        ## 0126
+        for j in range(np.array(priority_list).shape[0]):
+            if (np.array(violation_pattern_to_search[i]) == np.array(priority_list[j])).all():
+                my_index = j
+                break
+
         ancessor_list = []
         father_index = []
         for j in range (pattern_num):
-            if parent_list[i][j] == 1:
+            if parent_list[my_index][j] == 1:
                 father_index.append(j)
                 ancessor_list.append(priority_list[j])
 
@@ -124,10 +129,10 @@ def Relation_Ranking (violation_pattern_to_search, searched_violation_pattern, p
             for j in range (len(father_index)):
                 for k in range (np.array(violation_pattern_to_search).shape[0]):
                     if (np.array(ancessor_list[j]) == np.array(violation_pattern_to_search[k])).all():
+                        # print("we have this")
                         not_found_pattern = not_found_pattern + 1
                         break
-            reward[i] = (len(father_index) - not_found_pattern)/len(father_index)
-
+            reward[my_index] = (len(father_index) - not_found_pattern)/len(father_index)
 
     for i in range (np.array(searched_violation_pattern).shape[0]):
         reward_0 = 1 ## searched and found
