@@ -171,15 +171,15 @@ if __name__ == '__main__':
                 file_name = target_dir + '/pattern_count_' + str(round_index) + '.txt'
                 numpy.savetxt(file_name, pattern_count, fmt="%d")  # 保存为整数
                 file_name = target_dir + '/overall_rank_list_' + str(round_index) + '.txt'
-                numpy.savetxt(file_name, overall_rank_list, fmt="%d")  # 保存为整数
+                numpy.savetxt(file_name, overall_rank_list, fmt="%f")  # 保存为整数
                 file_name = target_dir + '/violation_pattern_ranking_' + str(round_index) + '.txt'
                 numpy.savetxt(file_name, violation_pattern_ranking, fmt="%d")  # 保存为整数
                 file_name = target_dir + '/violation_pattern_ranking_removed_' + str(round_index) + '.txt'
                 numpy.savetxt(file_name, violation_pattern_ranking_removed, fmt="%d")  # 保存为整数
                 file_name = target_dir + '/dist_mean' + str(round_index) + '.txt'
-                numpy.savetxt(file_name, dist_mean, fmt="%d")  # 保存为整数
+                numpy.savetxt(file_name, dist_mean, fmt="%f")  # 保存为整数
                 file_name = target_dir + '/reward' + str(round_index) + '.txt'
-                numpy.savetxt(file_name, reward, fmt="%d")  # 保存为整数
+                numpy.savetxt(file_name, reward, fmt="%f")  # 保存为整数
 
 
             Goal_num = Configuration.goal_num
