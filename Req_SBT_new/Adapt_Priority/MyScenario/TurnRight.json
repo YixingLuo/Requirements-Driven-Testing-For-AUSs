@@ -11,7 +11,7 @@
         "k_thr": "0.172",
         "ego_width": "1.84",
         "ego_length": "4.86",
-		"s0": "190",
+		"s0": "180",
 	    "l0": "1.75",
         "v0": "8.0",
 		"theta0": "1.5707963267",
@@ -49,10 +49,10 @@
     "traffic_signal": [
         {
             "start_s": "200",
-            "end_s": "220",
-            "green_time": "1.0",
-            "yellow_time": "2.0",
-            "red_time": "5.0"
+            "end_s": "210",
+            "green_time": "6.0",
+            "yellow_time": "1.0",
+            "red_time": "2.0"
         }
     ],
     "dynamic_obs": [

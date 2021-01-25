@@ -43,7 +43,7 @@ if __name__ == '__main__':
         # search_round_list = [1, 10, 10, 10, 10, 20, 110, 110]
         # search_round_list = [1, 10, 20, 30, 40, 50, 60, 70]
         search_round_list = [50, 50, 50, 50, 50, 50, 50, 50]
-        target_value_threshold = [-1 / 5.0, 0, -16.67, 1, 0, -0.1, -0.4]
+        target_value_threshold = [-1 / 5.0, 0, -16.67, 1, 0, -0.05, -0.2]
         target_dir = data_folder
 
 
