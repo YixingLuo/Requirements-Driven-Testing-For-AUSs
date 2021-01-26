@@ -182,6 +182,11 @@ if __name__ == '__main__':
                 numpy.savetxt(file_name, dist_mean, fmt="%f")  # 保存为整数
                 file_name = target_dir + '/reward' + str(round_index) + '.txt'
                 numpy.savetxt(file_name, reward, fmt="%f")  # 保存为整数
+                file_name = target_dir + '/distance_ranking' + str(round_index) + '.txt'
+                numpy.savetxt(file_name, distance_ranking, fmt="%f")  # 保存为整数
+                file_name = target_dir + '/relation_ranking' + str(round_index) + '.txt'
+                numpy.savetxt(file_name, relation_ranking, fmt="%f")  # 保存为整数
+
             Goal_num = Configuration.goal_num
 
             """===============================实例化问题对象============================"""
