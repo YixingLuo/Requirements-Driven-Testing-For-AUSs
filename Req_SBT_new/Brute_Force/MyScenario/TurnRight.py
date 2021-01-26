@@ -49,6 +49,11 @@ def create_run_scenario_turnright (Vars, Configure):
             configList = ret_dic[key]
 
             configList["s0"] = str(Vars[0])
+            if Vars[0] < 170:
+                configList["l0"] = "5.25"
+            else:
+                configList["l0"] = "1.75"
+
             configList["v0"] = str(Vars[1])
             ret_dic[key] = configList
 
@@ -236,6 +241,11 @@ def create_run_scenario_turnright_random (Configure):
             configList["s0"] = str(random.uniform(config.ego_s0[0], config.ego_s0[1]))
             configList["v0"] = str(random.uniform(config.ego_v0[0], config.ego_v0[1]))
             ret_dic[key] = configList
+
+            if float(configList["s0"]) < 170:
+                configList["l0"] = "5.25"
+            else:
+                configList["l0"] = "1.75"
 
             Vars.extend([configList["s0"],configList["v0"]])
 

@@ -56,7 +56,7 @@ def Ensemble_Ranking(distance_rank, relation_rank, violation_pattern_to_search, 
                 for k in range(len(violation_pattern_to_search)):
                     if (np.array(priority_list[j]) == violation_pattern_to_search[k]).all():
                         sorted_violation_pattern_list.append(violation_pattern_to_search[k])
-                        overall_rank_list_new.append([distance_rank[j], relation_rank[j], rank_list[j], overall_rank[j]])
+                        overall_rank_list_new.append([j, distance_rank[j], relation_rank[j], rank_list[j], overall_rank[j]])
 
     return sorted_violation_pattern_list, overall_rank_list_new
 

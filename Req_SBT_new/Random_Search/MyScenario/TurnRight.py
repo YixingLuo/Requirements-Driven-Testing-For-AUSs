@@ -49,6 +49,11 @@ def create_run_scenario_turnright (Vars, Configure):
             configList = ret_dic[key]
 
             configList["s0"] = str(Vars[0])
+            if Vars[0] < 170:
+                configList["l0"] = "5.25"
+            else:
+                configList["l0"] = "1.75"
+
             configList["v0"] = str(Vars[1])
             ret_dic[key] = configList
 
@@ -237,6 +242,11 @@ def create_run_scenario_turnright_random (Configure):
             configList["v0"] = str(random.uniform(config.ego_v0[0], config.ego_v0[1]))
             ret_dic[key] = configList
 
+            if float(configList["s0"]) < 170:
+                configList["l0"] = "5.25"
+            else:
+                configList["l0"] = "1.75"
+
             Vars.extend([configList["s0"],configList["v0"]])
 
         elif key == "traffic_signal":
@@ -394,7 +404,7 @@ def create_run_scenario_turnright_random (Configure):
 
 
 
-    print("Results:", len(result), result)
+    # print("Results:", len(result), result)
 
     result_name = file_dir_eval + "/result_" + now_time  + "_"  + uuid_str + ".txt"
     # print(result_name)

@@ -61,7 +61,7 @@ class TurnRightConfigure:
         self.ProcessNum = 30
 
         ## ego
-        self.ego_s0 = [140, 190]
+        self.ego_s0 = [150, 190]
         self.ego_v0 = [4, 16]
 
         ## traffic_signals

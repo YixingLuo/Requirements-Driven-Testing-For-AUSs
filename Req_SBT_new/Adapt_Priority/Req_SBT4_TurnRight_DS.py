@@ -91,27 +91,39 @@ if __name__ == '__main__':
                 fileList = os.listdir(results_file_name)
                 fileList.sort()
 
-                for i in range(population * search_round):
+                for i in range(len(fileList)):
                     textname = results_file_name + '/' + fileList[i]
                     # print(textname)
                     result = numpy.loadtxt(textname)
                     evaluation.append(result)
-                    goal_flag = numpy.zeros((7), dtype=int)
-                    for j in range(7):
-                        if result[j] < target_value_threshold[j]:
-                            goal_flag[j] = 1
-                        else:
-                            goal_flag[j] = 0
-                    for j in range (priority_list.shape[0]):
-                        if (numpy.array(goal_flag) == priority_list[j]).all():
-                            pattern_count[j] = pattern_count[j] + 1
-                            break
+                    # goal_flag = numpy.zeros((7), dtype=int)
+                    # for j in range(7):
+                    #     if result[j] < target_value_threshold[j]:
+                    #         goal_flag[j] = 1
+                    #     else:
+                    #         goal_flag[j] = 0
+                    # for j in range (priority_list.shape[0]):
+                    #     if (numpy.array(goal_flag) == priority_list[j]).all():
+                    #         pattern_count[j] = pattern_count[j] + 1
+                    #         break
                 fileList = os.listdir(vars_file_name)
                 fileList.sort()
-                for i in range (population * search_round):
+                for i in range (len(fileList)):
                     textname = vars_file_name + '/' + fileList[i]
                     pop = numpy.loadtxt(textname)
                     variables.append(pop)
+
+                for i in range(numpy.array(evaluation).shape[0]):
+                    goal_flag = numpy.zeros((7), dtype=int)
+                    for j in range(7):
+                        if evaluation[i][j] < target_value_threshold[j]:
+                            goal_flag[j] = 1
+                        else:
+                            goal_flag[j] = 0
+                    for j in range(priority_list.shape[0]):
+                        if (numpy.array(goal_flag) == priority_list[j]).all():
+                            pattern_count[j] = pattern_count[j] + 1
+                            break
 
                 violation_pattern_to_search = []
                 for j in range (priority_list.shape[0]):
@@ -181,6 +193,10 @@ if __name__ == '__main__':
                 numpy.savetxt(file_name, dist_mean, fmt="%f")  # 保存为整数
                 file_name = target_dir + '/reward' + str(round_index) + '.txt'
                 numpy.savetxt(file_name, reward, fmt="%f")  # 保存为整数
+                file_name = target_dir + '/distance_ranking' + str(round_index) + '.txt'
+                numpy.savetxt(file_name, distance_ranking, fmt="%f")  # 保存为整数
+                file_name = target_dir + '/relation_ranking' + str(round_index) + '.txt'
+                numpy.savetxt(file_name, relation_ranking, fmt="%f")  # 保存为整数
 
 
             Goal_num = Configuration.goal_num
