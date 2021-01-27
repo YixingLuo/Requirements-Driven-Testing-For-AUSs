@@ -37,6 +37,17 @@ def Relation (priority_list):
 
     return parent_list, child_list
 
+def check_relation (pattern1, pattern2):
+    large_flag = 0
+    for k in range(len(pattern1)):
+        if pattern1[k] < pattern2[k]:
+            large_flag = 1
+            break
+    if large_flag == 1:
+        return False
+    else:
+        return True
+
 
 # def Relation_Ranking (violation_pattern_to_search, searched_violation_pattern, priority_list):
 #     parent_list, child_list = Relation (priority_list)
@@ -101,6 +112,97 @@ def Relation (priority_list):
 
 
 def Relation_Ranking (violation_pattern_to_search, searched_violation_pattern, priority_list):
+    parent_list, child_list = Relation (priority_list)
+    sorted_violation_pattern_list = []
+    gamma = 0.5
+    pattern_num = np.array(priority_list).shape[0]
+    goal_num = np.array(priority_list).shape[1]
+
+    reward = np.ones((pattern_num), dtype=float)
+    pattern_class = np.sum(priority_list, axis=1)
+    found_index = []
+    unfound_index = []
+    searched_unfound_index = []
+    unsearch_unfound_index = []
+
+    for i in range (np.array(violation_pattern_to_search).shape[0]):
+        for j in range(np.array(priority_list).shape[0]):
+            if (np.array(violation_pattern_to_search[i]) == np.array(priority_list[j])).all():
+                my_index = j ## not found
+                break
+        unfound_index.append(my_index)
+        reward[my_index] = 0
+
+    for i in range (pattern_num):
+        if i in unfound_index:
+            pass
+        else:
+            found_index.append(i)
+
+    for i in range (np.array(searched_violation_pattern).shape[0]):
+        for j in range (np.array(violation_pattern_to_search).shape[0]):
+            if (np.array(searched_violation_pattern[i]) == np.array(violation_pattern_to_search[j])).all():
+                my_index = j  ## searched and not found
+                break
+        searched_unfound_index.append(my_index)
+        reward[my_index] = -1
+
+    for i in range(len(unfound_index)):
+        if unfound_index[i] in searched_unfound_index:
+            pass
+        else:
+            unsearch_unfound_index.append(unfound_index[i])
+
+    # print("found_index:", found_index, len(found_index))
+    # print("unfound_index:", unfound_index, len(unfound_index))
+    # print("searched_unfound_index:", searched_unfound_index, len(searched_unfound_index))
+    # print("unsearch_unfound_index:", unsearch_unfound_index, len(unsearch_unfound_index))
+
+
+    for i in range(len(found_index)):
+        father_index = found_index[i]
+        initial_class = sum(priority_list[my_index])
+        for j in range (len(unsearch_unfound_index)):
+            child_index =unsearch_unfound_index[j]
+            if check_relation(priority_list[father_index], priority_list[child_index]):
+                # print("father and child", priority_list[father_index], priority_list[child_index])
+                reward[child_index] = reward[child_index] + reward[father_index] * np.power(gamma, (pattern_class[father_index] - pattern_class[child_index]))
+
+
+
+    for i in range (len(searched_unfound_index)):
+        father_index = searched_unfound_index[i]
+        initial_class = sum (priority_list[my_index])
+        for j in range (len(unsearch_unfound_index)):
+            child_index = unsearch_unfound_index[j]
+            if check_relation(priority_list[father_index], priority_list[child_index]):
+                reward[child_index] = reward[child_index] + reward[father_index] * np.power(gamma, (pattern_class[father_index] - pattern_class[child_index]))
+
+
+    reward_threshold = 0
+
+    reward_list = list(set(reward))
+    sorted_reward = sorted(reward_list, reverse=True)
+
+    relation_ranking = np.zeros((np.array(priority_list).shape[0]), dtype= int)
+    count = 1
+    for i in range (len(sorted_reward)):
+        same_number = 0
+        for j in range (len(reward)):
+            if reward[j] == sorted_reward[i]:
+                sorted_violation_pattern_list.append(priority_list[j])
+                if reward[j] <= reward_threshold:
+                    relation_ranking[j] = 1000
+                else:
+                    relation_ranking[j] = count
+                same_number = same_number + 1
+        count = count + same_number
+
+    weight_relation = 1
+
+    return weight_relation, sorted_violation_pattern_list, relation_ranking, reward
+
+def Relation_Ranking2 (violation_pattern_to_search, searched_violation_pattern, priority_list):
     parent_list, child_list = Relation (priority_list)
     sorted_violation_pattern_list = []
     gamma = 0.5
