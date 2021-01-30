@@ -195,6 +195,7 @@ def Relation_Ranking (violation_pattern_to_search, searched_violation_pattern, p
                     relation_ranking[j] = 1000
                 else:
                     relation_ranking[j] = count
+                # relation_ranking[j] = count
                 same_number = same_number + 1
         count = count + same_number
 
