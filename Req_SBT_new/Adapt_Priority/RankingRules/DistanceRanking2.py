@@ -96,9 +96,9 @@ def Distance_Ranking (priority_list, population, scores, target_value_threshold)
         for j in range(np.array(sorted_pop_index).shape[0]):
             sorted_pop[i][j] = population[sorted_pop_index[j]]
         sum_dist = 0
-        for j in range(2500):
+        for j in range(2000):
             sum_dist += distance[i][sorted_pop_index[j]]
-        dist_mean[i] = sum_dist/2500
+        dist_mean[i] = sum_dist/2000
     sorted_dist_mean = np.sort(list(set(dist_mean)))
     distance_ranking = np.zeros((np.array(priority_list).shape[0]), dtype=int)
     count = 1
@@ -107,11 +107,11 @@ def Distance_Ranking (priority_list, population, scores, target_value_threshold)
         for j in range (len(dist_mean)):
             if dist_mean[j] == sorted_dist_mean[i]:
                 sorted_violation_pattern_list.append(priority_list[j])
-                # if dist_mean[j] > dis_threshold:
-                #     distance_ranking[j] = 1000
-                # else:
-                #     distance_ranking[j] = count
-                distance_ranking[j] = count
+                if dist_mean[j] > dis_threshold:
+                    distance_ranking[j] = 1000
+                else:
+                    distance_ranking[j] = count
+                # distance_ranking[j] = count
                 same_number = same_number + 1
         count = count + same_number
 

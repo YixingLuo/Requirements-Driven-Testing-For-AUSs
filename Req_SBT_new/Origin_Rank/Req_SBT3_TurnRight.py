@@ -48,7 +48,7 @@ if __name__ == '__main__':
 
         # search_round_list = [1, 10, 10, 10, 10, 20, 110, 110]
         # search_round_list = [1, 10, 20, 30, 40, 50, 60, 70]
-        search_round_list = [50, 50, 50, 50, 50, 50, 50, 50]
+        search_round_list = [40, 40, 40, 40, 40, 40, 40, 80]
         # goal_selection_index = random.sample(range(0,128),128)
         goal_selection_index = [idx for idx in range(128)]
 
@@ -61,7 +61,7 @@ if __name__ == '__main__':
         file_name = os.path.join(target_dir, 'goal_selection_index.txt')
         numpy.savetxt(file_name, goal_selection_index, fmt="%d")  # 保存为整数
 
-        target_value_threshold = [-1 / 5.0, 0, -16.67, 1, 0, -0.05, -0.2]
+        target_values = [-1/5.0, 0, -16.67, 1, 0, -0.075, -0.3]
 
         priority_list = []
         with open("priority_list.csv") as csvfile:
@@ -106,7 +106,7 @@ if __name__ == '__main__':
                     evaluation.append(result)
                     goal_flag = numpy.zeros((7), dtype=int)
                     for j in range(7):
-                        if result[j] < target_value_threshold[j]:
+                        if result[j] < target_values[j]:
                             goal_flag[j] = 1
                         else:
                             goal_flag[j] = 0
@@ -162,7 +162,7 @@ if __name__ == '__main__':
 
             algorithm = NSGAIII(
                                 target_pattern=goal_selection_flag,
-                                target_value_threshold=target_value_threshold,
+                                target_value_threshold=target_values,
                                 population_evaluator=MultiprocessEvaluator(Configuration.ProcessNum),
                                 # population_evaluator=SequentialEvaluator(),
                                 problem=problem,
