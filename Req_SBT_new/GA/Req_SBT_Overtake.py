@@ -36,7 +36,7 @@ if __name__ == '__main__':
 
     for idx in range(10):
 
-        data_folder = os.getcwd() + '/Overtake_Datalog_' + str(time.strftime("%Y_%m_%d_%H"))
+        data_folder = os.getcwd() + '/Overtake_Datalog_' + str(time.strftime("%Y_%m_%d_%H_%M"))
         if not os.path.exists(data_folder):
             os.mkdir(data_folder)
 

@@ -9,7 +9,7 @@ import shutil
 # import psutil
 
 class CarBehindAndInFrontConfigure:
-    def __init__(self,goal_index,population, target_dir, round_idx):
+    def __init__(self,goal_index,population, target_dir, round_idx, round_number):
         # self.auto_close_on_reach_the_objective= 1
         # self.auto_close_x_position = 10
         # self.auto_close_y_position = 0
@@ -52,7 +52,8 @@ class CarBehindAndInFrontConfigure:
         self.goal_num = 7
         self.maxIterations = self.population * 50
         self.searchTimeout = 3*60*60
-        self.interval = 50
+        self.round = round_number
+        self.maxIterations = self.population * self.round
         self.num_variables = 18
         self.PoolType = "Thread"
         # self.PoolType = "Process"

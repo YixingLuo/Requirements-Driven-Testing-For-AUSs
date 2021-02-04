@@ -44,13 +44,13 @@ if __name__ == '__main__':
 
     for iteration in range(10):
 
-        data_folder = os.getcwd() + '/Overtake_Datalog_Req3_' + str(time.strftime("%Y_%m_%d_%H"))
+        data_folder = os.getcwd() + '/Overtake_Datalog_Req3_' + str(time.strftime("%Y_%m_%d_%H_%M"))
         if not os.path.exists(data_folder):
             os.mkdir(data_folder)
 
         # search_round_list = [1, 10, 10, 10, 10, 20, 110, 110]
         # search_round_list = [1, 10, 20, 30, 40, 50, 60, 70]
-        search_round_list = [40, 40, 40, 40, 40, 40, 40, 80]
+        search_round_list = [50, 50, 50, 50, 50, 50, 50, 50]
         # goal_selection_index = random.sample(range(0,128),128)
         goal_selection_index = [idx for idx in range(128)]
 
@@ -93,7 +93,7 @@ if __name__ == '__main__':
 
                 # total_round = total_round - search_round
 
-                Configuration = CarBehindAndInFrontConfigure(goal_index, population, target_dir, round_index)
+                Configuration = CarBehindAndInFrontConfigure(goal_index, population, target_dir, round_index, search_round)
                 vars_file_name = Configuration.file_dir_var
                 results_file_name = Configuration.file_dir_eval
                 searched_violation_pattern.append(goal_index)
@@ -139,7 +139,7 @@ if __name__ == '__main__':
                 # total_round = total_round - search_round
 
                 searched_violation_pattern.append(goal_index)
-                Configuration = CarBehindAndInFrontConfigure(goal_index, population, target_dir, round_index)
+                Configuration = CarBehindAndInFrontConfigure(goal_index, population, target_dir, round_index, search_round)
 
             # print(searched_violation_pattern)
             Goal_num = Configuration.goal_num
