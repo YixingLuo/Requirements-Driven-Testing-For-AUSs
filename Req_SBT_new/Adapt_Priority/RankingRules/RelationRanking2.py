@@ -179,7 +179,7 @@ def Relation_Ranking (violation_pattern_to_search, searched_violation_pattern, p
                 reward[child_index] = reward[child_index] + reward[father_index] * np.power(gamma, (pattern_class[father_index] - pattern_class[child_index]))
 
 
-    reward_threshold = 0
+    reward_threshold = 0.4
 
     reward_list = list(set(reward))
     sorted_reward = sorted(reward_list, reverse=True)

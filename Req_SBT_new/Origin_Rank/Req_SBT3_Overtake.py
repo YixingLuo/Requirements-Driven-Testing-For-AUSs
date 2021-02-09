@@ -63,7 +63,7 @@ if __name__ == '__main__':
         file_name = os.path.join(target_dir, 'goal_selection_index.txt')
         numpy.savetxt(file_name, goal_selection_index, fmt="%d")  # 保存为整数
 
-        target_values = [-1 / 5.0, 0, -16.67, 1, 0, -0.05, -0.2]
+        target_values = [-1 / 5.0, 0, -16.67, 1-(1e-3), 0-(1e-3), -0.05, -0.2]
 
         priority_list = []
         with open("priority_list.csv") as csvfile:
