@@ -8,7 +8,7 @@ from jmetal.util.termination_criterion import StoppingByEvaluations
 # from jmetal.util.evaluator import MultiprocessEvaluator, SequentialEvaluator
 from MyAlgorithm.evaluator import MultiprocessEvaluator
 from jmetal.util.observer import ProgressBarObserver
-from MyAlgorithm.nsgaiii import NSGAIII
+from MyAlgorithm.nsgaiii_2 import NSGAIII
 from Settings.TurnRightConfigure import TurnRightConfigure
 import os
 import time
@@ -37,19 +37,18 @@ def text_create(Configuration):
 if __name__ == '__main__':
 
     for iteration in range(10):
-        data_folder = os.getcwd() + '/TurnRight_Datalog_Req4_DS_RS_IS_40_' + str(time.strftime("%Y_%m_%d_%H"))
+        data_folder = os.getcwd() + '/TurnRight_Datalog_Req4_RS_' + str(time.strftime("%Y_%m_%d_%H"))
         if not os.path.exists(data_folder):
             os.mkdir(data_folder)
 
         # search_round_list = [1, 10, 10, 10, 10, 20, 110, 110]
         # search_round_list = [1, 10, 20, 30, 40, 50, 60, 70]
-        search_round_list = [40, 40, 40, 40, 40, 40, 40, 40]
-        target_value_threshold = [-1 / 5.0, 0, -16.67, 1, 0, -0.05, -0.2]
+        search_round_list = [50, 50, 50, 50, 50, 50, 50, 100]
+        target_value_threshold = [-1/5.0, 0, -16.67, 1-(1e-3), 0-(1e-3), -0.075, -0.3]
         target_dir = data_folder
 
-
         priority_list = []
-        with open("priority_list.csv") as csvfile:
+        with open("../priority_list.csv") as csvfile:
             csv_file = csv.reader(csvfile)
             for row in csv_file:
                 priority_list.append(row[0:-1])
@@ -125,9 +124,9 @@ if __name__ == '__main__':
                 weight_relation, sorted_pattern_relation, relation_ranking, reward = Relation_Ranking(violation_pattern_to_search,
                                                                                               searched_violation_pattern,
                                                                                               priority_list)
-                # weights = [1, 1, 1]
-                ratio = numpy.array(evaluation).shape[0] / (population * total_round)
-                weights = [ratio, ratio, 1 - ratio]
+                # weights = [0, 1, 0]
+                ratio = numpy.array(evaluation).shape[0]/(population*total_round)
+                weights = [0, ratio, 0]
                 violation_pattern_ranking, overall_rank_list = Ensemble_Ranking(distance_ranking, relation_ranking,
                                                                                 violation_pattern_to_search, weights)
 
@@ -189,6 +188,8 @@ if __name__ == '__main__':
 
             Goal_num = Configuration.goal_num
 
+
+
             """===============================实例化问题对象============================"""
             problem = TurnRightProblem(Goal_num, Configuration)
 
@@ -197,7 +198,7 @@ if __name__ == '__main__':
             # StoppingEvaluator = StoppingByEvaluations(max_evaluations=max_evaluations, problem=problem)
             StoppingEvaluator = StoppingByEvaluations(max_evaluations=max_evaluations)
 
-            algorithm = NSGAIII(initial_population=sorted_pop,
+            algorithm = NSGAIII(
                                 target_pattern=goal_selection_flag,
                                 target_value_threshold=target_value_threshold,
                                 population_evaluator=MultiprocessEvaluator(Configuration.ProcessNum),
@@ -243,3 +244,4 @@ if __name__ == '__main__':
             total_round = total_round - search_round
             print("real round: ", search_round, "idx: ", round_index, "left: ", total_round)
             round_index = round_index + 1
+

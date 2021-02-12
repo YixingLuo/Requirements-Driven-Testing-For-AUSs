@@ -48,7 +48,7 @@ if __name__ == '__main__':
 
         # search_round_list = [1, 10, 10, 10, 10, 20, 110, 110]
         # search_round_list = [1, 10, 20, 30, 40, 50, 60, 70]
-        search_round_list = [50, 50, 50, 50, 50, 50, 50, 50]
+        search_round_list = [50, 50, 50, 50, 50, 50, 50, 100]
         # goal_selection_index = random.sample(range(0,128),128)
         goal_selection_index = [idx for idx in range(128)]
 
@@ -173,6 +173,7 @@ if __name__ == '__main__':
                                 mutation=PolynomialMutation(probability=1.0 / problem.number_of_variables,
                                                             distribution_index=20),
                                 crossover=SBXCrossover(probability=1.0, distribution_index=20),
+                                # crossover=SBXCrossover(probability=0.6, distribution_index=20),
                                 termination_criterion=StoppingEvaluator
                                 # termination_criterion = StoppingByQualityIndicator(quality_indicator=HyperVolume, expected_value=1,
                                 #                                                  degree=0.9)

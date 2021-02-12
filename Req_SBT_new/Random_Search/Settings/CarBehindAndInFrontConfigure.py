@@ -48,7 +48,7 @@ class CarBehindAndInFrontConfigure:
         self.duration = 200
         self.population = 50
         self.goal_num = 7
-        self.search_round = 400*10
+        self.search_round = 400
         self.searchTimeout = 360000
         self.num_variables = 18
         self.PoolType = "Thread"

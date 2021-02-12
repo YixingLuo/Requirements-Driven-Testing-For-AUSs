@@ -36,14 +36,14 @@ def text_create(Configuration):
 if __name__ == '__main__':
 
     for iteration in range (10):
-        data_folder = os.getcwd() + '/TurnRight_Datalog_Req4_DS_RS_IS_' + str(time.strftime("%Y_%m_%d_%H"))
+        data_folder = os.getcwd() + '/TurnRight_Datalog_Req4_DS_RS_IS_' + str(time.strftime("%Y_%m_%d_%H_%M"))
         if not os.path.exists(data_folder):
             os.mkdir(data_folder)
 
         # search_round_list = [1, 10, 10, 10, 10, 20, 110, 110]
-        # search_round_list = [1, 10, 20, 30, 40, 50, 60, 70]
-        search_round_list = [50, 50, 50, 50, 50, 50, 50, 50]
-        target_value_threshold = [-1 / 5.0, 0, -16.67, 1, 0, -0.05, -0.2]
+        search_round_list = [1, 10, 20, 30, 40, 50, 60, 70]
+        # search_round_list = [50, 50, 50, 50, 50, 50, 50, 100]
+        target_value_threshold = [-1/5.0, 0, -16.67, 1-(1e-3), 0-(1e-3), -0.075, -0.3]
         target_dir = data_folder
 
 
@@ -124,8 +124,9 @@ if __name__ == '__main__':
                 weight_relation, sorted_pattern_relation, relation_ranking, reward = Relation_Ranking(violation_pattern_to_search,
                                                                                               searched_violation_pattern,
                                                                                               priority_list)
-                ratio = numpy.array(evaluation).shape[0]/(population*total_round)
-                weights = [ratio, ratio, 1-ratio]
+                # ratio = numpy.array(evaluation).shape[0]/(population*total_round)
+                # weights = [ratio, ratio, 1-ratio]
+                weights = [1, 1, 1]
                 violation_pattern_ranking, overall_rank_list = Ensemble_Ranking(distance_ranking, relation_ranking,
                                                                                 violation_pattern_to_search, weights)
 
@@ -185,6 +186,7 @@ if __name__ == '__main__':
                 file_name = target_dir + '/relation_ranking' + str(round_index) + '.txt'
                 numpy.savetxt(file_name, relation_ranking, fmt="%f")  # 保存为整数
 
+
             Goal_num = Configuration.goal_num
 
 
@@ -210,6 +212,7 @@ if __name__ == '__main__':
                                 mutation=PolynomialMutation(probability=1.0 / problem.number_of_variables,
                                                             distribution_index=20),
                                 crossover=SBXCrossover(probability=1.0, distribution_index=20),
+                                # crossover=SBXCrossover(probability=0.6, distribution_index=20),
                                 termination_criterion=StoppingEvaluator
                                 # termination_criterion = StoppingByQualityIndicator(quality_indicator=HyperVolume, expected_value=1,
                                 #                                                  degree=0.9)

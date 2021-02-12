@@ -21,6 +21,7 @@ from RankingRules.RelationRanking2 import Relation_Ranking
 
 
 
+
 def text_create(Configuration):
     desktop_path = os.getcwd() + '/'
     # 新创建的txt文件的存放路径
@@ -34,19 +35,20 @@ def text_create(Configuration):
 
 if __name__ == '__main__':
 
-    for iteration in range(10):
-        data_folder = os.getcwd() + '/Overtake_Datalog_Req4_DS_' + str(time.strftime("%Y_%m_%d_%H"))
+    for ieration in range (10):
+        data_folder = os.getcwd() + '/Overtake_Datalog_Req5_DS_RS_IS_' + str(time.strftime("%Y_%m_%d_%H_%M"))
         if not os.path.exists(data_folder):
             os.mkdir(data_folder)
 
         # search_round_list = [1, 10, 10, 10, 10, 20, 110, 110]
         # search_round_list = [1, 10, 20, 30, 40, 50, 60, 70]
-        search_round_list = [50, 50, 50, 50, 50, 50, 50, 100]
-        target_value_threshold = [-1 / 5.0, 0, -16.67, 1-(1e-3), 0-(1e-3), -0.05, -0.2]
+        search_round_list = [50, 50, 50, 50, 50, 50, 50, 50]
+        # target_value_threshold = [-1 / 5.0, 0, -16.67, 1-(1e-3), 0-(1e-3), -0.05, -0.2]
+        target_value_threshold = [-1/5.0, 0, -16.67, 1-(1e-3), 0-(1e-3), -0.075, -0.3]
         target_dir = data_folder
 
         priority_list = []
-        with open("../priority_list.csv") as csvfile:
+        with open("priority_list.csv") as csvfile:
             csv_file = csv.reader(csvfile)
             for row in csv_file:
                 priority_list.append(row[0:-1])
@@ -123,9 +125,9 @@ if __name__ == '__main__':
                 weight_relation, sorted_pattern_relation, relation_ranking, reward = Relation_Ranking(violation_pattern_to_search,
                                                                                               searched_violation_pattern,
                                                                                               priority_list)
-                # weights = [1, weight_dist, weight_relation]
                 ratio = numpy.array(evaluation).shape[0]/(population*total_round)
-                weights = [ratio, 0, 0]
+                # weights = [ratio, ratio, 1-ratio]
+                weights = [1, 1, 1]
                 violation_pattern_ranking, overall_rank_list = Ensemble_Ranking(distance_ranking, relation_ranking,
                                                                                 violation_pattern_to_search, weights)
 
@@ -185,7 +187,6 @@ if __name__ == '__main__':
                 file_name = target_dir + '/relation_ranking' + str(round_index) + '.txt'
                 numpy.savetxt(file_name, relation_ranking, fmt="%f")  # 保存为整数
 
-
             Goal_num = Configuration.goal_num
 
 
@@ -198,22 +199,26 @@ if __name__ == '__main__':
             # StoppingEvaluator = StoppingByEvaluations(max_evaluations=max_evaluations, problem=problem)
             StoppingEvaluator = StoppingByEvaluations(max_evaluations=max_evaluations)
 
-            algorithm = NSGAIII(initial_population = sorted_pop,
-                                target_pattern= goal_selection_flag,
-                                target_value_threshold= target_value_threshold,
-                population_evaluator=MultiprocessEvaluator(Configuration.ProcessNum),
-                # population_evaluator=SequentialEvaluator(),
-                problem=problem,
-                population_size = Configuration.population,
-                reference_directions=UniformReferenceDirectionFactory(Configuration.goal_num, n_points= Configuration.population - 1),
-                # offspring_population_size = Configuration.population,
-                mutation=PolynomialMutation(probability=1.0 / problem.number_of_variables, distribution_index=20),
-                crossover=SBXCrossover(probability=1.0, distribution_index=20),
-                termination_criterion = StoppingEvaluator
-            # termination_criterion = StoppingByQualityIndicator(quality_indicator=HyperVolume, expected_value=1,
-                #                                                  degree=0.9)
-                # selection = BinaryTournamentSelection()
-            )
+            algorithm = NSGAIII(initial_population=sorted_pop,
+                                target_pattern=goal_selection_flag,
+                                target_value_threshold=target_value_threshold,
+                                population_evaluator=MultiprocessEvaluator(Configuration.ProcessNum),
+                                # population_evaluator=SequentialEvaluator(),
+                                problem=problem,
+                                population_size=Configuration.population,
+                                reference_directions=UniformReferenceDirectionFactory(Configuration.goal_num,
+                                                                                      n_points=Configuration.population - 1),
+                                # offspring_population_size = Configuration.population,
+                                mutation=PolynomialMutation(probability=1.0 / problem.number_of_variables,
+                                                            distribution_index=20),
+                                crossover=SBXCrossover(probability=1.0, distribution_index=20),
+                                # crossover=SBXCrossover(probability=0.6, distribution_index=20),
+                                termination_criterion=StoppingEvaluator
+                                # termination_criterion = StoppingByQualityIndicator(quality_indicator=HyperVolume, expected_value=1,
+                                #                                                  degree=0.9)
+                                # selection = BinaryTournamentSelection()
+                                )
+
 
             """==========================调用算法模板进行种群进化========================="""
             # progress_bar = ProgressBarObserver(max=max_evaluations)
