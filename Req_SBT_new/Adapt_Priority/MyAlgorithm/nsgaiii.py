@@ -434,9 +434,20 @@ class NSGAIII(NSGAII):
 
             # return [self.problem.create_solution() for _ in range(self.population_size)]  ## random generator
         else:
-            population = [self.population_generator.new(self.problem) for _ in range(int(0.5*self.population_size))]
-            # print("we have new population")
-            for i in range (self.population_size - int(0.5*self.population_size)):
+            # population = [self.population_generator.new(self.problem) for _ in range(int(0.5*self.population_size))]
+            # # print("we have new population")
+            # for i in range (self.population_size - int(0.5*self.population_size)):
+            #     new_solution = FloatSolution(
+            #         self.problem.lower_bound,
+            #         self.problem.upper_bound,
+            #         self.problem.number_of_objectives,
+            #         self.problem.number_of_constraints)
+            #     new_solution.variables = self.initial_population[self.problem.config.goal_selection_index][i]
+            #     # print(i, self.initial_population[self.problem.config.goal_selection_index][i])
+            #     population.append(new_solution)
+
+            population = []
+            for i in range (self.population_size):
                 new_solution = FloatSolution(
                     self.problem.lower_bound,
                     self.problem.upper_bound,
@@ -445,4 +456,5 @@ class NSGAIII(NSGAII):
                 new_solution.variables = self.initial_population[self.problem.config.goal_selection_index][i]
                 # print(i, self.initial_population[self.problem.config.goal_selection_index][i])
                 population.append(new_solution)
+
             return population

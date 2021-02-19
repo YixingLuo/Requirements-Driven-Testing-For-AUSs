@@ -44,6 +44,7 @@ from jmetal.util.replacement import RankingAndDensityEstimatorReplacement, Remov
 from jmetal.util.comparator import DominanceComparator, Comparator, MultiComparator
 from jmetal.util.termination_criterion import TerminationCriterion
 from jmetal.core.solution import FloatSolution
+from jmetal.operator.selection import RankingAndFitnessSelection
 
 
 

@@ -2,6 +2,7 @@
 import time
 from typing import TypeVar, List, Generator
 import os
+import numpy as np
 
 try:
     import dask
@@ -48,7 +49,10 @@ class NSGAII(GeneticAlgorithm[S, R]):
                  termination_criterion: TerminationCriterion = store.default_termination_criteria,
                  population_generator: Generator = store.default_generator,
                  population_evaluator: Evaluator = store.default_evaluator,
-                 dominance_comparator: Comparator = store.default_comparator):
+                 dominance_comparator: Comparator = store.default_comparator,
+                 target_value_threshold: List[float] = None,
+                 target_pattern: List[int] = None
+                 ):
         """
         NSGA-II implementation as described in
 
@@ -81,6 +85,10 @@ class NSGAII(GeneticAlgorithm[S, R]):
         )
         self.dominance_comparator = dominance_comparator
         self.generation = 0
+        self.target_pattern = target_pattern
+        self.problem_solved = False
+        self.target_value_threshold = target_value_threshold
+
         self.file_pareto_front = os.getcwd() + '/' + str(time.strftime("%Y_%m_%d")) + '_PARETO_'
         if not os.path.exists(self.file_pareto_front):
             os.mkdir(self.file_pareto_front)
@@ -115,10 +123,30 @@ class NSGAII(GeneticAlgorithm[S, R]):
         return solutions
 
     def get_result(self) -> R:
+        for solution in self.solutions:
+            print(solution.objectives, self.target_pattern)
+            goal_flag = np.zeros((7), dtype=int)
+            for j in range(7):
+                if solution.objectives[j] < self.target_value_threshold[j]:
+                    goal_flag[j] = 1
+                else:
+                    goal_flag[j] = 0
+            if (goal_flag == np.array(self.target_pattern)).all():
+                # print(goal_flag, self.target_pattern)
+                self.problem_solved = True
+
         return self.solutions
 
     def get_name(self) -> str:
         return 'NSGAII'
+
+    def stopping_condition_is_met(self) -> bool:
+
+        if self.problem_solved:
+            # print("reach the destination")
+            return self.problem_solved
+        else:
+            return self.termination_criterion.is_met
 
 
 class DynamicNSGAII(NSGAII[S, R], DynamicAlgorithm):

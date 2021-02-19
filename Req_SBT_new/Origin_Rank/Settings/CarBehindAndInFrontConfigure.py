@@ -9,7 +9,7 @@ import shutil
 # import psutil
 
 class CarBehindAndInFrontConfigure:
-    def __init__(self,goal_index,population, target_dir, round_idx, round_number):
+    def __init__(self,goal_index, population, target_dir, round_idx, round_number):
         # self.auto_close_on_reach_the_objective= 1
         # self.auto_close_x_position = 10
         # self.auto_close_y_position = 0
@@ -96,10 +96,11 @@ class CarBehindAndInFrontConfigure:
 
         ## algorithm
         ## "NSGA_II": NSGA_II, "NSGA_III": NSGA_III ,"NSGA_III_Adapt": NSGA_II_Goal_Adapt
-        self.algorithm = "Brute_Froce"
+        self.algorithm = "Origin_Rank"
 
-        self.file_dir_sce = target_dir + '/' + str(time.strftime("%Y_%m_%d")) + '_' + str(self.algorithm) + '_scenarios_' + str(
-            round_idx)
+        # print(target_dir)
+        self.file_dir_sce = target_dir + '/' + str(time.strftime("%Y_%m_%d")) + '_' + str(self.algorithm) + '_scenarios_' + str(round_idx)
+        # print(self.file_dir_sce)
         if not os.path.exists(self.file_dir_sce):
             os.mkdir(self.file_dir_sce)
 

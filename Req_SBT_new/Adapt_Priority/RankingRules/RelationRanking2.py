@@ -159,14 +159,15 @@ def Relation_Ranking (violation_pattern_to_search, searched_violation_pattern, p
     # print("unsearch_unfound_index:", unsearch_unfound_index, len(unsearch_unfound_index))
 
 
-    for i in range(len(found_index)):
-        father_index = found_index[i]
-        initial_class = sum(priority_list[my_index])
-        for j in range (len(unsearch_unfound_index)):
-            child_index =unsearch_unfound_index[j]
-            if check_relation(priority_list[father_index], priority_list[child_index]):
-                # print("father and child", priority_list[father_index], priority_list[child_index])
-                reward[child_index] = reward[child_index] + reward[father_index] * np.power(gamma, (pattern_class[father_index] - pattern_class[child_index]))
+    ## only for descending
+    # for i in range(len(found_index)):
+    #     father_index = found_index[i]
+    #     initial_class = sum(priority_list[my_index])
+    #     for j in range (len(unsearch_unfound_index)):
+    #         child_index =unsearch_unfound_index[j]
+    #         if check_relation(priority_list[father_index], priority_list[child_index]):
+    #             # print("father and child", priority_list[father_index], priority_list[child_index])
+    #             reward[child_index] = reward[child_index] + reward[father_index] * np.power(gamma, (pattern_class[father_index] - pattern_class[child_index]))
 
 
 
@@ -179,7 +180,8 @@ def Relation_Ranking (violation_pattern_to_search, searched_violation_pattern, p
                 reward[child_index] = reward[child_index] + reward[father_index] * np.power(gamma, (pattern_class[father_index] - pattern_class[child_index]))
 
 
-    reward_threshold = 0.4
+    # reward_threshold = 0.4
+    # reward_threshold = 0
 
     reward_list = list(set(reward))
     sorted_reward = sorted(reward_list, reverse=True)
@@ -191,11 +193,11 @@ def Relation_Ranking (violation_pattern_to_search, searched_violation_pattern, p
         for j in range (len(reward)):
             if reward[j] == sorted_reward[i]:
                 sorted_violation_pattern_list.append(priority_list[j])
-                if reward[j] <= reward_threshold:
-                    relation_ranking[j] = 1000
-                else:
-                    relation_ranking[j] = count
-                # relation_ranking[j] = count
+                # if reward[j] <= reward_threshold:
+                #     relation_ranking[j] = 1000
+                # else:
+                #     relation_ranking[j] = count
+                relation_ranking[j] = count
                 same_number = same_number + 1
         count = count + same_number
 
