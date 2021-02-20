@@ -146,6 +146,7 @@ def create_run_scenario_turnright (Vars, Configure):
     ego_vehicle_state = []
     dynamic_vehicle_state = [[] for i in range(num_dynamic_obs)]
     static_vehicle_state = [[] for i in range(num_static_obs)]
+    collision_flag = 1
 
     with open(log_name, 'r', encoding='gb18030', errors='ignore') as f:
         my_data = f.readlines()
@@ -157,6 +158,8 @@ def create_run_scenario_turnright (Vars, Configure):
                 if line.strip() == "":
                     continue
                 if data[0] == "CRASH" or data[0] == "Register" or data[0] == "TIMEOUT":
+                    if data[0] == "CRASH":
+                        collision_flag = 0
                     break
                 if len(data) == 8 and data[0] == "EGO_STATUS":
                     log = []
@@ -209,7 +212,10 @@ def create_run_scenario_turnright (Vars, Configure):
 
     comfort1, comfort2 = evaluate_comfort(ego_vehicle_state, config)
     min_speed = evaluate_speed(ego_vehicle_state)
-    min_dis = evaluate_collision(ego_vehicle_state, dynamic_vehicle_state, dy_obsList, static_vehicle_state, st_obsList, config)
+    if collision_flag:
+        min_dis = evaluate_collision(ego_vehicle_state, dynamic_vehicle_state, dy_obsList, static_vehicle_state, st_obsList, config)
+    else:
+        min_dis = -1
     min_stable = evaluate_stability(ego_vehicle_state)
     traffic_light = evaluate_traffic_light(ego_vehicle_state, traffic_light)
     cross_lane = evaluate_cross_lane(ego_vehicle_state)
@@ -338,6 +344,7 @@ def create_run_scenario_turnright_random (Configure):
     ego_vehicle_state = []
     dynamic_vehicle_state = [[] for i in range(num_dynamic_obs)]
     static_vehicle_state = [[] for i in range(num_static_obs)]
+    collision_flag = 1
 
     with open(log_name, 'r', encoding='gb18030', errors='ignore') as f:
         my_data = f.readlines()
@@ -349,6 +356,8 @@ def create_run_scenario_turnright_random (Configure):
                 if line.strip() == "":
                     continue
                 if data[0] == "CRASH" or data[0] == "Register" or data[0] == "TIMEOUT":
+                    if data[0] == "CRASH":
+                        collision_flag = 0
                     break
                 if len(data) == 8 and data[0] == "EGO_STATUS":
                     log = []
@@ -400,7 +409,10 @@ def create_run_scenario_turnright_random (Configure):
 
     comfort1, comfort2 = evaluate_comfort(ego_vehicle_state, config)
     min_speed = evaluate_speed(ego_vehicle_state)
-    min_dis = evaluate_collision(ego_vehicle_state, dynamic_vehicle_state, dy_obsList, static_vehicle_state, st_obsList, config)
+    if collision_flag:
+        min_dis = evaluate_collision(ego_vehicle_state, dynamic_vehicle_state, dy_obsList, static_vehicle_state, st_obsList, config)
+    else:
+        min_dis = -1
     min_stable = evaluate_stability(ego_vehicle_state)
     traffic_light = evaluate_traffic_light(ego_vehicle_state, traffic_light)
     cross_lane = evaluate_cross_lane(ego_vehicle_state)
@@ -410,7 +422,7 @@ def create_run_scenario_turnright_random (Configure):
 
 
 
-    print("Results:", result)
+    # print("Results:", len(result), result)
 
     result_name = file_dir_eval + "/result_" + now_time  + "_"  + uuid_str + ".txt"
     # print(result_name)

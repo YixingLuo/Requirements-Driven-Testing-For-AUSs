@@ -535,7 +535,7 @@ def evaluate_cross_lane (ego_vehicle_state):
     satisfaction = 1
     total_time = 0
     for i in range (len(ego_vehicle_state)):
-        if ego_vehicle_state[i][0] > 0.5:
+        if ego_vehicle_state[i][0] > - 0.5:
             total_time += 1
     if not total_time:
         return 0
