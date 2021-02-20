@@ -96,9 +96,9 @@ def Distance_Ranking (priority_list, population, scores, target_value_threshold)
         for j in range(np.array(sorted_pop_index).shape[0]):
             sorted_pop[i][j] = population[sorted_pop_index[j]]
         sum_dist = 0
-        for j in range(50):
+        for j in range(25):
             sum_dist += distance[i][sorted_pop_index[j]]
-        dist_mean[i] = sum_dist/50
+        dist_mean[i] = sum_dist/25
     sorted_dist_mean = np.sort(list(set(dist_mean)))
     distance_ranking = np.zeros((np.array(priority_list).shape[0]), dtype=int)
     count = 1

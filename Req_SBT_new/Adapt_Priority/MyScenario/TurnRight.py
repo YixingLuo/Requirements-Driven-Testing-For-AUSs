@@ -156,7 +156,7 @@ def create_run_scenario_turnright (Vars, Configure):
                 # print(data)
                 if line.strip() == "":
                     continue
-                if data[0] == "CRASH" or data[0] == "Register" or data[0] == "TIMEOUT":
+                if  data[0] == "Register" or data[0] == "TIMEOUT":
                     break
                 if len(data) == 8 and data[0] == "EGO_STATUS":
                     log = []
@@ -348,7 +348,7 @@ def create_run_scenario_turnright_random (Configure):
                 # print(data)
                 if line.strip() == "":
                     continue
-                if data[0] == "CRASH" or data[0] == "Register" or data[0] == "TIMEOUT":
+                if data[0] == "Register" or data[0] == "TIMEOUT":
                     break
                 if len(data) == 8 and data[0] == "EGO_STATUS":
                     log = []

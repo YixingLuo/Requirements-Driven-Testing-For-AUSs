@@ -149,6 +149,8 @@ def create_run_scenario_overtake (Vars, Configure):
                 if line.strip() == "":
                     continue
                 if data[0] == "CRASH" or data[0] == "Register" or data[0] == "TIMEOUT":
+                    if data[0] == "CRASH":
+                        collision_flag = 0
                     break
                 if len(data) == 8 and data[0] == "EGO_STATUS":
                     log = []
@@ -334,6 +336,8 @@ def create_run_scenario_overtake_random (Configure):
                 if line.strip() == "":
                     continue
                 if data[0] == "CRASH" or data[0] == "Register" or data[0] == "TIMEOUT":
+                    if data[0] == "CRASH":
+                        collision_flag = 0
                     break
                 if len(data) == 8 and data[0] == "EGO_STATUS":
                     log = []

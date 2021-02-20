@@ -6,7 +6,7 @@ from jmetal.util.solution import print_function_values_to_file, print_variables_
 from jmetal.util.termination_criterion import StoppingByEvaluations
 from jmetal.util.observer import ProgressBarObserver
 # from MyAlgorithm.termination_criterion import StoppingByEvaluations
-from jmetal.util.evaluator import SequentialEvaluator
+# from jmetal.util.evaluator import MultiprocessEvaluator, SequentialEvaluator
 from MyAlgorithm.evaluator import MultiprocessEvaluator
 from jmetal.util.observer import ProgressBarObserver
 from MyAlgorithm.nsgaiii_2 import NSGAIII
@@ -171,8 +171,9 @@ if __name__ == '__main__':
                                 reference_directions=UniformReferenceDirectionFactory(Configuration.goal_num,
                                                                                       n_points=Configuration.population - 1),
                                 # offspring_population_size = Configuration.population,
-                                mutation=PolynomialMutation(probability=1.0 / problem.number_of_variables,
-                                                            distribution_index=20),
+                                # mutation=PolynomialMutation(probability=1.0 / problem.number_of_variables,
+                                                            # distribution_index=20),
+                                mutation=PolynomialMutation(probability=0.01, distribution_index=20),
                                 crossover=SBXCrossover(probability=1.0, distribution_index=20),
                                 # crossover=SBXCrossover(probability=0.6, distribution_index=20),
                                 termination_criterion=StoppingEvaluator

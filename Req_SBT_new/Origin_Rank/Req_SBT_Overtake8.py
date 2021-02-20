@@ -43,7 +43,7 @@ def text_create(Configuration):
 if __name__ == '__main__':
 
 
-    data_folder = os.getcwd() + '/Overtake_Datalog_Req3_M1' + str(time.strftime("%Y_%m_%d_%H"))
+    data_folder = os.getcwd() + '/Overtake_Datalog_Req3_001_08_' + str(time.strftime("%Y_%m_%d_%H"))
     # print(data_folder)
     if not os.path.exists(data_folder):
         os.mkdir(data_folder)
@@ -146,7 +146,7 @@ if __name__ == '__main__':
                             # offspring_population_size = Configuration.population,
                             mutation=PolynomialMutation(probability=0.01,
                                                         distribution_index=20),
-                            crossover=SBXCrossover(probability=1, distribution_index=20),
+                            crossover=SBXCrossover(probability=0.8, distribution_index=20),
                             # selection=RouletteWheelSelection(),
                             termination_criterion=StoppingEvaluator
                             # termination_criterion = StoppingByQualityIndicator(quality_indicator=HyperVolume, expected_value=1,

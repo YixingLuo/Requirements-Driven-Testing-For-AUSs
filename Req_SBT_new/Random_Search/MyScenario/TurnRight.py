@@ -410,7 +410,7 @@ def create_run_scenario_turnright_random (Configure):
 
 
 
-    # print("Results:", len(result), result)
+    print("Results:", result)
 
     result_name = file_dir_eval + "/result_" + now_time  + "_"  + uuid_str + ".txt"
     # print(result_name)
