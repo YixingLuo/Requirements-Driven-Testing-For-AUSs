@@ -312,6 +312,8 @@ def create_run_scenario_overtake_random (Configure):
 
     ## amazon
     # cmd = "wine /home/yixing/Release/dynamic_cost.exe -c %d -v EGO_TESTER -i %s > %s" % (duration, scenario_name, log_name)
+    # cmd = "wine /home/yixing/mazda-path-planner-sbt_changes/mazda-path-planner-sbt_changes/ERATO_planning/x64/Release/dynamic_cost.exe -c %d -v EGO_TESTER -i %s > %s" % (
+    # duration, scenario_name, log_name)
 
     ## mac
     # cmd = "wine /Users/luoyixing/Downloads/Release/dynamic_cost.exe -c %d -v EGO_TESTER -i %s > %s" % (duration, scenario_name, log_name)
