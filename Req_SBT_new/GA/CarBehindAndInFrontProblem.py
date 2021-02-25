@@ -27,14 +27,14 @@ class CarBehindAndInFrontProblem(FloatProblem):
 
         self.lower_bound = [self.config.ego_s0[0], self.config.ego_v0[0],
                             self.config.start_s[0], self.config.green_time[0], self.config.yellow_time[0], self.config.red_time[0],
-                            self.config.pos_y_1[0], self.config.velo_1[0], self.config.acc_1[0], self.config.start_time_1[0],
-                            self.config.pos_y_2[0], self.config.velo_2[0], self.config.acc_2[0], self.config.start_time_2[0],
-                            self.config.pos_y_3[0], self.config.velo_3[0], self.config.acc_3[0], self.config.start_time_3[0]]  # ���߱����½�
+                            self.config.pos_y_1[0], self.config.velo_1[0], self.config.acc_1[0],
+                            self.config.pos_y_2[0], self.config.velo_2[0], self.config.acc_2[0],
+                            self.config.pos_y_3[0], self.config.velo_3[0], self.config.acc_3[0]]
         self.upper_bound = [self.config.ego_s0[1], self.config.ego_v0[1],
                             self.config.start_s[1], self.config.green_time[1], self.config.yellow_time[1], self.config.red_time[1],
-                            self.config.pos_y_1[1], self.config.velo_1[1], self.config.acc_1[1], self.config.start_time_1[1],
-                            self.config.pos_y_2[1], self.config.velo_2[1], self.config.acc_2[1], self.config.start_time_2[1],
-                            self.config.pos_y_3[1], self.config.velo_3[1], self.config.acc_3[1], self.config.start_time_3[1]]  # ���߱����Ͻ�
+                            self.config.pos_y_1[1], self.config.velo_1[1], self.config.acc_1[1],
+                            self.config.pos_y_2[1], self.config.velo_2[1], self.config.acc_2[1],
+                            self.config.pos_y_3[1], self.config.velo_3[1], self.config.acc_3[1]]
 
 
 

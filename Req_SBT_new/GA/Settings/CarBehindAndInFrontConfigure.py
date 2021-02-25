@@ -47,7 +47,7 @@ class CarBehindAndInFrontConfigure:
         self.goal_num = 7
         self.search_round = 400
         self.searchTimeout = 360000
-        self.num_variables = 18
+        self.num_variables = 15
         self.PoolType = "Thread"
         # self.PoolType = "Process"
         # self.ProcessNum = psutil.cpu_count()
@@ -73,19 +73,19 @@ class CarBehindAndInFrontConfigure:
         self.pos_y_1 = [45, 65]
         self.velo_1 = [4, 16]
         self.acc_1 = [0, 3]
-        self.start_time_1 = [0, 0]
+        self.start_time_1 = 0
 
         ## dynamic_obstacle_2
         self.pos_y_2 = [0, 20]
         self.velo_2 = [4, 16]
         self.acc_2 = [0, 3]
-        self.start_time_2 = [0, 0]
+        self.start_time_2 = 0
 
         ## dynamic_obstacle_3
         self.pos_y_3 = [40, 90]
         self.velo_3 = [4, 16]
         self.acc_3 = [0, 3]
-        self.start_time_3 = [0, 0]
+        self.start_time_3 = 0
 
         ## algorithm
         ## "NSGA_II": NSGA_II, "NSGA_III": NSGA_III ,"NSGA_III_Adapt": NSGA_II_Goal_Adapt

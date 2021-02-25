@@ -59,11 +59,9 @@ if __name__ == '__main__':
             population_size = Configuration.population,
             reference_directions=UniformReferenceDirectionFactory(Configuration.goal_num, n_points= Configuration.population - 1),
             # offspring_population_size = Configuration.population,
-            # mutation=PolynomialMutation(probability=1.0 / problem.number_of_variables, distribution_index=20),
-            mutation=PolynomialMutation(probability=0.01, distribution_index=20),
-            # mutation=PolynomialMutation(probability= 0.01, distribution_index=20),
+            mutation=PolynomialMutation(probability=1.0 / problem.number_of_variables,
+                                        distribution_index=20),
             crossover=SBXCrossover(probability=1.0, distribution_index=20),
-            # crossover=SBXCrossover(probability=0.6, distribution_index=20),
             termination_criterion = StoppingByEvaluations(max_evaluations=max_evaluations)
             # termination_criterion = StoppingByQualityIndicator(quality_indicator=HyperVolume, expected_value=1,
             #                                                  degree=0.9)
