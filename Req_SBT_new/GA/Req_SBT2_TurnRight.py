@@ -6,9 +6,9 @@ from jmetal.algorithm.multiobjective.nsgaiii import NSGAIII
 from jmetal.algorithm.multiobjective.nsgaiii import UniformReferenceDirectionFactory
 from jmetal.operator import SBXCrossover, PolynomialMutation
 from jmetal.util.solution import print_function_values_to_file, print_variables_to_file
-from jmetal.util.termination_criterion import StoppingByEvaluations, StoppingByTime
+from jmetal.util.termination_criterion import StoppingByEvaluations
 from jmetal.util.evaluator import MultiprocessEvaluator, SequentialEvaluator
-# from MyAlgorithm.evaluator import MultiprocessEvaluator
+from MyAlgorithm.evaluator import MultiprocessEvaluator
 # from MyAlgorithm.nsgaiii import NSGAIII
 # from MyAlgorithm.nsgaii import NSGAII
 # from MyAlgorithm.random_search import RandomSearch
@@ -35,7 +35,7 @@ if __name__ == '__main__':
 
     for idx in range(10):
 
-        data_folder = os.getcwd() + '/TurnRight_Datalog_Req2_' + str(time.strftime("%Y_%m_%d_%H"))
+        data_folder = os.getcwd() + '/TurnRight_Datalog_Req2_' + str(time.strftime("%Y_%m_%d_%H_%M"))
         if not os.path.exists(data_folder):
             os.mkdir(data_folder)
 
@@ -49,7 +49,8 @@ if __name__ == '__main__':
         problem = TurnRightProblem(Goal_num, Configuration)
 
         """=================================算法参数设置============================"""
-        max_evaluations = Configuration.maxIterations
+        # max_evaluations = Configuration.maxIterations
+        max_evaluations = 1000*50
 
 
         algorithm = NSGAIII(
@@ -59,10 +60,11 @@ if __name__ == '__main__':
             population_size = Configuration.population,
             reference_directions=UniformReferenceDirectionFactory(Configuration.goal_num, n_points= Configuration.population - 1),
             # offspring_population_size = Configuration.population,
-            mutation=PolynomialMutation(probability=1.0 / problem.number_of_variables, distribution_index=20),
+            mutation=PolynomialMutation(probability=1.0 / problem.number_of_variables,
+                                        distribution_index=20),
             crossover=SBXCrossover(probability=1.0, distribution_index=20),
-            termination_criterion=StoppingByTime(max_seconds=24 * 60 * 60)
-            # termination_criterion = StoppingByEvaluations(max_evaluations=max_evaluations)
+            # crossover=SBXCrossover(probability=0.6, distribution_index=20),
+            termination_criterion = StoppingByEvaluations(max_evaluations=max_evaluations)
             # termination_criterion = StoppingByQualityIndicator(quality_indicator=HyperVolume, expected_value=1,
             #                                                  degree=0.9)
             # selection = BinaryTournamentSelection()
@@ -87,5 +89,7 @@ if __name__ == '__main__':
         print(f'Algorithm: ${algorithm.get_name()}')
         print(f'Problem: ${problem.get_name()}')
         print(f'Computing time: ${algorithm.total_computing_time}')
+
+
 
 

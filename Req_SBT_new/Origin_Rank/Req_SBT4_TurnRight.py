@@ -6,7 +6,7 @@ from jmetal.util.solution import print_function_values_to_file, print_variables_
 from jmetal.util.termination_criterion import StoppingByEvaluations
 from jmetal.util.observer import ProgressBarObserver
 # from MyAlgorithm.termination_criterion import StoppingByEvaluations
-# from jmetal.util.evaluator import MultiprocessEvaluator, SequentialEvaluator
+from jmetal.util.evaluator import SequentialEvaluator
 from MyAlgorithm.evaluator import MultiprocessEvaluator
 from MyAlgorithm.nsgaiii_2 import NSGAIII
 from Settings.TurnRightConfigure import TurnRightConfigure
@@ -47,12 +47,12 @@ if __name__ == '__main__':
             os.mkdir(data_folder)
 
         # search_round_list = [1, 10, 10, 10, 10, 20, 110, 110]
-        search_round_list = [1, 10, 20, 30, 40, 50, 60, 70]
-        # search_round_list = [50, 50, 50, 50, 50, 50, 50, 50]
+        # search_round_list = [1, 10, 20, 30, 40, 50, 60, 70]
+        search_round_list = [40, 40, 40, 40, 40, 40, 40, 100]
         # goal_selection_index = random.sample(range(0,128),128)
         goal_selection_index = [idx for idx in range(128)]
 
-        total_round = 400
+        total_round = 700
         round_index = 0
         population = 50
         search_round = 0
@@ -173,7 +173,6 @@ if __name__ == '__main__':
                                 mutation=PolynomialMutation(probability=1.0 / problem.number_of_variables,
                                                             distribution_index=20),
                                 crossover=SBXCrossover(probability=1.0, distribution_index=20),
-                                # crossover=SBXCrossover(probability=0.6, distribution_index=20),
                                 termination_criterion=StoppingEvaluator
                                 # termination_criterion = StoppingByQualityIndicator(quality_indicator=HyperVolume, expected_value=1,
                                 #                                                  degree=0.9)
