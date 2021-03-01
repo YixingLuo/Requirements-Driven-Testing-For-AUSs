@@ -41,8 +41,8 @@ if __name__ == '__main__':
             os.mkdir(data_folder)
 
         # search_round_list = [1, 10, 10, 10, 10, 20, 110, 110]
-        search_round_list = [1, 10, 20, 30, 40, 50, 60, 70]
-        # search_round_list = [50, 50, 50, 50, 50, 50, 50, 100]
+        # search_round_list = [1, 10, 20, 30, 40, 50, 60, 70]
+        search_round_list = [50, 50, 50, 50, 50, 50, 50, 100]
         target_value_threshold = [-1/5.0, 0, -16.67, 1-(1e-3), 0-(1e-3), -0.075, -0.3]
         target_dir = data_folder
 
@@ -126,7 +126,7 @@ if __name__ == '__main__':
                                                                                               priority_list)
                 # ratio = numpy.array(evaluation).shape[0]/(population*total_round)
                 # weights = [ratio, ratio, 1-ratio]
-                weights = [1, 1, 1]
+                weights = [0, 1, 1]
                 violation_pattern_ranking, overall_rank_list = Ensemble_Ranking(distance_ranking, relation_ranking,
                                                                                 violation_pattern_to_search, weights)
 
