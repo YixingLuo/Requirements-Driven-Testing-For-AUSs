@@ -123,8 +123,11 @@ def create_run_scenario_turnright (Vars, Configure):
     ## weiming
     # cmd = "wine /gpfs/share/home/1801111354/mazda-path-planner/ERATO_planning/x64/Release/dynamic_cost.exe -c %d -v EGO_TESTER -i %s > %s" % (duration, scenario_name, log_name)
     # cmd = "wine /gpfs/share/home/1801111354/mazda-path-planner-sbt_changes/ERATO_planning/x64/Release/dynamic_cost.exe -c %d -v EGO_TESTER -i %s > %s" % (duration, scenario_name, log_name)
-    cmd = "wine64 /gpfs/share/home/1801213680/luoyixing/mazda-path-planner-sbt_changes/ERATO_planning/x64/Release/dynamic_cost.exe -c %d -v EGO_TESTER -i %s > %s" % (
-    duration, scenario_name, log_name)
+    cmd = "wine64 /gpfs/share/home/1801111351/luoyixing/mazda-path-planner-sbt_changes/ERATO_planning/x64/Release/dynamic_cost.exe -c %d -v EGO_TESTER -i %s > %s" % (
+        duration, scenario_name, log_name)
+    # cmd = "wine64 /gpfs/share/home/1801213680/luoyixing/mazda-path-planner-sbt_changes/ERATO_planning/x64/Release/dynamic_cost.exe -c %d -v EGO_TESTER -i %s > %s" % (
+    # duration, scenario_name, log_name)
+
 
     ## amazon
     # cmd = "wine /home/yixing/Release/dynamic_cost.exe -c %d -v EGO_TESTER -i %s > %s" % (duration, scenario_name, log_name)
@@ -321,8 +324,10 @@ def create_run_scenario_turnright_random (Configure):
     ## weiming
     # cmd = "wine /gpfs/share/home/1801111354/mazda-path-planner/ERATO_planning/x64/Release/dynamic_cost.exe -c %d -v EGO_TESTER -i %s > %s" % (duration, scenario_name, log_name)
     # cmd = "wine /gpfs/share/home/1801111354/mazda-path-planner-sbt_changes/ERATO_planning/x64/Release/dynamic_cost.exe -c %d -v EGO_TESTER -i %s > %s" % (duration, scenario_name, log_name)
-    cmd = "wine64 /gpfs/share/home/1801213680/luoyixing/mazda-path-planner-sbt_changes/ERATO_planning/x64/Release/dynamic_cost.exe -c %d -v EGO_TESTER -i %s > %s" % (
-    duration, scenario_name, log_name)
+    cmd = "wine64 /gpfs/share/home/1801111351/luoyixing/mazda-path-planner-sbt_changes/ERATO_planning/x64/Release/dynamic_cost.exe -c %d -v EGO_TESTER -i %s > %s" % (
+        duration, scenario_name, log_name)
+    # cmd = "wine64 /gpfs/share/home/1801213680/luoyixing/mazda-path-planner-sbt_changes/ERATO_planning/x64/Release/dynamic_cost.exe -c %d -v EGO_TESTER -i %s > %s" % (
+    # duration, scenario_name, log_name)
 
 
     ## amazon

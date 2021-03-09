@@ -79,17 +79,17 @@ def create_run_scenario_turnright (Vars, Configure):
             obsList[0]["acc"] = str(config.acc_1)
             # obsList[0]["velo"] = Vars[6]
             # obsList[0]["acc"] = Vars[7]
-            obsList[0]["start_time"] = str(Vars[6])
+            obsList[0]["start_time"] = str(config.start_time_1)
 
-            obsList[1]["pos_x"] = str(Vars[7])
-            obsList[1]["velo"] = str(Vars[8])
-            obsList[1]["acc"] = str(Vars[9])
-            obsList[1]["start_time"] = str(Vars[10])
+            obsList[1]["pos_x"] = str(Vars[6])
+            obsList[1]["velo"] = str(Vars[7])
+            obsList[1]["acc"] = str(Vars[8])
+            obsList[1]["start_time"] = str(config.start_time_2)
 
-            obsList[2]["pos_x"] = str(Vars[11])
-            obsList[2]["velo"] = str(Vars[12])
-            obsList[2]["acc"] = str(Vars[13])
-            obsList[2]["start_time"] = str(Vars[14])
+            obsList[2]["pos_x"] = str(Vars[9])
+            obsList[2]["velo"] = str(Vars[10])
+            obsList[2]["acc"] = str(Vars[11])
+            obsList[2]["start_time"] = str(config.start_time_3)
 
     traffic_light = ret_dic["traffic_signal"]
     st_obsList = ret_dic["static_obs"]
@@ -123,8 +123,11 @@ def create_run_scenario_turnright (Vars, Configure):
     ## weiming
     # cmd = "wine /gpfs/share/home/1801111354/mazda-path-planner/ERATO_planning/x64/Release/dynamic_cost.exe -c %d -v EGO_TESTER -i %s > %s" % (duration, scenario_name, log_name)
     # cmd = "wine /gpfs/share/home/1801111354/mazda-path-planner-sbt_changes/ERATO_planning/x64/Release/dynamic_cost.exe -c %d -v EGO_TESTER -i %s > %s" % (duration, scenario_name, log_name)
-    cmd = "wine64 /gpfs/share/home/1801213680/luoyixing/mazda-path-planner-sbt_changes/ERATO_planning/x64/Release/dynamic_cost.exe -c %d -v EGO_TESTER -i %s > %s" % (
-    duration, scenario_name, log_name)
+    cmd = "wine64 /gpfs/share/home/1801111351/luoyixing/mazda-path-planner-sbt_changes/ERATO_planning/x64/Release/dynamic_cost.exe -c %d -v EGO_TESTER -i %s > %s" % (
+        duration, scenario_name, log_name)
+    # cmd = "wine64 /gpfs/share/home/1801213680/luoyixing/mazda-path-planner-sbt_changes/ERATO_planning/x64/Release/dynamic_cost.exe -c %d -v EGO_TESTER -i %s > %s" % (
+    # duration, scenario_name, log_name)
+
 
     ## amazon
     # cmd = "wine /home/yixing/Release/dynamic_cost.exe -c %d -v EGO_TESTER -i %s > %s" % (duration, scenario_name, log_name)
@@ -277,17 +280,17 @@ def create_run_scenario_turnright_random (Configure):
             obsList[0]["acc"] = str(config.acc_1)
             # obsList[0]["velo"] = random.uniform(config.velo_1[0], config.velo_1[1])
             # obsList[0]["acc"] = random.uniform(config.acc_1[0], config.acc_1[1])
-            obsList[0]["start_time"] = str(random.uniform(config.start_time_1[0], config.start_time_1[1]))
+            obsList[0]["start_time"] = str(0)
 
             obsList[1]["pos_x"] = str(random.uniform(config.pos_x_2[0], config.pos_x_2[1]))
             obsList[1]["velo"] = str(random.uniform(config.velo_2[0], config.velo_2[1]))
             obsList[1]["acc"] = str(random.uniform(config.acc_2[0], config.acc_2[1]))
-            obsList[1]["start_time"] = str(random.uniform(config.start_time_2[0], config.start_time_2[1]))
+            obsList[1]["start_time"] = str(0)
 
             obsList[2]["pos_x"] = str(random.uniform(config.pos_x_3[0], config.pos_x_3[1]))
             obsList[2]["velo"] = str(random.uniform(config.velo_3[0], config.velo_3[1]))
             obsList[2]["acc"] = str(random.uniform(config.acc_3[0], config.acc_3[1]))
-            obsList[2]["start_time"] = str(random.uniform(config.start_time_3[0], config.start_time_3[1]))
+            obsList[2]["start_time"] = str(0)
 
             Vars.extend([obsList[0]["pos_y"], obsList[0]["velo"], obsList[0]["acc"], obsList[0]["start_time"]])
             for j in range(1, 3):
@@ -321,8 +324,10 @@ def create_run_scenario_turnright_random (Configure):
     ## weiming
     # cmd = "wine /gpfs/share/home/1801111354/mazda-path-planner/ERATO_planning/x64/Release/dynamic_cost.exe -c %d -v EGO_TESTER -i %s > %s" % (duration, scenario_name, log_name)
     # cmd = "wine /gpfs/share/home/1801111354/mazda-path-planner-sbt_changes/ERATO_planning/x64/Release/dynamic_cost.exe -c %d -v EGO_TESTER -i %s > %s" % (duration, scenario_name, log_name)
-    cmd = "wine64 /gpfs/share/home/1801213680/luoyixing/mazda-path-planner-sbt_changes/ERATO_planning/x64/Release/dynamic_cost.exe -c %d -v EGO_TESTER -i %s > %s" % (
-    duration, scenario_name, log_name)
+    cmd = "wine64 /gpfs/share/home/1801111351/luoyixing/mazda-path-planner-sbt_changes/ERATO_planning/x64/Release/dynamic_cost.exe -c %d -v EGO_TESTER -i %s > %s" % (
+        duration, scenario_name, log_name)
+    # cmd = "wine64 /gpfs/share/home/1801213680/luoyixing/mazda-path-planner-sbt_changes/ERATO_planning/x64/Release/dynamic_cost.exe -c %d -v EGO_TESTER -i %s > %s" % (
+    # duration, scenario_name, log_name)
 
 
     ## amazon

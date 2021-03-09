@@ -51,7 +51,7 @@ if __name__ == '__main__':
 
         """=================================算法参数设置============================"""
         # max_evaluations = Configuration.maxIterations
-        max_evaluations = 1000*50
+        max_evaluations = 700*50
 
         algorithm = NSGAIII(
             population_evaluator=MultiprocessEvaluator(Configuration.ProcessNum),

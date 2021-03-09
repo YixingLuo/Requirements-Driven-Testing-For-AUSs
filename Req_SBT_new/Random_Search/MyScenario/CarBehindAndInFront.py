@@ -72,17 +72,17 @@ def create_run_scenario_overtake (Vars, Configure):
             obsList[0]["pos_y"] = str(Vars[6])
             obsList[0]["velo"] = str(Vars[7])
             obsList[0]["acc"] = str(Vars[8])
-            obsList[0]["start_time"] = str(Vars[9])
+            obsList[0]["start_time"] = str(config.start_time_1)
 
-            obsList[1]["pos_y"] = str(Vars[10])
-            obsList[1]["velo"] = str(Vars[11])
-            obsList[1]["acc"] = str(Vars[12])
-            obsList[1]["start_time"] = str(Vars[13])
+            obsList[1]["pos_y"] = str(Vars[9])
+            obsList[1]["velo"] = str(Vars[10])
+            obsList[1]["acc"] = str(Vars[11])
+            obsList[1]["start_time"] = str(config.start_time_2)
 
-            obsList[2]["pos_y"] = str(Vars[14])
-            obsList[2]["velo"] = str(Vars[15])
-            obsList[2]["acc"] = str(Vars[16])
-            obsList[2]["start_time"] = str(Vars[17])
+            obsList[2]["pos_y"] = str(Vars[12])
+            obsList[2]["velo"] = str(Vars[13])
+            obsList[2]["acc"] = str(Vars[14])
+            obsList[2]["start_time"] = str(config.start_time_3)
 
     traffic_light = ret_dic["traffic_signal"]
     st_obsList = ret_dic["static_obs"]
@@ -115,7 +115,11 @@ def create_run_scenario_overtake (Vars, Configure):
     ## weiming
     # cmd = "wine /gpfs/share/home/1801111354/mazda-path-planner/ERATO_planning/x64/Release/dynamic_cost.exe -c %d -v EGO_TESTER -i %s > %s" % (duration, scenario_name, log_name)
     # cmd = "wine /gpfs/share/home/1801111354/mazda-path-planner-sbt_changes/ERATO_planning/x64/Release/dynamic_cost.exe -c %d -v EGO_TESTER -i %s > %s" % (duration, scenario_name, log_name)
-    cmd = "wine64 /gpfs/share/home/1801213680/luoyixing/mazda-path-planner-sbt_changes/ERATO_planning/x64/Release/dynamic_cost.exe -c %d -v EGO_TESTER -i %s > %s" % (duration, scenario_name, log_name)
+    cmd = "wine64 /gpfs/share/home/1801111351/luoyixing/mazda-path-planner-sbt_changes/ERATO_planning/x64/Release/dynamic_cost.exe -c %d -v EGO_TESTER -i %s > %s" % (
+        duration, scenario_name, log_name)
+    # cmd = "wine64 /gpfs/share/home/1801213680/luoyixing/mazda-path-planner-sbt_changes/ERATO_planning/x64/Release/dynamic_cost.exe -c %d -v EGO_TESTER -i %s > %s" % (
+    # duration, scenario_name, log_name)
+
 
     ## amazon
     # cmd = "wine /home/yixing/Release/dynamic_cost.exe -c %d -v EGO_TESTER -i %s > %s" % (duration, scenario_name, log_name)
@@ -261,20 +265,20 @@ def create_run_scenario_overtake_random (Configure):
 
         elif key == "dynamic_obs":
             obsList = ret_dic[key]
-            obsList[0]["pos_y"] = random.uniform(config.pos_y_1[0], config.pos_y_1[1])
-            obsList[0]["velo"] = random.uniform(config.velo_1[0], config.velo_1[1])
-            obsList[0]["acc"] = random.uniform(config.acc_1[0], config.acc_1[1])
-            obsList[0]["start_time"] = random.uniform(config.start_time_1[0], config.start_time_1[1])
+            obsList[0]["pos_y"] = str(random.uniform(config.pos_y_1[0], config.pos_y_1[1]))
+            obsList[0]["velo"] = str(random.uniform(config.velo_1[0], config.velo_1[1]))
+            obsList[0]["acc"] = str(random.uniform(config.acc_1[0], config.acc_1[1]))
+            obsList[0]["start_time"] = str(0)
 
-            obsList[1]["pos_y"] = random.uniform(config.pos_y_2[0], config.pos_y_2[1])
-            obsList[1]["velo"] = random.uniform(config.velo_2[0], config.velo_2[1])
-            obsList[1]["acc"] = random.uniform(config.acc_2[0], config.acc_2[1])
-            obsList[1]["start_time"] = random.uniform(config.start_time_2[0], config.start_time_2[1])
+            obsList[1]["pos_y"] = str(random.uniform(config.pos_y_2[0], config.pos_y_2[1]))
+            obsList[1]["velo"] = str(random.uniform(config.velo_2[0], config.velo_2[1]))
+            obsList[1]["acc"] = str(random.uniform(config.acc_2[0], config.acc_2[1]))
+            obsList[1]["start_time"] = str(0)
 
-            obsList[2]["pos_y"] = random.uniform(config.pos_y_3[0], config.pos_y_3[1])
-            obsList[2]["velo"] = random.uniform(config.velo_3[0], config.velo_3[1])
-            obsList[2]["acc"] = random.uniform(config.acc_3[0], config.acc_3[1])
-            obsList[2]["start_time"] = random.uniform(config.start_time_3[0], config.start_time_3[1])
+            obsList[2]["pos_y"] = str(random.uniform(config.pos_y_3[0], config.pos_y_3[1]))
+            obsList[2]["velo"] = str(random.uniform(config.velo_3[0], config.velo_3[1]))
+            obsList[2]["acc"] = str(random.uniform(config.acc_3[0], config.acc_3[1]))
+            obsList[2]["start_time"] = str(0)
 
             for j in range(3):
                 Vars.extend([obsList[j]["pos_y"], obsList[j]["velo"], obsList[j]["acc"], obsList[j]["start_time"]])
@@ -307,8 +311,10 @@ def create_run_scenario_overtake_random (Configure):
     ## weiming
     # cmd = "wine /gpfs/share/home/1801111354/mazda-path-planner/ERATO_planning/x64/Release/dynamic_cost.exe -c %d -v EGO_TESTER -i %s > %s" % (duration, scenario_name, log_name)
     # cmd = "wine /gpfs/share/home/1801111354/mazda-path-planner-sbt_changes/ERATO_planning/x64/Release/dynamic_cost.exe -c %d -v EGO_TESTER -i %s > %s" % (duration, scenario_name, log_name)
-    cmd = "wine64 /gpfs/share/home/1801213680/luoyixing/mazda-path-planner-sbt_changes/ERATO_planning/x64/Release/dynamic_cost.exe -c %d -v EGO_TESTER -i %s > %s" % (
-    duration, scenario_name, log_name)
+    cmd = "wine64 /gpfs/share/home/1801111351/luoyixing/mazda-path-planner-sbt_changes/ERATO_planning/x64/Release/dynamic_cost.exe -c %d -v EGO_TESTER -i %s > %s" % (
+        duration, scenario_name, log_name)
+    # cmd = "wine64 /gpfs/share/home/1801213680/luoyixing/mazda-path-planner-sbt_changes/ERATO_planning/x64/Release/dynamic_cost.exe -c %d -v EGO_TESTER -i %s > %s" % (
+    # duration, scenario_name, log_name)
 
     ## amazon
     # cmd = "wine /home/yixing/Release/dynamic_cost.exe -c %d -v EGO_TESTER -i %s > %s" % (duration, scenario_name, log_name)
